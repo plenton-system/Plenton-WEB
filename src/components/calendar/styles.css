@@ -1,0 +1,153 @@
+/*
+  FullCalendar Custom Style
+*/
+.fc {
+  --fc-radius: 12px;
+  --fc-neutral-bg-color: var(--palette-background-neutral);
+  --fc-border-color: rgba(var(--palette-grey-500Channel) / 0.20);
+
+  --fc-button-bg-color: var(--palette-primary-main);
+
+  --fc-today-bg-color: rgba(var(--palette-primary-mainChannel) / 0.16);
+  font-size: 15px;
+}
+
+[data-color-scheme="dark"] .fc {
+  --fc-today-bg-color: rgba(var(--palette-primary-mainChannel) / 0.24);
+}
+
+.fc-toolbar-title {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--palette-text-primary);
+  text-transform: capitalize;
+}
+
+.fc-button, .fc-button-primary {
+  border-radius: 8px !important;
+  box-shadow: 0 1px 4px #0001;
+  padding: 4px 16px !important;
+  min-width: 30px !important;
+  font-size: 0.87rem !important;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.fc-daygrid-day-number {
+  font-weight: 700;
+  color: var(--palette-primary-main);
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: var(--fc-today-bg-color) !important;
+  border-radius: 10px 10px 0 0;
+}
+
+.fc-event {
+  border-radius: 8px !important;
+  box-shadow: 0 1px 6px #0001;
+  border: none !important;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 2px 8px !important;
+}
+
+.fc-event:hover {
+  filter: brightness(1.07);
+  box-shadow: 0 3px 12px #0002;
+}
+
+.fc-daygrid-dot-event {
+  background: rgba(var(--palette-primary-mainChannel) / 0.12) !important;
+  color: var(--palette-text-primary) !important;
+}
+
+.fc .fc-scrollgrid {
+  border-radius: var(--fc-radius);
+  overflow: hidden;
+  border: 1px solid var(--fc-border-color);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
+.fc-scrollgrid-section-header .fc-col-header-cell-cushion {
+  font-weight: 600;
+  color: var(--palette-text-primary);
+  letter-spacing: 1px;
+}
+
+.fc-daygrid-day.fc-day-past {
+  background: var(--palette-background-neutral);
+  color: var(--palette-text-disabled);
+}
+
+/* Deixar botões prev/next menores e mais compactos */
+.fc .fc-prev-button,
+.fc .fc-next-button {
+  min-width: 32px !important;
+  padding: 4px 8px !important;
+  font-size: 1.1rem !important;
+  border-radius: 50% !important;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent !important;
+  color: var(--palette-primary-main) !important;
+  border: none !important;
+}
+
+/* Opcional: deixar só o ícone visível e tirar o fundo do botão */
+.fc .fc-prev-button .fc-icon,
+.fc .fc-next-button .fc-icon {
+  font-size: 1.3rem !important;
+  margin: 0;
+}
+
+.fc .fc-prev-button:hover,
+.fc .fc-next-button:hover {
+  background: rgba(var(--palette-primary-mainChannel) / 0.12) !important;
+}
+
+.fc-today-button {
+  background: var(--palette-primary-main) !important;
+  color: var(--palette-primary-contrastText) !important;
+  border: none !important;
+}
+
+.fc-header-toolbar {
+  align-items: center !important;
+}
+
+.fc .fc-toolbar-chunk {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.fc .fc-toolbar-chunk:last-child .fc-button-group .fc-button {
+  margin-right: 8px;
+}
+
+.fc .fc-toolbar-chunk:last-child .fc-button-group .fc-button:last-child {
+  margin-right: 0;
+}
+
+/* VISUALIZAÇÃO - Dia, Semana, Mês: Mesmo estilo do Hoje quando NÃO ativo */
+.fc .fc-button:not(.fc-button-active):not(.fc-prev-button):not(.fc-next-button):not(.fc-today-button) {
+  background: rgba(var(--palette-primary-mainChannel) / 0.12) !important;
+  color: var(--palette-primary-main) !important;
+  border: none !important;
+}
+
+/* VISUALIZAÇÃO - Dia, Semana, Mês: Quando ATIVO (selecionado) */
+.fc .fc-button.fc-button-active {
+  background: var(--palette-primary-main) !important;
+  color: var(--palette-primary-contrastText) !important;
+  border: none !important;
+}
+
+/* Remove o contorno azul ou preto ao clicar/focar os botões do calendário */
+.fc .fc-button:focus,
+.fc .fc-button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}

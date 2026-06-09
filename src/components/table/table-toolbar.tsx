@@ -1,0 +1,67 @@
+import Icon from '@mui/material/Icon';
+import Tooltip from '@mui/material/Tooltip';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+
+import { Iconify } from 'src/components/iconify';
+
+import type { TableToolbarProps } from './types';
+
+export function GenericTableToolbar({
+    numSelected,
+    filterValue,
+    onFilterValue,
+    placeholder = 'Pesquisar...',
+    onDeleteSelected,
+}: TableToolbarProps) {
+    return (
+        <Toolbar
+            sx={{
+                height: 96,
+                display: 'flex',
+                justifyContent: 'space-between',
+                p: (theme) => theme.spacing(0, 1, 0, 3),
+                ...(numSelected > 0 && {
+                    color: 'primary.main',
+                    bgcolor: 'primary.lighter',
+                }),
+            }}
+        >
+            {numSelected > 0 ? (
+                <Typography component="div" variant="subtitle1">
+                    {numSelected} selecionado(s)
+                </Typography>
+            ) : (
+                <OutlinedInput
+                    fullWidth
+                    value={filterValue}
+                    onChange={onFilterValue}
+                    placeholder={placeholder}
+                    startAdornment={
+                        <InputAdornment position="start">
+                            <Iconify width={20} icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                        </InputAdornment>
+                    }
+                    sx={{ flex: 1 }}
+                />
+            )}
+
+            {numSelected > 0 && onDeleteSelected ? (
+                <Tooltip title="Excluir selecionados">
+                    <IconButton onClick={onDeleteSelected}>
+                        <Iconify icon="solar:trash-bin-trash-bold" />
+                    </IconButton>
+                </Tooltip>
+            ) : (
+                <Tooltip title="Filtrar lista">
+                    <Icon sx={{ paddingInline: 3 }}>
+                        <Iconify icon="ic:round-filter-list" />
+                    </Icon>
+                </Tooltip>
+            )}
+        </Toolbar>
+    );
+}

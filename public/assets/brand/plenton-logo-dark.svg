@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="220" viewBox="0 0 820 220" role="img" aria-label="Plenton">
+  <defs>
+    <linearGradient id="ptLd" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2DD4BF"/>
+      <stop offset="1" stop-color="#4ADE80"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(30,30)">
+    <g transform="scale(0.3125)">
+      <rect width="512" height="512" rx="118" fill="#0B1F1C"/>
+      <circle cx="256" cy="256" r="132" fill="none" stroke="url(#ptLd)" stroke-width="38" stroke-linecap="round" stroke-dasharray="600 230" transform="rotate(-90 256 256)"/>
+      <circle cx="256" cy="256" r="52" fill="#ECFDF5"/>
+      <path d="M300 92c42 4 72 34 74 76-42-4-72-34-74-76z" fill="#4ADE80"/>
+    </g>
+  </g>
+  <text x="212" y="140" font-family="'Poppins','Montserrat','Segoe UI',sans-serif" font-size="104" font-weight="700" letter-spacing="-3" fill="#F0FDF4">Plenton</text>
+</svg>

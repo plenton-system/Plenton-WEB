@@ -1,0 +1,1 @@
+export * from './view/public-anamnesis-view';     

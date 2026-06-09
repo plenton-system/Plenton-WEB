@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /$
+Allow: /sitemap.xml
+Disallow: /sign-in
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /dashboard
+Disallow: /patient
+Disallow: /appointment
+Disallow: /workspace
+Disallow: /food
+Disallow: /anamnesis
+Disallow: /public/
+
+Sitemap: https://www.plenton.com.br/sitemap.xml
