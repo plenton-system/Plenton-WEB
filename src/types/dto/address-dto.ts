@@ -1,5 +1,4 @@
-import type { Address } from "../domain/address";
+import type { Address } from '../domain/address';
 
 export type AddressDto = Address & {
-  
 };

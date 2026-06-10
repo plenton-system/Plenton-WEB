@@ -53,7 +53,7 @@ export interface NutritionistViewProps {
      * Conselho Regional de Nutrição do nutricionista
      * @example "12345"
      */
-    crn: string;
+    crn?: string | null;
 
     /**
      * Data de nascimento do nutricionista

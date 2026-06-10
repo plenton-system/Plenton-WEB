@@ -32,15 +32,16 @@ export interface ProfileDetailsProps {
   photoPhoto: string;
   document: string;
   phone: string;
-  crn: string;
+  crn?: string | null;
   gender: Gender | null;
   birthDate: string | null;
   addressDto?: {
     street: string;
+    number: string;
     city: string;
     neighborhood: string;
     state: string;
-  zipCode: string;
+    zipCode: string;
   };
 }
 

@@ -2,6 +2,7 @@ import type { ProfileFormValues } from 'src/types';
 import type { IconButtonProps } from '@mui/material/IconButton';
 import type { SystemSettingsProps, EditSystemSettingsDto } from 'src/types/domain/system-settings';
 
+import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useState, useCallback } from 'react';
 
@@ -24,6 +25,17 @@ import { systemSettingsService } from 'src/services/systemSettings/systemSetting
 
 import { ProfilePopover } from './profile-popover';
 import { SettingsPopover } from './settings-popover';
+
+const profileValidationSchema = Yup.object({
+  addressDto: Yup.object({
+    street: Yup.string().trim().required('Informe a rua ou avenida.'),
+    number: Yup.string().trim().required('Informe o número do endereço.'),
+    neighborhood: Yup.string().trim().required('Informe o bairro.'),
+    city: Yup.string().trim().required('Informe a cidade.'),
+    state: Yup.string().trim().required('Informe o estado.'),
+    zipCode: Yup.string().trim().required('Informe o CEP.'),
+  }).required(),
+});
 
 export type AccountPopoverProps = IconButtonProps & {
   data?: {
@@ -51,6 +63,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
     gender: null,
     addressDto: {
       street: '',
+      number: '',
       city: '',
       neighborhood: '',
       state: '',
@@ -118,6 +131,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
             birthDate: profileResponse?.birthDate ?? '',
             addressDto: {
               street: profileResponse.addressDto?.street ?? '',
+              number: profileResponse.addressDto?.number ?? '',
               city: profileResponse.addressDto?.city ?? '',
               neighborhood: profileResponse.addressDto?.neighborhood ?? '',
               state: profileResponse.addressDto?.state ?? '',
@@ -148,6 +162,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
   const formikProfile = useFormik<ProfileFormValues>({
     initialValues: initialValuesProfile,
     enableReinitialize: true,
+    validationSchema: profileValidationSchema,
     onSubmit: async (values) => {
       setLocalError(null);
 

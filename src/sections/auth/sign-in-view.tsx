@@ -22,10 +22,42 @@ import { useRouter } from 'src/routes/hooks';
 import { useAuth } from 'src/hooks/common/use-auth';
 
 import { authService } from 'src/services';
+import { fetchAddressByCep } from 'src/shared/services/cep';
 
 import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
+
+type RegisterAddress = {
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  zipCode: string;
+};
+
+const emptyRegisterAddress: RegisterAddress = {
+  street: '',
+  number: '',
+  neighborhood: '',
+  city: '',
+  state: '',
+  zipCode: '',
+};
+
+function missingRegisterAddressFields(address: RegisterAddress) {
+  const required: { field: keyof RegisterAddress; label: string }[] = [
+    { field: 'zipCode', label: 'CEP' },
+    { field: 'street', label: 'rua/avenida' },
+    { field: 'number', label: 'número do endereço' },
+    { field: 'neighborhood', label: 'bairro' },
+    { field: 'city', label: 'cidade' },
+    { field: 'state', label: 'estado' },
+  ];
+
+  return required.filter(({ field }) => !address[field].trim()).map(({ label }) => label);
+}
 
 export function SignInView() {
   const theme = useTheme();
@@ -63,7 +95,25 @@ export function SignInView() {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerCrn, setRegisterCrn] = useState('');
   const [registerPhone, setRegisterPhone] = useState('');
+  const [registerAddress, setRegisterAddress] = useState<RegisterAddress>(emptyRegisterAddress);
   const [registering, setRegistering] = useState(false);
+
+  const setRegisterAddressField = (field: keyof RegisterAddress, value: string) => {
+    setRegisterAddress((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleRegisterZipCodeBlur = async () => {
+    const address = await fetchAddressByCep(registerAddress.zipCode);
+    if (!address) return;
+
+    setRegisterAddress((prev) => ({
+      ...prev,
+      street: address.street ?? prev.street,
+      neighborhood: address.neighborhood ?? prev.neighborhood,
+      city: address.city ?? prev.city,
+      state: address.state ?? prev.state,
+    }));
+  };
 
   const handleSignIn = async () => {
     try {
@@ -100,19 +150,34 @@ export function SignInView() {
   };
 
   const handleRegister = async () => {
-    if (!registerName.trim() || !registerEmail.trim() || !registerPassword || !registerCrn.trim()) {
-      setErrorMessage('Preencha nome, e-mail, senha e CRN.');
+    if (!registerName.trim() || !registerEmail.trim() || !registerPassword) {
+      setErrorMessage('Preencha nome, e-mail e senha.');
+      return;
+    }
+
+    const missingAddressFields = missingRegisterAddressFields(registerAddress);
+    if (missingAddressFields.length > 0) {
+      setErrorMessage(`Preencha o endereço completo: ${missingAddressFields.join(', ')}.`);
       return;
     }
 
     setRegistering(true);
     try {
+      const crn = registerCrn.trim() || null;
       await authService.register({
         name: registerName.trim(),
         email: registerEmail.trim(),
         password: registerPassword,
-        crn: registerCrn.trim(),
+        crn,
         phone: registerPhone.trim() || undefined,
+        address: {
+          street: registerAddress.street.trim(),
+          number: registerAddress.number.trim(),
+          neighborhood: registerAddress.neighborhood.trim(),
+          city: registerAddress.city.trim(),
+          state: registerAddress.state.trim(),
+          zipCode: registerAddress.zipCode.trim(),
+        },
       });
 
       // Pré-preenche o login com os dados recém-cadastrados
@@ -221,8 +286,8 @@ export function SignInView() {
               alignItems: 'center',
               justifyContent: 'safe center',
               flexDirection: 'column',
-              px: { xs: 3, md: 10 },
-              py: { xs: 4, md: 0 },
+              px: { xs: 3, md: 6 },
+              py: { xs: 3, md: 2 },
               overflowY: 'auto',
               bgcolor: theme.vars.palette.background.paper,
               position: { xs: 'relative', md: 'absolute' },
@@ -240,10 +305,11 @@ export function SignInView() {
               }}
               sx={{
                 display: 'flex',
-                alignItems: 'flex-end',
+                alignItems: 'stretch',
                 flexDirection: 'column',
                 width: '100%',
-                maxWidth: { xs: '100%', md: '80%' },
+                maxWidth: '100%',
+                gap: 1.25,
               }}
             >
               <TextField
@@ -364,44 +430,50 @@ export function SignInView() {
                 handleRegister();
               }}
               sx={{
-                display: 'flex',
-                alignItems: 'flex-end',
-                flexDirection: 'column',
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' },
                 width: '100%',
-                maxWidth: { xs: '100%', md: '80%' },
+                maxWidth: { xs: '100%', md: 520 },
+                columnGap: 1.5,
+                rowGap: 2,
+                '& .MuiOutlinedInput-root': {
+                  minHeight: 48,
+                },
+                '& .MuiInputBase-input': {
+                  py: 1.5,
+                },
               }}
             >
               <TextField
                 fullWidth
+                size="small"
                 name="name"
                 label="Nome completo"
                 value={registerName}
                 onChange={(e) => setRegisterName(e.target.value)}
-                sx={{ mb: 2, mt: 3 }}
-                slotProps={{ inputLabel: { shrink: true } }}
+                sx={{ gridColumn: '1 / -1' }}
               />
+
               <TextField
                 fullWidth
+                size="small"
                 name="email"
                 type="email"
                 label="E-mail"
                 value={registerEmail}
                 onChange={(e) => setRegisterEmail(e.target.value)}
-                sx={{ mb: 2 }}
-                slotProps={{ inputLabel: { shrink: true } }}
               />
               <TextField
                 fullWidth
+                size="small"
                 name="registerPassword"
                 label="Senha"
                 type={showPassword ? 'text' : 'password'}
                 autoComplete="off"
                 value={registerPassword}
                 onChange={(e) => setRegisterPassword(e.target.value)}
-                helperText="Mínimo 8 caracteres"
-                sx={{ mb: 2 }}
+                placeholder="Mínimo 8 caracteres"
                 slotProps={{
-                  inputLabel: { shrink: true },
                   htmlInput: {
                     autoComplete: 'off',
                     'data-1p-ignore': 'true',
@@ -421,23 +493,83 @@ export function SignInView() {
               />
               <TextField
                 fullWidth
+                size="small"
                 name="crn"
-                label="CRN"
+                label="CRN (opcional)"
                 placeholder="Ex.: CRN-3 12345"
                 value={registerCrn}
                 onChange={(e) => setRegisterCrn(e.target.value)}
-                sx={{ mb: 2 }}
-                slotProps={{ inputLabel: { shrink: true } }}
               />
               <TextField
                 fullWidth
+                size="small"
                 name="phone"
                 label="Telefone (opcional)"
                 value={registerPhone}
                 onChange={(e) => setRegisterPhone(e.target.value)}
-                sx={{ mb: 3 }}
-                slotProps={{ inputLabel: { shrink: true } }}
               />
+              <TextField
+                fullWidth
+                size="small"
+                name="zipCode"
+                label="CEP"
+                value={registerAddress.zipCode}
+                onChange={(e) => setRegisterAddressField('zipCode', e.target.value)}
+                onBlur={handleRegisterZipCodeBlur}
+                slotProps={{ htmlInput: { maxLength: 9 } }}
+              />
+              <TextField
+                fullWidth
+                size="small"
+                name="number"
+                label="Número"
+                value={registerAddress.number}
+                onChange={(e) => setRegisterAddressField('number', e.target.value)}
+              />
+              <TextField
+                fullWidth
+                size="small"
+                name="street"
+                label="Rua/Avenida"
+                value={registerAddress.street}
+                onChange={(e) => setRegisterAddressField('street', e.target.value)}
+                sx={{ gridColumn: '1 / -1' }}
+              />
+              <TextField
+                fullWidth
+                size="small"
+                name="neighborhood"
+                label="Bairro"
+                value={registerAddress.neighborhood}
+                onChange={(e) => setRegisterAddressField('neighborhood', e.target.value)}
+                slotProps={{ htmlInput: { maxLength: 64 } }}
+              />
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', sm: 'minmax(0, 1fr) 92px' },
+                  columnGap: 1.5,
+                  rowGap: 2,
+                }}
+              >
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="city"
+                  label="Cidade"
+                  value={registerAddress.city}
+                  onChange={(e) => setRegisterAddressField('city', e.target.value)}
+                />
+                <TextField
+                  fullWidth
+                  size="small"
+                  name="state"
+                  label="Estado"
+                  value={registerAddress.state}
+                  onChange={(e) => setRegisterAddressField('state', e.target.value)}
+                  slotProps={{ htmlInput: { maxLength: 2 } }}
+                />
+              </Box>
               <Button
                 fullWidth
                 size="large"
@@ -446,7 +578,7 @@ export function SignInView() {
                 variant="contained"
                 disabled={registering}
                 startIcon={registering && <CircularProgress size={20} color="inherit" />}
-                sx={{ mb: 1 }}
+                sx={{ gridColumn: '1 / -1', mt: 0.5, mb: 1 }}
               >
                 {registering ? 'Criando conta...' : 'Registrar'}
               </Button>

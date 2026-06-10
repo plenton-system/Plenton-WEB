@@ -38,8 +38,16 @@ export type RegisterRequest = {
     name: string;
     email: string;
     password: string;
-    crn: string;
+    crn?: string | null;
     phone?: string;
+    address: {
+        street: string;
+        number: string;
+        neighborhood: string;
+        city: string;
+        state: string;
+        zipCode: string;
+    };
 };
 
 // ----------------------------------------------------------------------

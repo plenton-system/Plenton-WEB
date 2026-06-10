@@ -33,11 +33,12 @@ function mapApiToProfileData(apiData: types.ProfileDetailsProps): types.ProfileF
     email: apiData.email,
     document: apiData.document,
     photo: apiData.photoPhoto,
-    crn: apiData.crn,
+    crn: apiData.crn ?? '',
     gender: apiData.gender,
     birthDate: apiData.birthDate ? fDateInput(apiData.birthDate) : '',
     addressDto: {
       street: apiData.addressDto?.street || '',
+      number: apiData.addressDto?.number || '',
       neighborhood: apiData.addressDto?.neighborhood || '',
       city: apiData.addressDto?.city || '',
       state: apiData.addressDto?.state || '',
@@ -82,8 +83,21 @@ export function useUserDataDetails({ userId, autoLoad = false }: UseUserDataDeta
 
       try {
         const { photo, ...rest } = values;
+        const crn = rest.crn?.trim() || null;
         const payload: types.ProfileDetailsProps = {
           ...(rest as Omit<types.ProfileDetailsProps, 'photoPhoto'>),
+          crn,
+          addressDto: rest.addressDto
+            ? {
+                ...rest.addressDto,
+                street: rest.addressDto.street.trim(),
+                number: rest.addressDto.number.trim(),
+                neighborhood: rest.addressDto.neighborhood.trim(),
+                city: rest.addressDto.city.trim(),
+                state: rest.addressDto.state.trim(),
+                zipCode: rest.addressDto.zipCode.trim(),
+              }
+            : undefined,
           photoPhoto: photo,
         };
 

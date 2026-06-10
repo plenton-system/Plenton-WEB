@@ -45,6 +45,16 @@ export default function ProfileAddressTab({ formik }: Props) {
           helperText={(fieldError('addressDto.street') as string) || ''}
           fullWidth
         />
+
+        <TextField
+          name="addressDto.number"
+          label="Número"
+          value={formik.values.addressDto?.number ?? ''}
+          onChange={formik.handleChange}
+          error={Boolean(fieldError('addressDto.number'))}
+          helperText={(fieldError('addressDto.number') as string) || ''}
+          sx={{ width: { xs: '100%', md: '22%' } }}
+        />
       </Stack>
 
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>

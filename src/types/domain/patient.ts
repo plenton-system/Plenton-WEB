@@ -61,6 +61,7 @@ export interface PatientDetailProps extends PatientListProps {
     gender?: Patient.Gender | string | null;
     addressDto?: {
         street: string;
+        number?: string;
         neighborhood: string;
         city: string;
         state: string;
@@ -160,5 +161,4 @@ export interface PatientViewProps {
     neighborhood: string;
 
 }
-
 

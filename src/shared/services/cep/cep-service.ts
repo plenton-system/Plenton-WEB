@@ -43,6 +43,7 @@ export async function fetchAddressByCep(
 
     const addr: AddressDto = {
       street: data.logradouro ?? '',
+      number: '',
       neighborhood: data.bairro ?? '',
       city: data.localidade ?? '',
       state: data.uf ?? '',
