@@ -26,6 +26,8 @@ import { fetchAddressByCep } from 'src/shared/services/cep';
 
 import { Iconify } from 'src/components/iconify';
 
+import { maskCPF } from 'src/sections/patient/utils/masks';
+
 // ----------------------------------------------------------------------
 
 type RegisterAddress = {
@@ -93,6 +95,7 @@ export function SignInView() {
   const [registerName, setRegisterName] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
+  const [registerDocument, setRegisterDocument] = useState('');
   const [registerCrn, setRegisterCrn] = useState('');
   const [registerPhone, setRegisterPhone] = useState('');
   const [registerAddress, setRegisterAddress] = useState<RegisterAddress>(emptyRegisterAddress);
@@ -150,8 +153,14 @@ export function SignInView() {
   };
 
   const handleRegister = async () => {
-    if (!registerName.trim() || !registerEmail.trim() || !registerPassword) {
-      setErrorMessage('Preencha nome, e-mail e senha.');
+    if (
+      !registerName.trim() ||
+      !registerEmail.trim() ||
+      !registerPassword ||
+      !registerDocument.trim() ||
+      !registerPhone.trim()
+    ) {
+      setErrorMessage('Preencha nome, e-mail, senha, CPF e telefone.');
       return;
     }
 
@@ -168,9 +177,10 @@ export function SignInView() {
         name: registerName.trim(),
         email: registerEmail.trim(),
         password: registerPassword,
+        document: registerDocument.trim(),
         crn,
-        phone: registerPhone.trim() || undefined,
-        address: {
+        phone: registerPhone.trim(),
+        addressDto: {
           street: registerAddress.street.trim(),
           number: registerAddress.number.trim(),
           neighborhood: registerAddress.neighborhood.trim(),
@@ -466,6 +476,15 @@ export function SignInView() {
               <TextField
                 fullWidth
                 size="small"
+                name="document"
+                label="CPF"
+                value={registerDocument}
+                onChange={(e) => setRegisterDocument(maskCPF(e.target.value))}
+                slotProps={{ htmlInput: { maxLength: 14 } }}
+              />
+              <TextField
+                fullWidth
+                size="small"
                 name="registerPassword"
                 label="Senha"
                 type={showPassword ? 'text' : 'password'}
@@ -504,7 +523,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="phone"
-                label="Telefone (opcional)"
+                label="Telefone"
                 value={registerPhone}
                 onChange={(e) => setRegisterPhone(e.target.value)}
               />

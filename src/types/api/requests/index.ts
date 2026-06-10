@@ -38,9 +38,10 @@ export type RegisterRequest = {
     name: string;
     email: string;
     password: string;
+    document: string;
     crn?: string | null;
-    phone?: string;
-    address: {
+    phone: string;
+    addressDto: {
         street: string;
         number: string;
         neighborhood: string;
