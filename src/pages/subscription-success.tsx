@@ -5,7 +5,7 @@ import { SubscriptionStatusRouteView } from 'src/sections/subscription';
 export default function Page() {
   return (
     <>
-      <title>{`Aguardando confirmacao - ${CONFIG.appName}`}</title>
+      <title>{`Aguardando confirmação - ${CONFIG.appName}`}</title>
       <SubscriptionStatusRouteView state="success" />
     </>
   );

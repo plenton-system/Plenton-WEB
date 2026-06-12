@@ -10,8 +10,8 @@ export const billingCycleLabel = (cycle?: SubscriptionBillingCycle | null) => {
 export const billingTypeLabel = (type?: SubscriptionBillingType | null) => {
   if (type === 'Pix') return 'PIX';
   if (type === 'BankSlip') return 'Boleto';
-  if (type === 'CreditCard') return 'Cartao de credito';
-  return 'Nao informado';
+  if (type === 'CreditCard') return 'Cartão de crédito';
+  return 'Não informado';
 };
 
 export const statusLabel = (status?: SubscriptionStatus | null) => {

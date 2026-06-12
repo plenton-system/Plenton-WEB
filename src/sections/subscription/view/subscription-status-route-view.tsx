@@ -20,15 +20,15 @@ type Props = {
 const copy = {
   success: {
     icon: 'solar:hourglass-bold',
-    title: 'Aguardando confirmacao',
+    title: 'Aguardando confirmação',
     description:
-      'Recebemos o retorno do checkout, mas a assinatura so sera liberada quando o backend confirmar o pagamento.',
+      'Recebemos o retorno do checkout, mas a assinatura só será liberada quando o backend confirmar o pagamento.',
     severity: 'info' as const,
   },
   cancel: {
     icon: 'solar:close-circle-bold',
     title: 'Checkout cancelado',
-    description: 'O pagamento nao foi concluido. Voce pode voltar aos planos e iniciar uma nova tentativa.',
+    description: 'O pagamento não foi concluído. Você pode voltar aos planos e iniciar uma nova tentativa.',
     severity: 'warning' as const,
   },
   expired: {
@@ -60,7 +60,7 @@ export function SubscriptionStatusRouteView({ state }: Props) {
 
           <Alert severity={content.severity}>
             {state === 'success'
-              ? 'Aguardando confirmacao do webhook de pagamento.'
+              ? 'Aguardando confirmação do webhook de pagamento.'
               : content.description}
           </Alert>
 

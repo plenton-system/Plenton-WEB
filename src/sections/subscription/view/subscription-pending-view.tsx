@@ -36,13 +36,13 @@ export function SubscriptionPendingView() {
               Pagamento iniciado
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              Aguardando confirmacao do pagamento para liberar a assinatura.
+              Aguardando confirmação do pagamento para liberar a assinatura.
             </Typography>
           </Stack>
 
           <Alert severity="info">
             {state.planName ? `Plano: ${state.planName}. ` : ''}
-            Metodo: {billingTypeLabel(state.billingType)}.
+            Método: {billingTypeLabel(state.billingType)}.
           </Alert>
 
           {payment.pixQrCode && (

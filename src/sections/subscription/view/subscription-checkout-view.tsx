@@ -33,12 +33,12 @@ const PAYMENT_OPTIONS: { value: SubscriptionBillingType; title: string; descript
   {
     value: 'BankSlip',
     title: 'Boleto',
-    description: 'Gere a cobranca e acompanhe a confirmacao apos a compensacao.',
+    description: 'Gere a cobrança e acompanhe a confirmação após a compensação.',
   },
   {
     value: 'CreditCard',
-    title: 'Cartao de credito',
-    description: 'Voce sera redirecionado para o checkout hospedado do Asaas.',
+    title: 'Cartão de crédito',
+    description: 'Você será redirecionado para o checkout hospedado do Asaas.',
   },
 ];
 
@@ -82,7 +82,7 @@ export function SubscriptionCheckoutView() {
         window.location.href = checkoutUrl;
         return;
       }
-      startSubscription.setError('O backend nao retornou a URL do checkout hospedado.');
+      startSubscription.setError('O backend não retornou a URL do checkout hospedado.');
       return;
     }
 
@@ -130,7 +130,7 @@ export function SubscriptionCheckoutView() {
             severity="warning"
             action={<Button onClick={() => navigate('/#planos')}>Escolher plano</Button>}
           >
-            O preco selecionado nao esta mais disponivel. Escolha um plano ativo para continuar.
+            O preço selecionado não está mais disponível. Escolha um plano ativo para continuar.
           </Alert>
         )}
 

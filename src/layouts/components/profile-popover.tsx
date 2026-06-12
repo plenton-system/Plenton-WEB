@@ -155,12 +155,12 @@ export function ProfilePopover({ open, loading, error, onClose, formik }: Props)
                     />
                     <Box>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                        {subscription.data.planName ?? 'Plano nao informado'}
+                        {subscription.data.planName ?? 'Plano não informado'}
                       </Typography>
                       <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                         Ciclo {billingCycleLabel(subscription.data.billingCycle)}
                         {formatDate(subscription.data.nextChargeDate ?? subscription.data.dueDate)
-                          ? ` · Proxima cobranca em ${formatDate(subscription.data.nextChargeDate ?? subscription.data.dueDate)}`
+                          ? ` · Próxima cobrança em ${formatDate(subscription.data.nextChargeDate ?? subscription.data.dueDate)}`
                           : ''}
                       </Typography>
                     </Box>
@@ -175,7 +175,7 @@ export function ProfilePopover({ open, loading, error, onClose, formik }: Props)
                   }}
                   sx={{ alignSelf: 'flex-start' }}
                 >
-                  Abrir area de assinatura
+                  Abrir área de assinatura
                 </Button>
               </Stack>
             </Box>

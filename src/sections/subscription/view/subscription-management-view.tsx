@@ -28,7 +28,7 @@ export function SubscriptionManagementView() {
             Minha assinatura
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
-            Acompanhe o plano, status e proximas cobrancas da sua conta.
+            Acompanhe o plano, status e próximas cobranças da sua conta.
           </Typography>
         </Box>
 
@@ -65,10 +65,10 @@ export function SubscriptionManagementView() {
                   />
                   <Box>
                     <Typography variant="h5" sx={{ fontWeight: 700 }}>
-                      {data.planName ?? 'Plano nao informado'}
+                      {data.planName ?? 'Plano não informado'}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      {data.planCode ?? 'Codigo nao informado'}
+                      {data.planCode ?? 'Código não informado'}
                     </Typography>
                   </Box>
 
@@ -87,15 +87,15 @@ export function SubscriptionManagementView() {
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
                       <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                        Proxima cobranca
+                        Próxima cobrança
                       </Typography>
-                      <Typography>{formatDate(data.nextChargeDate ?? data.dueDate) ?? 'Nao informado'}</Typography>
+                      <Typography>{formatDate(data.nextChargeDate ?? data.dueDate) ?? 'Não informado'}</Typography>
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
                       <Typography variant="caption" sx={{ color: 'text.secondary' }}>
                         Expira em
                       </Typography>
-                      <Typography>{formatDate(data.expiresAt) ?? 'Nao informado'}</Typography>
+                      <Typography>{formatDate(data.expiresAt) ?? 'Não informado'}</Typography>
                     </Grid>
                   </Grid>
                 </Stack>
@@ -106,12 +106,12 @@ export function SubscriptionManagementView() {
               <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
                 <Stack spacing={1.5}>
                   <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                    Acoes
+                    Ações
                   </Typography>
                   {[
                     ['solar:refresh-circle-bold', 'Alterar plano'],
                     ['solar:card-2-bold', 'Alterar pagamento'],
-                    ['solar:bill-list-bold', 'Ver cobrancas'],
+                    ['solar:bill-list-bold', 'Ver cobranças'],
                     ['solar:trash-bin-trash-bold', 'Cancelar assinatura'],
                   ].map(([icon, label]) => (
                     <Button

@@ -238,14 +238,14 @@ export function LandingPricing() {
           <Stack direction="row" spacing={1.5} justifyContent="center" alignItems="center" sx={{ mb: 3 }}>
             <CircularProgress size={20} />
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Carregando planos disponiveis...
+              Carregando planos disponíveis...
             </Typography>
           </Stack>
         )}
 
         {error && (
           <Alert severity="info" action={<Button onClick={reload}>Tentar novamente</Button>} sx={{ mb: 3 }}>
-            Nao foi possivel carregar o catalogo agora. Mantivemos os planos de referencia abaixo.
+            Não foi possível carregar o catálogo agora. Mantivemos os planos de referência abaixo.
           </Alert>
         )}
 
