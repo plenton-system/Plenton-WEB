@@ -21,6 +21,8 @@ export interface Profile {
   id: string;
   photo: string;
   status: number | string;
+  name?: string;
+  email?: string;
   document?: string | null;
   phone?: string | null;
 }

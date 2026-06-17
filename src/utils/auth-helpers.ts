@@ -22,10 +22,11 @@ export async function buildAndStoreUser(token?: string): Promise<User> {
     };
 
     const profile = await authService.getUserProfile();
-    
+
     const userWithProfile: User = {
         ...userData,
-        profile
+        name: profile?.name?.trim() || userData.name,
+        profile,
     };
 
     authStorage.setUser(userWithProfile);
