@@ -24,4 +24,6 @@ export * from './domain/nutritionist';
 
 export * from './domain/subscription';
 
+export * from './domain/notification';
+
 export * from './domain/public-anamnesis';

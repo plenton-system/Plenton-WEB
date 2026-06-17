@@ -10,3 +10,5 @@ export { mealPlanService } from './mealPlan/mealPlanService';
 export { appointmentService } from './appointment/appointmentService';
 
 export { subscriptionService } from './subscription/subscriptionService';
+
+export { notificationService } from './notifications/notificationService';

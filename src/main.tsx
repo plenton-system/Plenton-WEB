@@ -7,6 +7,7 @@ import { routesSection } from './routes/sections';
 import { ErrorBoundary } from './routes/components';
 import { AuthProvider } from './contexts/auth-context';
 import { ConfirmProvider } from './contexts/confirm-context';
+import { NotificationsProvider } from './contexts/notifications-context';
 
 // ----------------------------------------------------------------------
 
@@ -27,9 +28,11 @@ const root = createRoot(document.getElementById('root')!);
 root.render(
   <StrictMode>
     <AuthProvider>
-      <ConfirmProvider>
-        <RouterProvider router={router} />
-      </ConfirmProvider>
+      <NotificationsProvider>
+        <ConfirmProvider>
+          <RouterProvider router={router} />
+        </ConfirmProvider>
+      </NotificationsProvider>
     </AuthProvider>
   </StrictMode>
 );

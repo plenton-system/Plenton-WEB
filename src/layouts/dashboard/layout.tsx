@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 
-import { _langs, _notifications } from 'src/_mock';
+import { _langs } from 'src/_mock';
 
 import { NoIndex } from 'src/components/seo';
 
@@ -84,7 +84,7 @@ export function DashboardLayout({
           <LanguagePopover data={_langs} />
 
           {/** @slot Notifications popover */}
-          <NotificationsPopover data={_notifications} />
+          <NotificationsPopover />
 
           {/** @slot Account drawer */}
           <AccountPopover data={_account} />
