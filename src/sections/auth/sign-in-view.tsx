@@ -9,7 +9,8 @@ import Slide from '@mui/material/Slide';
 import Paper from '@mui/material/Paper';
 import { useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
+// Integrações sociais ainda não implementadas — reativar o import quando prontas.
+// import Divider from '@mui/material/Divider';
 import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
@@ -382,6 +383,7 @@ export function SignInView() {
 
 
             </Box>
+            {/* Login social (Google, GitHub, X) ainda não implementado — reativar quando pronto.
             <Divider sx={{ my: 1.5, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
               <Typography
                 variant="overline"
@@ -407,6 +409,7 @@ export function SignInView() {
                 <Iconify width={22} icon="socials:twitter" />
               </IconButton>
             </Box>
+            */}
           </Paper>
         </Slide >
 
@@ -441,7 +444,7 @@ export function SignInView() {
               }}
               sx={{
                 display: 'grid',
-                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' },
+                gridTemplateColumns: { xs: '1fr', sm: 'repeat(12, minmax(0, 1fr))' },
                 width: '100%',
                 maxWidth: { xs: '100%', md: 520 },
                 columnGap: 1.5,
@@ -472,6 +475,7 @@ export function SignInView() {
                 label="E-mail"
                 value={registerEmail}
                 onChange={(e) => setRegisterEmail(e.target.value)}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}
               />
               <TextField
                 fullWidth
@@ -481,6 +485,7 @@ export function SignInView() {
                 value={registerDocument}
                 onChange={(e) => setRegisterDocument(maskCPF(e.target.value))}
                 slotProps={{ htmlInput: { maxLength: 14 } }}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}
               />
               <TextField
                 fullWidth
@@ -509,6 +514,7 @@ export function SignInView() {
                     ),
                   },
                 }}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}
               />
               <TextField
                 fullWidth
@@ -518,6 +524,7 @@ export function SignInView() {
                 placeholder="Ex.: CRN-3 12345"
                 value={registerCrn}
                 onChange={(e) => setRegisterCrn(e.target.value)}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}
               />
               <TextField
                 fullWidth
@@ -526,6 +533,7 @@ export function SignInView() {
                 label="Telefone"
                 value={registerPhone}
                 onChange={(e) => setRegisterPhone(e.target.value)}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}
               />
               <TextField
                 fullWidth
@@ -536,14 +544,7 @@ export function SignInView() {
                 onChange={(e) => setRegisterAddressField('zipCode', e.target.value)}
                 onBlur={handleRegisterZipCodeBlur}
                 slotProps={{ htmlInput: { maxLength: 9 } }}
-              />
-              <TextField
-                fullWidth
-                size="small"
-                name="number"
-                label="Número"
-                value={registerAddress.number}
-                onChange={(e) => setRegisterAddressField('number', e.target.value)}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}
               />
               <TextField
                 fullWidth
@@ -552,7 +553,16 @@ export function SignInView() {
                 label="Rua/Avenida"
                 value={registerAddress.street}
                 onChange={(e) => setRegisterAddressField('street', e.target.value)}
-                sx={{ gridColumn: '1 / -1' }}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 8' } }}
+              />
+              <TextField
+                fullWidth
+                size="small"
+                name="number"
+                label="Número"
+                value={registerAddress.number}
+                onChange={(e) => setRegisterAddressField('number', e.target.value)}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 4' } }}
               />
               <TextField
                 fullWidth
@@ -562,33 +572,27 @@ export function SignInView() {
                 value={registerAddress.neighborhood}
                 onChange={(e) => setRegisterAddressField('neighborhood', e.target.value)}
                 slotProps={{ htmlInput: { maxLength: 64 } }}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}
               />
-              <Box
-                sx={{
-                  display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', sm: 'minmax(0, 1fr) 92px' },
-                  columnGap: 1.5,
-                  rowGap: 2,
-                }}
-              >
-                <TextField
-                  fullWidth
-                  size="small"
-                  name="city"
-                  label="Cidade"
-                  value={registerAddress.city}
-                  onChange={(e) => setRegisterAddressField('city', e.target.value)}
-                />
-                <TextField
-                  fullWidth
-                  size="small"
-                  name="state"
-                  label="Estado"
-                  value={registerAddress.state}
-                  onChange={(e) => setRegisterAddressField('state', e.target.value)}
-                  slotProps={{ htmlInput: { maxLength: 2 } }}
-                />
-              </Box>
+              <TextField
+                fullWidth
+                size="small"
+                name="city"
+                label="Cidade"
+                value={registerAddress.city}
+                onChange={(e) => setRegisterAddressField('city', e.target.value)}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 3' } }}
+              />
+              <TextField
+                fullWidth
+                size="small"
+                name="state"
+                label="Estado"
+                value={registerAddress.state}
+                onChange={(e) => setRegisterAddressField('state', e.target.value)}
+                slotProps={{ htmlInput: { maxLength: 2 } }}
+                sx={{ gridColumn: { xs: '1 / -1', sm: 'span 3' } }}
+              />
               <Button
                 fullWidth
                 size="large"
@@ -603,6 +607,7 @@ export function SignInView() {
               </Button>
             </Box>
 
+            {/* Cadastro social (Google, GitHub, X) ainda não implementado — reativar quando pronto.
             <Divider
               sx={{
                 width: '100%',
@@ -635,6 +640,7 @@ export function SignInView() {
                 <Iconify width={22} icon="socials:twitter" />
               </IconButton>
             </Box>
+            */}
           </Paper>
         </Slide>
 
