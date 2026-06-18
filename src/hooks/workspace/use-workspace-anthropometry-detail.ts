@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { workspaceAnthropometryService } from 'src/services/workspace/workspaceAnthropometryService';
 
 type UseWorkspaceAnthropometryDetailReturn = {
@@ -51,7 +52,7 @@ export function useWorkspaceAnthropometryDetail(
       const detail = await workspaceAnthropometryService.getById(patientId, evaluationId);
       setData(detail);
     } catch (fetchError) {
-      setError(extractApiErrorMessage(fetchError, 'Não foi possível carregar a avaliação antropométrica.'));
+      setError(extractApiErrorMessage(fetchError, i18n.t('workspace.errors.loadAnthropometryDetail')));
     } finally {
       setLoading(false);
     }
@@ -60,7 +61,7 @@ export function useWorkspaceAnthropometryDetail(
   const save = useCallback(
     async (dto: SaveAnthropometryRequest) => {
       if (!patientId) {
-        throw new Error('Paciente não informado.');
+        throw new Error(i18n.t('workspace.errors.patientRequired'));
       }
 
       setSaving(true);
@@ -76,7 +77,7 @@ export function useWorkspaceAnthropometryDetail(
       } catch (saveRequestError) {
         const message = extractApiErrorMessage(
           saveRequestError,
-          'Não foi possível salvar a avaliação antropométrica.'
+          i18n.t('workspace.errors.saveAnthropometry')
         );
         setSaveError(message);
         throw new Error(message);

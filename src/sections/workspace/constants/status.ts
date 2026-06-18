@@ -1,4 +1,5 @@
 import type { WorkspaceStatus } from 'src/types';
+
 import i18n from 'src/i18n';
 
 export const WORKSPACE_STATUS_ORDER: WorkspaceStatus[] = ['ACTIVE', 'INACTIVE', 'SUSPENDED'];

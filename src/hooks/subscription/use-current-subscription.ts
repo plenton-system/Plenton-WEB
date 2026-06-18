@@ -2,6 +2,7 @@ import type { CurrentSubscription } from 'src/types';
 
 import { useRef, useState, useEffect, useCallback } from 'react';
 
+import i18n from 'src/i18n';
 import { subscriptionService } from 'src/services';
 
 type Options = {
@@ -29,7 +30,7 @@ export function useCurrentSubscription({
       setData(response);
       return response;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Não foi possível carregar a assinatura.';
+      const message = err instanceof Error ? err.message : i18n.t('subscription.errors.loadCurrent');
       setError(message);
       setData(null);
       return null;

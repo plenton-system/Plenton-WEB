@@ -1,8 +1,9 @@
+import { useTranslation } from 'react-i18next';
+
 import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
-import { useTranslation } from 'react-i18next';
 
 import type { TableNoDataProps } from './types';
 

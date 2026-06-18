@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { workspaceAnthropometryService } from 'src/services/workspace/workspaceAnthropometryService';
 
 // ----------------------------------------------------------------------
@@ -29,7 +30,7 @@ export function useWorkspaceAnthropometries(patientId?: string): UseWorkspaceAnt
       const data = await workspaceAnthropometryService.getAll(patientId);
       setItems(data?.items ?? []);
     } catch (err) {
-      setError(extractApiErrorMessage(err, 'Erro ao carregar antropometria'));
+      setError(extractApiErrorMessage(err, i18n.t('workspace.errors.loadAnthropometry')));
     } finally {
       setLoading(false);
     }

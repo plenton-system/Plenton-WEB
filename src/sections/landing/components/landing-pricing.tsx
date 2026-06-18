@@ -3,8 +3,8 @@ import type { SubscriptionPlan } from 'src/types';
 import { Icon } from '@iconify/react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { varAlpha } from 'minimal-shared/utils';
 import { useTranslation } from 'react-i18next';
+import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';

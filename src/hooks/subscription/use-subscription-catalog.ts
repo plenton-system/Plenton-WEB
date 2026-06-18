@@ -2,6 +2,7 @@ import type { SubscriptionPlan } from 'src/types';
 
 import { useState, useEffect, useCallback } from 'react';
 
+import i18n from 'src/i18n';
 import { subscriptionService } from 'src/services';
 
 type Options = {
@@ -22,7 +23,7 @@ export function useSubscriptionCatalog({ auto = true }: Options = {}) {
       setPlans(data);
       return data;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Não foi possível carregar os planos.';
+      const message = err instanceof Error ? err.message : i18n.t('subscription.errors.loadCatalog');
       setError(message);
       setPlans([]);
       return [];

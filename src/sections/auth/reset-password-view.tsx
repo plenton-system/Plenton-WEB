@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams, Link as RouterLink } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -25,14 +26,8 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-const schema = Yup.object({
-  newPassword: Yup.string().required('Informe a nova senha'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('newPassword')], 'As senhas não coincidem')
-    .required('Confirme a nova senha'),
-});
-
 export function ResetPasswordView() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const router = useRouter();
   const [params] = useSearchParams();
@@ -47,7 +42,12 @@ export function ResetPasswordView() {
 
   const formik = useFormik({
     initialValues: { newPassword: '', confirmPassword: '' },
-    validationSchema: schema,
+    validationSchema: Yup.object({
+      newPassword: Yup.string().required(() => t('auth.reset.newRequired')),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref('newPassword')], () => t('auth.reset.passwordMismatch'))
+        .required(() => t('auth.reset.confirmRequired')),
+    }),
     onSubmit: async (values, helpers) => {
       setErrorMessage('');
       try {
@@ -56,7 +56,7 @@ export function ResetPasswordView() {
         setTimeout(() => router.push('/sign-in'), 2000);
       } catch (err) {
         setErrorMessage(
-          err instanceof Error ? err.message : 'Não foi possível redefinir a senha.'
+          err instanceof Error ? err.message : t('auth.reset.requestError')
         );
       } finally {
         helpers.setSubmitting(false);
@@ -99,7 +99,7 @@ export function ResetPasswordView() {
         }}
       >
         <Typography variant="h4" gutterBottom textAlign="center">
-          Defina uma nova senha
+          {t('auth.reset.heroTitle')}
         </Typography>
 
         <Typography
@@ -108,7 +108,7 @@ export function ResetPasswordView() {
           textAlign="center"
           sx={{ color: 'rgba(255,255,255,0.92)' }}
         >
-          Quase lá! Escolha uma senha segura para continuar acessando sua conta.
+          {t('auth.reset.heroDescription')}
         </Typography>
 
         <Button
@@ -121,7 +121,7 @@ export function ResetPasswordView() {
             '&:hover': { borderColor: '#FFFFFF', bgcolor: 'rgba(255,255,255,0.08)' },
           }}
         >
-          Voltar ao login
+          {t('auth.reset.backToLogin')}
         </Button>
       </Grid>
 
@@ -149,19 +149,17 @@ export function ResetPasswordView() {
           }}
         >
           <Typography variant="h5" gutterBottom>
-            Nova senha
+            {t('auth.reset.title')}
           </Typography>
           {!linkInvalid && (
             <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
-              Definindo nova senha para <strong>{email}</strong>.
+              {t('auth.reset.forEmail')} <strong>{email}</strong>.
             </Typography>
           )}
 
           {linkInvalid ? (
             <Stack spacing={2}>
-              <Alert severity="error">
-                Link inválido ou incompleto. Solicite uma nova redefinição de senha.
-              </Alert>
+              <Alert severity="error">{t('auth.reset.invalidLink')}</Alert>
               <Button
                 fullWidth
                 size="large"
@@ -170,14 +168,12 @@ export function ResetPasswordView() {
                 to="/forgot-password"
                 sx={{ textTransform: 'none' }}
               >
-                Solicitar novo link
+                {t('auth.reset.requestNewLink')}
               </Button>
             </Stack>
           ) : submitted ? (
             <Stack spacing={2}>
-              <Alert severity="success">
-                Senha redefinida com sucesso. Redirecionando para o login...
-              </Alert>
+              <Alert severity="success">{t('auth.reset.success')}</Alert>
             </Stack>
           ) : (
             <form onSubmit={formik.handleSubmit} noValidate>
@@ -191,7 +187,7 @@ export function ResetPasswordView() {
                 <TextField
                   fullWidth
                   name="newPassword"
-                  label="Nova senha"
+                  label={t('auth.reset.newPassword')}
                   type={showPassword ? 'text' : 'password'}
                   value={formik.values.newPassword}
                   onChange={formik.handleChange}
@@ -217,7 +213,7 @@ export function ResetPasswordView() {
                 <TextField
                   fullWidth
                   name="confirmPassword"
-                  label="Confirmar senha"
+                  label={t('auth.reset.confirmPassword')}
                   type={showPassword ? 'text' : 'password'}
                   value={formik.values.confirmPassword}
                   onChange={formik.handleChange}
@@ -239,12 +235,12 @@ export function ResetPasswordView() {
                   }
                   sx={{ textTransform: 'none' }}
                 >
-                  {formik.isSubmitting ? 'Salvando...' : 'Redefinir senha'}
+                  {formik.isSubmitting ? t('auth.reset.saving') : t('auth.reset.submit')}
                 </Button>
 
                 <Box sx={{ textAlign: 'center' }}>
                   <Link component={RouterLink} to="/sign-in" underline="hover" variant="body2">
-                    Voltar para o login
+                    {t('auth.reset.backToLogin')}
                   </Link>
                 </Box>
               </Stack>

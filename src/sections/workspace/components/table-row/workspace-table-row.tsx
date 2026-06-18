@@ -1,12 +1,13 @@
 import type { WorkspaceStatus } from 'src/types';
 
+import { useTranslation } from 'react-i18next';
+
 import Chip from '@mui/material/Chip';
 import Checkbox from '@mui/material/Checkbox';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-import { useTranslation } from 'react-i18next';
 
 import { getWorkspaceStatusColor, getWorkspaceStatusLabel } from '../../constants/status';
 

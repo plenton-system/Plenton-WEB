@@ -1,6 +1,8 @@
 import type { BoxProps } from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
 
+import { useTranslation } from 'react-i18next';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -29,6 +31,8 @@ type Props = CardProps & {
 };
 
 export function AnalyticsNews({ title, subheader, list, sx, ...other }: Props) {
+  const { t } = useTranslation();
+
   return (
     <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 1 }} />
@@ -47,7 +51,7 @@ export function AnalyticsNews({ title, subheader, list, sx, ...other }: Props) {
           color="inherit"
           endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
         >
-          View all
+          {t('actions.viewAll')}
         </Button>
       </Box>
     </Card>

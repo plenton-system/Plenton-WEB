@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { fDateInput } from 'src/utils/format-time';
 
+import i18n from 'src/i18n';
 import { userDataService } from 'src/services/userData/userDataService';
 
 // ----------------------------------------------------------------------
@@ -70,7 +71,7 @@ export function useUserDataDetails({ userId, autoLoad = false }: UseUserDataDeta
       const result = await userDataService.getDataByUserId(userId!);
       return mapApiToProfileData(result);
     } catch (erro: any) {
-      setError(erro?.response?.data?.message || erro.message || 'Erro ao buscar dados do usuário');
+      setError(erro?.response?.data?.message || erro.message || i18n.t('profile.errors.load'));
       return null;
     } finally {
       setLoading(false);
@@ -104,7 +105,7 @@ export function useUserDataDetails({ userId, autoLoad = false }: UseUserDataDeta
         const updated = await userDataService.update(payload);
         return updated;
       } catch (erro: any) {
-        const message = erro?.response?.data || erro.message || 'Erro ao salvar os dados do perfil';
+        const message = erro?.response?.data || erro.message || i18n.t('profile.errors.save');
         setError(message);
         throw new Error(message);
       } finally {

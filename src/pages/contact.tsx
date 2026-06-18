@@ -1,5 +1,6 @@
-import { CONFIG } from 'src/config-global';
 import { useTranslation } from 'react-i18next';
+
+import { CONFIG } from 'src/config-global';
 
 import { ContactView } from 'src/sections/institutional/view';
 

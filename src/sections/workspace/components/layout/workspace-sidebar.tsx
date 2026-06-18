@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -7,7 +8,6 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 

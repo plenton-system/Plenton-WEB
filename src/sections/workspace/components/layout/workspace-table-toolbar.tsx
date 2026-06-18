@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { useTranslation } from 'react-i18next';
 
 import { GenericTableToolbar } from 'src/components/table';
 

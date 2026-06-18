@@ -2,6 +2,7 @@ import type { HomemadeMeasureDto } from 'src/types';
 
 import { useState, useEffect, useCallback } from 'react';
 
+import i18n from 'src/i18n';
 import { homemadeMeasureService } from 'src/services/mealPlan/homemadeMeasureService';
 
 // ----------------------------------------------------------------------
@@ -28,7 +29,7 @@ export function useHomemadeMeasures({ foodId }: UseHomemadeMeasuresOptions) {
             const data = await homemadeMeasureService.getByFood(foodId);
             setMeasures(data);
         } catch (err) {
-            setError((err as Error).message || 'Erro ao carregar medidas caseiras');
+            setError((err as Error).message || i18n.t('mealplan.errors.loadMeasures'));
         } finally {
             setLoading(false);
         }

@@ -1,8 +1,8 @@
 import type { ChangePasswordDto } from 'src/types';
 
 import * as Yup from 'yup';
-import { useFormik } from 'formik';
 import { useMemo } from 'react';
+import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import Alert from '@mui/material/Alert';

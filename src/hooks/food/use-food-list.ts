@@ -8,6 +8,7 @@ import type {
 
 import { useState, useEffect, useCallback } from 'react';
 
+import i18n from 'src/i18n';
 import { foodService } from 'src/services/food/foodService';
 
 // ----------------------------------------------------------------------
@@ -169,7 +170,7 @@ export function useFoodList({ initialFilters }: UseFoodListOptions): UseFoodList
       } catch (err) {
         if ((err as any)?.name === 'CanceledError' || (err as any)?.code === 'ERR_CANCELED') return;
         if ((err as any)?.name === 'AbortError') return;
-        setError((err as Error).message || 'Erro ao carregar alimentos');
+        setError((err as Error).message || i18n.t('food.errors.loadList'));
       } finally {
         setLoading(false);
       }
@@ -189,7 +190,7 @@ export function useFoodList({ initialFilters }: UseFoodListOptions): UseFoodList
         await fetchList();
         return true;
       } catch (err: any) {
-        const message = err?.response?.data?.message || err?.message || 'Erro ao excluir alimento';
+        const message = err?.response?.data?.message || err?.message || i18n.t('food.errors.delete');
         setError(message);
         throw new Error(message);
       } finally {

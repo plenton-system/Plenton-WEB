@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
@@ -8,7 +10,6 @@ import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useTranslation } from 'react-i18next';
 
 import { useWorkspaceAnthropometricEvolution } from 'src/hooks/workspace/use-workspace-anthropometric-evolution';
 

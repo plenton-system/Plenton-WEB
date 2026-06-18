@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { anamnesisService } from 'src/services/anamnesis/anamnesisService';
 
 type UseAnamnesisListOptions = {
@@ -64,7 +65,7 @@ export function useAnamnesisList({ initialFilters }: UseAnamnesisListOptions = {
             setItems(response?.items ?? []);
             setTotal(response?.totalCount ?? 0);
         } catch (erro: any) {
-            setError(extractApiErrorMessage(erro, 'Erro ao carregar lista de anamnese'));
+            setError(extractApiErrorMessage(erro, i18n.t('anamnesis.errors.loadList')));
         } finally {
             setLoading(false);
         }
@@ -82,7 +83,7 @@ export function useAnamnesisList({ initialFilters }: UseAnamnesisListOptions = {
             await fetchList();
             return true;
         } catch (erro: any) {
-            const message = extractApiErrorMessage(erro, 'Erro ao deletar questionário');
+            const message = extractApiErrorMessage(erro, i18n.t('anamnesis.errors.delete'));
             setError(message);
             throw new Error(message);
         } finally {

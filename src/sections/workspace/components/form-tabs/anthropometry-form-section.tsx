@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Accordion from '@mui/material/Accordion';
@@ -6,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import { useTranslation } from 'react-i18next';
 
 type AnthropometryFormValues = {
   evaluationDateUtc: string;

@@ -12,26 +12,28 @@ import type {
 import { get } from 'src/utils/http-client';
 import { fDateTimePtBr } from 'src/utils/format-time';
 
+import i18n from 'src/i18n';
+
 // Mock data for workspace sections
 
-const MOCK_DATA: Record<WorkspaceSectionKind, WorkspaceSectionItem[]> = {
+const getMockData = (): Record<WorkspaceSectionKind, WorkspaceSectionItem[]> => ({
   anthropometry: [
-    { id: 'a1', primary: 'Peso: 72 kg', secondary: 'Atualizado há 2 dias' },
-    { id: 'a2', primary: 'Altura: 1,70 m', secondary: 'Atualizado há 2 dias' },
+    { id: 'a1', primary: i18n.t('workspace.mock.weight'), secondary: i18n.t('workspace.mock.updated') },
+    { id: 'a2', primary: i18n.t('workspace.mock.height'), secondary: i18n.t('workspace.mock.updated') },
   ],
   anamnesis: [
-    { id: 'an1', primary: 'Questionário inicial', secondary: 'Preenchido' },
-    { id: 'an2', primary: 'Histórico alimentar', secondary: 'Pendente' },
+    { id: 'an1', primary: i18n.t('workspace.mock.initialQuestionnaire'), secondary: i18n.t('workspace.mock.completed') },
+    { id: 'an2', primary: i18n.t('workspace.mock.foodHistory'), secondary: i18n.t('workspace.mock.pending') },
   ],
   evolution: [
-    { id: 'e1', primary: 'Retorno 01', secondary: 'Agendado para 15/02' },
-    { id: 'e2', primary: 'Retorno 02', secondary: 'Agendar' },
+    { id: 'e1', primary: i18n.t('workspace.mock.followUpOne'), secondary: i18n.t('workspace.mock.scheduled') },
+    { id: 'e2', primary: i18n.t('workspace.mock.followUpTwo'), secondary: i18n.t('workspace.mock.schedule') },
   ],
   documents: [
-    { id: 'd1', primary: 'Plano enviado (PDF)', secondary: '01/02' },
-    { id: 'd2', primary: 'WhatsApp', secondary: 'Enviado ontem' },
+    { id: 'd1', primary: i18n.t('workspace.documents.planSent'), secondary: '01/02' },
+    { id: 'd2', primary: 'WhatsApp', secondary: i18n.t('workspace.documents.sentYesterday') },
   ],
-};
+});
 
 const DEFAULT_PAGE_SIZE = 5;
 const DEFAULT_ORDER_BY_FIELD = 'patientId';
@@ -131,6 +133,6 @@ export const workspaceService = {
   ): Promise<WorkspaceSectionItem[]> => {
     // Simula latência
     await new Promise((resolve) => setTimeout(resolve, 200));
-    return MOCK_DATA[kind] ?? [];
+    return getMockData()[kind] ?? [];
   },
 };

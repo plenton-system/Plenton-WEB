@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import { useTranslation } from 'react-i18next';
 
 import { Loading } from 'src/components/loading';
 

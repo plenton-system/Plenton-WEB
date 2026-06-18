@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Popover from '@mui/material/Popover';
@@ -26,6 +27,7 @@ type AnamneseTableRowProps = {
 // ----------------------------------------------------------------------
 
 export function AnamneseTableRow({ row, selected, onSelectRow, onEdit, onDelete }: AnamneseTableRowProps) {
+  const { t } = useTranslation();
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -90,7 +92,7 @@ export function AnamneseTableRow({ row, selected, onSelectRow, onEdit, onDelete 
             }}
           >
             <Iconify icon="solar:pen-bold" />
-            Editar
+            {t('actions.edit')}
           </MenuItem>
 
           <MenuItem
@@ -101,7 +103,7 @@ export function AnamneseTableRow({ row, selected, onSelectRow, onEdit, onDelete 
             sx={{ color: 'error.main' }}
           >
             <Iconify icon="solar:trash-bin-trash-bold" />
-            Excluir
+            {t('actions.delete')}
           </MenuItem>
         </MenuList>
       </Popover>

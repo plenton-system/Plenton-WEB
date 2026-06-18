@@ -1,11 +1,12 @@
 import type { EnergyCalculationResult } from 'src/types';
 
+import { useTranslation } from 'react-i18next';
+
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useTranslation } from 'react-i18next';
 
 import { fDateTimeLocale } from 'src/utils/format-time';
 

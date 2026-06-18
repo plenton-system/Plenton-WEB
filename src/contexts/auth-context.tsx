@@ -4,8 +4,8 @@ import type { User, LoginRequest } from 'src/types';
 import { useMemo, useState, useEffect, createContext } from 'react';
 
 import { buildAndStoreUser } from 'src/utils/auth-helpers';
-import i18n from 'src/i18n';
 
+import i18n from 'src/i18n';
 import { registerSessionExpiredHandler } from 'src/services/api';
 
 import { authService } from '../services';

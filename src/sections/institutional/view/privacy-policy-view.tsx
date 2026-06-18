@@ -1,5 +1,6 @@
-import Link from '@mui/material/Link';
 import { useTranslation } from 'react-i18next';
+
+import Link from '@mui/material/Link';
 
 import { CONFIG } from 'src/config-global';
 

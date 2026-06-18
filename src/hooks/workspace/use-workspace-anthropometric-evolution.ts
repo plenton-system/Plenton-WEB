@@ -7,6 +7,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { workspaceAnthropometricEvolutionService } from 'src/services/workspace/workspaceAnthropometricEvolutionService';
 
 type UseWorkspaceAnthropometricEvolutionReturn = {
@@ -44,7 +45,7 @@ export function useWorkspaceAnthropometricEvolution(
       setOptions(data);
     } catch (err) {
       setOptions([]);
-      setOptionsError(extractApiErrorMessage(err, 'Erro ao carregar avaliações disponíveis.'));
+      setOptionsError(extractApiErrorMessage(err, i18n.t('workspace.errors.loadEvaluations')));
     } finally {
       setLoadingOptions(false);
     }
@@ -70,12 +71,12 @@ export function useWorkspaceAnthropometricEvolution(
 
   const fetchEvolution = useCallback(async () => {
     if (!patientId) {
-      setEvolutionError('Paciente não informado para consultar a evolução.');
+      setEvolutionError(i18n.t('workspace.errors.evolutionPatientRequired'));
       return;
     }
 
     if (selectedEvaluationIds.length < 2) {
-      setValidationError('Selecione pelo menos duas avaliações para consultar a evolução.');
+      setValidationError(i18n.t('workspace.errors.evolutionMinimum'));
       return;
     }
 
@@ -92,7 +93,7 @@ export function useWorkspaceAnthropometricEvolution(
       setResult(data);
     } catch (err) {
       setResult(null);
-      setEvolutionError(extractApiErrorMessage(err, 'Erro ao carregar a evolução antropométrica.'));
+      setEvolutionError(extractApiErrorMessage(err, i18n.t('workspace.errors.loadEvolution')));
     } finally {
       setLoadingEvolution(false);
     }

@@ -10,6 +10,8 @@ import type {
 
 import { del, get, put, post } from 'src/utils/http-client';
 
+import i18n from 'src/i18n';
+
 type ApiEnvelope<T> = {
   data?: T | null;
   isSuccess?: boolean;
@@ -198,7 +200,7 @@ export const workspaceAnthropometryService = {
 
     const data = unwrapEnvelope(response);
     if (!data) {
-      throw new Error('Avaliação antropométrica não encontrada.');
+      throw new Error(i18n.t('workspace.errors.anthropometryNotFound'));
     }
 
     return mapDetail(data);
@@ -224,7 +226,7 @@ export const workspaceAnthropometryService = {
 
     const data = unwrapEnvelope(response);
     if (!data) {
-      throw new Error('Não foi possível salvar a avaliação antropométrica.');
+      throw new Error(i18n.t('workspace.errors.saveAnthropometry'));
     }
 
     return mapDetail(data);
@@ -242,7 +244,7 @@ export const workspaceAnthropometryService = {
 
     const data = unwrapEnvelope(response);
     if (!data) {
-      throw new Error('Não foi possível atualizar a avaliação antropométrica.');
+      throw new Error(i18n.t('workspace.errors.updateAnthropometry'));
     }
 
     return mapDetail(data);
@@ -264,7 +266,7 @@ export const workspaceAnthropometryService = {
 
     const data = unwrapEnvelope(response);
     if (!data) {
-      throw new Error('Não foi possível calcular o gasto energético.');
+      throw new Error(i18n.t('workspace.errors.calculateEnergy'));
     }
 
     return data;

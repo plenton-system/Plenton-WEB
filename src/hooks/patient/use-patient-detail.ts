@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import { extractApiErrorMessage } from "src/utils/api-error";
 
+import i18n from "src/i18n";
 import { patientService } from "src/services/patient/patientService";
 
 // ----------------------------------------------------------------------
@@ -71,7 +72,7 @@ export function usePatientDetail({ id, autoLoad = true }: UsePatientDetailOption
 
             setData(mappedPatient);
         } catch (erro) {
-            setError(extractApiErrorMessage(erro, "Erro ao buscar paciente"));
+            setError(extractApiErrorMessage(erro, i18n.t('patient.errors.load')));
         } finally {
             setLoading(false);
         }
@@ -90,7 +91,7 @@ export function usePatientDetail({ id, autoLoad = true }: UsePatientDetailOption
             setData(null);
             return true;
         } catch (erro) {
-            const message = extractApiErrorMessage(erro, "Erro ao salvar paciente");
+            const message = extractApiErrorMessage(erro, i18n.t('patient.errors.save'));
             setError(message);
             throw new Error(message);
         } finally {

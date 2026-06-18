@@ -2,7 +2,8 @@
   "language": {
     "pt-BR": "Português",
     "en-US": "English",
-    "es": "Español"
+    "es": "Español",
+    "select": "Select language"
   },
   "actions": {
     "save": "Save",
@@ -13,7 +14,12 @@
     "new": "New",
     "search": "Search",
     "confirm": "Confirm",
-    "close": "Close"
+    "close": "Close",
+    "share": "Share",
+    "downloadPdf": "Download PDF",
+    "generatingPdf": "Generating PDF...",
+    "completed": "Completed",
+    "viewAll": "View all"
   },
   "common": {
     "yes": "Yes",
@@ -68,6 +74,7 @@
       "document": "ID",
       "passwordHint": "At least 8 characters",
       "crn": "Professional registration (optional)",
+      "crnPlaceholder": "E.g.: CRN-3 12345",
       "phone": "Phone",
       "zipCode": "ZIP code",
       "street": "Street",
@@ -75,6 +82,45 @@
       "neighborhood": "District",
       "city": "City",
       "state": "State"
+    },
+    "forgot": {
+      "heroTitle": "Forgot your password?",
+      "heroDescription": "No problem. Enter your email and we will help you regain access.",
+      "backToLogin": "Back to sign in",
+      "title": "Reset password",
+      "description": "We will send you a link to create a new password.",
+      "success": "If the email is registered, you will receive a password reset link shortly. Check your inbox and spam folder.",
+      "invalidEmail": "Invalid email",
+      "emailRequired": "Enter your email",
+      "sending": "Sending...",
+      "submit": "Send link",
+      "remembered": "Remembered your password? Sign in",
+      "requestError": "We could not process the request."
+    },
+    "reset": {
+      "heroTitle": "Set a new password",
+      "heroDescription": "Almost there! Choose a secure password to keep accessing your account.",
+      "backToLogin": "Back to sign in",
+      "title": "New password",
+      "forEmail": "Setting a new password for",
+      "invalidLink": "This link is invalid or incomplete. Request a new password reset.",
+      "requestNewLink": "Request a new link",
+      "success": "Password reset successfully. Redirecting to sign in...",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "newRequired": "Enter the new password",
+      "passwordMismatch": "Passwords do not match",
+      "confirmRequired": "Confirm the new password",
+      "saving": "Saving...",
+      "submit": "Reset password",
+      "requestError": "We could not reset the password."
+    },
+    "errors": {
+      "register": "We could not complete your registration.",
+      "login": "Sign-in failed",
+      "invalidCredentials": "Invalid email or password.",
+      "refresh": "We could not renew the session.",
+      "invalidToken": "Invalid token or missing payload."
     }
   },
   "patient": {
@@ -119,7 +165,20 @@
       "gender": "Gender"
     },
     "address": { "zipCode": "ZIP code", "street": "Street", "neighborhood": "District", "city": "City", "state": "State" },
-    "notes": { "label": "Notes" }
+    "notes": { "label": "Notes" },
+    "validation": {
+      "caloriesInvalid": "Invalid calories",
+      "documentInvalid": "Invalid CPF",
+      "futureDate": "The date cannot be in the future",
+      "genderInvalid": "Select a gender",
+      "genderRequired": "Gender is required"
+    },
+    "errors": {
+      "load": "Could not load the patient",
+      "save": "Could not save the patient",
+      "loadList": "Could not load the patient list",
+      "delete": "Could not delete the patient"
+    }
   },
   "appointment": {
     "form": {
@@ -134,7 +193,23 @@
       "observation": "Notes"
     },
     "status": { "scheduled": "Scheduled", "completed": "Completed", "canceled": "Canceled" },
-    "delete": { "title": "Delete appointment", "description": "This action is irreversible. Do you want to continue?" }
+    "delete": { "title": "Delete appointment", "description": "This action is irreversible. Do you want to continue?" },
+    "validation": {
+      "patientRequired": "Select a patient",
+      "dateRequired": "Choose a date and time",
+      "colorInvalid": "Select a valid color",
+      "statusRequired": "Select a status"
+    },
+    "messages": {
+      "loadCalendarError": "Could not load the calendar.",
+      "loadError": "Could not load the appointment.",
+      "createSuccess": "Appointment created successfully!",
+      "createError": "Could not create the appointment.",
+      "updateSuccess": "Appointment updated successfully!",
+      "updateError": "Could not save the appointment.",
+      "deleteSuccess": "Appointment deleted successfully!",
+      "deleteError": "Could not delete the appointment."
+    }
   },
   "overview": {
     "welcome": "Hi, welcome back 👋",
@@ -145,7 +220,8 @@
       "attendanceRate": "Attendance rate"
     },
     "tasks": { "title": "Pending appointments" },
-    "bmi": { "title": "Average BMI (last 12 months)", "subheader": "Latest BMI of each patient/month" }
+    "bmi": { "title": "Average BMI (last 12 months)", "subheader": "Latest BMI of each patient/month" },
+    "loadError": "Could not load dashboard data"
   },
   "food": {
     "list": {
@@ -208,6 +284,20 @@
       "manganese": "Manganese (mg)",
       "selenium": "Selenium (mcg)",
       "cholesterol": "Cholesterol (mg)"
+    },
+    "validation": {
+      "descriptionRequired": "Description is required",
+      "sourceInvalid": "Invalid source",
+      "sourceRequired": "Source is required",
+      "tableTypeInvalid": "Invalid table type",
+      "tableTypeRequired": "Table type is required",
+      "measureDescriptionRequired": "Household measure description is required"
+    },
+    "errors": {
+      "load": "Could not load the food",
+      "save": "Could not save the food",
+      "loadList": "Could not load foods",
+      "delete": "Could not delete the food"
     }
   },
   "mealplan": {
@@ -292,7 +382,45 @@
       "saving": "Saving..."
     },
     "foodAutocomplete": { "label": "Food", "placeholder": "Type to search..." },
-    "measureAutocomplete": { "label": "Homemade measure", "addNew": "Add new measure...", "systemDefault": "System default" }
+    "measureAutocomplete": { "label": "Homemade measure", "addNew": "Add new measure...", "systemDefault": "System default" },
+    "detail": {
+      "editTitle": "Edit meal plan",
+      "newTitle": "New meal plan",
+      "nutrients": {
+        "energy": "Energy",
+        "protein": "Protein",
+        "carbs": "Carbohydrates",
+        "fat": "Fat",
+        "fiber": "Fiber",
+        "sodium": "Sodium",
+        "vitaminA": "Vitamin A",
+        "vitaminC": "Vitamin C",
+        "vitaminD": "Vitamin D",
+        "calcium": "Calcium",
+        "iron": "Iron",
+        "zinc": "Zinc",
+        "potassium": "Potassium"
+      }
+    },
+    "insights": {
+      "title": "Nutrition summary",
+      "micronutrients": "Micronutrients",
+      "description": "Estimated DRI coverage for {{plan}}.",
+      "planFallback": "the plan",
+      "series": "Micronutrients",
+      "driPercent": "{{value}}% of DRI"
+    },
+    "validation": {
+      "foodRequired": "Food is required",
+      "mealNameRequired": "Meal name is required",
+      "timeRequired": "Time is required",
+      "planNameRequired": "Plan name is required",
+      "dayRequired": "Select at least one day"
+    },
+    "errors": {
+      "pdf": "Could not generate the meal plan PDF.",
+      "loadMeasures": "Could not load household measures"
+    }
   },
   "anamnesis": {
     "list": {
@@ -336,6 +464,7 @@
     },
     "form": {
       "preview": "Preview",
+      "useExample": "Use example",
       "exampleTitle": "Nutritional Anamnesis - Base Template",
       "exampleDescription": "Initial information collection for assessment. Edit according to your practice.",
       "exampleQ1": "Main goal",
@@ -351,6 +480,14 @@
       "noTitle": "No title",
       "empty": "No question added.",
       "yourAnswer": "Your answer"
+    },
+    "errors": {
+      "loadByPatient": "Could not load the patient's anamneses",
+      "load": "Could not load the questionnaire",
+      "save": "Could not save the questionnaire",
+      "loadList": "Could not load the anamnesis list",
+      "delete": "Could not delete the questionnaire",
+      "pdf": "Could not generate the anamnesis PDF."
     }
   },
   "publicAnamnesis": {
@@ -388,6 +525,14 @@
       "min": "Minimum: {{min}}",
       "max": "Maximum: {{max}}",
       "minOne": "Select at least 1 option"
+    },
+    "errors": {
+      "open": "Could not open the anamnesis",
+      "missingContext": "Tenant or token was not provided.",
+      "notLoaded": "The form has not been loaded yet.",
+      "consent": "Could not register consent",
+      "saveDraft": "Could not save the draft",
+      "submit": "Could not submit the answers"
     }
   },
   "shared": {
@@ -462,6 +607,10 @@
       "confirmRequired": "Confirm the new password",
       "success": "Password changed successfully.",
       "error": "The password could not be changed right now."
+    },
+    "errors": {
+      "load": "Could not load the user data",
+      "save": "Could not save the profile data"
     }
   },
   "settings": {
@@ -494,7 +643,8 @@
       "system": "System"
     },
     "effectiveMode": "Active mode: {{mode}}",
-    "systemMode": "System ({{mode}})"
+    "systemMode": "System ({{mode}})",
+    "loadError": "Could not load settings"
   },
   "subscription": {
     "notProvided": "Not provided",
@@ -524,6 +674,7 @@
       "choosePlan": "Choose plan",
       "loading": "Loading subscription...",
       "empty": "No subscription found.",
+      "planFallback": "Plan",
       "planUnknown": "Plan not provided",
       "codeUnknown": "Code not provided",
       "cycle": "Cycle",
@@ -584,6 +735,11 @@
       "openPayment": "Open payment link",
       "checkStatus": "Check status",
       "chooseAnother": "Choose another plan"
+    },
+    "errors": {
+      "loadCurrent": "Could not load the subscription.",
+      "start": "Could not start the subscription.",
+      "loadCatalog": "Could not load the plans."
     }
   },
   "workspace": {
@@ -620,6 +776,35 @@
       "active": "Active",
       "inactive": "Inactive",
       "suspended": "Suspended"
+    },
+    "errors": {
+      "patientRequired": "Patient was not provided.",
+      "calculateEnergy": "Could not calculate energy expenditure.",
+      "loadEvaluations": "Could not load available assessments.",
+      "evolutionPatientRequired": "A patient is required to view progress.",
+      "evolutionMinimum": "Select at least two assessments to view progress.",
+      "loadEvolution": "Could not load anthropometric progress.",
+      "loadAnthropometry": "Could not load anthropometry.",
+      "loadAnthropometryDetail": "Could not load the anthropometric assessment.",
+      "saveAnthropometry": "Could not save the anthropometric assessment.",
+      "updateAnthropometry": "Could not update the anthropometric assessment.",
+      "anthropometryNotFound": "Anthropometric assessment not found.",
+      "loadList": "Could not load workspaces.",
+      "loadPlans": "Could not load plans.",
+      "loadSection": "Could not load data."
+    },
+    "mock": {
+      "weight": "Weight: 72 kg",
+      "height": "Height: 1.70 m",
+      "updated": "Updated 2 days ago",
+      "initialQuestionnaire": "Initial questionnaire",
+      "completed": "Completed",
+      "foodHistory": "Food history",
+      "pending": "Pending",
+      "followUpOne": "Follow-up 01",
+      "followUpTwo": "Follow-up 02",
+      "scheduled": "Scheduled for 02/15",
+      "schedule": "Schedule"
     },
     "documents": {
       "title": "Documents and deliveries",
@@ -1187,6 +1372,26 @@
         }
       }
     }
+  },
+  "validation": {
+    "required": "Required field",
+    "numberInvalid": "Enter a valid number",
+    "nonNegative": "The value must be greater than or equal to 0",
+    "valueInvalid": "Invalid value",
+    "nameRequired": "Name is required",
+    "titleRequired": "Title is required",
+    "statusRequired": "Status is required",
+    "statusInvalid": "Select a status",
+    "phoneInvalid": "Invalid phone number",
+    "phoneRequired": "Phone number is required",
+    "emailInvalid": "Invalid email",
+    "emailRequired": "Email is required",
+    "documentRequired": "Document is required",
+    "dateRequired": "Date is required",
+    "zipCodeInvalid": "Invalid ZIP code"
+  },
+  "errors": {
+    "unexpected": "Unexpected error"
   },
   "pages": {
     "landingTitle": "{{appName}} — Practice management software for nutritionists",

@@ -2,22 +2,24 @@ import type { FoodFormValues } from 'src/types';
 
 import * as Yup from 'yup';
 
+import i18n from 'src/i18n';
+
 // ----------------------------------------------------------------------
 
 const nonNegativeNumber = Yup.number()
-  .typeError('Informe um número válido')
-  .min(0, 'O valor deve ser maior ou igual a 0')
-  .required('Campo obrigatório');
+  .typeError(() => i18n.t('validation.numberInvalid'))
+  .min(0, () => i18n.t('validation.nonNegative'))
+  .required(() => i18n.t('validation.required'));
 
 // ----------------------------------------------------------------------
 
 export const validationSchema: Yup.Schema<FoodFormValues> = Yup.object({
   id: Yup.string().default(''),
-  description: Yup.string().trim().required('Descrição é obrigatória'),
+  description: Yup.string().trim().required(() => i18n.t('food.validation.descriptionRequired')),
   group: Yup.string().nullable().default(''),
   source: Yup.mixed<'custom' | 'taco'>()
-    .oneOf(['custom', 'taco'], 'Origem inválida')
-    .required('Origem é obrigatória'),
+    .oneOf(['custom', 'taco'], () => i18n.t('food.validation.sourceInvalid'))
+    .required(() => i18n.t('food.validation.sourceRequired')),
   energyKcal: nonNegativeNumber,
   carbs: nonNegativeNumber,
   protein: nonNegativeNumber,
@@ -25,10 +27,10 @@ export const validationSchema: Yup.Schema<FoodFormValues> = Yup.object({
   portionSize: nonNegativeNumber,
   foodGroupId: Yup.string().trim().default(''),
   tableType: Yup.number()
-    .typeError('Tipo da tabela inválido')
-    .integer('Tipo da tabela inválido')
-    .min(0, 'Tipo da tabela inválido')
-    .required('Tipo da tabela é obrigatório'),
+    .typeError(() => i18n.t('food.validation.tableTypeInvalid'))
+    .integer(() => i18n.t('food.validation.tableTypeInvalid'))
+    .min(0, () => i18n.t('food.validation.tableTypeInvalid'))
+    .required(() => i18n.t('food.validation.tableTypeRequired')),
   externalCode: Yup.string().default(''),
   macronutrients: Yup.object({
     carbohydrates: nonNegativeNumber,
@@ -65,7 +67,9 @@ export const validationSchema: Yup.Schema<FoodFormValues> = Yup.object({
   homemadeMeasures: Yup.array()
     .of(
       Yup.object({
-        description: Yup.string().trim().required('Descrição da medida caseira é obrigatória'),
+        description: Yup.string()
+          .trim()
+          .required(() => i18n.t('food.validation.measureDescriptionRequired')),
         quantityInGrams: nonNegativeNumber,
       }).required()
     )

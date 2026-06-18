@@ -11,6 +11,8 @@ import type {
 
 import { get, post } from 'src/utils/http-client';
 
+import i18n from 'src/i18n';
+
 type AnyRecord = Record<string, any>;
 
 const BILLING_TYPE_TO_API: Record<SubscriptionBillingType, number> = {
@@ -91,7 +93,7 @@ const normalizePlanFeatures = (value: unknown): string[] => {
 const normalizePlan = (item: AnyRecord): SubscriptionPlan => ({
   planId: String(item.planId ?? item.id ?? ''),
   code: String(item.code ?? ''),
-  name: String(item.name ?? 'Plano'),
+  name: String(item.name ?? i18n.t('subscription.common.planFallback')),
   description: String(item.description ?? ''),
   status: normalizePlanStatus(item.status),
   displayOrder: Number(item.displayOrder ?? item.order ?? 0),

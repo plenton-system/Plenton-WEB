@@ -1,7 +1,8 @@
 import type { SubscriptionStatus, SubscriptionBillingType, SubscriptionBillingCycle } from 'src/types';
 
-import i18n from 'src/i18n';
 import { getCurrentLocale } from 'src/utils/format-time';
+
+import i18n from 'src/i18n';
 
 export const billingCycleLabel = (cycle?: SubscriptionBillingCycle | null) => {
   if (cycle === 'weekly') return i18n.t('subscription.billingCycle.weekly');

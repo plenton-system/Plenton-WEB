@@ -1,5 +1,6 @@
-import { WorkspaceGenericListTab } from './workspace-generic-list-tab';
 import { useTranslation } from 'react-i18next';
+
+import { WorkspaceGenericListTab } from './workspace-generic-list-tab';
 
 // ----------------------------------------------------------------------
 

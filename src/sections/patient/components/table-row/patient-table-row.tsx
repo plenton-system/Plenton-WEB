@@ -1,13 +1,15 @@
+import { useTranslation } from 'react-i18next';
+
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
-import { useTranslation } from 'react-i18next';
+
+import { fDateLocale } from 'src/utils/format-time';
 
 import { Label } from 'src/components/label';
 import { RowActionsMenu } from 'src/components/table';
-import { fDateLocale } from 'src/utils/format-time';
 
 import type { PatientListProps } from '../../../../types';
 

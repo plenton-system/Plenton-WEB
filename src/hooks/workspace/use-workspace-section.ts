@@ -2,6 +2,7 @@ import type { WorkspaceSectionItem, WorkspaceSectionKind } from 'src/types';
 
 import { useState, useEffect, useCallback } from 'react';
 
+import i18n from 'src/i18n';
 import { workspaceService } from 'src/services/workspace/workspaceService';
 
 // ----------------------------------------------------------------------
@@ -27,7 +28,7 @@ export function useWorkspaceSection(kind: WorkspaceSectionKind, patientId?: stri
       const data = await workspaceService.getSectionItems(kind, patientId);
       setItems(data ?? []);
     } catch (err: any) {
-      setError(err?.message ?? 'Erro ao carregar dados');
+      setError(err?.message ?? i18n.t('workspace.errors.loadSection'));
     } finally {
       setLoading(false);
     }

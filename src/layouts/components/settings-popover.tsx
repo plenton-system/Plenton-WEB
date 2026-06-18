@@ -1,8 +1,8 @@
 import type { AnamnesisListQuery } from 'src/types/domain/anamnesis';
 import type { EditSystemSettingsDto } from 'src/types/domain/system-settings';
 
-import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';

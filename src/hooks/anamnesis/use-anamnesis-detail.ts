@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { anamnesisService } from 'src/services/anamnesis/anamnesisService';
 
 // ----------------------------------------------------------------------
@@ -44,7 +45,7 @@ export function useAnamnesisDetail({ id, autoLoad = true }: UseAnamnesisDetailOp
 
             setData(result);
         } catch (erro: any) {
-            setError(extractApiErrorMessage(erro, 'Erro ao buscar questionário'));
+            setError(extractApiErrorMessage(erro, i18n.t('anamnesis.errors.load')));
         } finally {
             setLoading(false);
         }
@@ -63,7 +64,7 @@ export function useAnamnesisDetail({ id, autoLoad = true }: UseAnamnesisDetailOp
             setData(null);
             return true;
         } catch (erro: any) {
-            const message = extractApiErrorMessage(erro, 'Erro ao salvar questionário');
+            const message = extractApiErrorMessage(erro, i18n.t('anamnesis.errors.save'));
             setError(message);
             throw new Error(message);
         } finally {

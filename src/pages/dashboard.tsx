@@ -1,5 +1,6 @@
-import { CONFIG } from 'src/config-global';
 import { useTranslation } from 'react-i18next';
+
+import { CONFIG } from 'src/config-global';
 
 import { OverviewAnalyticsView as DashboardView } from 'src/sections/overview/view';
 

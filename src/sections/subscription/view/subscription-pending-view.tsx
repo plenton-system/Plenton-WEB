@@ -1,8 +1,8 @@
 import type { SubscriptionBillingType, SubscriptionPaymentDetails } from 'src/types';
 
 import { Icon } from '@iconify/react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';

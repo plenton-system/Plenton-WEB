@@ -2,6 +2,7 @@ import type { OverviewDashboardView } from 'src/types/domain/overview';
 
 import { useState, useEffect } from 'react';
 
+import i18n from 'src/i18n';
 import { overviewService } from 'src/services/overview/overviewService';
 
 // ----------------------------------------------------------------------
@@ -19,7 +20,7 @@ export function useOverview() {
             const result = await overviewService.getOverview();
             setData(result);
         } catch (erro: any) {
-            setError(erro.message || 'Erro ao buscar dados');
+            setError(erro.message || i18n.t('overview.loadError'));
         } finally {
             setLoading(false);
         }

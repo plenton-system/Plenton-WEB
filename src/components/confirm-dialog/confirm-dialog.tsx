@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -9,7 +10,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useTranslation } from 'react-i18next';
 
 import type { ConfirmDialogProps } from './types';
 
@@ -86,10 +86,10 @@ export function ConfirmDialog({
             slotProps={{
                 paper: {
                     elevation: 0,
-                    sx: (t) => ({
+                    sx: (theme) => ({
                         borderRadius: 3,
-                        border: `1px solid ${t.palette.divider}`,
-                        boxShadow: `0 10px 30px ${t.palette.mode === 'light' ? 'rgba(16,24,40,0.08)' : 'rgba(0,0,0,0.5)'}`,
+                        border: `1px solid ${theme.palette.divider}`,
+                        boxShadow: `0 10px 30px ${theme.palette.mode === 'light' ? 'rgba(16,24,40,0.08)' : 'rgba(0,0,0,0.5)'}`,
                     })
                 }
             }}
@@ -126,8 +126,8 @@ export function ConfirmDialog({
                         borderRadius: 2,
                         textTransform: 'none',
                         fontWeight: 600,
-                        borderColor: (t) => t.palette[accent].main,
-                        color: (t) => t.palette[accent].main
+                        borderColor: (theme) => theme.palette[accent].main,
+                        color: (theme) => theme.palette[accent].main
                     }}
                 >
                     {cancelText ?? t('actions.cancel')}

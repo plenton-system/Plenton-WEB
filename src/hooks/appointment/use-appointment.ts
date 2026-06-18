@@ -5,6 +5,7 @@ import { useState, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { appointmentService } from 'src/services/appointment/appointmentService';
 
 // ----------------------------------------------------------------------
@@ -91,7 +92,7 @@ export function useAppointment(): UseAppointmentResult {
 
             setEvents(data);
         } catch (err) {
-            setError(extractApiErrorMessage(err, 'Não foi possível carregar a agenda.'));
+            setError(extractApiErrorMessage(err, i18n.t('appointment.messages.loadCalendarError')));
         } finally {
             setLoadingCalendar(false);
         }
@@ -108,7 +109,7 @@ export function useAppointment(): UseAppointmentResult {
             const data = await appointmentService.getById(id);
             setAppointment(data);
         } catch (erro) {
-            setError(extractApiErrorMessage(erro, 'Não foi possível carregar a consulta.'));
+            setError(extractApiErrorMessage(erro, i18n.t('appointment.messages.loadError')));
         } finally {
             setLoadingForm(false);
         }
@@ -120,9 +121,9 @@ export function useAppointment(): UseAppointmentResult {
         try {
             const created = await appointmentService.create(data);
             setEvents(prev => [...prev, mapAppointmentDetailToEvent(created)]);
-            setSuccess('Consulta criada com sucesso!');
+            setSuccess(i18n.t('appointment.messages.createSuccess'));
         } catch (erro) {
-            setError(extractApiErrorMessage(erro, 'Não foi possível criar a consulta.'));
+            setError(extractApiErrorMessage(erro, i18n.t('appointment.messages.createError')));
         } finally {
             setLoadingCalendar(false);
         }
@@ -138,10 +139,10 @@ export function useAppointment(): UseAppointmentResult {
                     prev.map(event => (event.id === updated.id ? mapAppointmentDetailToEvent(updated) : event))
                 );
 
-                setSuccess('Consulta alterada com sucesso!');
+                setSuccess(i18n.t('appointment.messages.updateSuccess'));
             }
         } catch (erro) {
-            setError(extractApiErrorMessage(erro, 'Não foi possível salvar a consulta.'));
+            setError(extractApiErrorMessage(erro, i18n.t('appointment.messages.updateError')));
         } finally {
             setLoadingCalendar(false);
         }
@@ -154,14 +155,14 @@ export function useAppointment(): UseAppointmentResult {
             const deleted = await appointmentService.delete(id);
 
             if (!deleted)
-                throw new Error('Erro ao excluir evento');
+                throw new Error(i18n.t('appointment.messages.deleteError'));
 
             setEvents(prev => prev.filter(event => event.id !== id));
-            setSuccess('Consulta excluída com sucesso!');
+            setSuccess(i18n.t('appointment.messages.deleteSuccess'));
 
             return deleted;
         } catch (erro) {
-            setError(extractApiErrorMessage(erro, 'Não foi possível excluir a consulta.'));
+            setError(extractApiErrorMessage(erro, i18n.t('appointment.messages.deleteError')));
             return false;
         } finally {
             setLoadingCalendar(false);

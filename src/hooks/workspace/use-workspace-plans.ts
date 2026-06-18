@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { workspacePlanService } from 'src/services/workspace/workspacePlanService';
 
 // ----------------------------------------------------------------------
@@ -29,7 +30,7 @@ export function useWorkspacePlans(patientId?: string): UseWorkspacePlansReturn {
       const data = await workspacePlanService.getAll({ patientId });
       setItems(data?.items ?? []);
     } catch (err) {
-      setError(extractApiErrorMessage(err, 'Erro ao carregar planos'));
+      setError(extractApiErrorMessage(err, i18n.t('workspace.errors.loadPlans')));
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,5 @@
-import type { AnamnesisResponseDetail, AnamnesisResponseQuestion } from 'src/types';
 import type { TFunction } from 'i18next';
+import type { AnamnesisResponseDetail, AnamnesisResponseQuestion } from 'src/types';
 
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,9 +19,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { useAnamnesisResponsePdf } from 'src/hooks/anamnesis/use-anamnesis-response-pdf';
 
+import { fDateTimeLocale } from 'src/utils/format-time';
+
 import { QuestionType } from 'src/enums/anamnesis';
 import { anamnesisService } from 'src/services/anamnesis/anamnesisService';
-import { fDateTimeLocale } from 'src/utils/format-time';
 
 import { Loading } from 'src/components/loading';
 import { Iconify } from 'src/components/iconify';

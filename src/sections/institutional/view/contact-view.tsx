@@ -2,8 +2,8 @@ import type { FormEvent } from 'react';
 
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { varAlpha } from 'minimal-shared/utils';
 import { useTranslation } from 'react-i18next';
+import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';

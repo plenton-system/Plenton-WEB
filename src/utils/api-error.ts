@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import i18n from 'src/i18n';
+
 const GENERIC_AXIOS_ERROR_MESSAGE_REGEX = /^Request failed with status code \d{3}$/i;
 
 const isReadableMessage = (value: unknown): value is string =>
@@ -41,7 +43,7 @@ const omitKnownProblemDetailsFields = (value: Record<string, unknown>) =>
  *   - `{ Field: ["msg1", "msg2"], ... }` (ModelState do ASP.NET)
  *   - string crua
  */
-export function extractApiErrorMessage(err: unknown, fallback = 'Erro inesperado'): string {
+export function extractApiErrorMessage(err: unknown, fallback = i18n.t('errors.unexpected')): string {
     if (axios.isAxiosError(err)) {
         const data = err.response?.data;
 

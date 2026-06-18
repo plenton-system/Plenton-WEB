@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { anamnesisService } from 'src/services/anamnesis/anamnesisService';
 
 // ----------------------------------------------------------------------
@@ -35,7 +36,7 @@ export function useAnamnesisByPatient(patientId?: string | null): UseAnamnesisBy
             const data = await anamnesisService.getByPatient(patientId);
             setItems(data);
         } catch (erro: any) {
-            setError(extractApiErrorMessage(erro, 'Erro ao carregar anamneses do paciente'));
+            setError(extractApiErrorMessage(erro, i18n.t('anamnesis.errors.loadByPatient')));
         } finally {
             setLoading(false);
         }

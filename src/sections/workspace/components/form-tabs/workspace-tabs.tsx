@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 

@@ -121,15 +121,15 @@ export function usePatientAnamnesis({
             setData(result);
             loadedOnceRef.current = true;
         } catch (erro) {
-            setError(extractApiErrorMessage(erro, 'Erro ao abrir anamnese'));
+            setError(extractApiErrorMessage(erro, i18n.t('publicAnamnesis.errors.open')));
         } finally {
             setLoading(false);
         }
     }, [tenantId, token]);
 
     const acceptConsent = useCallback(async () => {
-        if (!tenantId || !token) throw new Error('tenantId/token não informado.');
-        if (!loadedOnceRef.current || !data) throw new Error('Formulário ainda não foi carregado.');
+        if (!tenantId || !token) throw new Error(i18n.t('publicAnamnesis.errors.missingContext'));
+        if (!loadedOnceRef.current || !data) throw new Error(i18n.t('publicAnamnesis.errors.notLoaded'));
 
         setStates();
 
@@ -150,7 +150,7 @@ export function usePatientAnamnesis({
 
             return resp;
         } catch (erro: any) {
-            const message = extractApiErrorMessage(erro, 'Erro ao registrar consentimento');
+            const message = extractApiErrorMessage(erro, i18n.t('publicAnamnesis.errors.consent'));
             setError(message);
             throw new Error(message);
         } finally {
@@ -159,15 +159,15 @@ export function usePatientAnamnesis({
     }, [tenantId, token, data]);
 
     const saveDraft = useCallback(async (dto: PublicAnamnesisSaveDraftRequestDto) => {
-        if (!tenantId || !token) throw new Error('tenantId/token não informado.');
-        if (!loadedOnceRef.current) throw new Error('Formulário ainda não foi carregado.');
+        if (!tenantId || !token) throw new Error(i18n.t('publicAnamnesis.errors.missingContext'));
+        if (!loadedOnceRef.current) throw new Error(i18n.t('publicAnamnesis.errors.notLoaded'));
 
         setStates();
 
         try {
             return await publicAnamnesisService.saveDraft(tenantId, token, dto);
         } catch (erro: any) {
-            const message = extractApiErrorMessage(erro, 'Erro ao salvar rascunho');
+            const message = extractApiErrorMessage(erro, i18n.t('publicAnamnesis.errors.saveDraft'));
             setError(message);
             throw new Error(message);
         } finally {
@@ -176,8 +176,8 @@ export function usePatientAnamnesis({
     }, [tenantId, token]);
 
     const submit = useCallback(async (dto: PublicAnamnesisSubmitRequestDto) => {
-        if (!tenantId || !token) throw new Error('tenantId/token não informado.');
-        if (!loadedOnceRef.current) throw new Error('Formulário ainda não foi carregado.');
+        if (!tenantId || !token) throw new Error(i18n.t('publicAnamnesis.errors.missingContext'));
+        if (!loadedOnceRef.current) throw new Error(i18n.t('publicAnamnesis.errors.notLoaded'));
 
         setStates();
 
@@ -186,7 +186,7 @@ export function usePatientAnamnesis({
             await reload();
             return resp;
         } catch (erro: any) {
-            const message = extractApiErrorMessage(erro, 'Erro ao enviar respostas');
+            const message = extractApiErrorMessage(erro, i18n.t('publicAnamnesis.errors.submit'));
             setError(message);
             throw new Error(message);
         } finally {

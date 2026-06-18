@@ -1,5 +1,5 @@
-import type { PatientViewProps, PatientAnamnesisItem, PatientAnamnesisStatus } from 'src/types';
 import type { TFunction } from 'i18next';
+import type { PatientViewProps, PatientAnamnesisItem, PatientAnamnesisStatus } from 'src/types';
 
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,8 +20,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 
 import { useAnamnesisByPatient } from 'src/hooks/anamnesis/use-anamnesis-by-patient';
 
-import { extractApiErrorMessage } from 'src/utils/api-error';
 import { fDateTimeLocale } from 'src/utils/format-time';
+import { extractApiErrorMessage } from 'src/utils/api-error';
 
 import { patientService } from 'src/services/patient/patientService';
 

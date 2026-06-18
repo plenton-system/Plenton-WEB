@@ -1,5 +1,7 @@
 import type { FoodListProps } from 'src/types';
 
+import { useTranslation } from 'react-i18next';
+
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
@@ -19,9 +21,10 @@ type FoodTableRowProps = {
 // ----------------------------------------------------------------------
 
 export function FoodTableRow({ row, selected, onSelectRow, onEdit, onDelete }: FoodTableRowProps) {
+  const { t } = useTranslation();
   const actions: RowActionItem[] = [
     {
-      label: 'Editar',
+      label: t('actions.edit'),
       icon: 'solar:pen-bold',
       onClick: () => onEdit(row),
     },
@@ -29,7 +32,7 @@ export function FoodTableRow({ row, selected, onSelectRow, onEdit, onDelete }: F
 
   if (onDelete) {
     actions.push({
-      label: 'Excluir',
+      label: t('actions.delete'),
       icon: 'solar:trash-bin-trash-bold',
       color: 'error',
       onClick: () => onDelete(row),

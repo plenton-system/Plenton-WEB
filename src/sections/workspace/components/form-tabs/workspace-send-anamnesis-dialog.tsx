@@ -4,8 +4,8 @@ import type {
     AnamnesisSendPublicEmailResponseDto,
 } from 'src/types';
 
-import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';

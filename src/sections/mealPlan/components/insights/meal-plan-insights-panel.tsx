@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -5,6 +7,8 @@ import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
+
+import { fNumber } from 'src/utils/format-number';
 
 import { Chart, useChart } from '../../../../components/chart';
 
@@ -35,6 +39,7 @@ export function MealPlanInsightsPanel({
   totals = [],
   micronutrients = [],
 }: MealPlanInsightsPanelProps) {
+  const { t } = useTranslation();
   const theme = useTheme();
 
   const chartOptions = useChart({
@@ -45,7 +50,7 @@ export function MealPlanInsightsPanel({
     yaxis: { max: 120 },
     fill: { opacity: 0.2 },
     legend: { show: false },
-    tooltip: { y: { formatter: (val) => `${val.toFixed(0)}% da DRI` } },
+    tooltip: { y: { formatter: (val) => t('mealplan.insights.driPercent', { value: fNumber(val, { maximumFractionDigits: 0 }) }) } },
   }) ?? {};
 
   const fallbackColors = [
@@ -63,7 +68,7 @@ export function MealPlanInsightsPanel({
 
   return (
     <Stack spacing={2}>
-      <Typography variant="subtitle1">Resumo nutricional</Typography>
+      <Typography variant="subtitle1">{t('mealplan.insights.title')}</Typography>
 
       <Card variant="outlined" sx={{ p: 2 }}>
         <Box
@@ -81,7 +86,7 @@ export function MealPlanInsightsPanel({
                   {item.label}
                 </Typography>
                 <Typography variant="h6">
-                  {item.value.toFixed(0)} {item.unit}
+                  {fNumber(item.value, { maximumFractionDigits: 0 })} {item.unit}
                 </Typography>
                 {pct !== undefined && (
                   <LinearProgress
@@ -99,9 +104,11 @@ export function MealPlanInsightsPanel({
       {micronutrients.length > 0 && (
         <Card variant="outlined" sx={{ p: 2, height: 320 }}>
           <Stack spacing={1} sx={{ mb: 1 }}>
-            <Typography variant="subtitle2">Micronutrientes</Typography>
+            <Typography variant="subtitle2">{t('mealplan.insights.micronutrients')}</Typography>
             <Typography variant="body2" color="text.secondary">
-              Cobertura percentual estimada da DRI para {planName || 'o plano'}.
+              {t('mealplan.insights.description', {
+                plan: planName || t('mealplan.insights.planFallback'),
+              })}
             </Typography>
           </Stack>
 
@@ -109,7 +116,7 @@ export function MealPlanInsightsPanel({
 
           <Chart
             type="radar"
-            series={[{ name: 'Micros', data: micronutrients.map((it) => it.value) }]}
+            series={[{ name: t('mealplan.insights.series'), data: micronutrients.map((it) => it.value) }]}
             options={{ ...chartOptions, colors }}
             sx={{ height: 200 }}
           />

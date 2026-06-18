@@ -4,6 +4,7 @@ import { get, post } from 'src/utils/http-client';
 import { authStorage } from 'src/utils/auth-storage';
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { HttpAuthState, abortAllRequests, registerRefreshExecutor } from 'src/services/api';
 
 // ----------------------------------------------------------------------
@@ -14,7 +15,7 @@ export const authService = {
         try {
             await post('/api/auth/register', payload);
         } catch (err) {
-            throw new Error(extractApiErrorMessage(err, 'Não foi possível concluir o cadastro.'));
+            throw new Error(extractApiErrorMessage(err, i18n.t('auth.errors.register')));
         }
     },
 
@@ -22,7 +23,7 @@ export const authService = {
         try {
             await post('/api/auth/forgot-password', payload);
         } catch (err) {
-            throw new Error(extractApiErrorMessage(err, 'Não foi possível processar a solicitação.'));
+            throw new Error(extractApiErrorMessage(err, i18n.t('auth.forgot.requestError')));
         }
     },
 
@@ -30,7 +31,7 @@ export const authService = {
         try {
             await post('/api/auth/reset-password', payload);
         } catch (err) {
-            throw new Error(extractApiErrorMessage(err, 'Não foi possível redefinir a senha.'));
+            throw new Error(extractApiErrorMessage(err, i18n.t('auth.reset.requestError')));
         }
     },
 
@@ -39,14 +40,14 @@ export const authService = {
             const data = await post<LoginResponse>('/api/auth/login', credentials);
 
             if (!data?.accessToken || !data.isSuccess || (data.errors?.length ?? 0) > 0) {
-                const msg = data?.errors?.join(', ') || 'Falha no login';
+                const msg = data?.errors?.join(', ') || i18n.t('auth.errors.login');
                 throw new Error(msg);
             }
 
             HttpAuthState.setAccessToken(data.accessToken);
             return data.accessToken;
         } catch (err) {
-            throw new Error(extractApiErrorMessage(err, 'E-mail ou senha inválidos.'));
+            throw new Error(extractApiErrorMessage(err, i18n.t('auth.errors.invalidCredentials')));
         }
     },
 
@@ -56,7 +57,7 @@ export const authService = {
             data?.accessToken ?? data?.token?.accessToken ?? data?.Token?.AccessToken;
 
         if (!accessToken)
-            throw new Error('Refresh não retornou accessToken');
+            throw new Error(i18n.t('auth.errors.refresh'));
 
         HttpAuthState.setAccessToken(accessToken);
         return accessToken;
@@ -83,7 +84,7 @@ export const authService = {
         try {
             await post('/api/auth/change-password', dto);
         } catch (err) {
-            throw new Error(extractApiErrorMessage(err, 'Não foi possível alterar a senha.'));
+            throw new Error(extractApiErrorMessage(err, i18n.t('profile.password.error')));
         }
     },
 

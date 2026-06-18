@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 
 import { triggerBrowserDownload } from 'src/utils/format-file';
 
+import i18n from 'src/i18n';
 import { mealPlanService } from 'src/services/mealPlan/mealPlanService';
 
 // ----------------------------------------------------------------------
@@ -33,5 +34,5 @@ export function useMealPlanPdf() {
 
 const extractMessage = (err: unknown): string => {
   if (err instanceof Error && err.message) return err.message;
-  return 'Erro ao gerar o PDF do plano alimentar.';
+  return i18n.t('mealplan.errors.pdf');
 };

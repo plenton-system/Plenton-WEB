@@ -1,10 +1,10 @@
 import type { CSSObject, Breakpoint } from '@mui/material/styles';
 
 import { merge } from 'es-toolkit';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import { useTranslation } from 'react-i18next';
 
 import { RouterLink } from 'src/routes/components';
 

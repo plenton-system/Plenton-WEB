@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -34,6 +35,7 @@ export function GenericTable<T extends { id: string | number }>({
     emptyRowsComponent,
     notFoundComponent,
 }: TableProps<T>) {
+    const { t } = useTranslation();
 
     const showNotFound = !data.length && !!filterValue;
     const emptyRowsCount = emptyRows(table.page, table.rowsPerPage, total);
@@ -119,7 +121,7 @@ export function GenericTable<T extends { id: string | number }>({
                         setFilterValue(e.target.value);
                         table.onChangePage?.(undefined, 0);
                     }}
-                    placeholder="Buscar"
+                    placeholder={t('shared.searchAction')}
                     onDeleteSelected={onDeleteSelected}
                 />
             )}

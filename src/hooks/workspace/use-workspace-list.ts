@@ -3,6 +3,7 @@ import type { WorkspaceListItem, WorkspaceListQuery } from 'src/types';
 
 import { useState, useEffect, useCallback } from 'react';
 
+import i18n from 'src/i18n';
 import { workspaceService } from 'src/services/workspace/workspaceService';
 
 // ----------------------------------------------------------------------
@@ -63,7 +64,7 @@ export function useWorkspaceList({ initialFilters }: UseWorkspaceListOptions = {
       setItems(response?.items ?? []);
       setTotal(response?.totalCount ?? 0);
     } catch (err: any) {
-      setError(err?.message ?? 'Erro ao carregar workspaces');
+      setError(err?.message ?? i18n.t('workspace.errors.loadList'));
     } finally {
       setLoading(false);
     }

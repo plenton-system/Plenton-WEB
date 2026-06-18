@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 import { useTheme } from '@mui/material/styles';
 import { Box, keyframes, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 

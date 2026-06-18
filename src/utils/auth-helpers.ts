@@ -13,7 +13,7 @@ export async function buildAndStoreUser(token?: string): Promise<User> {
     const payload = JwtUtils.getPayload(token);
 
     if (!payload)
-        throw new Error('Token inválido ou payload ausente');
+        throw new Error(i18n.t('auth.errors.invalidToken'));
 
     const userData: Omit<User, 'profile'> = {
         id: payload.id ?? '',

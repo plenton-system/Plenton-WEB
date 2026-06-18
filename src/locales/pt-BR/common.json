@@ -2,7 +2,8 @@
   "language": {
     "pt-BR": "Português",
     "en-US": "English",
-    "es": "Español"
+    "es": "Español",
+    "select": "Selecionar idioma"
   },
   "actions": {
     "save": "Salvar",
@@ -13,7 +14,12 @@
     "new": "Novo",
     "search": "Buscar",
     "confirm": "Confirmar",
-    "close": "Fechar"
+    "close": "Fechar",
+    "share": "Compartilhar",
+    "downloadPdf": "Baixar PDF",
+    "generatingPdf": "Gerando PDF...",
+    "completed": "Concluído",
+    "viewAll": "Ver tudo"
   },
   "common": {
     "yes": "Sim",
@@ -68,6 +74,7 @@
       "document": "CPF",
       "passwordHint": "Mínimo 8 caracteres",
       "crn": "CRN (opcional)",
+      "crnPlaceholder": "Ex.: CRN-3 12345",
       "phone": "Telefone",
       "zipCode": "CEP",
       "street": "Rua/Avenida",
@@ -75,6 +82,45 @@
       "neighborhood": "Bairro",
       "city": "Cidade",
       "state": "Estado"
+    },
+    "forgot": {
+      "heroTitle": "Esqueceu sua senha?",
+      "heroDescription": "Sem problemas. Informe seu e-mail e ajudaremos você a recuperar o acesso.",
+      "backToLogin": "Voltar ao login",
+      "title": "Recuperar senha",
+      "description": "Enviaremos um link para você criar uma nova senha.",
+      "success": "Se o e-mail estiver cadastrado, você receberá em instantes um link para redefinir a senha. Confira sua caixa de entrada e o spam.",
+      "invalidEmail": "E-mail inválido",
+      "emailRequired": "Informe seu e-mail",
+      "sending": "Enviando...",
+      "submit": "Enviar link",
+      "remembered": "Lembrou a senha? Entrar",
+      "requestError": "Não foi possível processar a solicitação."
+    },
+    "reset": {
+      "heroTitle": "Defina uma nova senha",
+      "heroDescription": "Quase lá! Escolha uma senha segura para continuar acessando sua conta.",
+      "backToLogin": "Voltar ao login",
+      "title": "Nova senha",
+      "forEmail": "Definindo nova senha para",
+      "invalidLink": "Link inválido ou incompleto. Solicite uma nova redefinição de senha.",
+      "requestNewLink": "Solicitar novo link",
+      "success": "Senha redefinida com sucesso. Redirecionando para o login...",
+      "newPassword": "Nova senha",
+      "confirmPassword": "Confirmar senha",
+      "newRequired": "Informe a nova senha",
+      "passwordMismatch": "As senhas não coincidem",
+      "confirmRequired": "Confirme a nova senha",
+      "saving": "Salvando...",
+      "submit": "Redefinir senha",
+      "requestError": "Não foi possível redefinir a senha."
+    },
+    "errors": {
+      "register": "Não foi possível concluir o cadastro.",
+      "login": "Falha no login",
+      "invalidCredentials": "E-mail ou senha inválidos.",
+      "refresh": "Não foi possível renovar a sessão.",
+      "invalidToken": "Token inválido ou payload ausente."
     }
   },
   "patient": {
@@ -119,7 +165,20 @@
       "gender": "Gênero"
     },
     "address": { "zipCode": "CEP", "street": "Rua", "neighborhood": "Bairro", "city": "Cidade", "state": "Estado" },
-    "notes": { "label": "Observações" }
+    "notes": { "label": "Observações" },
+    "validation": {
+      "caloriesInvalid": "Calorias inválidas",
+      "documentInvalid": "CPF inválido",
+      "futureDate": "A data não pode estar no futuro",
+      "genderInvalid": "Selecione o gênero",
+      "genderRequired": "Gênero é obrigatório"
+    },
+    "errors": {
+      "load": "Erro ao buscar paciente",
+      "save": "Erro ao salvar paciente",
+      "loadList": "Erro ao carregar a lista de pacientes",
+      "delete": "Erro ao excluir o paciente"
+    }
   },
   "appointment": {
     "form": {
@@ -134,7 +193,23 @@
       "observation": "Observação"
     },
     "status": { "scheduled": "Agendada", "completed": "Concluída", "canceled": "Cancelada" },
-    "delete": { "title": "Excluir consulta", "description": "Esta ação é irreversível. Deseja continuar?" }
+    "delete": { "title": "Excluir consulta", "description": "Esta ação é irreversível. Deseja continuar?" },
+    "validation": {
+      "patientRequired": "Selecione o paciente",
+      "dateRequired": "Escolha a data e hora",
+      "colorInvalid": "Selecione uma cor válida",
+      "statusRequired": "Selecione o status"
+    },
+    "messages": {
+      "loadCalendarError": "Não foi possível carregar a agenda.",
+      "loadError": "Não foi possível carregar a consulta.",
+      "createSuccess": "Consulta criada com sucesso!",
+      "createError": "Não foi possível criar a consulta.",
+      "updateSuccess": "Consulta alterada com sucesso!",
+      "updateError": "Não foi possível salvar a consulta.",
+      "deleteSuccess": "Consulta excluída com sucesso!",
+      "deleteError": "Não foi possível excluir a consulta."
+    }
   },
   "overview": {
     "welcome": "Olá, bem-vindo de volta 👋",
@@ -145,7 +220,8 @@
       "attendanceRate": "Taxa de comparecimento"
     },
     "tasks": { "title": "Consultas pendentes" },
-    "bmi": { "title": "IMC médio (últimos 12 meses)", "subheader": "Último IMC de cada paciente/mês" }
+    "bmi": { "title": "IMC médio (últimos 12 meses)", "subheader": "Último IMC de cada paciente/mês" },
+    "loadError": "Erro ao buscar dados"
   },
   "food": {
     "list": {
@@ -208,6 +284,20 @@
       "manganese": "Manganês (mg)",
       "selenium": "Selênio (mcg)",
       "cholesterol": "Colesterol (mg)"
+    },
+    "validation": {
+      "descriptionRequired": "Descrição é obrigatória",
+      "sourceInvalid": "Origem inválida",
+      "sourceRequired": "Origem é obrigatória",
+      "tableTypeInvalid": "Tipo da tabela inválido",
+      "tableTypeRequired": "Tipo da tabela é obrigatório",
+      "measureDescriptionRequired": "Descrição da medida caseira é obrigatória"
+    },
+    "errors": {
+      "load": "Erro ao buscar alimento",
+      "save": "Erro ao salvar alimento",
+      "loadList": "Erro ao carregar alimentos",
+      "delete": "Erro ao excluir alimento"
     }
   },
   "mealplan": {
@@ -292,7 +382,45 @@
       "saving": "Salvando..."
     },
     "foodAutocomplete": { "label": "Alimento", "placeholder": "Digite para buscar..." },
-    "measureAutocomplete": { "label": "Medida caseira", "addNew": "Adicionar nova medida...", "systemDefault": "Padrão do sistema" }
+    "measureAutocomplete": { "label": "Medida caseira", "addNew": "Adicionar nova medida...", "systemDefault": "Padrão do sistema" },
+    "detail": {
+      "editTitle": "Editar plano alimentar",
+      "newTitle": "Novo plano alimentar",
+      "nutrients": {
+        "energy": "Energia",
+        "protein": "Proteína",
+        "carbs": "Carboidrato",
+        "fat": "Gorduras",
+        "fiber": "Fibra",
+        "sodium": "Sódio",
+        "vitaminA": "Vitamina A",
+        "vitaminC": "Vitamina C",
+        "vitaminD": "Vitamina D",
+        "calcium": "Cálcio",
+        "iron": "Ferro",
+        "zinc": "Zinco",
+        "potassium": "Potássio"
+      }
+    },
+    "insights": {
+      "title": "Resumo nutricional",
+      "micronutrients": "Micronutrientes",
+      "description": "Cobertura percentual estimada da DRI para {{plan}}.",
+      "planFallback": "o plano",
+      "series": "Micronutrientes",
+      "driPercent": "{{value}}% da DRI"
+    },
+    "validation": {
+      "foodRequired": "Alimento obrigatório",
+      "mealNameRequired": "Nome da refeição é obrigatório",
+      "timeRequired": "Horário é obrigatório",
+      "planNameRequired": "Nome do plano é obrigatório",
+      "dayRequired": "Selecione ao menos um dia"
+    },
+    "errors": {
+      "pdf": "Erro ao gerar o PDF do plano alimentar.",
+      "loadMeasures": "Erro ao carregar medidas caseiras"
+    }
   },
   "anamnesis": {
     "list": {
@@ -336,6 +464,7 @@
     },
     "form": {
       "preview": "Preview",
+      "useExample": "Usar exemplo",
       "exampleTitle": "Anamnese Nutricional - Modelo Base",
       "exampleDescription": "Coleta inicial de informações para avaliação. Edite conforme sua prática.",
       "exampleQ1": "Objetivo principal",
@@ -351,6 +480,14 @@
       "noTitle": "Sem título",
       "empty": "Nenhuma pergunta adicionada.",
       "yourAnswer": "Sua resposta"
+    },
+    "errors": {
+      "loadByPatient": "Erro ao carregar anamneses do paciente",
+      "load": "Erro ao buscar questionário",
+      "save": "Erro ao salvar questionário",
+      "loadList": "Erro ao carregar lista de anamnese",
+      "delete": "Erro ao excluir questionário",
+      "pdf": "Erro ao gerar o PDF da anamnese."
     }
   },
   "publicAnamnesis": {
@@ -388,6 +525,14 @@
       "min": "Mínimo: {{min}}",
       "max": "Máximo: {{max}}",
       "minOne": "Selecione ao menos 1 opção"
+    },
+    "errors": {
+      "open": "Erro ao abrir anamnese",
+      "missingContext": "Tenant ou token não informado.",
+      "notLoaded": "Formulário ainda não foi carregado.",
+      "consent": "Erro ao registrar consentimento",
+      "saveDraft": "Erro ao salvar rascunho",
+      "submit": "Erro ao enviar respostas"
     }
   },
   "shared": {
@@ -462,6 +607,10 @@
       "confirmRequired": "Confirme a nova senha",
       "success": "Senha alterada com sucesso.",
       "error": "Não foi possível alterar a senha no momento."
+    },
+    "errors": {
+      "load": "Erro ao buscar dados do usuário",
+      "save": "Erro ao salvar os dados do perfil"
     }
   },
   "settings": {
@@ -494,7 +643,8 @@
       "system": "Sistema"
     },
     "effectiveMode": "Modo efetivo: {{mode}}",
-    "systemMode": "Sistema ({{mode}})"
+    "systemMode": "Sistema ({{mode}})",
+    "loadError": "Erro ao carregar as configurações"
   },
   "subscription": {
     "notProvided": "Não informado",
@@ -524,6 +674,7 @@
       "choosePlan": "Escolher plano",
       "loading": "Carregando assinatura...",
       "empty": "Nenhuma assinatura encontrada.",
+      "planFallback": "Plano",
       "planUnknown": "Plano não informado",
       "codeUnknown": "Código não informado",
       "cycle": "Ciclo",
@@ -584,6 +735,11 @@
       "openPayment": "Abrir link de pagamento",
       "checkStatus": "Verificar status",
       "chooseAnother": "Escolher outro plano"
+    },
+    "errors": {
+      "loadCurrent": "Não foi possível carregar a assinatura.",
+      "start": "Não foi possível iniciar a assinatura.",
+      "loadCatalog": "Não foi possível carregar os planos."
     }
   },
   "workspace": {
@@ -620,6 +776,35 @@
       "active": "Ativo",
       "inactive": "Inativo",
       "suspended": "Suspenso"
+    },
+    "errors": {
+      "patientRequired": "Paciente não informado.",
+      "calculateEnergy": "Não foi possível calcular o gasto energético.",
+      "loadEvaluations": "Erro ao carregar avaliações disponíveis.",
+      "evolutionPatientRequired": "Paciente não informado para consultar a evolução antropométrica.",
+      "evolutionMinimum": "Selecione pelo menos duas avaliações para consultar a evolução.",
+      "loadEvolution": "Erro ao carregar a evolução antropométrica.",
+      "loadAnthropometry": "Erro ao carregar antropometria.",
+      "loadAnthropometryDetail": "Não foi possível carregar a avaliação antropométrica.",
+      "saveAnthropometry": "Não foi possível salvar a avaliação antropométrica.",
+      "updateAnthropometry": "Não foi possível atualizar a avaliação antropométrica.",
+      "anthropometryNotFound": "Avaliação antropométrica não encontrada.",
+      "loadList": "Erro ao carregar áreas de trabalho.",
+      "loadPlans": "Erro ao carregar planos.",
+      "loadSection": "Erro ao carregar dados."
+    },
+    "mock": {
+      "weight": "Peso: 72 kg",
+      "height": "Altura: 1,70 m",
+      "updated": "Atualizado há 2 dias",
+      "initialQuestionnaire": "Questionário inicial",
+      "completed": "Preenchido",
+      "foodHistory": "Histórico alimentar",
+      "pending": "Pendente",
+      "followUpOne": "Retorno 01",
+      "followUpTwo": "Retorno 02",
+      "scheduled": "Agendado para 15/02",
+      "schedule": "Agendar"
     },
     "documents": {
       "title": "Documentos e envios",
@@ -1187,6 +1372,26 @@
         }
       }
     }
+  },
+  "validation": {
+    "required": "Campo obrigatório",
+    "numberInvalid": "Informe um número válido",
+    "nonNegative": "O valor deve ser maior ou igual a 0",
+    "valueInvalid": "Valor inválido",
+    "nameRequired": "Nome é obrigatório",
+    "titleRequired": "Título é obrigatório",
+    "statusRequired": "Status obrigatório",
+    "statusInvalid": "Selecione o status",
+    "phoneInvalid": "Telefone inválido",
+    "phoneRequired": "Telefone é obrigatório",
+    "emailInvalid": "E-mail inválido",
+    "emailRequired": "E-mail é obrigatório",
+    "documentRequired": "Documento é obrigatório",
+    "dateRequired": "Data é obrigatória",
+    "zipCodeInvalid": "CEP inválido"
+  },
+  "errors": {
+    "unexpected": "Erro inesperado"
   },
   "pages": {
     "landingTitle": "{{appName}} — Software de gestão para nutricionistas",

@@ -2,6 +2,7 @@ import type { BoxProps } from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
@@ -70,6 +71,7 @@ type TaskItemProps = BoxProps & {
 };
 
 function TaskItem({ item, selected, onChange, sx, ...other }: TaskItemProps) {
+  const { t } = useTranslation();
   const menuActions = usePopover();
 
   const handleMarkComplete = () => {
@@ -153,24 +155,24 @@ function TaskItem({ item, selected, onChange, sx, ...other }: TaskItemProps) {
         >
           <MenuItem onClick={handleMarkComplete}>
             <Iconify icon="solar:check-circle-bold" />
-            Concluído
+            {t('actions.completed')}
           </MenuItem>
 
           <MenuItem onClick={handleEdit}>
             <Iconify icon="solar:pen-bold" />
-            Editar
+            {t('actions.edit')}
           </MenuItem>
 
           <MenuItem onClick={handleShare}>
             <Iconify icon="solar:share-bold" />
-            Compartilhar
+            {t('actions.share')}
           </MenuItem>
 
           <Divider sx={{ borderStyle: 'dashed' }} />
 
           <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
-            Excluir
+            {t('actions.delete')}
           </MenuItem>
         </MenuList>
       </Popover>

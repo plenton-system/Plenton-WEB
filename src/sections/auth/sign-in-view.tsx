@@ -523,7 +523,7 @@ export function SignInView() {
                 size="small"
                 name="crn"
                 label={t('auth.fields.crn')}
-                placeholder="Ex.: CRN-3 12345"
+                placeholder={t('auth.fields.crnPlaceholder')}
                 value={registerCrn}
                 onChange={(e) => setRegisterCrn(e.target.value)}
                 sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}

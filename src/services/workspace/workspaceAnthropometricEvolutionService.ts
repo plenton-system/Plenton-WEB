@@ -7,6 +7,8 @@ import type {
 import { get, post } from 'src/utils/http-client';
 import { fDateTimePtBr } from 'src/utils/format-time';
 
+import i18n from 'src/i18n';
+
 type ApiEnvelope<T> = {
   data?: T | null;
   isSuccess?: boolean;
@@ -32,7 +34,7 @@ const unwrapEnvelope = <T>(response: ApiEnvelope<T> | T): T | null => {
     const envelope = response as ApiEnvelope<T>;
 
     if (envelope.isSuccess === false) {
-      throw new Error(envelope.message ?? 'Não foi possível carregar os dados da evolução antropométrica.');
+      throw new Error(envelope.message ?? i18n.t('workspace.errors.loadEvolution'));
     }
 
     return envelope.data ?? null;
@@ -66,11 +68,11 @@ export const workspaceAnthropometricEvolutionService = {
     request: WorkspaceAnthropometricEvolutionRequest
   ): Promise<WorkspaceAnthropometricEvolutionView> => {
     if (!request.patientId) {
-      throw new Error('Paciente não informado para consultar a evolução antropométrica.');
+      throw new Error(i18n.t('workspace.errors.evolutionPatientRequired'));
     }
 
     if (request.evaluationIds.length < 2) {
-      throw new Error('Selecione pelo menos duas avaliações para consultar a evolução.');
+      throw new Error(i18n.t('workspace.errors.evolutionMinimum'));
     }
 
     const response = await post<ApiEnvelope<WorkspaceAnthropometricEvolutionView>>(
@@ -80,7 +82,7 @@ export const workspaceAnthropometricEvolutionService = {
 
     const data = unwrapEnvelope(response);
     if (!data) {
-      throw new Error('Não foi possível carregar a evolução antropométrica.');
+      throw new Error(i18n.t('workspace.errors.loadEvolution'));
     }
 
     return data;

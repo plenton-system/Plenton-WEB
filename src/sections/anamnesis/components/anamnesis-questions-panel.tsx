@@ -18,10 +18,10 @@ import { AnamnesisQuestionCard } from './anamnesis-question-card';
 const uid = () =>
     (typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : Math.random().toString(36).slice(2));
 
-const DEFAULT_Q = (): AnamnesisQuestionDto => ({
+const createDefaultQuestion = (label: string): AnamnesisQuestionDto => ({
     id: uid(),
     type: QuestionType.Text,
-    label: 'Nova pergunta',
+    label,
     required: false,
     helpText: '',
     min: null,
@@ -50,7 +50,7 @@ export function AnamnesisQuestionsPanel({ value, onChange }: Props) {
         onChange(next);
     };
 
-    const add = () => commit([...list, { ...DEFAULT_Q(), label: t('anamnesis.questions.defaultLabel') }]);
+    const add = () => commit([...list, createDefaultQuestion(t('anamnesis.questions.defaultLabel'))]);
 
     const patch = (id: string, p: Partial<AnamnesisQuestionDto>) =>
         commit(list.map((q) => (q.id === id ? { ...q, ...p } : q)));

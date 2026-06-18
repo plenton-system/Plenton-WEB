@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { systemSettingsService } from 'src/services/systemSettings/systemSettingsService';
 
 type UseSystemSettingsOptions = {
@@ -43,7 +44,7 @@ export function useSystemSettingsDetail({ userId, autoLoad = true }: UseSystemSe
 
       setData(mapped);
     } catch (erro) {
-      setError(extractApiErrorMessage(erro, 'Erro ao buscar paciente'));
+      setError(extractApiErrorMessage(erro, i18n.t('settings.loadError')));
     } finally {
       setLoading(false);
     }

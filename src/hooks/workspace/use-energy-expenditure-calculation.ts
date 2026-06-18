@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { workspaceAnthropometryService } from 'src/services/workspace/workspaceAnthropometryService';
 
 type UseEnergyExpenditureCalculationReturn = {
@@ -31,7 +32,7 @@ export function useEnergyExpenditureCalculation(
   const calculate = useCallback(
     async (dto: CalculateEnergyRequest) => {
       if (!patientId) {
-        throw new Error('Paciente não informado.');
+        throw new Error(i18n.t('workspace.errors.patientRequired'));
       }
 
       setLoading(true);
@@ -44,7 +45,7 @@ export function useEnergyExpenditureCalculation(
       } catch (requestError) {
         const message = extractApiErrorMessage(
           requestError,
-          'Não foi possível calcular o gasto energético.'
+          i18n.t('workspace.errors.calculateEnergy')
         );
         setError(message);
         throw new Error(message);

@@ -26,7 +26,7 @@ export type LanguagePopoverProps = IconButtonProps & {
 
 export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProps) {
   const { open, anchorEl, onClose, onOpen } = usePopover();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
 
   const currentValue = i18n.resolvedLanguage ?? i18n.language;
@@ -113,7 +113,7 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
   return (
     <>
       <IconButton
-        aria-label="Languages button"
+        aria-label={t('language.select')}
         onClick={onOpen}
         sx={[
           (theme) => ({

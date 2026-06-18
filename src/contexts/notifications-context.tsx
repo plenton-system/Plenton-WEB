@@ -6,8 +6,8 @@ import { useRef, useMemo, useState, useEffect, useCallback, createContext } from
 
 import { useAuth } from 'src/hooks/common/use-auth';
 
-import { notificationService } from 'src/services';
 import i18n from 'src/i18n';
+import { notificationService } from 'src/services';
 import { createNotificationHubConnection } from 'src/services/notifications/notificationHub';
 
 type NotificationsContextType = {

@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -19,18 +20,19 @@ import { authService } from 'src/services';
 
 // ----------------------------------------------------------------------
 
-const schema = Yup.object({
-  email: Yup.string().email('E-mail inválido').required('Informe seu e-mail'),
-});
-
 export function ForgotPasswordView() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const formik = useFormik({
     initialValues: { email: '' },
-    validationSchema: schema,
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email(() => t('auth.forgot.invalidEmail'))
+        .required(() => t('auth.forgot.emailRequired')),
+    }),
     onSubmit: async (values, helpers) => {
       setErrorMessage('');
       try {
@@ -38,7 +40,7 @@ export function ForgotPasswordView() {
         setSubmitted(true);
       } catch (err) {
         setErrorMessage(
-          err instanceof Error ? err.message : 'Não foi possível processar a solicitação.'
+          err instanceof Error ? err.message : t('auth.forgot.requestError')
         );
       } finally {
         helpers.setSubmitting(false);
@@ -81,7 +83,7 @@ export function ForgotPasswordView() {
         }}
       >
         <Typography variant="h4" gutterBottom textAlign="center">
-          Esqueceu sua senha?
+          {t('auth.forgot.heroTitle')}
         </Typography>
 
         <Typography
@@ -90,7 +92,7 @@ export function ForgotPasswordView() {
           textAlign="center"
           sx={{ color: 'rgba(255,255,255,0.92)' }}
         >
-          Sem problemas. Informe seu e-mail e te ajudaremos a recuperar o acesso.
+          {t('auth.forgot.heroDescription')}
         </Typography>
 
         <Button
@@ -103,7 +105,7 @@ export function ForgotPasswordView() {
             '&:hover': { borderColor: '#FFFFFF', bgcolor: 'rgba(255,255,255,0.08)' },
           }}
         >
-          Voltar ao login
+          {t('auth.forgot.backToLogin')}
         </Button>
       </Grid>
 
@@ -131,18 +133,15 @@ export function ForgotPasswordView() {
           }}
         >
           <Typography variant="h5" gutterBottom>
-            Recuperar senha
+            {t('auth.forgot.title')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
-            Enviaremos um link para você criar uma nova senha.
+            {t('auth.forgot.description')}
           </Typography>
 
           {submitted ? (
             <Stack spacing={2}>
-              <Alert severity="success">
-                Se o e-mail estiver cadastrado, você receberá em instantes um link para redefinir
-                a senha. Cheque sua caixa de entrada e o spam.
-              </Alert>
+              <Alert severity="success">{t('auth.forgot.success')}</Alert>
               <Button
                 fullWidth
                 size="large"
@@ -151,7 +150,7 @@ export function ForgotPasswordView() {
                 to="/sign-in"
                 sx={{ textTransform: 'none' }}
               >
-                Voltar para o login
+                {t('auth.forgot.backToLogin')}
               </Button>
             </Stack>
           ) : (
@@ -167,7 +166,7 @@ export function ForgotPasswordView() {
                   fullWidth
                   name="email"
                   type="email"
-                  label="E-mail"
+                  label={t('auth.fields.email')}
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -188,12 +187,12 @@ export function ForgotPasswordView() {
                   }
                   sx={{ textTransform: 'none' }}
                 >
-                  {formik.isSubmitting ? 'Enviando...' : 'Enviar link'}
+                  {formik.isSubmitting ? t('auth.forgot.sending') : t('auth.forgot.submit')}
                 </Button>
 
                 <Box sx={{ textAlign: 'center' }}>
                   <Link component={RouterLink} to="/sign-in" underline="hover" variant="body2">
-                    Lembrou a senha? Entrar
+                    {t('auth.forgot.remembered')}
                   </Link>
                 </Box>
               </Stack>

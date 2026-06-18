@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { patientService } from 'src/services/patient/patientService';
 
 // ----------------------------------------------------------------------
@@ -67,7 +68,7 @@ export function usePatientList({ initialFilters }: UsePatientListOptions = {}): 
             setItems(response?.items ?? []);
             setTotal(response?.totalCount ?? 0);
         } catch (erro) {
-            setError(extractApiErrorMessage(erro, 'Erro ao carregar a lista de pacientes'));
+            setError(extractApiErrorMessage(erro, i18n.t('patient.errors.loadList')));
         } finally {
             setLoading(false);
         }
@@ -85,7 +86,7 @@ export function usePatientList({ initialFilters }: UsePatientListOptions = {}): 
             await fetchList();
             return true;
         } catch (erro) {
-            const message = extractApiErrorMessage(erro, 'Erro ao excluir o paciente');
+            const message = extractApiErrorMessage(erro, i18n.t('patient.errors.delete'));
             setError(message);
             throw new Error(message);
         } finally {

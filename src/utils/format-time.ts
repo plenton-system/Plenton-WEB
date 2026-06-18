@@ -53,6 +53,12 @@ const isValidDate = (date: DatePickerFormat) =>
 
 export const getCurrentLocale = () => i18n.resolvedLanguage ?? i18n.language ?? 'pt-BR';
 
+const getCurrentDayjsLocale = () => {
+  if (getCurrentLocale() === 'pt-BR') return 'pt-br';
+  if (getCurrentLocale() === 'es') return 'es';
+  return 'en';
+};
+
 // ----------------------------------------------------------------------
 
 /**
@@ -63,10 +69,15 @@ export const getCurrentLocale = () => i18n.resolvedLanguage ?? i18n.language ?? 
  */
 export function fDateTime(date: DatePickerFormat, template?: string): string {
   if (!isValidDate(date)) {
-    return 'Invalid date';
+    return i18n.t('shared.invalidDate');
   }
 
-  return dayjs(date).format(template ?? formatPatterns.dateTime);
+  if (template) return dayjs(date).locale(getCurrentDayjsLocale()).format(template);
+
+  return new Intl.DateTimeFormat(getCurrentLocale(), {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(dayjs(date).toDate());
 }
 
 // ----------------------------------------------------------------------
@@ -104,10 +115,14 @@ export function fDateLocale(date: DatePickerFormat): string {
  */
 export function fDate(date: DatePickerFormat, template?: string): string {
   if (!isValidDate(date)) {
-    return 'Invalid date';
+    return i18n.t('shared.invalidDate');
   }
 
-  return dayjs(date).format(template ?? formatPatterns.date);
+  if (template) return dayjs(date).locale(getCurrentDayjsLocale()).format(template);
+
+  return new Intl.DateTimeFormat(getCurrentLocale(), {
+    dateStyle: 'medium',
+  }).format(dayjs(date).toDate());
 }
 
 // ----------------------------------------------------------------------
@@ -119,16 +134,10 @@ export function fDate(date: DatePickerFormat, template?: string): string {
  */
 export function fToNow(date: DatePickerFormat): string {
   if (!isValidDate(date)) {
-    return 'Invalid date';
+    return i18n.t('shared.invalidDate');
   }
 
-  const locale = i18n.resolvedLanguage === 'pt-BR'
-    ? 'pt-br'
-    : i18n.resolvedLanguage === 'es'
-      ? 'es'
-      : 'en';
-
-  return dayjs(date).locale(locale).toNow(true);
+  return dayjs(date).locale(getCurrentDayjsLocale()).toNow(true);
 }
 
 // ----------------------------------------------------------------------

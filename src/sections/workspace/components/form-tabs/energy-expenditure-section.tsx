@@ -4,6 +4,8 @@ import type {
   WorkspaceAnthropometryProtocol,
 } from 'src/types';
 
+import { useTranslation } from 'react-i18next';
+
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
@@ -12,7 +14,6 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { useTranslation } from 'react-i18next';
 
 import { EnergyExpenditureResultCard } from './energy-expenditure-result-card';
 

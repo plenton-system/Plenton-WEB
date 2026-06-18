@@ -6,6 +6,7 @@ import type {
 
 import { useState, useCallback } from 'react';
 
+import i18n from 'src/i18n';
 import { subscriptionService } from 'src/services';
 
 type StartArgs = {
@@ -33,7 +34,7 @@ export function useStartSubscription() {
       setData(response);
       return response;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Não foi possível iniciar a assinatura.';
+      const message = err instanceof Error ? err.message : i18n.t('subscription.errors.start');
       setError(message);
       return null;
     } finally {

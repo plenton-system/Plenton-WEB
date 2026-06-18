@@ -2,6 +2,7 @@ import type { FoodViewProps, FoodDetailProps } from 'src/types';
 
 import { useState, useEffect, useCallback } from 'react';
 
+import i18n from 'src/i18n';
 import { FoodGroup } from 'src/types';
 import { foodService } from 'src/services/food/foodService';
 
@@ -73,7 +74,7 @@ export function useFoodDetail({ id, autoLoad = true }: UseFoodDetailOptions): Us
 
       setData(mappedFood);
     } catch (erro: any) {
-      setError(erro?.response?.data?.message || erro.message || 'Erro ao buscar alimento');
+      setError(erro?.response?.data?.message || erro.message || i18n.t('food.errors.load'));
     } finally {
       setLoading(false);
     }
@@ -93,7 +94,7 @@ export function useFoodDetail({ id, autoLoad = true }: UseFoodDetailOptions): Us
         setData(null);
         return true;
       } catch (erro: any) {
-        const message = erro?.response?.data?.message || erro.message || 'Erro ao salvar alimento';
+        const message = erro?.response?.data?.message || erro.message || i18n.t('food.errors.save');
         setError(message);
         throw new Error(message);
       } finally {
