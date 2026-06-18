@@ -1,6 +1,7 @@
 import type * as Yup from 'yup';
 
 import { useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFormik, FieldArray, FormikProvider } from 'formik';
 
 import Card from '@mui/material/Card';
@@ -42,6 +43,22 @@ type MealPlanFormProps = {
 
 // ----------------------------------------------------------------------
 
+const DAY_LABEL_KEY = {
+    0: 'mealplan.days.sun',
+    1: 'mealplan.days.mon',
+    2: 'mealplan.days.tue',
+    3: 'mealplan.days.wed',
+    4: 'mealplan.days.thu',
+    5: 'mealplan.days.fri',
+    6: 'mealplan.days.sat',
+} as const;
+
+const STATUS_OPTION_KEY = {
+    [MealPlanStatus.ACTIVE]: 'mealplan.status.active',
+    [MealPlanStatus.INACTIVE]: 'mealplan.status.inactive',
+    [MealPlanStatus.SUSPENDED]: 'mealplan.status.suspended',
+} as const;
+
 export function MealPlanForm({
     patientId,
     initial,
@@ -51,6 +68,7 @@ export function MealPlanForm({
     loading,
     error,
 }: MealPlanFormProps) {
+    const { t } = useTranslation();
     const nutritionistId = authStorage.getUser()?.profile?.id ?? '';
 
     const initialValues = useMemo<MealPlanDto>(() => {
@@ -84,7 +102,7 @@ export function MealPlanForm({
                 await onSubmit(normalized);
             } catch (err) {
                 console.error('Error during form submission:', err);
-                formik.setStatus(err instanceof Error ? err.message : 'Erro ao salvar o plano');
+                formik.setStatus(err instanceof Error ? err.message : t('mealplan.form.saveError'));
             }
         },
     });
@@ -106,7 +124,7 @@ export function MealPlanForm({
         if (formik.errors.meals) {
             return (
                 <Alert severity="error" sx={{ mb: 2 }}>
-                    Existem erros nas refeições ou itens. Verifique se todos os campos obrigatórios estão preenchidos.
+                    {t('mealplan.form.errorsSummary')}
                 </Alert>
             );
         }
@@ -128,7 +146,7 @@ export function MealPlanForm({
                 <Card sx={{ p: 3 }}>
                     <Stack spacing={2}>
                         <TextField
-                            label="Nome do plano"
+                            label={t('mealplan.form.name')}
                             name="name"
                             value={formik.values.name}
                             onChange={formik.handleChange}
@@ -140,7 +158,7 @@ export function MealPlanForm({
                         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                             <TextField
                                 select
-                                label="Status"
+                                label={t('mealplan.form.status')}
                                 name="status"
                                 value={formik.values.status}
                                 onChange={(event) =>
@@ -150,14 +168,16 @@ export function MealPlanForm({
                             >
                                 {statusOptions.map((opt) => (
                                     <MenuItem key={opt.value} value={opt.value}>
-                                        {opt.label}
+                                        {STATUS_OPTION_KEY[opt.value as keyof typeof STATUS_OPTION_KEY]
+                                            ? t(STATUS_OPTION_KEY[opt.value as keyof typeof STATUS_OPTION_KEY])
+                                            : opt.label}
                                     </MenuItem>
                                 ))}
                             </TextField>
 
                             <FormControl component="fieldset" fullWidth sx={{ flex: 1 }}>
                                 <FormLabel component="legend" id="days-label" sx={{ mb: 1 }}>
-                                    Dias da semana
+                                    {t('mealplan.form.daysOfWeek')}
                                 </FormLabel>
 
                                 <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
@@ -172,9 +192,9 @@ export function MealPlanForm({
                                             )
                                         }
                                         aria-controls="days-group"
-                                        aria-label={dayAllSelected ? 'Limpar todos os dias' : 'Selecionar todos os dias'}
+                                        aria-label={dayAllSelected ? t('mealplan.form.clearAllDays') : t('mealplan.form.selectAllDays')}
                                     >
-                                        Todos
+                                        {t('mealplan.form.all')}
                                     </Button>
 
                                     <ToggleButtonGroup
@@ -205,11 +225,14 @@ export function MealPlanForm({
                                             },
                                         }}
                                     >
-                                        {DAYS.map((d) => (
-                                            <ToggleButton key={d.value} value={d.value} color="primary" aria-label={d.label}>
-                                                {d.label}
-                                            </ToggleButton>
-                                        ))}
+                                        {DAYS.map((d) => {
+                                            const dayLabel = t(DAY_LABEL_KEY[d.value as keyof typeof DAY_LABEL_KEY]);
+                                            return (
+                                                <ToggleButton key={d.value} value={d.value} color="primary" aria-label={dayLabel}>
+                                                    {dayLabel}
+                                                </ToggleButton>
+                                            );
+                                        })}
                                     </ToggleButtonGroup>
                                 </Stack>
 
@@ -251,10 +274,10 @@ export function MealPlanForm({
                     }}
                 >
                     <Button variant="outlined" onClick={onCancel} disabled={loading}>
-                        Cancelar
+                        {t('actions.cancel')}
                     </Button>
                     <Button variant="contained" type="submit" disabled={loading}>
-                        {loading ? <CircularProgress size={22} /> : 'Salvar Plano'}
+                        {loading ? <CircularProgress size={22} /> : t('mealplan.form.savePlan')}
                     </Button>
                 </Paper>
             </form>

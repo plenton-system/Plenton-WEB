@@ -1,4 +1,5 @@
 import { useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -30,6 +31,7 @@ export function PatientListView({
     onCreate,
     onNotify
 }: PatientListViewProps) {
+    const { t } = useTranslation();
     const confirm = useConfirm();
     const table = useTable({ initialOrderBy: 'name' });
 
@@ -66,9 +68,9 @@ export function PatientListView({
 
     const handleDelete = async (id: string) => {
         const ok = await confirm({
-            title: 'Excluir Paciente',
-            description: 'Esta ação é irreversível. Deseja continuar?',
-            confirmText: 'Excluir',
+            title: t('patient.list.delete.title'),
+            description: t('patient.list.delete.description'),
+            confirmText: t('actions.delete'),
             destructive: true,
         });
 
@@ -78,9 +80,9 @@ export function PatientListView({
             await deletePatient?.(id);
 
             removeFromSelection?.(id);
-            onNotify?.({ kind: 'success', message: 'Paciente excluído com sucesso.' });
+            onNotify?.({ kind: 'success', message: t('patient.list.deleteSuccess') });
         } catch (e: any) {
-            onNotify?.({ kind: 'error', message: e?.message ?? 'Falha ao excluir o paciente.' });
+            onNotify?.({ kind: 'error', message: e?.message ?? t('patient.list.deleteError') });
         }
     };
 
@@ -88,7 +90,7 @@ export function PatientListView({
         <>
             <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
                 <Typography variant="h4" sx={{ flexGrow: 1 }}>
-                    Pacientes
+                    {t('patient.list.title')}
                 </Typography>
                 {onCreate && (
                     <Button
@@ -97,7 +99,7 @@ export function PatientListView({
                         disabled={loading}
                         onClick={onCreate}
                     >
-                        Novo
+                        {t('actions.new')}
                     </Button>
                 )}
             </Box>
@@ -126,10 +128,10 @@ export function PatientListView({
                 filterValue={filters.value}
                 setFilterValue={(x: string) => setFilters(f => ({ ...f, value: x }))}
                 headLabel={[
-                    { id: 'name', label: 'Nome' },
-                    { id: 'birthDate', label: 'Data de Nascimento' },
-                    { id: 'status', label: 'Status' },
-                    { id: 'actions', label: 'Ações', sortable: false, align: 'center' },
+                    { id: 'name', label: t('patient.list.columns.name') },
+                    { id: 'birthDate', label: t('patient.list.columns.birthDate') },
+                    { id: 'status', label: t('patient.list.columns.status') },
+                    { id: 'actions', label: t('patient.list.columns.actions'), sortable: false, align: 'center' },
                 ]}
                 renderRow={(row, isSelected, onRowSelect) => (
                     <PatientTableRow

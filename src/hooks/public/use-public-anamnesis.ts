@@ -11,6 +11,7 @@ import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { QuestionType } from 'src/enums/anamnesis';
 import { publicAnamnesisService } from 'src/services/public/publicAnamnesisService';
 
@@ -114,6 +115,9 @@ export function usePatientAnamnesis({
 
         try {
             const result = await publicAnamnesisService.open(tenantId, token);
+            if (result.language) {
+                await i18n.changeLanguage(result.language);
+            }
             setData(result);
             loadedOnceRef.current = true;
         } catch (erro) {

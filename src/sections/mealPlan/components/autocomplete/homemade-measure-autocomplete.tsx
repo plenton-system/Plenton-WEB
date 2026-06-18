@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
@@ -31,6 +32,7 @@ const filter = createFilterOptions<HomemadeMeasureOption>();
 // ----------------------------------------------------------------------
 
 export default function HomemadeMeasureAutocomplete({ foodId, value, onChange }: Props) {
+    const { t } = useTranslation();
     const { measures, loading, refetch } = useHomemadeMeasures({ foodId });
 
     const [openDialog, setOpenDialog] = useState(false);
@@ -44,7 +46,7 @@ export default function HomemadeMeasureAutocomplete({ foodId, value, onChange }:
         ? [
               {
                   id: 'add-new',
-                  name: 'Adicionar nova medida...',
+                  name: t('mealplan.measureAutocomplete.addNew'),
                   isAdd: true,
                   foodId: '',
                   quantityInGrams: 0,
@@ -65,7 +67,7 @@ export default function HomemadeMeasureAutocomplete({ foodId, value, onChange }:
                     if (foodId && !filtered.some((o) => o.isAdd)) {
                         filtered.unshift({
                             id: 'add-new',
-                            name: 'Adicionar nova medida...',
+                            name: t('mealplan.measureAutocomplete.addNew'),
                             isAdd: true,
                             foodId: '',
                             quantityInGrams: 0,
@@ -94,7 +96,7 @@ export default function HomemadeMeasureAutocomplete({ foodId, value, onChange }:
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1 }}>
                                 {option.name}
                                 {option.isGlobal && (
-                                    <Tooltip title="Padrão do sistema">
+                                    <Tooltip title={t('mealplan.measureAutocomplete.systemDefault')}>
                                         <Box component="span" sx={{ display: 'inline-flex' }}>
                                             <Iconify
                                                 icon="solar:global-bold"
@@ -111,7 +113,7 @@ export default function HomemadeMeasureAutocomplete({ foodId, value, onChange }:
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        label="Medida caseira"
+                        label={t('mealplan.measureAutocomplete.label')}
                         InputProps={{
                             ...params.InputProps,
                             endAdornment: (

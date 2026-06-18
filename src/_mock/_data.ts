@@ -43,24 +43,19 @@ export const _patient = [...Array(24)].map((_, index) => ({
 
 export const _langs = [
   {
-    value: 'br',
+    value: 'pt-BR',
     label: 'Português',
     icon: '/assets/icons/flags/ic-flag-br.svg',
   },
   {
-    value: 'en',
+    value: 'en-US',
     label: 'English',
     icon: '/assets/icons/flags/ic-flag-en.svg',
   },
   {
-    value: 'de',
-    label: 'German',
-    icon: '/assets/icons/flags/ic-flag-de.svg',
-  },
-  {
-    value: 'fr',
-    label: 'French',
-    icon: '/assets/icons/flags/ic-flag-fr.svg',
+    value: 'es',
+    label: 'Español',
+    icon: '/assets/icons/flags/ic-flag-es.svg',
   },
 ];
 

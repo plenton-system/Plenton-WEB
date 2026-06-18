@@ -1,5 +1,7 @@
 import type { FormikProps } from 'formik';
 
+import { useTranslation } from 'react-i18next';
+
 import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
@@ -17,11 +19,13 @@ type Props = { formik: FormikProps<PatientFormValues> };
 // ----------------------------------------------------------------------
 
 export default function PatientDataTab({ formik }: Props) {
+    const { t } = useTranslation();
+
     return (
         <Stack spacing={2}>
             <TextField
                 name="name"
-                label="Nome Completo"
+                label={t('patient.data.name')}
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 error={formik.touched.name && Boolean(formik.errors.name)}
@@ -32,7 +36,7 @@ export default function PatientDataTab({ formik }: Props) {
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                 <TextField
                     name="document"
-                    label="CPF"
+                    label={t('patient.data.document')}
                     value={formik.values.document}
                     onChange={(e) => formik.setFieldValue('document', maskCPF(e.target.value))}
                     error={formik.touched.document && Boolean(formik.errors.document)}
@@ -42,7 +46,7 @@ export default function PatientDataTab({ formik }: Props) {
                 />
                 <TextField
                     name="phone"
-                    label="Telefone"
+                    label={t('patient.data.phone')}
                     value={formik.values.phone}
                     onChange={formik.handleChange}
                     error={formik.touched.phone && Boolean(formik.errors.phone)}
@@ -51,7 +55,7 @@ export default function PatientDataTab({ formik }: Props) {
                 />
                 <TextField
                     name="email"
-                    label="E-mail"
+                    label={t('patient.data.email')}
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     error={formik.touched.email && Boolean(formik.errors.email)}
@@ -63,7 +67,7 @@ export default function PatientDataTab({ formik }: Props) {
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                 <TextField
                     name="birthDate"
-                    label="Data de Nascimento"
+                    label={t('patient.data.birthDate')}
                     type="date"
                     value={formik.values.birthDate}
                     onChange={formik.handleChange}
@@ -75,7 +79,7 @@ export default function PatientDataTab({ formik }: Props) {
                 <TextField
                     select
                     name="gender"
-                    label="Gênero"
+                    label={t('patient.data.gender')}
                     value={formik.values.gender}
                     onChange={formik.handleChange}
                     error={formik.touched.gender && Boolean(formik.errors.gender)}
@@ -83,9 +87,9 @@ export default function PatientDataTab({ formik }: Props) {
                     slotProps={{ select: { displayEmpty: true } }}
                     sx={{ flex: 1 }}
                 >
-                    <MenuItem value="">Selecione</MenuItem>
-                    <MenuItem value={PatientEnum.Gender.Male}>Masculino</MenuItem>
-                    <MenuItem value={PatientEnum.Gender.Female}>Feminino</MenuItem>
+                    <MenuItem value="">{t('patient.gender.select')}</MenuItem>
+                    <MenuItem value={PatientEnum.Gender.Male}>{t('patient.gender.male')}</MenuItem>
+                    <MenuItem value={PatientEnum.Gender.Female}>{t('patient.gender.female')}</MenuItem>
                 </TextField>
             </Stack>
         </Stack>

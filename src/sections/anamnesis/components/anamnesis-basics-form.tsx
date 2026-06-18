@@ -1,5 +1,7 @@
 import type { Basics } from 'src/types';
 
+import { useTranslation } from 'react-i18next';
+
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -17,16 +19,18 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export function AnamnesisBasicsForm({ value, onChange, disabled = false }: Props) {
+    const { t } = useTranslation();
+
     return (
         <Card variant="outlined">
             <CardHeader
-                title="Anamnese - Informações básicas"
-                subheader="Defina um título e, opcionalmente, uma descrição."
+                title={t('anamnesis.basics.cardTitle')}
+                subheader={t('anamnesis.basics.cardSubheader')}
             />
             <CardContent>
                 <Stack spacing={2}>
                     <TextField
-                        label="Título"
+                        label={t('anamnesis.basics.title')}
                         value={value.title}
                         onChange={(e) => onChange({ title: e.target.value })}
                         fullWidth
@@ -34,7 +38,7 @@ export function AnamnesisBasicsForm({ value, onChange, disabled = false }: Props
                         required
                     />
                     <TextField
-                        label="Descrição (opcional)"
+                        label={t('anamnesis.basics.description')}
                         value={value.description ?? ''}
                         onChange={(e) => onChange({ description: e.target.value })}
                         fullWidth

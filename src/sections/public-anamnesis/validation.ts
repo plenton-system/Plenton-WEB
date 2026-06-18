@@ -1,3 +1,4 @@
+import type { TFunction } from 'i18next';
 import type { PublicOpenResponse } from 'src/types';
 
 import * as Yup from 'yup';
@@ -8,7 +9,7 @@ import { asQuestionType } from './utils/public-anamnesis-utils';
 
 // ----------------------------------------------------------------------
 
-export function buildValidation(open: PublicOpenResponse) {
+export function buildValidation(open: PublicOpenResponse, t: TFunction) {
     const shape: Record<string, any> = {};
 
     for (const question of open.questions) {
@@ -19,7 +20,7 @@ export function buildValidation(open: PublicOpenResponse) {
                 let validator = Yup.string();
 
                 if (question.required) {
-                    validator = validator.trim().required('Obrigatório');
+                    validator = validator.trim().required(t('publicAnamnesis.validation.required'));
                 }
 
                 shape[question.id] = validator;
@@ -31,18 +32,18 @@ export function buildValidation(open: PublicOpenResponse) {
                     .transform((value, originalValue) =>
                         originalValue === '' || originalValue === null ? undefined : value
                     )
-                    .typeError('Informe um número válido');
+                    .typeError(t('publicAnamnesis.validation.numberInvalid'));
 
                 if (question.min != null) {
-                    validator = validator.min(question.min, `Mínimo: ${question.min}`);
+                    validator = validator.min(question.min, t('publicAnamnesis.validation.min', { min: question.min }));
                 }
 
                 if (question.max != null) {
-                    validator = validator.max(question.max, `Máximo: ${question.max}`);
+                    validator = validator.max(question.max, t('publicAnamnesis.validation.max', { max: question.max }));
                 }
 
                 if (question.required) {
-                    validator = validator.required('Obrigatório');
+                    validator = validator.required(t('publicAnamnesis.validation.required'));
                 }
 
                 shape[question.id] = validator;
@@ -53,7 +54,7 @@ export function buildValidation(open: PublicOpenResponse) {
                 let validator = Yup.string();
 
                 if (question.required) {
-                    validator = validator.required('Obrigatório');
+                    validator = validator.required(t('publicAnamnesis.validation.required'));
                 }
 
                 shape[question.id] = validator;
@@ -64,7 +65,7 @@ export function buildValidation(open: PublicOpenResponse) {
                 let validator = Yup.array().of(Yup.string());
 
                 if (question.required) {
-                    validator = validator.min(1, 'Selecione ao menos 1 opção');
+                    validator = validator.min(1, t('publicAnamnesis.validation.minOne'));
                 }
 
                 shape[question.id] = validator;

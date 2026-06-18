@@ -1,5 +1,7 @@
 import type { AnamnesisQuestionDto } from 'src/types';
 
+import { useTranslation } from 'react-i18next';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
@@ -29,16 +31,18 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export function AnamnesisPreviewDialog({ open, onClose, title, description, questions }: Props) {
+    const { t } = useTranslation();
+
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
-            <DialogTitle>Prévia do questionário</DialogTitle>
+            <DialogTitle>{t('anamnesis.preview.title')}</DialogTitle>
             <DialogContent dividers>
                 <Card variant="outlined">
-                    <CardHeader title={title || 'Sem título'} subheader={description ?? undefined} />
+                    <CardHeader title={title || t('anamnesis.preview.noTitle')} subheader={description ?? undefined} />
                     <CardContent>
                         <Stack spacing={2}>
                             {questions.length === 0 ? (
-                                <Typography color="text.secondary">Nenhuma pergunta adicionada.</Typography>
+                                <Typography color="text.secondary">{t('anamnesis.preview.empty')}</Typography>
                             ) : (
                                 questions.map((q) => (
                                     <Box key={q.id}>
@@ -46,7 +50,7 @@ export function AnamnesisPreviewDialog({ open, onClose, title, description, ques
                                             {q.label} {q.required && <span style={{ color: '#2e7d32' }}>*</span>}
                                         </Typography>
 
-                                        {q.type === QuestionType.Text && <TextField fullWidth placeholder="Sua resposta" />}
+                                        {q.type === QuestionType.Text && <TextField fullWidth placeholder={t('anamnesis.preview.yourAnswer')} />}
                                         {q.type === QuestionType.Number && (
                                             <TextField
                                                 fullWidth
@@ -60,7 +64,7 @@ export function AnamnesisPreviewDialog({ open, onClose, title, description, ques
                                             />
                                         )}
                                         {q.type === QuestionType.Boolean && (
-                                            <Stack direction="row" spacing={1}><Chip label="Sim" /><Chip label="Não" /></Stack>
+                                            <Stack direction="row" spacing={1}><Chip label={t('common.yes')} /><Chip label={t('common.no')} /></Stack>
                                         )}
                                         {(q.type === QuestionType.Select || q.type === QuestionType.MultiSelect) && (
                                             <Stack direction="row" spacing={1} flexWrap="wrap">
@@ -82,7 +86,7 @@ export function AnamnesisPreviewDialog({ open, onClose, title, description, ques
             </DialogContent>
             <DialogActions>
                 <Button variant="outlined" onClick={onClose}>
-                    Fechar
+                    {t('actions.close')}
                 </Button>
             </DialogActions>
         </Dialog>

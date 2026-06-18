@@ -1,0 +1,392 @@
+{
+  "language": {
+    "pt-BR": "Português",
+    "en-US": "English",
+    "es": "Español"
+  },
+  "actions": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "remove": "Remover",
+    "edit": "Editar",
+    "new": "Novo",
+    "search": "Buscar",
+    "confirm": "Confirmar",
+    "close": "Fechar"
+  },
+  "common": {
+    "yes": "Sim",
+    "no": "Não",
+    "loading": "Carregando..."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "patients": "Pacientes",
+    "appointments": "Consultas",
+    "workspace": "Área de trabalho",
+    "foods": "Alimentos",
+    "anamnesis": "Anamnese"
+  },
+  "notifications": {
+    "title": "Notificações",
+    "unread_one": "{{count}} não lida",
+    "unread_other": "{{count}} não lidas",
+    "markAll": "Marcar todas como lidas",
+    "recent": "Recentes",
+    "empty": "Nenhuma notificação"
+  },
+  "calendar": {
+    "today": "Hoje",
+    "month": "Mês",
+    "week": "Semana",
+    "day": "Dia"
+  },
+  "auth": {
+    "welcomeBack": "Bem-vindo de volta!",
+    "helloFriend": "Olá, amigo!",
+    "signInIntro": "Para manter a conexão conosco, faça login com suas informações pessoais",
+    "registerIntro": "Insira seus dados pessoais e comece sua jornada conosco",
+    "signInTitle": "Iniciar sessão",
+    "createAccount": "Criar conta",
+    "signIn": "Entrar",
+    "signingIn": "Entrando...",
+    "register": "Registrar",
+    "registering": "Criando conta...",
+    "forgotPassword": "Esqueceu a senha?",
+    "requiredLogin": "Por favor, preencha o e-mail e a senha.",
+    "requiredRegister": "Preencha nome, e-mail, senha, CPF e telefone.",
+    "requiredAddress": "Preencha o endereço completo: {{fields}}.",
+    "registerSuccess": "Cadastro efetuado! Faça login para continuar.",
+    "unknownError": "Erro desconhecido",
+    "createError": "Erro ao criar conta.",
+    "fields": {
+      "email": "E-mail",
+      "password": "Senha",
+      "name": "Nome completo",
+      "document": "CPF",
+      "passwordHint": "Mínimo 8 caracteres",
+      "crn": "CRN (opcional)",
+      "phone": "Telefone",
+      "zipCode": "CEP",
+      "street": "Rua/Avenida",
+      "number": "Número",
+      "neighborhood": "Bairro",
+      "city": "Cidade",
+      "state": "Estado"
+    }
+  },
+  "patient": {
+    "list": {
+      "title": "Pacientes",
+      "columns": {
+        "name": "Nome",
+        "birthDate": "Data de Nascimento",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "delete": {
+        "title": "Excluir Paciente",
+        "description": "Esta ação é irreversível. Deseja continuar?"
+      },
+      "deleteSuccess": "Paciente excluído com sucesso.",
+      "deleteError": "Falha ao excluir o paciente."
+    },
+    "form": {
+      "back": "Voltar",
+      "editTitle": "Editar Paciente",
+      "newTitle": "Novo Paciente",
+      "sectionIdentification": "Identificação",
+      "sectionAddress": "Endereço"
+    },
+    "tabs": { "personal": "Pessoais", "notes": "Anotações" },
+    "header": {
+      "changePhoto": "Trocar foto",
+      "addPhoto": "Adicionar foto",
+      "newPatient": "Novo paciente",
+      "years": "{{count}} anos",
+      "statusLabel": "Status"
+    },
+    "gender": { "male": "Masculino", "female": "Feminino", "other": "Outro", "select": "Selecione" },
+    "status": { "active": "Ativo", "pending": "Pendente", "pendingPayment": "Pagamento pendente", "inactive": "Inativo" },
+    "data": {
+      "name": "Nome Completo",
+      "document": "CPF",
+      "phone": "Telefone",
+      "email": "E-mail",
+      "birthDate": "Data de Nascimento",
+      "gender": "Gênero"
+    },
+    "address": { "zipCode": "CEP", "street": "Rua", "neighborhood": "Bairro", "city": "Cidade", "state": "Estado" },
+    "notes": { "label": "Observações" }
+  },
+  "appointment": {
+    "form": {
+      "editTitle": "Editar Consulta",
+      "newTitle": "Nova Consulta",
+      "patient": "Paciente",
+      "select": "Selecione...",
+      "selectedPatient": "Paciente selecionado",
+      "dateTime": "Data e Hora",
+      "status": "Status",
+      "color": "Cor",
+      "observation": "Observação"
+    },
+    "status": { "scheduled": "Agendada", "completed": "Concluída", "canceled": "Cancelada" },
+    "delete": { "title": "Excluir consulta", "description": "Esta ação é irreversível. Deseja continuar?" }
+  },
+  "overview": {
+    "welcome": "Olá, bem-vindo de volta 👋",
+    "widgets": {
+      "activePatients": "Pacientes ativos",
+      "completedAppointments": "Consultas realizadas",
+      "returnRate": "Taxa de retorno",
+      "attendanceRate": "Taxa de comparecimento"
+    },
+    "tasks": { "title": "Consultas pendentes" },
+    "bmi": { "title": "IMC médio (últimos 12 meses)", "subheader": "Último IMC de cada paciente/mês" }
+  },
+  "food": {
+    "list": {
+      "title": "Alimentos",
+      "tabs": { "custom": "Meus alimentos", "taco": "TACO" },
+      "search": "Buscar alimento",
+      "columns": { "description": "Descrição", "group": "Grupo", "kcal": "kcal", "protein": "Prot. (g)", "carbs": "Carb. (g)", "fat": "Gord. (g)", "actions": "Ações" },
+      "delete": { "title": "Excluir Alimento", "description": "Esta ação é irreversível. Deseja continuar?", "onlyCustom": "Só é possível excluir alimentos da aba Meus alimentos." },
+      "deleteSuccess": "Alimento excluído com sucesso.",
+      "deleteError": "Falha ao excluir alimento."
+    },
+    "form": {
+      "editTitle": "Editar alimento",
+      "newTitle": "Novo alimento",
+      "description": "Descrição",
+      "group": "Grupo alimentar",
+      "groupSimple": "Grupo",
+      "select": "Selecione...",
+      "addGroup": "+ Adicionar novo grupo...",
+      "newGroupPrompt": "Digite o nome do novo grupo alimentar:",
+      "portion": "Porção (g)",
+      "energy": "Energia (kcal)",
+      "kcal": "kcal",
+      "protein": "Proteína (g)",
+      "carbs": "Carboidrato (g)",
+      "fat": "Gordura (g)",
+      "saveError": "Erro ao salvar alimento",
+      "sections": { "mainMacros": "Macronutrientes principais", "detailedMacros": "Macronutrientes detalhados", "micros": "Micronutrientes", "homemade": "Medidas caseiras" },
+      "homemadeDesc": "Descrição da medida caseira",
+      "homemadeGrams": "Quantidade em gramas",
+      "removeMeasure": "Remover",
+      "addMeasure": "Adicionar medida caseira"
+    },
+    "nutrients": {
+      "carbohydrates": "Carboidratos detalhado (g)",
+      "proteins": "Proteínas detalhado (g)",
+      "fats": "Gorduras detalhado (g)",
+      "sugar": "Açúcar (g)",
+      "vitaminA": "Vitamina A (mcg)",
+      "vitaminC": "Vitamina C (mg)",
+      "vitaminD": "Vitamina D (mcg)",
+      "vitaminE": "Vitamina E (mg)",
+      "vitaminK": "Vitamina K (mcg)",
+      "vitaminB1": "Vitamina B1 (mg)",
+      "vitaminB2": "Vitamina B2 (mg)",
+      "vitaminB3": "Vitamina B3 (mg)",
+      "vitaminB5": "Vitamina B5 (mg)",
+      "vitaminB6": "Vitamina B6 (mg)",
+      "vitaminB7": "Vitamina B7 (mcg)",
+      "vitaminB9": "Vitamina B9 (mcg)",
+      "vitaminB12": "Vitamina B12 (mcg)",
+      "calcium": "Cálcio (mg)",
+      "phosphorus": "Fósforo (mg)",
+      "magnesium": "Magnésio (mg)",
+      "sodium": "Sódio (mg)",
+      "potassium": "Potássio (mg)",
+      "iron": "Ferro (mg)",
+      "zinc": "Zinco (mg)",
+      "copper": "Cobre (mg)",
+      "manganese": "Manganês (mg)",
+      "selenium": "Selênio (mcg)",
+      "cholesterol": "Colesterol (mg)"
+    }
+  },
+  "mealplan": {
+    "list": {
+      "title": "Planos alimentares",
+      "loading": "Carregando planos...",
+      "empty": "Nenhum plano cadastrado.",
+      "updated": "Atualizado: {{date}}",
+      "allDays": "Todos os dias",
+      "delivery": "Entrega: {{value}}",
+      "mealsCount_one": "{{count}} refeição",
+      "mealsCount_other": "{{count}} refeições",
+      "itemsCount_one": "{{count}} item",
+      "itemsCount_other": "{{count}} itens",
+      "columns": { "name": "Nome", "status": "Status", "days": "Dias", "resume": "Resumo", "updatedAt": "Última atualização", "delivery": "Entrega", "actions": "Ações" }
+    },
+    "status": { "active": "Ativo", "inactive": "Inativo", "suspended": "Suspenso" },
+    "days": { "sun": "Dom", "mon": "Seg", "tue": "Ter", "wed": "Qua", "thu": "Qui", "fri": "Sex", "sat": "Sáb" },
+    "form": {
+      "name": "Nome do plano",
+      "status": "Status",
+      "daysOfWeek": "Dias da semana",
+      "all": "Todos",
+      "selectAllDays": "Selecionar todos os dias",
+      "clearAllDays": "Limpar todos os dias",
+      "savePlan": "Salvar Plano",
+      "saveError": "Erro ao salvar o plano",
+      "errorsSummary": "Existem erros nas refeições ou itens. Verifique se todos os campos obrigatórios estão preenchidos."
+    },
+    "meals": {
+      "title": "Refeições",
+      "add": "Adicionar refeição",
+      "empty": "Nenhuma refeição adicionada.",
+      "foods": "Alimentos da refeição",
+      "noMainFoods": "Nenhum alimento principal cadastrado.",
+      "substitutes": "Substitutas",
+      "noSubstitutes": "Nenhuma substituta cadastrada.",
+      "noSubstituteFoods": "Nenhum alimento cadastrado nesta substituta.",
+      "unnamedSubstitute": "Substituta sem nome",
+      "noDetails": "Nenhum alimento ou substituta cadastrados.",
+      "unnamedFood": "Alimento sem descrição",
+      "noQuantity": "Sem quantidade informada",
+      "expand": "Expandir {{name}}",
+      "collapse": "Recolher {{name}}",
+      "columns": { "name": "Nome", "time": "Hora", "protein": "Proteína (g)", "carbs": "Carboidrato (g)", "fat": "Lipídeo (g)", "calories": "Calorias (kcal)", "actions": "Ações" }
+    },
+    "mealDialog": {
+      "editTitle": "Editar refeição",
+      "newTitle": "Nova refeição",
+      "description": "Descrição",
+      "substituteVariations": "Variações substitutas",
+      "mealFallback": "Refeição"
+    },
+    "items": {
+      "title": "Itens da refeição",
+      "add": "Adicionar item",
+      "empty": "Nenhum item adicionado.",
+      "columns": { "food": "Alimento", "quantity": "Qtd", "grams": "Gramas", "measure": "Medida", "optional": "Opcional", "order": "Ordem", "actions": "Ações" }
+    },
+    "substitutes": {
+      "ofParent": "Substitutas de",
+      "add": "Adicionar substituta",
+      "empty": "Nenhuma substituta adicionada.",
+      "columns": { "name": "Nome", "time": "Hora", "items": "Itens", "actions": "Ações" }
+    },
+    "itemDialog": {
+      "editTitle": "Editar item",
+      "newTitle": "Novo item",
+      "quantity": "Quantidade",
+      "grams": "Gramas",
+      "portionLabel": "Rótulo de porção",
+      "order": "Ordem",
+      "optional": "Opcional",
+      "notes": "Observações"
+    },
+    "subDialog": { "editTitle": "Editar substituta", "newTitle": "Nova substituta" },
+    "measureDialog": {
+      "editTitle": "Editar medida",
+      "newTitle": "Nova medida",
+      "description": "Descrição",
+      "grams": "Quantidade em gramas",
+      "saving": "Salvando..."
+    },
+    "foodAutocomplete": { "label": "Alimento", "placeholder": "Digite para buscar..." },
+    "measureAutocomplete": { "label": "Medida caseira", "addNew": "Adicionar nova medida...", "systemDefault": "Padrão do sistema" }
+  },
+  "anamnesis": {
+    "list": {
+      "title": "Questionários Anamnese",
+      "delete": { "title": "Excluir questionário", "description": "Esta ação é irreversível. Deseja continuar?" },
+      "deleteSuccess": "Questionário excluído com sucesso.",
+      "deleteError": "Falha ao excluir o questionário.",
+      "columns": { "title": "Titulo", "description": "Descrição", "actions": "Ações" }
+    },
+    "basics": {
+      "cardTitle": "Anamnese - Informações básicas",
+      "cardSubheader": "Defina um título e, opcionalmente, uma descrição.",
+      "title": "Título",
+      "description": "Descrição (opcional)"
+    },
+    "questions": {
+      "count": "Perguntas ({{count}})",
+      "add": "Adicionar pergunta",
+      "empty": "Nenhuma pergunta ainda. Clique em “Adicionar pergunta”.",
+      "defaultLabel": "Nova pergunta",
+      "copyLabel": "{{label}} (cópia)"
+    },
+    "card": {
+      "type": "Tipo",
+      "types": { "text": "Texto", "number": "Número", "boolean": "Sim/Não", "select": "Múltipla escolha (única)", "multiSelect": "Múltipla escolha (várias)" },
+      "question": "Pergunta",
+      "required": "Obrigatória",
+      "moveUp": "Mover para cima",
+      "moveDown": "Mover para baixo",
+      "duplicate": "Duplicar",
+      "remove": "Remover",
+      "help": "Ajuda (opcional)",
+      "min": "Mínimo",
+      "max": "Máximo",
+      "optionsBtn": "opções",
+      "optionsTitle": "Opções da pergunta",
+      "newOption": "Nova opção",
+      "add": "Adicionar",
+      "noOptions": "Nenhuma opção adicionada.",
+      "close": "Fechar"
+    },
+    "form": {
+      "preview": "Preview",
+      "exampleTitle": "Anamnese Nutricional - Modelo Base",
+      "exampleDescription": "Coleta inicial de informações para avaliação. Edite conforme sua prática.",
+      "exampleQ1": "Objetivo principal",
+      "exampleQ2": "Peso (kg)",
+      "exampleQ2Help": "Informe em kg",
+      "errTitleRequired": "Informe um título.",
+      "errLabelRequired": "Pergunta {{index}}: rótulo é obrigatório.",
+      "errMinMax": "Pergunta {{index}}: mínimo não pode ser maior que o máximo.",
+      "errMinOptions": "Pergunta {{index}}: inclua pelo menos 2 opções."
+    },
+    "preview": {
+      "title": "Prévia do questionário",
+      "noTitle": "Sem título",
+      "empty": "Nenhuma pergunta adicionada.",
+      "yourAnswer": "Sua resposta"
+    }
+  },
+  "publicAnamnesis": {
+    "view": {
+      "loading": "Carregando Questionário",
+      "brand": "Plenton · Anamnese",
+      "submitted": "Formulário enviado. Obrigado!",
+      "submittedWithDate": "Formulário enviado em {{date}}. Obrigado!",
+      "expires": "Este formulário expira em {{date}}.",
+      "confirmBeforeSubmit": "Confira suas respostas antes de enviar. Você não poderá alterá-las depois.",
+      "submit": "Enviar respostas",
+      "consentNote": "Suas respostas são tratadas conforme o termo de consentimento aceito."
+    },
+    "consent": {
+      "brand": "Plenton · Privacidade",
+      "termTitle": "Termo de tratamento de dados pessoais",
+      "termIntro": "Antes de começar a anamnese, leia atentamente o termo abaixo e confirme que está de acordo. Você pode revogar este consentimento a qualquer momento junto ao nutricionista responsável.",
+      "termHeader": "Termo de Consentimento (LGPD)",
+      "version": "versão {{version}}",
+      "accept": "Li e aceito o tratamento dos meus dados conforme o termo acima.",
+      "start": "Começar anamnese",
+      "lgpdNote": "Seus dados são tratados conforme a Lei nº 13.709/2018 (LGPD)."
+    },
+    "header": {
+      "status": "Status: {{status}}",
+      "expires": "Expira: {{date}}",
+      "saving": "Salvando...",
+      "draftSaved": "Rascunho salvo ✅",
+      "saveError": "Erro ao salvar ⚠️",
+      "submitted": "Formulário já enviado em {{date}}."
+    },
+    "validation": {
+      "required": "Obrigatório",
+      "numberInvalid": "Informe um número válido",
+      "min": "Mínimo: {{min}}",
+      "max": "Máximo: {{max}}",
+      "minOne": "Selecione ao menos 1 opção"
+    }
+  }
+}

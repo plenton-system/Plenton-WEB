@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
@@ -27,6 +28,7 @@ type MealDialogProps = {
 // ----------------------------------------------------------------------
 
 export default function MealDialog({ open, initial, onClose, onSave }: MealDialogProps) {
+    const { t } = useTranslation();
     const [meal, setMeal] = useState<MealDto>({
         name: '',
         description: '',
@@ -53,19 +55,19 @@ export default function MealDialog({ open, initial, onClose, onSave }: MealDialo
 
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
-            <DialogTitle>{initial ? 'Editar refeição' : 'Nova refeição'}</DialogTitle>
+            <DialogTitle>{initial ? t('mealplan.mealDialog.editTitle') : t('mealplan.mealDialog.newTitle')}</DialogTitle>
             <DialogContent dividers>
                 <Stack spacing={2} sx={{ mt: 0.5 }}>
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                         <TextField
-                            label="Nome"
+                            label={t('mealplan.meals.columns.name')}
                             value={meal.name}
                             onChange={(e) => setMeal((v) => ({ ...v, name: e.target.value }))}
                             required
                             sx={{ flex: 1 }}
                         />
                         <TextField
-                            label="Hora"
+                            label={t('mealplan.meals.columns.time')}
                             type="time"
                             value={meal.time}
                             onChange={(e) => setMeal((v) => ({ ...v, time: e.target.value }))}
@@ -75,7 +77,7 @@ export default function MealDialog({ open, initial, onClose, onSave }: MealDialo
                         />
                     </Stack>
                     <TextField
-                        label="Descrição"
+                        label={t('mealplan.mealDialog.description')}
                         value={meal.description}
                         onChange={(e) => setMeal((v) => ({ ...v, description: e.target.value }))}
                         fullWidth
@@ -102,10 +104,10 @@ export default function MealDialog({ open, initial, onClose, onSave }: MealDialo
 
                     <Divider sx={{ my: 1.5 }} />
 
-                    <Typography variant="subtitle1">Variações substitutas</Typography>
+                    <Typography variant="subtitle1">{t('mealplan.mealDialog.substituteVariations')}</Typography>
                     <MealsSubstituteSection
                         substitutes={meal.substitute}
-                        parentName={meal.name || 'Refeição'}
+                        parentName={meal.name || t('mealplan.mealDialog.mealFallback')}
                         onAdd={(sub) =>
                             setMeal((v) => ({ ...v, substitute: [...v.substitute, { ...sub, isSubstitute: true }] }))
                         }
@@ -127,7 +129,7 @@ export default function MealDialog({ open, initial, onClose, onSave }: MealDialo
                 </Stack>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Cancelar</Button>
+                <Button onClick={onClose}>{t('actions.cancel')}</Button>
                 <Button
                     variant="contained"
                     onClick={() => {
@@ -135,7 +137,7 @@ export default function MealDialog({ open, initial, onClose, onSave }: MealDialo
                         onSave(meal);
                     }}
                 >
-                    Salvar
+                    {t('actions.save')}
                 </Button>
             </DialogActions>
         </Dialog>

@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import { JwtUtils } from 'src/utils/jwt-utils';
 
+import i18n from 'src/i18n';
+
 // ----------------------------------------------------------------------
 
 const BASE_URL = import.meta.env.VITE_BASE_URL ?? 'http://localhost:5226';
@@ -115,8 +117,11 @@ export function abortAllRequests() {
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const token = HttpAuthState.getAccessToken();
 
+    // Idioma ativo da UI → a API resolve a cultura via Accept-Language (precedência sobre a claim).
+    config.headers = config.headers ?? {};
+    config.headers['Accept-Language'] = i18n.resolvedLanguage ?? i18n.language ?? 'pt-BR';
+
     if (isNgrok) {
-        config.headers = config.headers ?? {};
         (config.headers as any)['ngrok-skip-browser-warning'] = 'true';
     }
 

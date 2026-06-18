@@ -110,6 +110,8 @@ export type AnamnesisSendPublicLinkRequestDto = {
     patientId?: string | null;
     /** Data/hora UTC em que o link deve expirar (opcional) */
     expiresAtUtc?: string | null;
+    /** Idioma do paciente; quando omitido, usa o idioma ativo do nutricionista */
+    language?: string | null;
 };
 
 /**
@@ -141,6 +143,8 @@ export type AnamnesisSendPublicEmailRequestDto = {
     patientId?: string | null;
     /** Data/hora UTC de expiração (opcional) */
     expiresAtUtc?: string | null;
+    /** Idioma do paciente; quando omitido, usa o idioma ativo do nutricionista */
+    language?: string | null;
 };
 
 /**

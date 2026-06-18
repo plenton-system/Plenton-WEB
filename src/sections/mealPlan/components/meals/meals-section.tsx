@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -39,11 +40,10 @@ type MockMacros = {
     calories: number;
 };
 
-const EMPTY_DETAIL_MESSAGE = 'Nenhum alimento ou substituta cadastrados.';
-
 // ----------------------------------------------------------------------
 
 export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) {
+    const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [expandedRows, setExpandedRows] = useState<Record<number, boolean>>({});
     const [editing, setEditing] = useState<{ index: number; value: MealDto } | null>(null);
@@ -59,7 +59,7 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
         <Box>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                 <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    Refeições
+                    {t('mealplan.meals.title')}
                 </Typography>
                 <Button
                     startIcon={<AddIcon />}
@@ -69,7 +69,7 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
                         setOpen(true);
                     }}
                 >
-                    Adicionar refeição
+                    {t('mealplan.meals.add')}
                 </Button>
             </Box>
 
@@ -78,13 +78,13 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
                     <TableHead>
                         <TableRow>
                             <TableCell width={56} />
-                            <TableCell>Nome</TableCell>
-                            <TableCell>Hora</TableCell>
-                            <TableCell>Proteína (g)</TableCell>
-                            <TableCell>Carboidrato (g)</TableCell>
-                            <TableCell>Lipídeo (g)</TableCell>
-                            <TableCell>Calorias (kcal)</TableCell>
-                            <TableCell align="center">Ações</TableCell>
+                            <TableCell>{t('mealplan.meals.columns.name')}</TableCell>
+                            <TableCell>{t('mealplan.meals.columns.time')}</TableCell>
+                            <TableCell>{t('mealplan.meals.columns.protein')}</TableCell>
+                            <TableCell>{t('mealplan.meals.columns.carbs')}</TableCell>
+                            <TableCell>{t('mealplan.meals.columns.fat')}</TableCell>
+                            <TableCell>{t('mealplan.meals.columns.calories')}</TableCell>
+                            <TableCell align="center">{t('mealplan.meals.columns.actions')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -93,7 +93,7 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
                                 const totals = buildMockMacros(meal);
                                 const actions: RowActionItem[] = [
                                     {
-                                        label: 'Editar',
+                                        label: t('actions.edit'),
                                         icon: 'solar:pen-bold',
                                         onClick: () => {
                                             setEditing({ index, value: meal });
@@ -101,7 +101,7 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
                                         },
                                     },
                                     {
-                                        label: 'Remover',
+                                        label: t('actions.remove'),
                                         icon: 'solar:trash-bin-trash-bold',
                                         color: 'error',
                                         onClick: () => onRemove(index),
@@ -117,8 +117,8 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
                                                     onClick={() => toggleExpandedRow(index)}
                                                     aria-label={
                                                         expandedRows[index]
-                                                            ? `Recolher ${meal.name}`
-                                                            : `Expandir ${meal.name}`
+                                                            ? t('mealplan.meals.collapse', { name: meal.name })
+                                                            : t('mealplan.meals.expand', { name: meal.name })
                                                     }
                                                 >
                                                     {expandedRows[index] ? (
@@ -147,11 +147,11 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
                                                             <Stack spacing={2}>
                                                                 <Box>
                                                                     <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                                                                        Alimentos da refeição
+                                                                        {t('mealplan.meals.foods')}
                                                                     </Typography>
                                                                     <MealItemsList
                                                                         items={meal.items}
-                                                                        emptyMessage="Nenhum alimento principal cadastrado."
+                                                                        emptyMessage={t('mealplan.meals.noMainFoods')}
                                                                     />
                                                                 </Box>
 
@@ -159,7 +159,7 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
 
                                                                 <Box>
                                                                     <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                                                                        Substitutas
+                                                                        {t('mealplan.meals.substitutes')}
                                                                     </Typography>
 
                                                                     {meal.substitute?.length ? (
@@ -175,12 +175,12 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
                                                                                     }}
                                                                                 >
                                                                                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                                                                        {substitute.name || 'Substituta sem nome'}
+                                                                                        {substitute.name || t('mealplan.meals.unnamedSubstitute')}
                                                                                         {substitute.time ? ` • ${substitute.time}` : ''}
                                                                                     </Typography>
                                                                                     <MealItemsList
                                                                                         items={substitute.items}
-                                                                                        emptyMessage="Nenhum alimento cadastrado nesta substituta."
+                                                                                        emptyMessage={t('mealplan.meals.noSubstituteFoods')}
                                                                                         compact
                                                                                     />
                                                                                 </Box>
@@ -188,14 +188,14 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
                                                                         </Stack>
                                                                     ) : (
                                                                         <Typography variant="body2" color="text.secondary">
-                                                                            Nenhuma substituta cadastrada.
+                                                                            {t('mealplan.meals.noSubstitutes')}
                                                                         </Typography>
                                                                     )}
                                                                 </Box>
                                                             </Stack>
                                                         ) : (
                                                             <Typography variant="body2" color="text.secondary">
-                                                                {EMPTY_DETAIL_MESSAGE}
+                                                                {t('mealplan.meals.noDetails')}
                                                             </Typography>
                                                         )}
                                                     </Box>
@@ -208,7 +208,7 @@ export default function MealsSection({ meals, onAdd, onEdit, onRemove }: Props) 
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
-                                    Nenhuma refeição adicionada.
+                                    {t('mealplan.meals.empty')}
                                 </TableCell>
                             </TableRow>
                         )}
@@ -243,6 +243,7 @@ function MealItemsList({
     emptyMessage: string;
     compact?: boolean;
 }) {
+    const { t } = useTranslation();
     if (!items?.length) {
         return (
             <Typography variant="body2" color="text.secondary">
@@ -256,10 +257,10 @@ function MealItemsList({
             {items.map((item, index) => (
                 <Box key={`${item.id ?? item.foodDto?.id ?? 'meal-item'}-${index}`}>
                     <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                        {item.foodDto?.description || 'Alimento sem descrição'}
+                        {item.foodDto?.description || t('mealplan.meals.unnamedFood')}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                        {buildItemDescription(item)}
+                        {buildItemDescription(item) || t('mealplan.meals.noQuantity')}
                     </Typography>
                 </Box>
             ))}
@@ -296,5 +297,5 @@ const buildItemDescription = (item: MealItemsDto) => {
         item.homemadeMeasureDto?.name || undefined,
     ].filter(Boolean);
 
-    return tokens.length ? tokens.join(' • ') : 'Sem quantidade informada';
+    return tokens.length ? tokens.join(' • ') : '';
 };

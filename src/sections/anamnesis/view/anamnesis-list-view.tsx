@@ -1,4 +1,5 @@
 import { useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -26,6 +27,7 @@ interface AnamnesisListViewProps {
 // ----------------------------------------------------------------------
 
 export function AnamsnesisListView({ onEdit, onCreate, onNotify }: AnamnesisListViewProps) {
+  const { t } = useTranslation();
   const confirm = useConfirm();
   const table = useTable({ initialOrderBy: 'title' });
 
@@ -62,9 +64,9 @@ export function AnamsnesisListView({ onEdit, onCreate, onNotify }: AnamnesisList
 
   const handleDelete = async (id: string) => {
     const ok = await confirm({
-      title: 'Excluir questionário',
-      description: 'Esta ação é irreversível. Deseja continuar?',
-      confirmText: 'Excluir',
+      title: t('anamnesis.list.delete.title'),
+      description: t('anamnesis.list.delete.description'),
+      confirmText: t('actions.delete'),
       destructive: true,
     });
 
@@ -74,9 +76,9 @@ export function AnamsnesisListView({ onEdit, onCreate, onNotify }: AnamnesisList
       await deleteAnamnesis?.(id);
 
       removeFromSelection?.(id);
-      onNotify?.({ kind: 'success', message: 'Questionário excluído com sucesso.' });
+      onNotify?.({ kind: 'success', message: t('anamnesis.list.deleteSuccess') });
     } catch (e: any) {
-      onNotify?.({ kind: 'error', message: e?.message ?? 'Falha ao excluir o questionário.' });
+      onNotify?.({ kind: 'error', message: e?.message ?? t('anamnesis.list.deleteError') });
     }
   };
 
@@ -84,7 +86,7 @@ export function AnamsnesisListView({ onEdit, onCreate, onNotify }: AnamnesisList
     <>
       <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          Questionários Anamnese
+          {t('anamnesis.list.title')}
         </Typography>
 
         <Button
@@ -93,7 +95,7 @@ export function AnamsnesisListView({ onEdit, onCreate, onNotify }: AnamnesisList
           disabled={loading}
           onClick={onCreate}
         >
-          Novo
+          {t('actions.new')}
         </Button>
       </Box>
 
@@ -121,9 +123,9 @@ export function AnamsnesisListView({ onEdit, onCreate, onNotify }: AnamnesisList
         filterValue={filters.value}
         setFilterValue={(x: string) => setFilters((f) => ({ ...f, value: x }))}
         headLabel={[
-          { id: 'title', label: 'Titulo' },
-          { id: 'description', label: 'Descrição' },
-          { id: 'actions', label: 'Ações', sortable: false, align: 'center' },
+          { id: 'title', label: t('anamnesis.list.columns.title') },
+          { id: 'description', label: t('anamnesis.list.columns.description') },
+          { id: 'actions', label: t('anamnesis.list.columns.actions'), sortable: false, align: 'center' },
         ]}
         renderRow={(row, isSelected, onRowSelect) => (
           <AnamneseTableRow

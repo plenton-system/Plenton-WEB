@@ -1,6 +1,8 @@
 import type { FormikProps } from 'formik';
 import type { PublicOpenResponse } from 'src/types';
 
+import { useTranslation } from 'react-i18next';
+
 import {
     Box,
     Select,
@@ -38,6 +40,7 @@ export function PublicAnamnesisQuestion({
     formik,
     readOnly,
 }: Props) {
+    const { t } = useTranslation();
     const questionType = asQuestionType(question.type);
     const fieldName = String(question.id);
 
@@ -114,7 +117,7 @@ export function PublicAnamnesisQuestion({
                                     disabled={readOnly}
                                 />
                             )}
-                            label="Sim"
+                            label={t('common.yes')}
                         />
 
                         {showError && (

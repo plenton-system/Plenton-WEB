@@ -3,6 +3,7 @@ import type { FocusEvent, ChangeEvent } from 'react';
 import type { FoodGroup, FoodFormValues } from 'src/types';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getIn, useFormik, FastField, FieldArray, FormikProvider } from 'formik';
 
 import Box from '@mui/material/Box';
@@ -32,39 +33,39 @@ type Props = {
 type MacronutrientKey = keyof FoodFormValues['macronutrients'];
 type MicronutrientKey = keyof FoodFormValues['micronutrients'];
 
-const macronutrientFields: Array<{ key: MacronutrientKey; label: string }> = [
-  { key: 'carbohydrates', label: 'Carboidratos detalhado (g)' },
-  { key: 'proteins', label: 'Proteínas detalhado (g)' },
-  { key: 'fats', label: 'Gorduras detalhado (g)' },
-];
+const macronutrientFields = [
+  { key: 'carbohydrates', labelKey: 'food.nutrients.carbohydrates' },
+  { key: 'proteins', labelKey: 'food.nutrients.proteins' },
+  { key: 'fats', labelKey: 'food.nutrients.fats' },
+] as const satisfies ReadonlyArray<{ key: MacronutrientKey; labelKey: string }>;
 
-const micronutrientFields: Array<{ key: MicronutrientKey; label: string }> = [
-  { key: 'sugar', label: 'Açúcar (g)' },
-  { key: 'vitaminA', label: 'Vitamina A (mcg)' },
-  { key: 'vitaminC', label: 'Vitamina C (mg)' },
-  { key: 'vitaminD', label: 'Vitamina D (mcg)' },
-  { key: 'vitaminE', label: 'Vitamina E (mg)' },
-  { key: 'vitaminK', label: 'Vitamina K (mcg)' },
-  { key: 'vitaminB1', label: 'Vitamina B1 (mg)' },
-  { key: 'vitaminB2', label: 'Vitamina B2 (mg)' },
-  { key: 'vitaminB3', label: 'Vitamina B3 (mg)' },
-  { key: 'vitaminB5', label: 'Vitamina B5 (mg)' },
-  { key: 'vitaminB6', label: 'Vitamina B6 (mg)' },
-  { key: 'vitaminB7', label: 'Vitamina B7 (mcg)' },
-  { key: 'vitaminB9', label: 'Vitamina B9 (mcg)' },
-  { key: 'vitaminB12', label: 'Vitamina B12 (mcg)' },
-  { key: 'calcium', label: 'Cálcio (mg)' },
-  { key: 'phosphorus', label: 'Fósforo (mg)' },
-  { key: 'magnesium', label: 'Magnésio (mg)' },
-  { key: 'sodium', label: 'Sódio (mg)' },
-  { key: 'potassium', label: 'Potássio (mg)' },
-  { key: 'iron', label: 'Ferro (mg)' },
-  { key: 'zinc', label: 'Zinco (mg)' },
-  { key: 'copper', label: 'Cobre (mg)' },
-  { key: 'manganese', label: 'Manganês (mg)' },
-  { key: 'selenium', label: 'Selênio (mcg)' },
-  { key: 'cholesterol', label: 'Colesterol (mg)' },
-];
+const micronutrientFields = [
+  { key: 'sugar', labelKey: 'food.nutrients.sugar' },
+  { key: 'vitaminA', labelKey: 'food.nutrients.vitaminA' },
+  { key: 'vitaminC', labelKey: 'food.nutrients.vitaminC' },
+  { key: 'vitaminD', labelKey: 'food.nutrients.vitaminD' },
+  { key: 'vitaminE', labelKey: 'food.nutrients.vitaminE' },
+  { key: 'vitaminK', labelKey: 'food.nutrients.vitaminK' },
+  { key: 'vitaminB1', labelKey: 'food.nutrients.vitaminB1' },
+  { key: 'vitaminB2', labelKey: 'food.nutrients.vitaminB2' },
+  { key: 'vitaminB3', labelKey: 'food.nutrients.vitaminB3' },
+  { key: 'vitaminB5', labelKey: 'food.nutrients.vitaminB5' },
+  { key: 'vitaminB6', labelKey: 'food.nutrients.vitaminB6' },
+  { key: 'vitaminB7', labelKey: 'food.nutrients.vitaminB7' },
+  { key: 'vitaminB9', labelKey: 'food.nutrients.vitaminB9' },
+  { key: 'vitaminB12', labelKey: 'food.nutrients.vitaminB12' },
+  { key: 'calcium', labelKey: 'food.nutrients.calcium' },
+  { key: 'phosphorus', labelKey: 'food.nutrients.phosphorus' },
+  { key: 'magnesium', labelKey: 'food.nutrients.magnesium' },
+  { key: 'sodium', labelKey: 'food.nutrients.sodium' },
+  { key: 'potassium', labelKey: 'food.nutrients.potassium' },
+  { key: 'iron', labelKey: 'food.nutrients.iron' },
+  { key: 'zinc', labelKey: 'food.nutrients.zinc' },
+  { key: 'copper', labelKey: 'food.nutrients.copper' },
+  { key: 'manganese', labelKey: 'food.nutrients.manganese' },
+  { key: 'selenium', labelKey: 'food.nutrients.selenium' },
+  { key: 'cholesterol', labelKey: 'food.nutrients.cholesterol' },
+] as const satisfies ReadonlyArray<{ key: MicronutrientKey; labelKey: string }>;
 
 const emptyHomemadeMeasure = {
   description: '',
@@ -182,6 +183,7 @@ function FastFormikTextField({ name, isNumber = false, ...props }: FastFormikTex
 }
 
 export function FoodFormView({ foodId, onReturn }: Props) {
+  const { t } = useTranslation();
   const isEdit = !!foodId;
 
   const { data, loading, error, createOrUpdate } = useFoodDetail({
@@ -297,7 +299,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
         const result = await createOrUpdate(payload);
         if (result) onReturn();
       } catch (submitError) {
-        setLocalError((submitError as Error)?.message ?? 'Erro ao salvar alimento');
+        setLocalError((submitError as Error)?.message ?? t('food.form.saveError'));
       }
     },
   });
@@ -315,7 +317,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
     const selectedId = event.target.value;
 
     if (selectedId === CREATE_NEW_GROUP_VALUE) {
-      const createdName = window.prompt('Digite o nome do novo grupo alimentar:')?.trim();
+      const createdName = window.prompt(t('food.form.newGroupPrompt'))?.trim();
 
       if (!createdName) return;
 
@@ -341,7 +343,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
 
       <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          {isEdit ? 'Editar alimento' : 'Novo alimento'}
+          {isEdit ? t('food.form.editTitle') : t('food.form.newTitle')}
         </Typography>
       </Box>
 
@@ -349,7 +351,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
         <form onSubmit={formik.handleSubmit}>
           <Card variant="outlined" sx={{ p: 3 }}>
             <Stack spacing={3}>
-              <FastFormikTextField label="Descrição" name="description" fullWidth size="small" />
+              <FastFormikTextField label={t('food.form.description')} name="description" fullWidth size="small" />
 
               <Box
                 sx={{
@@ -360,7 +362,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
               >
                 <TextField
                   select
-                  label="Grupo alimentar"
+                  label={t('food.form.group')}
                   name="foodGroupId"
                   value={formik.values.foodGroupId ?? ''}
                   onChange={handleGroupChange}
@@ -370,16 +372,16 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                   fullWidth
                   size="small"
                 >
-                  <MenuItem value="">Selecione...</MenuItem>
+                  <MenuItem value="">{t('food.form.select')}</MenuItem>
                   {groupOptions.map((option) => (
                     <MenuItem key={`${option.id}-${option.name}`} value={option.id}>
                       {option.name}
                     </MenuItem>
                   ))}
-                  <MenuItem value={CREATE_NEW_GROUP_VALUE}>+ Adicionar novo grupo...</MenuItem>
+                  <MenuItem value={CREATE_NEW_GROUP_VALUE}>{t('food.form.addGroup')}</MenuItem>
                 </TextField>
                 <FastFormikTextField
-                  label="Porção (g)"
+                  label={t('food.form.portion')}
                   name="portionSize"
                   type="number"
                   isNumber
@@ -388,7 +390,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                 />
               </Box>
 
-              <Typography variant="subtitle2">Macronutrientes principais</Typography>
+              <Typography variant="subtitle2">{t('food.form.sections.mainMacros')}</Typography>
 
               <Box
                 sx={{
@@ -398,7 +400,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                 }}
               >
                 <FastFormikTextField
-                  label="Energia (kcal)"
+                  label={t('food.form.energy')}
                   name="energyKcal"
                   type="number"
                   isNumber
@@ -406,7 +408,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                   size="small"
                 />
                 <FastFormikTextField
-                  label="Proteína (g)"
+                  label={t('food.form.protein')}
                   name="protein"
                   type="number"
                   isNumber
@@ -414,7 +416,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                   size="small"
                 />
                 <FastFormikTextField
-                  label="Carboidrato (g)"
+                  label={t('food.form.carbs')}
                   name="carbs"
                   type="number"
                   isNumber
@@ -422,7 +424,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                   size="small"
                 />
                 <FastFormikTextField
-                  label="Gordura (g)"
+                  label={t('food.form.fat')}
                   name="fat"
                   type="number"
                   isNumber
@@ -431,7 +433,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                 />
               </Box>
 
-              <Typography variant="subtitle2">Macronutrientes detalhados</Typography>
+              <Typography variant="subtitle2">{t('food.form.sections.detailedMacros')}</Typography>
 
               <Box
                 sx={{
@@ -443,7 +445,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                 {macronutrientFields.map((field) => (
                   <FastFormikTextField
                     key={field.key}
-                    label={field.label}
+                    label={t(field.labelKey)}
                     name={`macronutrients.${field.key}`}
                     type="number"
                     isNumber
@@ -453,7 +455,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                 ))}
               </Box>
 
-              <Typography variant="subtitle2">Micronutrientes</Typography>
+              <Typography variant="subtitle2">{t('food.form.sections.micros')}</Typography>
 
               <Box
                 sx={{
@@ -469,7 +471,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                 {micronutrientFields.map((field) => (
                   <FastFormikTextField
                     key={field.key}
-                    label={field.label}
+                    label={t(field.labelKey)}
                     name={`micronutrients.${field.key}`}
                     type="number"
                     isNumber
@@ -479,7 +481,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                 ))}
               </Box>
 
-              <Typography variant="subtitle2">Medidas caseiras</Typography>
+              <Typography variant="subtitle2">{t('food.form.sections.homemade')}</Typography>
 
               <FieldArray
                 name="homemadeMeasures"
@@ -499,13 +501,13 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                         }}
                       >
                         <FastFormikTextField
-                          label="Descrição da medida caseira"
+                          label={t('food.form.homemadeDesc')}
                           name={`homemadeMeasures[${index}].description`}
                           fullWidth
                           size="small"
                         />
                         <FastFormikTextField
-                          label="Quantidade em gramas"
+                          label={t('food.form.homemadeGrams')}
                           name={`homemadeMeasures[${index}].quantityInGrams`}
                           type="number"
                           isNumber
@@ -521,7 +523,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                             color="error"
                             onClick={() => arrayHelpers.remove(index)}
                           >
-                            Remover
+                            {t('food.form.removeMeasure')}
                           </Button>
                         </Box>
                       </Box>
@@ -533,7 +535,7 @@ export function FoodFormView({ foodId, onReturn }: Props) {
                         variant="outlined"
                         onClick={() => arrayHelpers.push({ ...emptyHomemadeMeasure })}
                       >
-                        Adicionar medida caseira
+                        {t('food.form.addMeasure')}
                       </Button>
                     </Box>
                   </Stack>
@@ -556,10 +558,10 @@ export function FoodFormView({ foodId, onReturn }: Props) {
             }}
           >
             <Button variant="outlined" onClick={onReturn} disabled={loading}>
-              Cancelar
+              {t('actions.cancel')}
             </Button>
             <Button variant="contained" color="primary" type="submit" disabled={loading}>
-              {loading ? <CircularProgress size={24} /> : 'Salvar'}
+              {loading ? <CircularProgress size={24} /> : t('actions.save')}
             </Button>
           </Paper>
         </form>

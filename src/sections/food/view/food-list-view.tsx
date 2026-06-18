@@ -1,6 +1,7 @@
 import type { ChangeEvent } from 'react';
 
 import { useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -35,6 +36,7 @@ type FoodListViewProps = {
 // ----------------------------------------------------------------------
 
 export function FoodListView({ tab, onTabChange, onCreate, onEdit, onNotify }: FoodListViewProps) {
+  const { t } = useTranslation();
   const confirm = useConfirm();
   const table = useTable({ initialOrderBy: 'description' });
   const canCreateInCurrentTab = CREATE_ALLOWED_TABS.includes(tab);
@@ -83,14 +85,14 @@ export function FoodListView({ tab, onTabChange, onCreate, onEdit, onNotify }: F
 
   const handleDelete = async (id: string, source: FoodTab) => {
     if (source !== 'custom') {
-      onNotify?.({ kind: 'error', message: 'Só é possível excluir alimentos da aba Meus alimentos.' });
+      onNotify?.({ kind: 'error', message: t('food.list.delete.onlyCustom') });
       return;
     }
 
     const ok = await confirm({
-      title: 'Excluir Alimento',
-      description: 'Esta ação é irreversível. Deseja continuar?',
-      confirmText: 'Excluir',
+      title: t('food.list.delete.title'),
+      description: t('food.list.delete.description'),
+      confirmText: t('actions.delete'),
       destructive: true,
     });
 
@@ -100,9 +102,9 @@ export function FoodListView({ tab, onTabChange, onCreate, onEdit, onNotify }: F
       await deleteFood?.(id);
 
       removeFromSelection?.(id);
-      onNotify?.({ kind: 'success', message: 'Alimento excluído com sucesso.' });
+      onNotify?.({ kind: 'success', message: t('food.list.deleteSuccess') });
     } catch (e: any) {
-      onNotify?.({ kind: 'error', message: e?.message ?? 'Falha ao excluir alimento.' });
+      onNotify?.({ kind: 'error', message: e?.message ?? t('food.list.deleteError') });
     }
   };
 
@@ -121,7 +123,7 @@ export function FoodListView({ tab, onTabChange, onCreate, onEdit, onNotify }: F
     <>
       <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          Alimentos
+          {t('food.list.title')}
         </Typography>
         <Button
           variant="contained"
@@ -132,7 +134,7 @@ export function FoodListView({ tab, onTabChange, onCreate, onEdit, onNotify }: F
             onCreate?.(tab);
           }}
         >
-          Novo
+          {t('actions.new')}
         </Button>
       </Box>
       <GenericTable
@@ -160,13 +162,13 @@ export function FoodListView({ tab, onTabChange, onCreate, onEdit, onNotify }: F
         filterValue={filters.value ?? ''}
         setFilterValue={(x: string) => setFilters((f) => ({ ...f, value: x }))}
         headLabel={[
-          { id: 'description', label: 'Descrição' },
-          { id: 'group', label: 'Grupo' },
-          { id: 'energyKcal', label: 'kcal' },
-          { id: 'protein', label: 'Prot. (g)' },
-          { id: 'carbs', label: 'Carb. (g)' },
-          { id: 'fat', label: 'Gord. (g)' },
-          { id: 'actions', label: 'Ações', sortable: false, align: 'center', width: 96 },
+          { id: 'description', label: t('food.list.columns.description') },
+          { id: 'group', label: t('food.list.columns.group') },
+          { id: 'energyKcal', label: t('food.list.columns.kcal') },
+          { id: 'protein', label: t('food.list.columns.protein') },
+          { id: 'carbs', label: t('food.list.columns.carbs') },
+          { id: 'fat', label: t('food.list.columns.fat') },
+          { id: 'actions', label: t('food.list.columns.actions'), sortable: false, align: 'center', width: 96 },
         ]}
         renderRow={(row, selected, onRowSelect) => (
           <FoodTableRow
@@ -197,8 +199,8 @@ export function FoodListView({ tab, onTabChange, onCreate, onEdit, onNotify }: F
               allowScrollButtonsMobile
               sx={{ px: 2, pt: 1 }}
             >
-              <Tab label="Meus alimentos" value="custom" />
-              <Tab label="TACO" value="taco" />
+              <Tab label={t('food.list.tabs.custom')} value="custom" />
+              <Tab label={t('food.list.tabs.taco')} value="taco" />
             </Tabs>
           </>
         }

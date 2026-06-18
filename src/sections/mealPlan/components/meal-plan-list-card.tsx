@@ -1,6 +1,8 @@
+import type { TFunction } from 'i18next';
 import type { ReactNode } from 'react';
 
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -36,10 +38,13 @@ const DEFAULT_SORT_STATE: MealPlanSortState = {
   order: 'desc',
 };
 
-const STATUS_LABEL: Record<Exclude<MealPlanUiStatus, null>, string> = {
-  ACTIVE: 'Ativo',
-  INACTIVE: 'Inativo',
-  SUSPENDED: 'Suspenso',
+const STATUS_LABEL_KEY: Record<
+  Exclude<MealPlanUiStatus, null>,
+  'mealplan.status.active' | 'mealplan.status.inactive' | 'mealplan.status.suspended'
+> = {
+  ACTIVE: 'mealplan.status.active',
+  INACTIVE: 'mealplan.status.inactive',
+  SUSPENDED: 'mealplan.status.suspended',
 };
 
 const STATUS_COLOR: Record<Exclude<MealPlanUiStatus, null>, 'default' | 'warning' | 'success'> = {
@@ -55,7 +60,7 @@ const getStatusOrder = (status: MealPlanUiStatus) => {
   return 3;
 };
 
-const getStatusChip = (status: MealPlanUiStatus) => {
+const getStatusChip = (status: MealPlanUiStatus, t: TFunction) => {
   if (!status) {
     return (
       <Typography variant="body2" color="text.secondary">
@@ -67,7 +72,7 @@ const getStatusChip = (status: MealPlanUiStatus) => {
   return (
     <Chip
       size="small"
-      label={STATUS_LABEL[status]}
+      label={t(STATUS_LABEL_KEY[status])}
       color={STATUS_COLOR[status]}
       variant={status === 'SUSPENDED' ? 'outlined' : 'filled'}
     />
@@ -113,8 +118,8 @@ type MealPlanListCardProps = {
 // ----------------------------------------------------------------------
 
 export function MealPlanListCard({
-  title = 'Planos alimentares',
-  createLabel = 'Novo',
+  title,
+  createLabel,
   items,
   loading,
   sortState,
@@ -127,7 +132,10 @@ export function MealPlanListCard({
   renderStatus,
   renderRowActions,
 }: MealPlanListCardProps) {
+  const { t } = useTranslation();
   const [internalSortState, setInternalSortState] = useState<MealPlanSortState>(defaultSortState);
+  const resolvedTitle = title ?? t('mealplan.list.title');
+  const resolvedCreateLabel = createLabel ?? t('actions.new');
   const theme = useTheme();
   const isCompactLayout = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -183,7 +191,7 @@ export function MealPlanListCard({
         sx={{ mb: 2 }}
       >
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          {title}
+          {resolvedTitle}
         </Typography>
 
         {headerActions}
@@ -194,17 +202,17 @@ export function MealPlanListCard({
           startIcon={<AddIcon />}
           sx={{ width: { xs: '100%', sm: 'auto' } }}
         >
-          {createLabel}
+          {resolvedCreateLabel}
         </Button>
       </Stack>
 
-      {loading && <Loading inline message="Carregando planos..." />}
+      {loading && <Loading inline message={t('mealplan.list.loading')} />}
 
       {isCompactLayout ? (
         isEmpty ? (
           <Box sx={{ py: 3 }}>
             <Typography variant="body2" color="text.secondary" align="center">
-              Nenhum plano cadastrado.
+              {t('mealplan.list.empty')}
             </Typography>
           </Box>
         ) : (
@@ -227,7 +235,7 @@ export function MealPlanListCard({
                         {item.name}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        Atualizado: {item.updatedAt ?? '-'}
+                        {t('mealplan.list.updated', { date: item.updatedAt ?? '-' })}
                       </Typography>
                     </Box>
 
@@ -239,12 +247,12 @@ export function MealPlanListCard({
                           menuWidth={150}
                           actions={[
                             {
-                              label: 'Editar',
+                              label: t('actions.edit'),
                               icon: 'solar:pen-bold',
                               onClick: () => onEdit(item),
                             },
                             {
-                              label: 'Remover',
+                              label: t('actions.remove'),
                               icon: 'solar:trash-bin-trash-bold',
                               color: 'error',
                               disabled: !onDelete,
@@ -257,18 +265,18 @@ export function MealPlanListCard({
                   </Stack>
 
                   <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} flexWrap="wrap">
-                    <Box>{renderStatus ? renderStatus(item) : getStatusChip(item.status)}</Box>
+                    <Box>{renderStatus ? renderStatus(item) : getStatusChip(item.status, t)}</Box>
                     <Typography variant="body2" color="text.secondary">
-                      {item.days ?? 'Todos os dias'}
+                      {item.days ?? t('mealplan.list.allDays')}
                     </Typography>
                     <Typography variant="body2">
-                      {item.mealsCount ?? 0} {(item.mealsCount ?? 0) === 1 ? 'refeição' : 'refeições'} ·{' '}
-                      {item.itemsCount ?? 0} {(item.itemsCount ?? 0) === 1 ? 'item' : 'itens'}
+                      {t('mealplan.list.mealsCount', { count: item.mealsCount ?? 0 })} ·{' '}
+                      {t('mealplan.list.itemsCount', { count: item.itemsCount ?? 0 })}
                     </Typography>
                   </Stack>
 
                   <Typography variant="body2" color="text.secondary">
-                    Entrega: {item.lastDelivery ?? '—'}
+                    {t('mealplan.list.delivery', { value: item.lastDelivery ?? '—' })}
                   </Typography>
                 </Stack>
               </Card>
@@ -288,7 +296,7 @@ export function MealPlanListCard({
                     direction={currentSortState.orderBy === 'name' ? currentSortState.order : 'asc'}
                     onClick={() => handleSort('name')}
                   >
-                    Nome
+                    {t('mealplan.list.columns.name')}
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
@@ -299,7 +307,7 @@ export function MealPlanListCard({
                     direction={currentSortState.orderBy === 'status' ? currentSortState.order : 'asc'}
                     onClick={() => handleSort('status')}
                   >
-                    Status
+                    {t('mealplan.list.columns.status')}
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
@@ -310,7 +318,7 @@ export function MealPlanListCard({
                     direction={currentSortState.orderBy === 'days' ? currentSortState.order : 'asc'}
                     onClick={() => handleSort('days')}
                   >
-                    Dias
+                    {t('mealplan.list.columns.days')}
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
@@ -321,7 +329,7 @@ export function MealPlanListCard({
                     direction={currentSortState.orderBy === 'resume' ? currentSortState.order : 'asc'}
                     onClick={() => handleSort('resume')}
                   >
-                    Resumo
+                    {t('mealplan.list.columns.resume')}
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
@@ -336,7 +344,7 @@ export function MealPlanListCard({
                     }
                     onClick={() => handleSort('updatedAt')}
                   >
-                    Última atualização
+                    {t('mealplan.list.columns.updatedAt')}
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
@@ -351,10 +359,10 @@ export function MealPlanListCard({
                     }
                     onClick={() => handleSort('lastDelivery')}
                   >
-                    Entrega
+                    {t('mealplan.list.columns.delivery')}
                   </TableSortLabel>
                 </TableCell>
-                <TableCell align="center">Ações</TableCell>
+                <TableCell align="center">{t('mealplan.list.columns.actions')}</TableCell>
               </TableRow>
             </TableHead>
             {isEmpty ? (
@@ -362,7 +370,7 @@ export function MealPlanListCard({
                 <TableRow>
                   <TableCell colSpan={7} align="center">
                     <Typography variant="body2" color="text.secondary">
-                      Nenhum plano cadastrado.
+                      {t('mealplan.list.empty')}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -373,16 +381,16 @@ export function MealPlanListCard({
                   <TableRow key={item.id} hover>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>
-                      {renderStatus ? renderStatus(item) : getStatusChip(item.status)}
+                      {renderStatus ? renderStatus(item) : getStatusChip(item.status, t)}
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2" color="text.secondary">
-                        {item.days ?? 'Todos os dias'}
+                        {item.days ?? t('mealplan.list.allDays')}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2">
-                        {item.mealsCount ?? 0} refeições · {item.itemsCount ?? 0} itens
+                        {t('mealplan.list.mealsCount', { count: item.mealsCount ?? 0 })} · {t('mealplan.list.itemsCount', { count: item.itemsCount ?? 0 })}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -399,12 +407,12 @@ export function MealPlanListCard({
                           menuWidth={150}
                           actions={[
                             {
-                              label: 'Editar',
+                              label: t('actions.edit'),
                               icon: 'solar:pen-bold',
                               onClick: () => onEdit(item),
                             },
                             {
-                              label: 'Remover',
+                              label: t('actions.remove'),
                               icon: 'solar:trash-bin-trash-bold',
                               color: 'error',
                               disabled: !onDelete,

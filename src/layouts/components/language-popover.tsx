@@ -1,6 +1,7 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
@@ -8,6 +9,10 @@ import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
+
+import { useAuth } from 'src/hooks/common/use-auth';
+
+import { systemSettingsService } from 'src/services/systemSettings/systemSettingsService';
 
 // ----------------------------------------------------------------------
 
@@ -21,18 +26,39 @@ export type LanguagePopoverProps = IconButtonProps & {
 
 export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProps) {
   const { open, anchorEl, onClose, onOpen } = usePopover();
+  const { i18n } = useTranslation();
+  const { user } = useAuth();
 
-  const [locale, setLocale] = useState(data[0].value);
+  const currentValue = i18n.resolvedLanguage ?? i18n.language;
+  const currentLang = data.find((lang) => lang.value === currentValue) ?? data[0];
+
+  // Persiste a preferência no perfil (best-effort): a sessão atual já é coberta por
+  // localStorage (i18next) + header Accept-Language; aqui garantimos que persista entre
+  // dispositivos e alimente e-mails/notificações no idioma certo.
+  const syncProfileLanguage = useCallback(
+    async (lng: string) => {
+      if (!user?.id) return;
+      try {
+        const settings = await systemSettingsService.getByUserId(user.id);
+        await systemSettingsService.update({
+          ...settings,
+          preferenceDto: { ...settings.preferenceDto, preferredLanguage: lng },
+        });
+      } catch {
+        /* best-effort — ignora falhas de sincronização */
+      }
+    },
+    [user?.id]
+  );
 
   const handleChangeLang = useCallback(
     (newLang: string) => {
-      setLocale(newLang);
+      i18n.changeLanguage(newLang); // i18next persiste no localStorage automaticamente
       onClose();
+      void syncProfileLanguage(newLang);
     },
-    [onClose]
+    [i18n, onClose, syncProfileLanguage]
   );
-
-  const currentLang = data.find((lang) => lang.value === locale);
 
   const renderFlag = (label?: string, icon?: string) => (
     <Box

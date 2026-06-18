@@ -5,40 +5,46 @@ import { SvgColor } from 'src/components/svg-color';
 const icon = (name: string) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} />;
 
 export type NavItem = {
-  title: string;
+  title:
+    | 'nav.dashboard'
+    | 'nav.patients'
+    | 'nav.appointments'
+    | 'nav.workspace'
+    | 'nav.foods'
+    | 'nav.anamnesis';
   path: string;
   icon: React.ReactNode;
   info?: React.ReactNode;
 };
 
-export const navData = [
+export const navData: NavItem[] = [
   {
-    title: 'Dashboard',
+    title: 'nav.dashboard',
     path: '/dashboard',
     icon: icon('ic-analytics'),
   },
   {
-    title: 'Paciente',
+    title: 'nav.patients',
     path: '/patient',
     icon: icon('ic-user'),
   },
   {
-    title: 'Consulta',
+    title: 'nav.appointments',
     path: '/appointment',
     icon: icon('ic-calendar'),
   },
   {
-    title: 'Workspace',
+    title: 'nav.workspace',
     path: '/workspace',
     icon: icon('ic-folder'),
   },
   {
-    title: 'Alimentos',
+    title: 'nav.foods',
     path: '/food',
     icon: icon('ic-cart'),
   },
   {
-    title: 'Anamnese',
+    title: 'nav.anamnesis',
     path: '/anamnesis',
     icon: icon('ic-clipboard'),
   },

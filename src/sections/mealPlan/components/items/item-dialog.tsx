@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
@@ -27,6 +28,7 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export default function ItemDialog({ open, initial, onClose, onSave }: Props) {
+    const { t } = useTranslation();
     const [it, setIt] = useState<MealItemsDto>({
         foodDto: { id: '', description: '' },
         quantity: null,
@@ -61,14 +63,14 @@ export default function ItemDialog({ open, initial, onClose, onSave }: Props) {
 
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
-            <DialogTitle>{initial ? 'Editar item' : 'Novo item'}</DialogTitle>
+            <DialogTitle>{initial ? t('mealplan.itemDialog.editTitle') : t('mealplan.itemDialog.newTitle')}</DialogTitle>
             <DialogContent dividers>
                 <Stack spacing={2} sx={{ mt: 0.5 }}>
                     <FoodAutocomplete value={it.foodDto} onChange={(v) => setIt((x) => ({ ...x, foodDto: v }))} />
 
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                         <TextField
-                            label="Quantidade"
+                            label={t('mealplan.itemDialog.quantity')}
                             type="number"
                             value={it.quantity ?? ''}
                             onChange={(e) => {
@@ -95,7 +97,7 @@ export default function ItemDialog({ open, initial, onClose, onSave }: Props) {
                             }
                         />
                         <TextField
-                            label="Gramas"
+                            label={t('mealplan.itemDialog.grams')}
                             type="number"
                             value={it.quantityInGrams ?? ''}
                             onChange={(e) =>
@@ -108,13 +110,13 @@ export default function ItemDialog({ open, initial, onClose, onSave }: Props) {
 
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                         <TextField
-                            label="Rótulo de porção"
+                            label={t('mealplan.itemDialog.portionLabel')}
                             value={it.portionLabel}
                             onChange={(e) => setIt((x) => ({ ...x, portionLabel: e.target.value }))}
                             sx={{ flex: 1 }}
                         />
                         <TextField
-                            label="Ordem"
+                            label={t('mealplan.itemDialog.order')}
                             type="number"
                             value={it.order ?? ''}
                             onChange={(e) => setIt((x) => ({ ...x, order: e.target.value ? Number(e.target.value) : null }))}
@@ -128,12 +130,12 @@ export default function ItemDialog({ open, initial, onClose, onSave }: Props) {
                                     onChange={(e) => setIt((x) => ({ ...x, isOptional: e.target.checked }))}
                                 />
                             }
-                            label="Opcional"
+                            label={t('mealplan.itemDialog.optional')}
                         />
                     </Stack>
 
                     <TextField
-                        label="Observações"
+                        label={t('mealplan.itemDialog.notes')}
                         value={it.notes}
                         onChange={(e) => setIt((x) => ({ ...x, notes: e.target.value }))}
                         fullWidth
@@ -143,7 +145,7 @@ export default function ItemDialog({ open, initial, onClose, onSave }: Props) {
                 </Stack>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Cancelar</Button>
+                <Button onClick={onClose}>{t('actions.cancel')}</Button>
                 <Button
                     variant="contained"
                     onClick={() => {
@@ -151,7 +153,7 @@ export default function ItemDialog({ open, initial, onClose, onSave }: Props) {
                         onSave(it);
                     }}
                 >
-                    Salvar
+                    {t('actions.save')}
                 </Button>
             </DialogActions>
         </Dialog>

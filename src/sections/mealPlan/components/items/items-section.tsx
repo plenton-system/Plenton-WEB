@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -31,6 +32,7 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export default function ItemsSection({ items, onAdd, onEdit, onRemove }: Props) {
+    const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [editing, setEditing] = useState<{ i: number; v: MealItemsDto } | null>(null);
 
@@ -38,7 +40,7 @@ export default function ItemsSection({ items, onAdd, onEdit, onRemove }: Props) 
         <Box>
             <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, mb: 1 }}>
                 <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
-                    Itens da refeição
+                    {t('mealplan.items.title')}
                 </Typography>
                 <Button
                     startIcon={<AddIcon />}
@@ -48,7 +50,7 @@ export default function ItemsSection({ items, onAdd, onEdit, onRemove }: Props) 
                         setOpen(true);
                     }}
                 >
-                    Adicionar item
+                    {t('mealplan.items.add')}
                 </Button>
             </Box>
 
@@ -56,13 +58,13 @@ export default function ItemsSection({ items, onAdd, onEdit, onRemove }: Props) 
                 <Table size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Alimento</TableCell>
-                            <TableCell>Qtd</TableCell>
-                            <TableCell>Gramas</TableCell>
-                            <TableCell>Medida</TableCell>
-                            <TableCell>Opcional</TableCell>
-                            <TableCell>Ordem</TableCell>
-                            <TableCell align="right">Ações</TableCell>
+                            <TableCell>{t('mealplan.items.columns.food')}</TableCell>
+                            <TableCell>{t('mealplan.items.columns.quantity')}</TableCell>
+                            <TableCell>{t('mealplan.items.columns.grams')}</TableCell>
+                            <TableCell>{t('mealplan.items.columns.measure')}</TableCell>
+                            <TableCell>{t('mealplan.items.columns.optional')}</TableCell>
+                            <TableCell>{t('mealplan.items.columns.order')}</TableCell>
+                            <TableCell align="right">{t('mealplan.items.columns.actions')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -73,15 +75,15 @@ export default function ItemsSection({ items, onAdd, onEdit, onRemove }: Props) 
                                     <TableCell>{it.quantity ?? '-'}</TableCell>
                                     <TableCell>{it.quantityInGrams ?? '-'}</TableCell>
                                     <TableCell>{it.homemadeMeasureDto?.name ?? '-'}</TableCell>
-                                    <TableCell>{it.isOptional ? 'Sim' : 'Não'}</TableCell>
+                                    <TableCell>{it.isOptional ? t('common.yes') : t('common.no')}</TableCell>
                                     <TableCell>{it.order ?? '-'}</TableCell>
                                     <TableCell align="right">
-                                        <Tooltip title="Editar">
+                                        <Tooltip title={t('actions.edit')}>
                                             <IconButton size="small" onClick={() => setEditing({ i, v: it })}>
                                                 <EditIcon fontSize="small" />
                                             </IconButton>
                                         </Tooltip>
-                                        <Tooltip title="Remover">
+                                        <Tooltip title={t('actions.remove')}>
                                             <IconButton size="small" color="error" onClick={() => onRemove(i)}>
                                                 <DeleteIcon fontSize="small" />
                                             </IconButton>
@@ -92,7 +94,7 @@ export default function ItemsSection({ items, onAdd, onEdit, onRemove }: Props) 
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={7} align="center" sx={{ py: 3 }}>
-                                    Nenhum item adicionado.
+                                    {t('mealplan.items.empty')}
                                 </TableCell>
                             </TableRow>
                         )}

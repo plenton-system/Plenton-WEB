@@ -23,6 +23,8 @@ export type PublicOpenResponse = {
     expiresAtUtc?: string | null;
     /** Data de submissão em UTC (opcional) */
     submittedAtUtc?: string | null;
+    /** Idioma definido quando o link foi criado */
+    language: string;
     /** Versão atual do termo LGPD que o paciente deve aceitar */
     consentTermVersion: string;
     /** Texto completo do termo LGPD a ser exibido */

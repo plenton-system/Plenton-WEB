@@ -1,5 +1,7 @@
 import type { PublicOpenResponse } from 'src/types';
 
+import { useTranslation } from 'react-i18next';
+
 import {
     Box,
     Chip,
@@ -24,6 +26,8 @@ export function PublicAnamnesisHeader({
     saveState,
     error,
 }: Props) {
+    const { t } = useTranslation();
+
     return (
         <>
             <Typography variant="h4" fontWeight={700} gutterBottom>
@@ -37,17 +41,17 @@ export function PublicAnamnesisHeader({
             )}
 
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 2, flexWrap: 'wrap' }}>
-                <Chip label={`Status: ${openData.status}`} />
+                <Chip label={t('publicAnamnesis.header.status', { status: openData.status })} />
 
                 {openData.expiresAtUtc && (
-                    <Chip label={`Expira: ${new Date(openData.expiresAtUtc).toLocaleString()}`} />
+                    <Chip label={t('publicAnamnesis.header.expires', { date: new Date(openData.expiresAtUtc).toLocaleString() })} />
                 )}
 
                 {!readOnly && (
                     <Typography variant="body2" color="text.secondary">
-                        {saveState === 'saving' && 'Salvando...'}
-                        {saveState === 'saved' && 'Rascunho salvo ✅'}
-                        {saveState === 'error' && 'Erro ao salvar ⚠️'}
+                        {saveState === 'saving' && t('publicAnamnesis.header.saving')}
+                        {saveState === 'saved' && t('publicAnamnesis.header.draftSaved')}
+                        {saveState === 'error' && t('publicAnamnesis.header.saveError')}
                     </Typography>
                 )}
             </Box>
@@ -60,7 +64,7 @@ export function PublicAnamnesisHeader({
 
             {readOnly && (
                 <Alert severity="success" sx={{ mb: 2 }}>
-                    Formulário já enviado em {new Date(openData.submittedAtUtc!).toLocaleString()}.
+                    {t('publicAnamnesis.header.submitted', { date: new Date(openData.submittedAtUtc!).toLocaleString() })}
                 </Alert>
             )}
         </>

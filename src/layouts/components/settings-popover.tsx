@@ -25,6 +25,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { useThemeMode, type ThemeMode } from 'src/hooks/common/use-theme-mode';
 
+import i18n from 'src/i18n';
 import { anamnesisService } from 'src/services/anamnesis/anamnesisService';
 
 // ----------------------------------------------------------------------
@@ -119,7 +120,12 @@ export function SettingsPopover({
       generalDto: { orderBy, autoSendBirthdayEmail: autoBirthday },
       anamnesisDto: { defaultTemplateId: defaultTemplate?.id || null },
       appSystemSettingsDto: { showAnthropometry: showAntrop, showPrescriptions: showRx },
-      preferenceDto: { theme: mode },
+      // Preserva o idioma ativo (definido no LanguagePopover) para não sobrescrevê-lo aqui.
+      preferenceDto: {
+        theme: mode,
+        preferredLanguage:
+          i18n.resolvedLanguage ?? i18n.language ?? data?.preferenceDto?.preferredLanguage ?? 'pt-BR',
+      },
     };
     await onSave?.(payload);
     onClose?.();

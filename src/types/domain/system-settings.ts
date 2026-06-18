@@ -9,6 +9,7 @@ interface AnamnesisSettings {
 
 interface PreferenceSettings {
   theme: string;
+  preferredLanguage: string;
 }
 
 interface AppSystemSettings {

@@ -1,6 +1,7 @@
 import type { FoodDto } from 'src/types';
 
 import { useRef, useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -17,6 +18,7 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export default function FoodAutocomplete({ value, onChange }: Props) {
+    const { t } = useTranslation();
     const [options, setOptions] = useState<FoodDto[]>([]);
     const [inputValue, setInputValue] = useState(value?.description ?? '');
     const [loading, setLoading] = useState(false);
@@ -155,7 +157,7 @@ export default function FoodAutocomplete({ value, onChange }: Props) {
                 },
             }}
             renderInput={(params) => (
-                <TextField {...params} placeholder="Digite para buscar..." label="Alimento" required />
+                <TextField {...params} placeholder={t('mealplan.foodAutocomplete.placeholder')} label={t('mealplan.foodAutocomplete.label')} required />
             )}
             fullWidth
         />

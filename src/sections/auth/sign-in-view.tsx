@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -63,6 +64,7 @@ function missingRegisterAddressFields(address: RegisterAddress) {
 }
 
 export function SignInView() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const router = useRouter();
   const { signIn, authenticating } = useAuth();
@@ -122,7 +124,7 @@ export function SignInView() {
   const handleSignIn = async () => {
     try {
       if (!email || !password) {
-        setErrorMessage('Por favor, preencha o e-mail e a senha.');
+        setErrorMessage(t('auth.requiredLogin'));
         return;
       }
 
@@ -148,7 +150,7 @@ export function SignInView() {
     } catch (error) {
       // Extrai apenas a mensagem limpa
       const message = error instanceof Error ?
-        error.message : 'Erro desconhecido';
+        error.message : t('auth.unknownError');
       setErrorMessage(message);
     }
   };
@@ -161,13 +163,13 @@ export function SignInView() {
       !registerDocument.trim() ||
       !registerPhone.trim()
     ) {
-      setErrorMessage('Preencha nome, e-mail, senha, CPF e telefone.');
+      setErrorMessage(t('auth.requiredRegister'));
       return;
     }
 
     const missingAddressFields = missingRegisterAddressFields(registerAddress);
     if (missingAddressFields.length > 0) {
-      setErrorMessage(`Preencha o endereço completo: ${missingAddressFields.join(', ')}.`);
+      setErrorMessage(t('auth.requiredAddress', { fields: missingAddressFields.join(', ') }));
       return;
     }
 
@@ -194,10 +196,10 @@ export function SignInView() {
       // Pré-preenche o login com os dados recém-cadastrados
       setEmail(registerEmail.trim());
       setPassword('');
-      setSuccessMessage('Cadastro efetuado! Faça login para continuar.');
+      setSuccessMessage(t('auth.registerSuccess'));
       goToSignIn();
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Erro ao criar conta.';
+      const message = error instanceof Error ? error.message : t('auth.createError');
       setErrorMessage(message);
     } finally {
       setRegistering(false);
@@ -239,7 +241,7 @@ export function SignInView() {
         }}
       >
         <Typography variant="h4" gutterBottom textAlign="center">
-          {isSignIn ? 'Bem-vindo de volta!' : 'Olá, amigo!'}
+          {isSignIn ? t('auth.welcomeBack') : t('auth.helloFriend')}
         </Typography>
 
         <Typography
@@ -249,8 +251,8 @@ export function SignInView() {
           sx={{ color: 'rgba(255,255,255,0.92)' }}
         >
           {isSignIn
-            ? 'Para manter a conexão conosco, faça login com suas informações pessoais'
-            : 'Insira seus dados pessoais e comece sua jornada conosco'}
+            ? t('auth.signInIntro')
+            : t('auth.registerIntro')}
         </Typography>
 
         <Button
@@ -265,7 +267,7 @@ export function SignInView() {
             },
           }}
         >
-          {isSignIn ? 'Registrar' : 'Entrar'}
+          {isSignIn ? t('auth.register') : t('auth.signIn')}
         </Button>
       </Grid>
 
@@ -306,7 +308,7 @@ export function SignInView() {
             }}
           >
             <Typography variant="h5" gutterBottom>
-              Iniciar Sessão
+              {t('auth.signInTitle')}
             </Typography>
             <Box
               component="form"
@@ -326,7 +328,7 @@ export function SignInView() {
               <TextField
                 fullWidth
                 name="email"
-                label="E-mail"
+                label={t('auth.fields.email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 sx={{ mb: 2, mt: 3 }}
@@ -338,7 +340,7 @@ export function SignInView() {
               <TextField
                 fullWidth
                 name="password"
-                label="Senha"
+                label={t('auth.fields.password')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type={showPassword ? 'text' : 'password'}
@@ -366,7 +368,7 @@ export function SignInView() {
                   color: theme.vars.palette.text.secondary,
                 }}
               >
-                Esqueceu a senha?
+                {t('auth.forgotPassword')}
               </Link>
 
               <Button
@@ -378,7 +380,7 @@ export function SignInView() {
                 disabled={authenticating}
                 startIcon={authenticating && <CircularProgress size={20} color="inherit" />}
               >
-                {authenticating ? 'Entrando...' : 'Entrar'}
+                {authenticating ? t('auth.signingIn') : t('auth.signIn')}
               </Button>
 
 
@@ -433,7 +435,7 @@ export function SignInView() {
             }}
           >
             <Typography variant="h5" gutterBottom>
-              Criar Conta
+              {t('auth.createAccount')}
             </Typography>
             <Box
               component="form"
@@ -461,7 +463,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="name"
-                label="Nome completo"
+                label={t('auth.fields.name')}
                 value={registerName}
                 onChange={(e) => setRegisterName(e.target.value)}
                 sx={{ gridColumn: '1 / -1' }}
@@ -472,7 +474,7 @@ export function SignInView() {
                 size="small"
                 name="email"
                 type="email"
-                label="E-mail"
+                label={t('auth.fields.email')}
                 value={registerEmail}
                 onChange={(e) => setRegisterEmail(e.target.value)}
                 sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}
@@ -481,7 +483,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="document"
-                label="CPF"
+                label={t('auth.fields.document')}
                 value={registerDocument}
                 onChange={(e) => setRegisterDocument(maskCPF(e.target.value))}
                 slotProps={{ htmlInput: { maxLength: 14 } }}
@@ -491,12 +493,12 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="registerPassword"
-                label="Senha"
+                label={t('auth.fields.password')}
                 type={showPassword ? 'text' : 'password'}
                 autoComplete="off"
                 value={registerPassword}
                 onChange={(e) => setRegisterPassword(e.target.value)}
-                placeholder="Mínimo 8 caracteres"
+                placeholder={t('auth.fields.passwordHint')}
                 slotProps={{
                   htmlInput: {
                     autoComplete: 'off',
@@ -520,7 +522,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="crn"
-                label="CRN (opcional)"
+                label={t('auth.fields.crn')}
                 placeholder="Ex.: CRN-3 12345"
                 value={registerCrn}
                 onChange={(e) => setRegisterCrn(e.target.value)}
@@ -530,7 +532,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="phone"
-                label="Telefone"
+                label={t('auth.fields.phone')}
                 value={registerPhone}
                 onChange={(e) => setRegisterPhone(e.target.value)}
                 sx={{ gridColumn: { xs: '1 / -1', sm: 'span 6' } }}
@@ -539,7 +541,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="zipCode"
-                label="CEP"
+                label={t('auth.fields.zipCode')}
                 value={registerAddress.zipCode}
                 onChange={(e) => setRegisterAddressField('zipCode', e.target.value)}
                 onBlur={handleRegisterZipCodeBlur}
@@ -550,7 +552,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="street"
-                label="Rua/Avenida"
+                label={t('auth.fields.street')}
                 value={registerAddress.street}
                 onChange={(e) => setRegisterAddressField('street', e.target.value)}
                 sx={{ gridColumn: { xs: '1 / -1', sm: 'span 8' } }}
@@ -559,7 +561,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="number"
-                label="Número"
+                label={t('auth.fields.number')}
                 value={registerAddress.number}
                 onChange={(e) => setRegisterAddressField('number', e.target.value)}
                 sx={{ gridColumn: { xs: '1 / -1', sm: 'span 4' } }}
@@ -568,7 +570,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="neighborhood"
-                label="Bairro"
+                label={t('auth.fields.neighborhood')}
                 value={registerAddress.neighborhood}
                 onChange={(e) => setRegisterAddressField('neighborhood', e.target.value)}
                 slotProps={{ htmlInput: { maxLength: 64 } }}
@@ -578,7 +580,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="city"
-                label="Cidade"
+                label={t('auth.fields.city')}
                 value={registerAddress.city}
                 onChange={(e) => setRegisterAddressField('city', e.target.value)}
                 sx={{ gridColumn: { xs: '1 / -1', sm: 'span 3' } }}
@@ -587,7 +589,7 @@ export function SignInView() {
                 fullWidth
                 size="small"
                 name="state"
-                label="Estado"
+                label={t('auth.fields.state')}
                 value={registerAddress.state}
                 onChange={(e) => setRegisterAddressField('state', e.target.value)}
                 slotProps={{ htmlInput: { maxLength: 2 } }}
@@ -603,7 +605,7 @@ export function SignInView() {
                 startIcon={registering && <CircularProgress size={20} color="inherit" />}
                 sx={{ gridColumn: '1 / -1', mt: 0.5, mb: 1 }}
               >
-                {registering ? 'Criando conta...' : 'Registrar'}
+                {registering ? t('auth.registering') : t('auth.register')}
               </Button>
             </Box>
 

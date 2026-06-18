@@ -2,6 +2,7 @@ import type { PatientFormValues, PatientDetailProps } from 'src/types';
 
 import { useFormik } from 'formik';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -40,6 +41,7 @@ type PatientFormViewProps = {
 // ----------------------------------------------------------------------
 
 export function PatientFormView({ patientId, onReturn }: PatientFormViewProps) {
+  const { t } = useTranslation();
   const isEdit = !!patientId;
 
   const { data, loading, error, createOrUpdate } = usePatientDetail({
@@ -118,11 +120,11 @@ export function PatientFormView({ patientId, onReturn }: PatientFormViewProps) {
       )}
 
       <Stack direction="row" alignItems="center" spacing={1.5} sx={{ mb: 3 }}>
-        <IconButton onClick={onReturn} aria-label="Voltar" disabled={loading}>
+        <IconButton onClick={onReturn} aria-label={t('patient.form.back')} disabled={loading}>
           <Iconify icon="eva:arrow-ios-forward-fill" sx={{ transform: 'rotate(180deg)' }} />
         </IconButton>
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          {isEdit ? 'Editar Paciente' : 'Novo Paciente'}
+          {isEdit ? t('patient.form.editTitle') : t('patient.form.newTitle')}
         </Typography>
         <Button
           variant="contained"
@@ -131,7 +133,7 @@ export function PatientFormView({ patientId, onReturn }: PatientFormViewProps) {
           disabled={loading}
           startIcon={loading ? <CircularProgress size={18} color="inherit" /> : undefined}
         >
-          Salvar
+          {t('actions.save')}
         </Button>
       </Stack>
 
@@ -151,7 +153,7 @@ export function PatientFormView({ patientId, onReturn }: PatientFormViewProps) {
                   variant="overline"
                   sx={{ color: 'text.secondary', fontWeight: 'fontWeightSemiBold', letterSpacing: 0.6 }}
                 >
-                  Identificação
+                  {t('patient.form.sectionIdentification')}
                 </Typography>
                 <Divider sx={{ flexGrow: 1, ml: 1, borderStyle: 'dashed' }} />
               </Stack>
@@ -164,7 +166,7 @@ export function PatientFormView({ patientId, onReturn }: PatientFormViewProps) {
                   variant="overline"
                   sx={{ color: 'text.secondary', fontWeight: 'fontWeightSemiBold', letterSpacing: 0.6 }}
                 >
-                  Endereço
+                  {t('patient.form.sectionAddress')}
                 </Typography>
                 <Divider sx={{ flexGrow: 1, ml: 1, borderStyle: 'dashed' }} />
               </Stack>

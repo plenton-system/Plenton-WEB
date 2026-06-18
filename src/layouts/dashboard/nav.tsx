@@ -1,6 +1,7 @@
 import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
@@ -102,6 +103,7 @@ export function NavMobile({
 
 export function NavContent({ data, slots, sx }: NavContentProps) {
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -168,7 +170,7 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
                     </Box>
 
                     <Box component="span" sx={{ flexGrow: 1 }}>
-                      {item.title}
+                      {t(item.title)}
                     </Box>
 
                     {item.info && item.info}

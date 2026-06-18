@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
@@ -15,6 +17,7 @@ import { AnalyticsWidgetSkeleton } from '../components/analytics-widget-skeleton
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
+  const { t } = useTranslation();
   const { data, loading } = useOverview();
 
   const tasksTodas = data?.tasks;
@@ -28,7 +31,7 @@ export function OverviewAnalyticsView() {
     <DashboardContent maxWidth="xl">
 
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Olá, bem-vindo de volta 👋
+        {t('overview.welcome')}
       </Typography>
 
       <Grid container spacing={3}>
@@ -52,7 +55,7 @@ export function OverviewAnalyticsView() {
           <>
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <AnalyticsWidget
-                title="Pacientes ativos"
+                title={t('overview.widgets.activePatients')}
                 percent={active?.percent ?? 0}
                 total={active?.total ?? 0}
                 icon={<img alt="User Check" src="/assets/icons/glass/ic-glass-users.svg" />}
@@ -65,7 +68,7 @@ export function OverviewAnalyticsView() {
 
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <AnalyticsWidget
-                title="Consultas realizadas"
+                title={t('overview.widgets.completedAppointments')}
                 percent={completed?.percent ?? 0}
                 total={completed?.total ?? 0}
                 color="info" // Ou qualquer cor desejada
@@ -79,7 +82,7 @@ export function OverviewAnalyticsView() {
 
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <AnalyticsWidget
-                title="Taxa de retorno"
+                title={t('overview.widgets.returnRate')}
                 percent={returnn?.percent ?? 0}
                 total={returnn?.total ?? 0}
                 color="warning"
@@ -93,7 +96,7 @@ export function OverviewAnalyticsView() {
 
             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <AnalyticsWidget
-                title="Taxa de comparecimento"
+                title={t('overview.widgets.attendanceRate')}
                 percent={attendance?.percent ?? 0}
                 total={attendance?.total ?? 0}
                 color="error"
@@ -107,8 +110,8 @@ export function OverviewAnalyticsView() {
 
             <Grid size={{ xs: 12, md: 6, lg: 6 }}>
               <AnalyticsTasks
-                title="Consultas pendentes"
-                subheader="Hoje"
+                title={t('overview.tasks.title')}
+                subheader={t('calendar.today')}
                 list={tasksTodas?.list ?? []}
                 sx={{
                   display: 'flex',
@@ -120,8 +123,8 @@ export function OverviewAnalyticsView() {
 
             <Grid size={{ xs: 8, md: 6, lg: 6 }}>
               <AnalyticsBar
-                title="IMC médio (últimos 12 meses)"
-                subheader="Último IMC de cada paciente/mês"
+                title={t('overview.bmi.title')}
+                subheader={t('overview.bmi.subheader')}
                 chart={{
                   categories: barBmiAverage?.categories ?? [],
                   series: barBmiAverage?.series ?? []

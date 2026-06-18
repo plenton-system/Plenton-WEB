@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -38,6 +39,7 @@ export default function MealsSubstituteSection({
     onEdit,
     onRemove,
 }: MealsSubstituteSectionProps) {
+    const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [editing, setEditing] = useState<{ i: number; v: MealDto } | null>(null);
 
@@ -45,7 +47,7 @@ export default function MealsSubstituteSection({
         <Box>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                 <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                    Substitutas de <b>{parentName}</b>
+                    {t('mealplan.substitutes.ofParent')} <b>{parentName}</b>
                 </Typography>
                 <Button
                     startIcon={<AddIcon />}
@@ -55,7 +57,7 @@ export default function MealsSubstituteSection({
                         setOpen(true);
                     }}
                 >
-                    Adicionar substituta
+                    {t('mealplan.substitutes.add')}
                 </Button>
             </Box>
 
@@ -63,10 +65,10 @@ export default function MealsSubstituteSection({
                 <Table size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Nome</TableCell>
-                            <TableCell>Hora</TableCell>
-                            <TableCell>Itens</TableCell>
-                            <TableCell align="right">Ações</TableCell>
+                            <TableCell>{t('mealplan.substitutes.columns.name')}</TableCell>
+                            <TableCell>{t('mealplan.substitutes.columns.time')}</TableCell>
+                            <TableCell>{t('mealplan.substitutes.columns.items')}</TableCell>
+                            <TableCell align="right">{t('mealplan.substitutes.columns.actions')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -77,12 +79,12 @@ export default function MealsSubstituteSection({
                                     <TableCell>{s.time}</TableCell>
                                     <TableCell>{s.items?.length ?? 0}</TableCell>
                                     <TableCell align="right">
-                                        <Tooltip title="Editar">
+                                        <Tooltip title={t('actions.edit')}>
                                             <IconButton size="small" onClick={() => setEditing({ i, v: s })}>
                                                 <EditIcon fontSize="small" />
                                             </IconButton>
                                         </Tooltip>
-                                        <Tooltip title="Remover">
+                                        <Tooltip title={t('actions.remove')}>
                                             <IconButton size="small" color="error" onClick={() => onRemove(i)}>
                                                 <DeleteIcon fontSize="small" />
                                             </IconButton>
@@ -93,7 +95,7 @@ export default function MealsSubstituteSection({
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={4} align="center" sx={{ py: 3 }}>
-                                    Nenhuma substituta adicionada.
+                                    {t('mealplan.substitutes.empty')}
                                 </TableCell>
                             </TableRow>
                         )}

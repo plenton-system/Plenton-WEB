@@ -22,6 +22,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
 
+import i18n from 'src/i18n';
 import { anamnesisService } from 'src/services/anamnesis/anamnesisService';
 
 import { Iconify } from 'src/components/iconify';
@@ -152,6 +153,7 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
                     patientEmail: channel === 'email' ? form.email.trim() : patient.email ?? null,
                     patientPhone: channel === 'whatsapp' ? form.phone.trim() : patient.phone ?? null,
                     expiresAtUtc: toIsoFromLocal(form.expiresAtLocal),
+                    language: i18n.resolvedLanguage ?? i18n.language,
                 };
                 const result = await anamnesisService.sendPublic(form.anamnesisId, dto);
                 setLastLink(result.url);
@@ -232,6 +234,7 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
                 patientName: patient.name?.trim() || null,
                 patientPhone: patient.phone || null,
                 expiresAtUtc: toIsoFromLocal(form.expiresAtLocal),
+                language: i18n.resolvedLanguage ?? i18n.language,
             };
             const result: AnamnesisSendPublicEmailResponseDto = await anamnesisService.sendPublicEmail(
                 form.anamnesisId,

@@ -1,6 +1,7 @@
 import type { HomemadeMeasureDto } from 'src/types';
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
@@ -25,6 +26,7 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export default function HomemadeMeasureDialog({ open, foodId, initial, onClose, onSave }: Props) {
+    const { t } = useTranslation();
     const [form, setForm] = useState({
         name: '',
         quantityInGrams: 0,
@@ -72,18 +74,18 @@ export default function HomemadeMeasureDialog({ open, foodId, initial, onClose, 
 
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
-            <DialogTitle>{initial ? 'Editar medida' : 'Nova medida'}</DialogTitle>
+            <DialogTitle>{initial ? t('mealplan.measureDialog.editTitle') : t('mealplan.measureDialog.newTitle')}</DialogTitle>
             <DialogContent dividers>
                 <Stack spacing={2} sx={{ mt: 0.5 }}>
                     <TextField
-                        label="Descrição"
+                        label={t('mealplan.measureDialog.description')}
                         fullWidth
                         autoFocus
                         value={form.name}
                         onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
                     />
                     <TextField
-                        label="Quantidade em gramas"
+                        label={t('mealplan.measureDialog.grams')}
                         fullWidth
                         type="number"
                         placeholder="0.00"
@@ -94,9 +96,9 @@ export default function HomemadeMeasureDialog({ open, foodId, initial, onClose, 
                 </Stack>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Cancelar</Button>
+                <Button onClick={onClose}>{t('actions.cancel')}</Button>
                 <Button variant="contained" onClick={handleSave} disabled={loading || !form.name}>
-                    {loading ? 'Salvando...' : 'Salvar'}
+                    {loading ? t('mealplan.measureDialog.saving') : t('actions.save')}
                 </Button>
             </DialogActions>
         </Dialog>

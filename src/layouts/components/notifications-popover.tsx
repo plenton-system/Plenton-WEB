@@ -2,6 +2,7 @@ import type { Notification } from 'src/types';
 import type { IconButtonProps } from '@mui/material/IconButton';
 
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -31,6 +32,7 @@ import { Iconify, type IconifyName } from 'src/components/iconify';
 export type NotificationsPopoverProps = IconButtonProps;
 
 export function NotificationsPopover({ sx, ...other }: NotificationsPopoverProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const { notifications, unreadCount, loading, markAsRead, markAllAsRead } = useNotifications();
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
@@ -102,14 +104,14 @@ export function NotificationsPopover({ sx, ...other }: NotificationsPopoverProps
           }}
         >
           <Box sx={{ flexGrow: 1, minWidth: 0 }}>
-            <Typography variant="subtitle1">Notificações</Typography>
+            <Typography variant="subtitle1">{t('notifications.title')}</Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {unreadCount === 1 ? '1 não lida' : `${unreadCount} não lidas`}
+              {t('notifications.unread', { count: unreadCount })}
             </Typography>
           </Box>
 
           {unreadCount > 0 && (
-            <Tooltip title="Marcar todas como lidas">
+            <Tooltip title={t('notifications.markAll')}>
               <IconButton color="primary" onClick={handleMarkAllAsRead}>
                 <Iconify icon="eva:done-all-fill" />
               </IconButton>
@@ -124,7 +126,7 @@ export function NotificationsPopover({ sx, ...other }: NotificationsPopoverProps
             disablePadding
             subheader={
               <ListSubheader disableSticky sx={{ py: 1, px: 2.5, typography: 'overline' }}>
-                Recentes
+                {t('notifications.recent')}
               </ListSubheader>
             }
           >
@@ -139,7 +141,7 @@ export function NotificationsPopover({ sx, ...other }: NotificationsPopoverProps
             {!loading && notifications.length === 0 && (
               <Box sx={{ px: 2.5, py: 4, textAlign: 'center' }}>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Nenhuma notificação
+                  {t('notifications.empty')}
                 </Typography>
               </Box>
             )}
@@ -147,7 +149,7 @@ export function NotificationsPopover({ sx, ...other }: NotificationsPopoverProps
             {loading && notifications.length === 0 && (
               <Box sx={{ px: 2.5, py: 4, textAlign: 'center' }}>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Carregando...
+                  {t('common.loading')}
                 </Typography>
               </Box>
             )}

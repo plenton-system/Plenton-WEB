@@ -4,6 +4,7 @@ import type {
 
 import { useFormik } from 'formik';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -42,6 +43,7 @@ function formatDate(value?: string | null) {
 // ----------------------------------------------------------------------
 
 export function PublicAnamnesisView() {
+    const { t } = useTranslation();
     const { tenantId, token } = useParams();
 
     const {
@@ -64,8 +66,8 @@ export function PublicAnamnesisView() {
     );
 
     const validationSchema = useMemo(
-        () => (openData ? buildValidation(openData) : undefined),
-        [openData]
+        () => (openData ? buildValidation(openData, t) : undefined),
+        [openData, t]
     );
 
     const sortedQuestions = useMemo(
@@ -93,7 +95,7 @@ export function PublicAnamnesisView() {
 
     if (isInitialLoading) {
         return (
-            <Loading message='Carregando Questionário' />
+            <Loading message={t('publicAnamnesis.view.loading')} />
         );
     }
 
@@ -182,7 +184,7 @@ export function PublicAnamnesisView() {
                                 variant="overline"
                                 sx={{ opacity: 0.85, letterSpacing: '0.12em' }}
                             >
-                                Plenton · Anamnese
+                                {t('publicAnamnesis.view.brand')}
                             </Typography>
                             <Typography variant="h5" fontWeight={700}>
                                 {openData.title}
@@ -211,7 +213,9 @@ export function PublicAnamnesisView() {
                         icon={<Iconify icon="solar:check-circle-bold" width={22} />}
                         sx={{ mb: 3 }}
                     >
-                        Formulário enviado{submittedAt ? ` em ${submittedAt}` : ''}. Obrigado!
+                        {submittedAt
+                            ? t('publicAnamnesis.view.submittedWithDate', { date: submittedAt })
+                            : t('publicAnamnesis.view.submitted')}
                     </Alert>
                 )}
 
@@ -223,7 +227,7 @@ export function PublicAnamnesisView() {
 
                 {!readOnly && expiresAt && (
                     <Alert severity="info" sx={{ mb: 3 }}>
-                        Este formulário expira em {expiresAt}.
+                        {t('publicAnamnesis.view.expires', { date: expiresAt })}
                     </Alert>
                 )}
 
@@ -269,7 +273,7 @@ export function PublicAnamnesisView() {
                             justifyContent="space-between"
                         >
                             <Typography variant="caption" color="text.secondary">
-                                Confira suas respostas antes de enviar. Você não poderá alterá-las depois.
+                                {t('publicAnamnesis.view.confirmBeforeSubmit')}
                             </Typography>
 
                             <Button
@@ -282,7 +286,7 @@ export function PublicAnamnesisView() {
                                 }
                                 sx={{ minWidth: 220, flexShrink: 0 }}
                             >
-                                Enviar respostas
+                                {t('publicAnamnesis.view.submit')}
                             </Button>
                         </Stack>
 
@@ -293,7 +297,7 @@ export function PublicAnamnesisView() {
                             color="text.secondary"
                             sx={{ display: 'block', textAlign: 'center', mt: 1 }}
                         >
-                            Suas respostas são tratadas conforme o termo de consentimento aceito.
+                            {t('publicAnamnesis.view.consentNote')}
                         </Typography>
                     </Container>
                 </Box>

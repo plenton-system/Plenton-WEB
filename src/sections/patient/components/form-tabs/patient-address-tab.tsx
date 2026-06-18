@@ -1,5 +1,7 @@
 import type { FormikProps } from 'formik';
 
+import { useTranslation } from 'react-i18next';
+
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 
@@ -16,6 +18,7 @@ type Props = { formik: FormikProps<PatientFormValues> };
 // ----------------------------------------------------------------------
 
 export default function PatientAddressTab({ formik }: Props) {
+  const { t } = useTranslation();
   const { lookupCep } = useCepLookup(formik.setFieldValue);
 
   const handleZipCodeBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
@@ -28,7 +31,7 @@ export default function PatientAddressTab({ formik }: Props) {
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
         <TextField
           name="addressDto.zipCode"
-          label="CEP"
+          label={t('patient.address.zipCode')}
           value={formik.values.addressDto?.zipCode}
           onChange={formik.handleChange}
           onBlur={handleZipCodeBlur}
@@ -39,7 +42,7 @@ export default function PatientAddressTab({ formik }: Props) {
         />
         <TextField
           name="addressDto.street"
-          label="Rua"
+          label={t('patient.address.street')}
           value={formik.values.addressDto?.street}
           onChange={formik.handleChange}
           error={!!getNestedFieldError(formik, 'addressDto', 'street')}
@@ -51,7 +54,7 @@ export default function PatientAddressTab({ formik }: Props) {
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
         <TextField
           name="addressDto.neighborhood"
-          label="Bairro"
+          label={t('patient.address.neighborhood')}
           value={formik.values.addressDto?.neighborhood}
           onChange={formik.handleChange}
           error={!!getNestedFieldError(formik, 'addressDto', 'neighborhood')}
@@ -60,7 +63,7 @@ export default function PatientAddressTab({ formik }: Props) {
         />
         <TextField
           name="addressDto.city"
-          label="Cidade"
+          label={t('patient.address.city')}
           value={formik.values.addressDto?.city}
           onChange={formik.handleChange}
           error={!!getNestedFieldError(formik, 'addressDto', 'city')}
@@ -69,7 +72,7 @@ export default function PatientAddressTab({ formik }: Props) {
         />
         <TextField
           name="addressDto.state"
-          label="Estado"
+          label={t('patient.address.state')}
           value={formik.values.addressDto?.state}
           onChange={formik.handleChange}
           error={!!getNestedFieldError(formik, 'addressDto', 'state')}

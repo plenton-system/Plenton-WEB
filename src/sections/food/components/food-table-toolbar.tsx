@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
@@ -13,6 +15,8 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export function FoodTableToolbar({ filterValue, onFilterValue }: Props) {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ p: 2 }}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems={{ md: 'center' }}>
@@ -21,7 +25,7 @@ export function FoodTableToolbar({ filterValue, onFilterValue }: Props) {
             numSelected={0}
             filterValue={filterValue}
             onFilterValue={(e) => onFilterValue(e.target.value)}
-            placeholder="Buscar alimento"
+            placeholder={t('food.list.search')}
           />
         </Box>
       </Stack>

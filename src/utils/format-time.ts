@@ -1,9 +1,14 @@
+import 'dayjs/locale/es';
+import 'dayjs/locale/pt-br';
+
 import type { Dayjs } from 'dayjs';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
+
+import i18n from 'src/i18n';
 
 // ----------------------------------------------------------------------
 
@@ -105,7 +110,13 @@ export function fToNow(date: DatePickerFormat): string {
     return 'Invalid date';
   }
 
-  return dayjs(date).toNow(true);
+  const locale = i18n.resolvedLanguage === 'pt-BR'
+    ? 'pt-br'
+    : i18n.resolvedLanguage === 'es'
+      ? 'es'
+      : 'en';
+
+  return dayjs(date).locale(locale).toNow(true);
 }
 
 // ----------------------------------------------------------------------

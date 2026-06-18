@@ -1,6 +1,7 @@
 import type { AnamnesisQuestionDto } from 'src/types';
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -46,6 +47,7 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export function AnamnesisQuestionCard({ value: q, index, total, onChange, onMoveUp, onMoveDown, onDuplicate, onRemove }: Props) {
+    const { t } = useTranslation();
     const [dlg, setDlg] = useState(false);
     const [newOpt, setNewOpt] = useState('');
 
@@ -67,10 +69,10 @@ export function AnamnesisQuestionCard({ value: q, index, total, onChange, onMove
             <CardContent>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems={{ md: 'center' }}>
                     <FormControl fullWidth sx={{ maxWidth: 240 }}>
-                        <InputLabel id={`type-${q.id}`}>Tipo</InputLabel>
+                        <InputLabel id={`type-${q.id}`}>{t('anamnesis.card.type')}</InputLabel>
                         <Selectt
                             labelId={`type-${q.id}`}
-                            label="Tipo"
+                            label={t('anamnesis.card.type')}
                             size="small"
                             value={q.type}
                             onChange={(e) => {
@@ -80,48 +82,48 @@ export function AnamnesisQuestionCard({ value: q, index, total, onChange, onMove
                                 onChange(patch);
                             }}
                         >
-                            <MenuItem value={QuestionType.Text}>Texto</MenuItem>
-                            <MenuItem value={QuestionType.Number}>Número</MenuItem>
-                            <MenuItem value={QuestionType.Boolean}>Sim/Não</MenuItem>
-                            <MenuItem value={QuestionType.Select}>Múltipla escolha (única)</MenuItem>
-                            <MenuItem value={QuestionType.MultiSelect}>Múltipla escolha (várias)</MenuItem>
+                            <MenuItem value={QuestionType.Text}>{t('anamnesis.card.types.text')}</MenuItem>
+                            <MenuItem value={QuestionType.Number}>{t('anamnesis.card.types.number')}</MenuItem>
+                            <MenuItem value={QuestionType.Boolean}>{t('anamnesis.card.types.boolean')}</MenuItem>
+                            <MenuItem value={QuestionType.Select}>{t('anamnesis.card.types.select')}</MenuItem>
+                            <MenuItem value={QuestionType.MultiSelect}>{t('anamnesis.card.types.multiSelect')}</MenuItem>
                         </Selectt>
                     </FormControl>
 
                     <TextField
                         fullWidth
                         size="small"
-                        label="Pergunta"
+                        label={t('anamnesis.card.question')}
                         value={q.label}
                         onChange={(e) => onChange({ label: e.target.value })}
                     />
 
                     <FormControlLabel
                         control={<Switch checked={q.required} onChange={(e) => onChange({ required: e.target.checked })} />}
-                        label="Obrigatória"
+                        label={t('anamnesis.card.required')}
                     />
 
                     <Stack direction="row" spacing={1} sx={{ ml: 'auto' }}>
-                        <Tooltip title="Mover para cima">
+                        <Tooltip title={t('anamnesis.card.moveUp')}>
                             <span>
                                 <IconButton size="small" onClick={onMoveUp} disabled={index === 0}>
                                     <ArrowUpward fontSize="small" />
                                 </IconButton>
                             </span>
                         </Tooltip>
-                        <Tooltip title="Mover para baixo">
+                        <Tooltip title={t('anamnesis.card.moveDown')}>
                             <span>
                                 <IconButton size="small" onClick={onMoveDown} disabled={index === total - 1}>
                                     <ArrowDownward fontSize="small" />
                                 </IconButton>
                             </span>
                         </Tooltip>
-                        <Tooltip title="Duplicar">
+                        <Tooltip title={t('anamnesis.card.duplicate')}>
                             <IconButton size="small" onClick={onDuplicate}>
                                 <ContentCopy fontSize="small" />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Remover">
+                        <Tooltip title={t('anamnesis.card.remove')}>
                             <IconButton size="small" color="error" onClick={onRemove}>
                                 <Delete fontSize="small" />
                             </IconButton>
@@ -133,7 +135,7 @@ export function AnamnesisQuestionCard({ value: q, index, total, onChange, onMove
                     <TextField
                         fullWidth
                         size="small"
-                        label="Ajuda (opcional)"
+                        label={t('anamnesis.card.help')}
                         value={q.helpText ?? ''}
                         onChange={(e) => onChange({ helpText: e.target.value })}
                     />
@@ -143,7 +145,7 @@ export function AnamnesisQuestionCard({ value: q, index, total, onChange, onMove
                             <TextField
                                 type="number"
                                 size="small"
-                                label="Mínimo"
+                                label={t('anamnesis.card.min')}
                                 value={q.min ?? ''}
                                 onChange={(e) => onChange({ min: e.target.value === '' ? null : Number(e.target.value) })}
                                 sx={{ maxWidth: 160 }}
@@ -151,7 +153,7 @@ export function AnamnesisQuestionCard({ value: q, index, total, onChange, onMove
                             <TextField
                                 type="number"
                                 size="small"
-                                label="Máximo"
+                                label={t('anamnesis.card.max')}
                                 value={q.max ?? ''}
                                 onChange={(e) => onChange({ max: e.target.value === '' ? null : Number(e.target.value) })}
                                 sx={{ maxWidth: 160 }}
@@ -161,25 +163,25 @@ export function AnamnesisQuestionCard({ value: q, index, total, onChange, onMove
 
                     {isChoice && (
                         <>
-                            <Button variant="outlined" onClick={() => setDlg(true)}>opções</Button>
+                            <Button variant="outlined" onClick={() => setDlg(true)}>{t('anamnesis.card.optionsBtn')}</Button>
                             <Dialog open={dlg} onClose={() => setDlg(false)} fullWidth maxWidth="sm">
-                                <DialogTitle>Opções da pergunta</DialogTitle>
+                                <DialogTitle>{t('anamnesis.card.optionsTitle')}</DialogTitle>
                                 <DialogContent>
                                     <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 1 }}>
                                         <TextField
                                             fullWidth
                                             size="small"
-                                            label="Nova opção"
+                                            label={t('anamnesis.card.newOption')}
                                             value={newOpt}
                                             onChange={(e) => setNewOpt(e.target.value)}
                                             onKeyDown={(e) => { if (e.key === 'Enter') addOption(); }}
                                         />
-                                        <Button startIcon={<Add />} variant="contained" onClick={addOption}>Adicionar</Button>
+                                        <Button startIcon={<Add />} variant="contained" onClick={addOption}>{t('anamnesis.card.add')}</Button>
                                     </Stack>
 
                                     <Box sx={{ mt: 2 }}>
                                         {(q.options ?? []).length === 0 ? (
-                                            <Typography variant="body2" color="text.secondary">Nenhuma opção adicionada.</Typography>
+                                            <Typography variant="body2" color="text.secondary">{t('anamnesis.card.noOptions')}</Typography>
                                         ) : (
                                             <Stack direction="row" spacing={1} flexWrap="wrap">
                                                 {(q.options ?? []).map((opt) => (
@@ -190,7 +192,7 @@ export function AnamnesisQuestionCard({ value: q, index, total, onChange, onMove
                                     </Box>
                                 </DialogContent>
                                 <DialogActions>
-                                    <Button onClick={() => setDlg(false)}>Fechar</Button>
+                                    <Button onClick={() => setDlg(false)}>{t('anamnesis.card.close')}</Button>
                                 </DialogActions>
                             </Dialog>
                         </>

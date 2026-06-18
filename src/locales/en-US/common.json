@@ -1,0 +1,392 @@
+{
+  "language": {
+    "pt-BR": "Português",
+    "en-US": "English",
+    "es": "Español"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "remove": "Remove",
+    "edit": "Edit",
+    "new": "New",
+    "search": "Search",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "loading": "Loading..."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "patients": "Patients",
+    "appointments": "Appointments",
+    "workspace": "Workspace",
+    "foods": "Foods",
+    "anamnesis": "Anamnesis"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unread_one": "{{count}} unread",
+    "unread_other": "{{count}} unread",
+    "markAll": "Mark all as read",
+    "recent": "Recent",
+    "empty": "No notifications"
+  },
+  "calendar": {
+    "today": "Today",
+    "month": "Month",
+    "week": "Week",
+    "day": "Day"
+  },
+  "auth": {
+    "welcomeBack": "Welcome back!",
+    "helloFriend": "Hello, friend!",
+    "signInIntro": "Sign in with your personal information to stay connected",
+    "registerIntro": "Enter your personal information and start your journey with us",
+    "signInTitle": "Sign in",
+    "createAccount": "Create account",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "register": "Register",
+    "registering": "Creating account...",
+    "forgotPassword": "Forgot your password?",
+    "requiredLogin": "Please enter your email and password.",
+    "requiredRegister": "Enter your name, email, password, ID, and phone number.",
+    "requiredAddress": "Complete the address: {{fields}}.",
+    "registerSuccess": "Registration complete! Sign in to continue.",
+    "unknownError": "Unknown error",
+    "createError": "Error creating account.",
+    "fields": {
+      "email": "Email",
+      "password": "Password",
+      "name": "Full name",
+      "document": "ID",
+      "passwordHint": "At least 8 characters",
+      "crn": "Professional registration (optional)",
+      "phone": "Phone",
+      "zipCode": "ZIP code",
+      "street": "Street",
+      "number": "Number",
+      "neighborhood": "District",
+      "city": "City",
+      "state": "State"
+    }
+  },
+  "patient": {
+    "list": {
+      "title": "Patients",
+      "columns": {
+        "name": "Name",
+        "birthDate": "Date of birth",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "delete": {
+        "title": "Delete patient",
+        "description": "This action is irreversible. Do you want to continue?"
+      },
+      "deleteSuccess": "Patient deleted successfully.",
+      "deleteError": "Failed to delete the patient."
+    },
+    "form": {
+      "back": "Back",
+      "editTitle": "Edit patient",
+      "newTitle": "New patient",
+      "sectionIdentification": "Identification",
+      "sectionAddress": "Address"
+    },
+    "tabs": { "personal": "Personal", "notes": "Notes" },
+    "header": {
+      "changePhoto": "Change photo",
+      "addPhoto": "Add photo",
+      "newPatient": "New patient",
+      "years": "{{count}} years",
+      "statusLabel": "Status"
+    },
+    "gender": { "male": "Male", "female": "Female", "other": "Other", "select": "Select" },
+    "status": { "active": "Active", "pending": "Pending", "pendingPayment": "Pending payment", "inactive": "Inactive" },
+    "data": {
+      "name": "Full name",
+      "document": "ID",
+      "phone": "Phone",
+      "email": "Email",
+      "birthDate": "Date of birth",
+      "gender": "Gender"
+    },
+    "address": { "zipCode": "ZIP code", "street": "Street", "neighborhood": "District", "city": "City", "state": "State" },
+    "notes": { "label": "Notes" }
+  },
+  "appointment": {
+    "form": {
+      "editTitle": "Edit appointment",
+      "newTitle": "New appointment",
+      "patient": "Patient",
+      "select": "Select...",
+      "selectedPatient": "Selected patient",
+      "dateTime": "Date and time",
+      "status": "Status",
+      "color": "Color",
+      "observation": "Notes"
+    },
+    "status": { "scheduled": "Scheduled", "completed": "Completed", "canceled": "Canceled" },
+    "delete": { "title": "Delete appointment", "description": "This action is irreversible. Do you want to continue?" }
+  },
+  "overview": {
+    "welcome": "Hi, welcome back 👋",
+    "widgets": {
+      "activePatients": "Active patients",
+      "completedAppointments": "Completed appointments",
+      "returnRate": "Return rate",
+      "attendanceRate": "Attendance rate"
+    },
+    "tasks": { "title": "Pending appointments" },
+    "bmi": { "title": "Average BMI (last 12 months)", "subheader": "Latest BMI of each patient/month" }
+  },
+  "food": {
+    "list": {
+      "title": "Foods",
+      "tabs": { "custom": "My foods", "taco": "TACO" },
+      "search": "Search food",
+      "columns": { "description": "Description", "group": "Group", "kcal": "kcal", "protein": "Prot. (g)", "carbs": "Carb. (g)", "fat": "Fat (g)", "actions": "Actions" },
+      "delete": { "title": "Delete food", "description": "This action is irreversible. Do you want to continue?", "onlyCustom": "You can only delete foods from the My foods tab." },
+      "deleteSuccess": "Food deleted successfully.",
+      "deleteError": "Failed to delete food."
+    },
+    "form": {
+      "editTitle": "Edit food",
+      "newTitle": "New food",
+      "description": "Description",
+      "group": "Food group",
+      "groupSimple": "Group",
+      "select": "Select...",
+      "addGroup": "+ Add new group...",
+      "newGroupPrompt": "Enter the name of the new food group:",
+      "portion": "Portion (g)",
+      "energy": "Energy (kcal)",
+      "kcal": "kcal",
+      "protein": "Protein (g)",
+      "carbs": "Carbohydrate (g)",
+      "fat": "Fat (g)",
+      "saveError": "Error saving food",
+      "sections": { "mainMacros": "Main macronutrients", "detailedMacros": "Detailed macronutrients", "micros": "Micronutrients", "homemade": "Homemade measures" },
+      "homemadeDesc": "Homemade measure description",
+      "homemadeGrams": "Quantity in grams",
+      "removeMeasure": "Remove",
+      "addMeasure": "Add homemade measure"
+    },
+    "nutrients": {
+      "carbohydrates": "Carbohydrates detailed (g)",
+      "proteins": "Proteins detailed (g)",
+      "fats": "Fats detailed (g)",
+      "sugar": "Sugar (g)",
+      "vitaminA": "Vitamin A (mcg)",
+      "vitaminC": "Vitamin C (mg)",
+      "vitaminD": "Vitamin D (mcg)",
+      "vitaminE": "Vitamin E (mg)",
+      "vitaminK": "Vitamin K (mcg)",
+      "vitaminB1": "Vitamin B1 (mg)",
+      "vitaminB2": "Vitamin B2 (mg)",
+      "vitaminB3": "Vitamin B3 (mg)",
+      "vitaminB5": "Vitamin B5 (mg)",
+      "vitaminB6": "Vitamin B6 (mg)",
+      "vitaminB7": "Vitamin B7 (mcg)",
+      "vitaminB9": "Vitamin B9 (mcg)",
+      "vitaminB12": "Vitamin B12 (mcg)",
+      "calcium": "Calcium (mg)",
+      "phosphorus": "Phosphorus (mg)",
+      "magnesium": "Magnesium (mg)",
+      "sodium": "Sodium (mg)",
+      "potassium": "Potassium (mg)",
+      "iron": "Iron (mg)",
+      "zinc": "Zinc (mg)",
+      "copper": "Copper (mg)",
+      "manganese": "Manganese (mg)",
+      "selenium": "Selenium (mcg)",
+      "cholesterol": "Cholesterol (mg)"
+    }
+  },
+  "mealplan": {
+    "list": {
+      "title": "Meal plans",
+      "loading": "Loading plans...",
+      "empty": "No plan registered.",
+      "updated": "Updated: {{date}}",
+      "allDays": "Every day",
+      "delivery": "Delivery: {{value}}",
+      "mealsCount_one": "{{count}} meal",
+      "mealsCount_other": "{{count}} meals",
+      "itemsCount_one": "{{count}} item",
+      "itemsCount_other": "{{count}} items",
+      "columns": { "name": "Name", "status": "Status", "days": "Days", "resume": "Summary", "updatedAt": "Last update", "delivery": "Delivery", "actions": "Actions" }
+    },
+    "status": { "active": "Active", "inactive": "Inactive", "suspended": "Suspended" },
+    "days": { "sun": "Sun", "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat" },
+    "form": {
+      "name": "Plan name",
+      "status": "Status",
+      "daysOfWeek": "Days of the week",
+      "all": "All",
+      "selectAllDays": "Select all days",
+      "clearAllDays": "Clear all days",
+      "savePlan": "Save plan",
+      "saveError": "Error saving the plan",
+      "errorsSummary": "There are errors in the meals or items. Check that all required fields are filled in."
+    },
+    "meals": {
+      "title": "Meals",
+      "add": "Add meal",
+      "empty": "No meal added.",
+      "foods": "Meal foods",
+      "noMainFoods": "No main food registered.",
+      "substitutes": "Substitutes",
+      "noSubstitutes": "No substitute registered.",
+      "noSubstituteFoods": "No food registered in this substitute.",
+      "unnamedSubstitute": "Unnamed substitute",
+      "noDetails": "No food or substitute registered.",
+      "unnamedFood": "Food without description",
+      "noQuantity": "No quantity provided",
+      "expand": "Expand {{name}}",
+      "collapse": "Collapse {{name}}",
+      "columns": { "name": "Name", "time": "Time", "protein": "Protein (g)", "carbs": "Carbohydrate (g)", "fat": "Fat (g)", "calories": "Calories (kcal)", "actions": "Actions" }
+    },
+    "mealDialog": {
+      "editTitle": "Edit meal",
+      "newTitle": "New meal",
+      "description": "Description",
+      "substituteVariations": "Substitute variations",
+      "mealFallback": "Meal"
+    },
+    "items": {
+      "title": "Meal items",
+      "add": "Add item",
+      "empty": "No item added.",
+      "columns": { "food": "Food", "quantity": "Qty", "grams": "Grams", "measure": "Measure", "optional": "Optional", "order": "Order", "actions": "Actions" }
+    },
+    "substitutes": {
+      "ofParent": "Substitutes of",
+      "add": "Add substitute",
+      "empty": "No substitute added.",
+      "columns": { "name": "Name", "time": "Time", "items": "Items", "actions": "Actions" }
+    },
+    "itemDialog": {
+      "editTitle": "Edit item",
+      "newTitle": "New item",
+      "quantity": "Quantity",
+      "grams": "Grams",
+      "portionLabel": "Portion label",
+      "order": "Order",
+      "optional": "Optional",
+      "notes": "Notes"
+    },
+    "subDialog": { "editTitle": "Edit substitute", "newTitle": "New substitute" },
+    "measureDialog": {
+      "editTitle": "Edit measure",
+      "newTitle": "New measure",
+      "description": "Description",
+      "grams": "Quantity in grams",
+      "saving": "Saving..."
+    },
+    "foodAutocomplete": { "label": "Food", "placeholder": "Type to search..." },
+    "measureAutocomplete": { "label": "Homemade measure", "addNew": "Add new measure...", "systemDefault": "System default" }
+  },
+  "anamnesis": {
+    "list": {
+      "title": "Anamnesis questionnaires",
+      "delete": { "title": "Delete questionnaire", "description": "This action is irreversible. Do you want to continue?" },
+      "deleteSuccess": "Questionnaire deleted successfully.",
+      "deleteError": "Failed to delete the questionnaire.",
+      "columns": { "title": "Title", "description": "Description", "actions": "Actions" }
+    },
+    "basics": {
+      "cardTitle": "Anamnesis - Basic information",
+      "cardSubheader": "Set a title and, optionally, a description.",
+      "title": "Title",
+      "description": "Description (optional)"
+    },
+    "questions": {
+      "count": "Questions ({{count}})",
+      "add": "Add question",
+      "empty": "No question yet. Click “Add question”.",
+      "defaultLabel": "New question",
+      "copyLabel": "{{label}} (copy)"
+    },
+    "card": {
+      "type": "Type",
+      "types": { "text": "Text", "number": "Number", "boolean": "Yes/No", "select": "Multiple choice (single)", "multiSelect": "Multiple choice (multiple)" },
+      "question": "Question",
+      "required": "Required",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "duplicate": "Duplicate",
+      "remove": "Remove",
+      "help": "Help (optional)",
+      "min": "Minimum",
+      "max": "Maximum",
+      "optionsBtn": "options",
+      "optionsTitle": "Question options",
+      "newOption": "New option",
+      "add": "Add",
+      "noOptions": "No option added.",
+      "close": "Close"
+    },
+    "form": {
+      "preview": "Preview",
+      "exampleTitle": "Nutritional Anamnesis - Base Template",
+      "exampleDescription": "Initial information collection for assessment. Edit according to your practice.",
+      "exampleQ1": "Main goal",
+      "exampleQ2": "Weight (kg)",
+      "exampleQ2Help": "Enter in kg",
+      "errTitleRequired": "Enter a title.",
+      "errLabelRequired": "Question {{index}}: label is required.",
+      "errMinMax": "Question {{index}}: minimum cannot be greater than maximum.",
+      "errMinOptions": "Question {{index}}: include at least 2 options."
+    },
+    "preview": {
+      "title": "Questionnaire preview",
+      "noTitle": "No title",
+      "empty": "No question added.",
+      "yourAnswer": "Your answer"
+    }
+  },
+  "publicAnamnesis": {
+    "view": {
+      "loading": "Loading questionnaire",
+      "brand": "Plenton · Anamnesis",
+      "submitted": "Form submitted. Thank you!",
+      "submittedWithDate": "Form submitted on {{date}}. Thank you!",
+      "expires": "This form expires on {{date}}.",
+      "confirmBeforeSubmit": "Review your answers before submitting. You will not be able to change them later.",
+      "submit": "Submit answers",
+      "consentNote": "Your answers are processed according to the accepted consent term."
+    },
+    "consent": {
+      "brand": "Plenton · Privacy",
+      "termTitle": "Personal data processing term",
+      "termIntro": "Before starting the anamnesis, carefully read the term below and confirm that you agree. You can revoke this consent at any time with the responsible nutritionist.",
+      "termHeader": "Consent Term (LGPD)",
+      "version": "version {{version}}",
+      "accept": "I have read and accept the processing of my data according to the term above.",
+      "start": "Start anamnesis",
+      "lgpdNote": "Your data is processed according to Law No. 13.709/2018 (LGPD)."
+    },
+    "header": {
+      "status": "Status: {{status}}",
+      "expires": "Expires: {{date}}",
+      "saving": "Saving...",
+      "draftSaved": "Draft saved ✅",
+      "saveError": "Error saving ⚠️",
+      "submitted": "Form already submitted on {{date}}."
+    },
+    "validation": {
+      "required": "Required",
+      "numberInvalid": "Enter a valid number",
+      "min": "Minimum: {{min}}",
+      "max": "Maximum: {{max}}",
+      "minOne": "Select at least 1 option"
+    }
+  }
+}

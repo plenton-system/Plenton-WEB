@@ -1,7 +1,9 @@
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import esLocale from '@fullcalendar/core/locales/es';
 import interactionPlugin from '@fullcalendar/interaction';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 
@@ -23,7 +25,13 @@ export function Calendar({
     onDragDropEvent,
     color = 'var(--palette-primary-main)'
 }: CalendarProps) {
+    const { t, i18n } = useTranslation();
     const lastRange = useRef<{ start: string, end: string } | null>(null);
+    const calendarLocale = i18n.resolvedLanguage === 'es'
+        ? 'es'
+        : i18n.resolvedLanguage === 'pt-BR'
+            ? 'pt-br'
+            : 'en';
 
     const handleDateClick = (arg: any) => {
         onAddEvent?.(arg.dateStr);
@@ -57,7 +65,8 @@ export function Calendar({
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
                 events={events}
-                locales={[ptBrLocale]}
+                locales={[ptBrLocale, esLocale]}
+                locale={calendarLocale}
                 editable
                 selectable
                 dayMaxEvents={5}
@@ -78,10 +87,10 @@ export function Calendar({
                     right: 'timeGridDay,timeGridWeek,dayGridMonth next'
                 }}
                 buttonText={{
-                    today: 'Hoje',
-                    month: 'Mês',
-                    week: 'Semana',
-                    day: 'Dia'
+                    today: t('calendar.today'),
+                    month: t('calendar.month'),
+                    week: t('calendar.week'),
+                    day: t('calendar.day')
                 }}
             />
 

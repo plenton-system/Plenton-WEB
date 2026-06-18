@@ -2,6 +2,7 @@ import type { PatientListQuery, AppointmentDetailProps } from "src/types";
 
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -28,13 +29,6 @@ import { validationSchema } from "../validation";
 
 // ----------------------------------------------------------------------
 
-// Enum para status
-const APPOINTMENT_STATUS = [
-    { value: 'Scheduled', label: 'Agendada' },
-    { value: 'Completed', label: 'Concluída' },
-    { value: 'Canceled', label: 'Cancelada' },
-];
-
 export interface AppointmentFormViewProps {
     appointment?: AppointmentDetailProps | null;
     onSubmit: (values: AppointmentDetailProps) => void;
@@ -54,9 +48,16 @@ export default function AppointmentFormVieww({
     onCancel,
     onDelete
 }: AppointmentFormViewProps) {
+    const { t } = useTranslation();
     const confirm = useConfirm();
     const [patientsLoading, setPatientsLoading] = useState(false);
     const [patients, setPatients] = useState<{ id: string, name: string }[]>([]);
+
+    const APPOINTMENT_STATUS = [
+        { value: 'Scheduled', label: t('appointment.status.scheduled') },
+        { value: 'Completed', label: t('appointment.status.completed') },
+        { value: 'Canceled', label: t('appointment.status.canceled') },
+    ];
 
     const user = authStorage.getUser();
 
@@ -115,10 +116,10 @@ export default function AppointmentFormVieww({
 
     const handleDeleteClick = async () => {
         const ok = await confirm({
-            title: 'Excluir consulta',
-            description: 'Esta ação é irreversível. Deseja continuar?',
-            confirmText: 'Excluir',
-            cancelText: 'Cancelar',
+            title: t('appointment.delete.title'),
+            description: t('appointment.delete.description'),
+            confirmText: t('actions.delete'),
+            cancelText: t('actions.cancel'),
             destructive: true,
         });
 
@@ -132,7 +133,7 @@ export default function AppointmentFormVieww({
         <>
             <Box sx={{ mt: 1, mr: 0, mb: 5, ml: 2, display: 'flex', alignItems: 'center' }}>
                 <Typography variant="h4" sx={{ flexGrow: 1 }}>
-                    {isEditing ? 'Editar Consulta' : 'Nova Consulta'}
+                    {isEditing ? t('appointment.form.editTitle') : t('appointment.form.newTitle')}
                 </Typography>
             </Box>
             <form onSubmit={formik.handleSubmit}>
@@ -141,7 +142,7 @@ export default function AppointmentFormVieww({
                         {/* Paciente */}
                         <TextField
                             select
-                            label="Paciente"
+                            label={t('appointment.form.patient')}
                             name="patientId"
                             value={formik.values.patientId}
                             onChange={formik.handleChange}
@@ -152,17 +153,17 @@ export default function AppointmentFormVieww({
                             disabled={loading || patientsLoading}
                             fullWidth
                         >
-                            <MenuItem value="">Selecione...</MenuItem>
+                            <MenuItem value="">{t('appointment.form.select')}</MenuItem>
                             {patientsLoading && (
                                 <MenuItem value="" disabled>
-                                    <CircularProgress size={18} sx={{ mr: 2 }} /> Carregando...
+                                    <CircularProgress size={18} sx={{ mr: 2 }} /> {t('common.loading')}
                                 </MenuItem>
                             )}
                             {/* Garante que o paciente selecionado sempre aparece */}
                             {!patients.find(p => p.id === formik.values.patientId) &&
                                 formik.values.patientId && (
                                     <MenuItem value={formik.values.patientId}>
-                                        {appointment?.patientName || 'Paciente selecionado'}
+                                        {appointment?.patientName || t('appointment.form.selectedPatient')}
                                     </MenuItem>
                                 )
                             }
@@ -176,7 +177,7 @@ export default function AppointmentFormVieww({
                         <Box sx={{ display: 'flex', gap: 2 }}>
                             <TextField
                                 name="start"
-                                label="Data e Hora"
+                                label={t('appointment.form.dateTime')}
                                 type="datetime-local"
                                 value={formik.values.start}
                                 onChange={formik.handleChange}
@@ -190,7 +191,7 @@ export default function AppointmentFormVieww({
 
                             <TextField
                                 select
-                                label="Status"
+                                label={t('appointment.form.status')}
                                 name="status"
                                 value={formik.values.status}
                                 onChange={formik.handleChange}
@@ -210,7 +211,7 @@ export default function AppointmentFormVieww({
 
                         {/* Cor */}
                         <Box>
-                            <InputLabel sx={{ mb: 1 }}>Cor</InputLabel>
+                            <InputLabel sx={{ mb: 1 }}>{t('appointment.form.color')}</InputLabel>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, position: 'relative' }}>
                                 <IconButton
                                     component="span"
@@ -265,7 +266,7 @@ export default function AppointmentFormVieww({
 
                         {/* Observação */}
                         <TextField
-                            label="Observação"
+                            label={t('appointment.form.observation')}
                             name="observation"
                             value={formik.values.observation}
                             onChange={formik.handleChange}
@@ -284,11 +285,11 @@ export default function AppointmentFormVieww({
                                     onClick={handleDeleteClick}
                                     disabled={loading}
                                 >
-                                    Excluir
+                                    {t('actions.delete')}
                                 </Button>
                             )}
                             <Button variant="outlined" onClick={onCancel} disabled={loading}>
-                                Cancelar
+                                {t('actions.cancel')}
                             </Button>
                             <Button
                                 variant="contained"
@@ -296,7 +297,7 @@ export default function AppointmentFormVieww({
                                 type="submit"
                                 disabled={loading}
                             >
-                                {loading ? <CircularProgress size={24} /> : 'Salvar'}
+                                {loading ? <CircularProgress size={24} /> : t('actions.save')}
                             </Button>
                         </Box>
                     </Stack>

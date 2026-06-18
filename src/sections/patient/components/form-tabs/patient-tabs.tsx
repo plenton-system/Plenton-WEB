@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
@@ -11,10 +13,12 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export default function PatientTabs({ value, onChange }: Props) {
+    const { t } = useTranslation();
+
     return (
         <Tabs value={value} onChange={(_, v) => onChange(v)} sx={{ mb: 2 }}>
-            <Tab label="Pessoais" />
-            <Tab label="Anotações" />
+            <Tab label={t('patient.tabs.personal')} />
+            <Tab label={t('patient.tabs.notes')} />
         </Tabs>
     );
 }

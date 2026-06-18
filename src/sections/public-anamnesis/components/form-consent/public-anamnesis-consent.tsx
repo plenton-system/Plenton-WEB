@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
     Box,
@@ -34,6 +35,7 @@ export function PublicAnamnesisConsent({
     submitting = false,
     error,
 }: Props) {
+    const { t } = useTranslation();
     const [accepted, setAccepted] = useState(false);
 
     return (
@@ -80,7 +82,7 @@ export function PublicAnamnesisConsent({
                                 variant="overline"
                                 sx={{ opacity: 0.85, letterSpacing: '0.12em' }}
                             >
-                                Plenton · Privacidade
+                                {t('publicAnamnesis.consent.brand')}
                             </Typography>
                             <Typography variant="h5" fontWeight={700}>
                                 {title}
@@ -103,12 +105,10 @@ export function PublicAnamnesisConsent({
             >
                 <Box>
                     <Typography variant="h6" fontWeight={600} gutterBottom>
-                        Termo de tratamento de dados pessoais
+                        {t('publicAnamnesis.consent.termTitle')}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        Antes de começar a anamnese, leia atentamente o termo abaixo e confirme
-                        que está de acordo. Você pode revogar este consentimento a qualquer
-                        momento junto ao nutricionista responsável.
+                        {t('publicAnamnesis.consent.termIntro')}
                     </Typography>
                 </Box>
 
@@ -141,11 +141,11 @@ export function PublicAnamnesisConsent({
                             sx={{ color: 'primary.main' }}
                         />
                         <Typography variant="subtitle2" fontWeight={600}>
-                            Termo de Consentimento (LGPD)
+                            {t('publicAnamnesis.consent.termHeader')}
                         </Typography>
                         <Box sx={{ flex: 1 }} />
                         <Typography variant="caption" color="text.secondary">
-                            versão {termVersion}
+                            {t('publicAnamnesis.consent.version', { version: termVersion })}
                         </Typography>
                     </Stack>
 
@@ -197,7 +197,7 @@ export function PublicAnamnesisConsent({
                             }
                             label={
                                 <Typography variant="body2">
-                                    Li e aceito o tratamento dos meus dados conforme o termo acima.
+                                    {t('publicAnamnesis.consent.accept')}
                                 </Typography>
                             }
                         />
@@ -213,7 +213,7 @@ export function PublicAnamnesisConsent({
                             }
                             sx={{ minWidth: 220, flexShrink: 0 }}
                         >
-                            Começar anamnese
+                            {t('publicAnamnesis.consent.start')}
                         </Button>
                     </Stack>
 
@@ -224,7 +224,7 @@ export function PublicAnamnesisConsent({
                         color="text.secondary"
                         sx={{ display: 'block', textAlign: 'center', mt: 1 }}
                     >
-                        Seus dados são tratados conforme a Lei nº 13.709/2018 (LGPD).
+                        {t('publicAnamnesis.consent.lgpdNote')}
                     </Typography>
                 </Container>
             </Box>

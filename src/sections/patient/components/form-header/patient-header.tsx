@@ -1,6 +1,7 @@
 import type { FormikProps } from 'formik';
 
 import { useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -21,19 +22,6 @@ import type { PatientFormValues } from '../../../../types';
 
 type Props = {
     formik: FormikProps<PatientFormValues>;
-};
-
-const GENDER_LABEL: Record<string, string> = {
-    [PatientEnum.Gender.Male]: 'Masculino',
-    [PatientEnum.Gender.Female]: 'Feminino',
-    [PatientEnum.Gender.Other]: 'Outro',
-};
-
-const STATUS_LABEL: Record<string, string> = {
-    [PatientEnum.Status.Active]: 'Ativo',
-    [PatientEnum.Status.Pending]: 'Pendente',
-    [PatientEnum.Status.PendingPayment]: 'Pagamento pendente',
-    [PatientEnum.Status.Inactive]: 'Inativo',
 };
 
 const STATUS_COLOR: Record<string, 'success' | 'warning' | 'error' | 'default'> = {
@@ -66,6 +54,21 @@ function InlineList({ items }: { items: string[] }) {
 // ----------------------------------------------------------------------
 
 export default function PatientHeader({ formik }: Props) {
+    const { t } = useTranslation();
+
+    const GENDER_LABEL: Record<string, string> = {
+        [PatientEnum.Gender.Male]: t('patient.gender.male'),
+        [PatientEnum.Gender.Female]: t('patient.gender.female'),
+        [PatientEnum.Gender.Other]: t('patient.gender.other'),
+    };
+
+    const STATUS_LABEL: Record<string, string> = {
+        [PatientEnum.Status.Active]: t('patient.status.active'),
+        [PatientEnum.Status.Pending]: t('patient.status.pending'),
+        [PatientEnum.Status.PendingPayment]: t('patient.status.pendingPayment'),
+        [PatientEnum.Status.Inactive]: t('patient.status.inactive'),
+    };
+
     const photoPreview = useMemo(() => {
         const v = formik.values.profilePhoto;
         if (!v) return null;
@@ -90,7 +93,7 @@ export default function PatientHeader({ formik }: Props) {
     const genderLabel =
         typeof genderValue === 'string' && genderValue in GENDER_LABEL ? GENDER_LABEL[genderValue] : null;
     const statusValue = (formik.values.status as string) ?? PatientEnum.Status.Active;
-    const statusLabel = STATUS_LABEL[statusValue] ?? 'Status';
+    const statusLabel = STATUS_LABEL[statusValue] ?? t('patient.header.statusLabel');
     const statusColor = STATUS_COLOR[statusValue] ?? 'default';
 
     return (
@@ -103,7 +106,7 @@ export default function PatientHeader({ formik }: Props) {
             <Stack alignItems="center" spacing={1} sx={{ flexShrink: 0 }}>
                 <Avatar src={photoPreview || undefined} sx={{ width: 96, height: 96 }} />
                 <Button component="label" size="small" variant="text">
-                    {photoPreview ? 'Trocar foto' : 'Adicionar foto'}
+                    {photoPreview ? t('patient.header.changePhoto') : t('patient.header.addPhoto')}
                     <input type="file" accept="image/*" hidden onChange={handlePhotoChange} />
                 </Button>
             </Stack>
@@ -111,14 +114,14 @@ export default function PatientHeader({ formik }: Props) {
             <Stack spacing={1.2} sx={{ flexGrow: 1, minWidth: 0, width: '100%' }}>
                 <Stack direction="row" alignItems="center" spacing={1.5} flexWrap="wrap">
                     <Typography variant="h5" sx={{ minWidth: 0 }} noWrap>
-                        {name || 'Novo paciente'}
+                        {name || t('patient.header.newPatient')}
                     </Typography>
                     <Chip size="small" color={statusColor} label={statusLabel} />
                 </Stack>
 
                 <InlineList
                     items={[
-                        age !== null ? `${age} anos` : null,
+                        age !== null ? t('patient.header.years', { count: age }) : null,
                         genderLabel,
                         formik.values.document || null,
                     ].filter((v): v is string => Boolean(v))}
@@ -135,14 +138,14 @@ export default function PatientHeader({ formik }: Props) {
                 <TextField
                     select
                     fullWidth
-                    label="Status"
+                    label={t('patient.header.statusLabel')}
                     name="status"
                     value={formik.values.status}
                     onChange={formik.handleChange}
                     size="small"
                 >
-                    <MenuItem value={PatientEnum.Status.Active}>Ativo</MenuItem>
-                    <MenuItem value={PatientEnum.Status.Inactive}>Inativo</MenuItem>
+                    <MenuItem value={PatientEnum.Status.Active}>{t('patient.status.active')}</MenuItem>
+                    <MenuItem value={PatientEnum.Status.Inactive}>{t('patient.status.inactive')}</MenuItem>
                 </TextField>
             </Box>
         </Stack>

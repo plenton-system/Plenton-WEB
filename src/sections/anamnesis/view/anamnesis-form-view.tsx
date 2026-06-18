@@ -1,6 +1,7 @@
 import type { Basics, AnamnesisCreateDto, AnamnesisQuestionDto } from 'src/types';
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -27,6 +28,7 @@ interface AnamnesisFormViewProps {
 // ----------------------------------------------------------------------
 
 export function AnamnesisFormView({ anamnesisId, onReturn }: AnamnesisFormViewProps) {
+    const { t } = useTranslation();
 
     const {
         data,
@@ -60,27 +62,27 @@ export function AnamnesisFormView({ anamnesisId, onReturn }: AnamnesisFormViewPr
 
     const handleUseExample = () => {
         setBasics({
-            title: 'Anamnese Nutricional - Modelo Base',
-            description: 'Coleta inicial de informações para avaliação. Edite conforme sua prática.',
+            title: t('anamnesis.form.exampleTitle'),
+            description: t('anamnesis.form.exampleDescription'),
         });
         // exemplo mínimo de perguntas (opcional):
         if (questions.length === 0) {
             setQuestions([
-                { id: crypto.randomUUID(), type: QuestionType.Text, label: 'Objetivo principal', required: true, helpText: '', min: null, max: null, options: null },
-                { id: crypto.randomUUID(), type: QuestionType.Number, label: 'Peso (kg)', required: true, helpText: 'Informe em kg', min: 0, max: 500, options: null },
+                { id: crypto.randomUUID(), type: QuestionType.Text, label: t('anamnesis.form.exampleQ1'), required: true, helpText: '', min: null, max: null, options: null },
+                { id: crypto.randomUUID(), type: QuestionType.Number, label: t('anamnesis.form.exampleQ2'), required: true, helpText: t('anamnesis.form.exampleQ2Help'), min: 0, max: 500, options: null },
             ]);
         }
     };
 
     const validate = (): string[] => {
         const errs: string[] = [];
-        if (!basics.title.trim()) errs.push('Informe um título.');
+        if (!basics.title.trim()) errs.push(t('anamnesis.form.errTitleRequired'));
         questions.forEach((q, idx) => {
-            if (!q.label?.trim()) errs.push(`Pergunta ${idx + 1}: rótulo é obrigatório.`);
+            if (!q.label?.trim()) errs.push(t('anamnesis.form.errLabelRequired', { index: idx + 1 }));
             if (q.type === QuestionType.Number && q.min != null && q.max != null && q.min > q.max)
-                errs.push(`Pergunta ${idx + 1}: mínimo não pode ser maior que o máximo.`);
+                errs.push(t('anamnesis.form.errMinMax', { index: idx + 1 }));
             if ((q.type === QuestionType.Select || q.type === QuestionType.MultiSelect) && (!q.options || q.options.filter(o => o?.trim()).length < 2))
-                errs.push(`Pergunta ${idx + 1}: inclua pelo menos 2 opções.`);
+                errs.push(t('anamnesis.form.errMinOptions', { index: idx + 1 }));
         });
 
         return errs;
@@ -158,13 +160,13 @@ export function AnamnesisFormView({ anamnesisId, onReturn }: AnamnesisFormViewPr
 
                         <Stack direction="row" justifyContent="flex-end" spacing={1} sx={{ mt: 2 }}>
                             <Button variant="outlined" onClick={onReturn} disabled={loading}>
-                                Cancelar
+                                {t('actions.cancel')}
                             </Button>
                             <Button variant="outlined" onClick={() => setPreviewOpen(true)} disabled={loading}>
-                                Preview
+                                {t('anamnesis.form.preview')}
                             </Button>
                             <Button variant="contained" onClick={handleSave} disabled={loading}>
-                                Salvar
+                                {t('actions.save')}
                             </Button>
                         </Stack>
                     </>

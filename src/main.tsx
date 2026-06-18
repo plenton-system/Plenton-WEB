@@ -1,3 +1,5 @@
+import 'src/i18n'; // inicializa o i18next antes do render
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router';
