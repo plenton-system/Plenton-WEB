@@ -27,8 +27,9 @@ i18n
     resources,
     fallbackLng: DEFAULT_LANGUAGE,
     supportedLngs: [...SUPPORTED_LANGUAGES],
-    // "pt" cai para "pt-BR" etc. quando o navegador reporta o idioma sem região.
-    nonExplicitSupportedLngs: true,
+    // O detector associa "pt"/"en" à variante regional suportada.
+    // nonExplicitSupportedLngs reduziria "pt-BR" para "pt" antes de consultar
+    // supportedLngs, rejeitando os recursos que usam códigos regionais.
     load: 'currentOnly',
     defaultNS: 'common',
     ns: ['common'],
