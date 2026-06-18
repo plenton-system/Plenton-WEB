@@ -1,13 +1,15 @@
 import { CONFIG } from 'src/config-global';
+import { useTranslation } from 'react-i18next';
 
 import { WorkspaceView } from 'src/sections/workspace/view';
 
 // ----------------------------------------------------------------------
 
 export default function Page() {
+    const { t } = useTranslation();
     return (
         <>
-            <title>{`Workspace - ${CONFIG.appName}`}</title>
+            <title>{`${t('pages.workspace')} - ${CONFIG.appName}`}</title>
 
             <WorkspaceView />
         </>

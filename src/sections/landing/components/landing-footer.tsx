@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -13,33 +14,6 @@ import { Logo } from 'src/components/logo';
 
 // ----------------------------------------------------------------------
 
-const FOOTER_LINKS = [
-  {
-    title: 'Produto',
-    items: [
-      { label: 'Funcionalidades', href: '#funcionalidades' },
-      { label: 'Como funciona', href: '#como-funciona' },
-      { label: 'Planos', href: '#planos' },
-      { label: 'FAQ', href: '#faq' },
-    ],
-  },
-  {
-    title: 'Conta',
-    items: [
-      { label: 'Entrar', href: '/sign-in' },
-      { label: 'Experimente grátis', href: '/sign-in?action=register' },
-    ],
-  },
-  {
-    title: 'Suporte',
-    items: [
-      { label: 'Contato', href: '/contato' },
-      { label: 'Política de privacidade', href: '/privacidade' },
-      { label: 'Termos de uso', href: '/termos' },
-    ],
-  },
-];
-
 const SOCIAL_ICONS = [
   { icon: 'mdi:instagram', label: 'Instagram', href: '#' },
   { icon: 'mdi:linkedin', label: 'LinkedIn', href: '#' },
@@ -47,7 +21,34 @@ const SOCIAL_ICONS = [
 ];
 
 export function LandingFooter() {
+  const { t } = useTranslation();
   const theme = useTheme();
+  const footerLinks = [
+    {
+      title: t('landing.footer.product'),
+      items: [
+        { label: t('landing.nav.features'), href: '#funcionalidades' },
+        { label: t('landing.nav.howItWorks'), href: '#como-funciona' },
+        { label: t('landing.nav.plans'), href: '#planos' },
+        { label: t('landing.nav.faq'), href: '#faq' },
+      ],
+    },
+    {
+      title: t('landing.footer.account'),
+      items: [
+        { label: t('landing.nav.signIn'), href: '/sign-in' },
+        { label: t('landing.nav.tryFree'), href: '/sign-in?action=register' },
+      ],
+    },
+    {
+      title: t('landing.footer.support'),
+      items: [
+        { label: t('landing.footer.contact'), href: '/contato' },
+        { label: t('landing.footer.privacy'), href: '/privacidade' },
+        { label: t('landing.footer.terms'), href: '/termos' },
+      ],
+    },
+  ];
 
   return (
     <Box
@@ -64,7 +65,7 @@ export function LandingFooter() {
             <Stack spacing={2}>
               <Logo isSingle />
               <Typography variant="body2" sx={{ color: 'text.secondary', maxWidth: 320 }}>
-                Plataforma de gestão completa para nutricionistas. Atenda mais e melhor.
+                {t('landing.footer.description')}
               </Typography>
               <Stack direction="row" spacing={0.5}>
                 {SOCIAL_ICONS.map((s) => (
@@ -83,7 +84,7 @@ export function LandingFooter() {
             </Stack>
           </Grid>
 
-          {FOOTER_LINKS.map((group) => (
+          {footerLinks.map((group) => (
             <Grid key={group.title} size={{ xs: 6, sm: 4, md: 2.6 }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1.5 }}>
                 {group.title}
@@ -120,10 +121,10 @@ export function LandingFooter() {
           }}
         >
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            © {new Date().getFullYear()} Plenton. Todos os direitos reservados.
+            {t('landing.footer.rights', { year: new Date().getFullYear() })}
           </Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            Feito com cuidado para profissionais da nutrição.
+            {t('landing.footer.care')}
           </Typography>
         </Box>
       </Container>

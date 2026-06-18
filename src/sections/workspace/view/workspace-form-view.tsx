@@ -1,6 +1,7 @@
 import type { AppointmentDetailProps } from 'src/types';
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -42,6 +43,7 @@ export function WorkspaceFormView({
   onBack,
   onReturn,
 }: WorkspaceFormViewProps) {
+  const { t } = useTranslation();
   const [tab, setTab] = useState<WorkspaceTabId>(initialTab ?? 'mealPlan');
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
   const [appointmentInitialData, setAppointmentInitialData] = useState<AppointmentDetailProps | null>(null);
@@ -93,12 +95,12 @@ export function WorkspaceFormView({
 
   const mockLists = {
     anthropometry: [
-      { primary: 'Peso: 72 kg', secondary: 'Atualizado há 2 dias' },
-      { primary: 'Altura: 1,70 m', secondary: 'Atualizado há 2 dias' },
+      { primary: `${t('workspace.anthropometry.columns.weight')}: 72 kg`, secondary: t('mealplan.list.updated', { date: '2d' }) },
+      { primary: `${t('workspace.anthropometry.columns.height')}: 1.70 m`, secondary: t('mealplan.list.updated', { date: '2d' }) },
     ],
     documents: [
-      { primary: 'Plano enviado (PDF)', secondary: '01/02' },
-      { primary: 'WhatsApp', secondary: 'Enviado ontem' },
+      { primary: t('workspace.documents.planSent'), secondary: '01/02' },
+      { primary: 'WhatsApp', secondary: t('workspace.documents.sentYesterday') },
     ],
   } as const;
 
@@ -135,9 +137,9 @@ export function WorkspaceFormView({
 
             {tab === 'documents' && (
               <WorkspaceGenericListTab
-                title="Documentos e envios"
+                title={t('workspace.documents.title')}
                 items={mockLists.documents}
-                placeholder="Sem documentos ou envios."
+                placeholder={t('workspace.documents.empty')}
               />
             )}
           </Stack>

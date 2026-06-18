@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 import { varAlpha } from 'minimal-shared/utils';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -13,6 +14,7 @@ import Typography from '@mui/material/Typography';
 // ----------------------------------------------------------------------
 
 export function LandingHero() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -32,19 +34,18 @@ export function LandingHero() {
       <Container maxWidth="lg">
         <Stack spacing={3} alignItems="center" textAlign="center">
           <Chip
-            label="Plataforma para nutricionistas"
+            label={t('landing.hero.eyebrow')}
             color="primary"
             variant="outlined"
             sx={{ fontWeight: 600 }}
           />
 
           <Typography variant="h2" sx={{ fontWeight: 800, maxWidth: 880, lineHeight: 1.15 }}>
-            Gestão completa do seu consultório nutricional em um único lugar.
+            {t('landing.hero.title')}
           </Typography>
 
           <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: 720, fontWeight: 400 }}>
-            Cadastre pacientes, monte planos alimentares, envie anamneses, organize sua agenda e
-            acompanhe a evolução — tudo integrado e pronto para usar.
+            {t('landing.hero.description')}
           </Typography>
 
           <Stack
@@ -59,7 +60,7 @@ export function LandingHero() {
               onClick={() => navigate('/sign-in?action=register')}
               sx={{ textTransform: 'none', boxShadow: 'none', px: 4, py: 1.5 }}
             >
-              Experimente grátis
+              {t('landing.nav.tryFree')}
             </Button>
             <Button
               size="large"
@@ -67,18 +68,18 @@ export function LandingHero() {
               onClick={() => navigate('/sign-in')}
               sx={{ textTransform: 'none', px: 4, py: 1.5 }}
             >
-              Já tenho conta
+              {t('landing.hero.haveAccount')}
             </Button>
           </Stack>
 
           <Stack direction="row" spacing={3} sx={{ pt: 2, color: 'text.secondary' }}>
             <Stack direction="row" spacing={0.75} alignItems="center">
               <Box component={Icon} icon="solar:check-circle-bold" sx={{ color: 'primary.main', width: 20, height: 20 }} />
-              <Typography variant="body2">Sem cartão de crédito</Typography>
+              <Typography variant="body2">{t('landing.hero.noCard')}</Typography>
             </Stack>
             <Stack direction="row" spacing={0.75} alignItems="center">
               <Box component={Icon} icon="solar:check-circle-bold" sx={{ color: 'primary.main', width: 20, height: 20 }} />
-              <Typography variant="body2">Cancele quando quiser</Typography>
+              <Typography variant="body2">{t('landing.hero.cancelAnytime')}</Typography>
             </Stack>
           </Stack>
         </Stack>

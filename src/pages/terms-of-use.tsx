@@ -1,26 +1,30 @@
 import { CONFIG } from 'src/config-global';
+import { useTranslation } from 'react-i18next';
 
 import { TermsOfUseView } from 'src/sections/institutional/view';
 
 // ----------------------------------------------------------------------
 
-const TITLE = `Termos de Uso — ${CONFIG.appName}`;
-const DESCRIPTION = `Conheça as regras e condições para utilização da plataforma ${CONFIG.appName}: cadastro, assinaturas, responsabilidades e cancelamento.`;
 const CANONICAL = `${CONFIG.siteUrl}/termos`;
 
 export default function Page() {
+  const { t, i18n } = useTranslation();
+  const title = `${t('institutional.terms.title')} — ${CONFIG.appName}`;
+  const description = t('institutional.terms.description', { appName: CONFIG.appName });
+  const ogLocale = i18n.resolvedLanguage === 'en-US' ? 'en_US' : i18n.resolvedLanguage === 'es' ? 'es_ES' : 'pt_BR';
+
   return (
     <>
-      <title>{TITLE}</title>
-      <meta name="description" content={DESCRIPTION} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
       <link rel="canonical" href={CANONICAL} />
 
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={CONFIG.appName} />
-      <meta property="og:title" content={TITLE} />
-      <meta property="og:description" content={DESCRIPTION} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
       <meta property="og:url" content={CANONICAL} />
-      <meta property="og:locale" content="pt_BR" />
+      <meta property="og:locale" content={ogLocale} />
 
       <TermsOfUseView />
     </>

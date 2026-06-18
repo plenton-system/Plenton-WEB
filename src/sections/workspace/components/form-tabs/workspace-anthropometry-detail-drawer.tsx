@@ -8,6 +8,7 @@ import type {
 
 import dayjs from 'dayjs';
 import { useMemo, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
@@ -229,6 +230,7 @@ export function WorkspaceAnthropometryDetailDrawer({
   onClose,
   onSaved,
 }: Props) {
+  const { t } = useTranslation();
   const patientDetail = usePatientDetail({ id: patientId ?? null, autoLoad: open && Boolean(patientId) });
   const detail = useWorkspaceAnthropometryDetail(patientId, evaluationId, open);
   const energyCalculation = useEnergyExpenditureCalculation(patientId);
@@ -394,12 +396,12 @@ export function WorkspaceAnthropometryDetailDrawer({
   return (
     <Dialog open={open} onClose={isBusy ? undefined : onClose} fullWidth maxWidth="lg">
       <DialogTitle>
-        {evaluationId ? 'Editar avaliação antropométrica' : 'Nova avaliação antropométrica'}
+        {evaluationId ? t('workspace.anthropometry.edit') : t('workspace.anthropometry.new')}
       </DialogTitle>
 
       <DialogContent sx={{ p: 3 }}>
         {isLoading ? (
-          <Loading inline message="Carregando avaliação antropométrica..." />
+          <Loading inline message={t('workspace.anthropometry.loading')} />
         ) : (
           <Stack spacing={3} sx={{ mt: 1 }}>
             {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
@@ -433,14 +435,14 @@ export function WorkspaceAnthropometryDetailDrawer({
 
       <DialogActions sx={{ px: 3, pb: 3 }}>
         <Button variant="outlined" onClick={onClose} disabled={isBusy}>
-          Cancelar
+          {t('actions.cancel')}
         </Button>
         <Button
           variant="contained"
           onClick={handleSave}
           disabled={isBusy || !patientId || !anthropometryForm.evaluationDateUtc}
         >
-          {detailSaving ? 'Salvando...' : 'Salvar'}
+          {detailSaving ? t('mealplan.measureDialog.saving') : t('actions.save')}
         </Button>
       </DialogActions>
     </Dialog>

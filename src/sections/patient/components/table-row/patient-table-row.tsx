@@ -3,9 +3,11 @@ import Avatar from '@mui/material/Avatar';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
+import { useTranslation } from 'react-i18next';
 
 import { Label } from 'src/components/label';
 import { RowActionsMenu } from 'src/components/table';
+import { fDateLocale } from 'src/utils/format-time';
 
 import type { PatientListProps } from '../../../../types';
 
@@ -19,13 +21,6 @@ type PatientTableRowProps = {
   onDelete: (patient: PatientListProps) => void;
 };
 
-const STATUS_LABELS: Record<string, string> = {
-  PendingPayment: 'Pagamento Pendente',
-  Pending: 'Pendente',
-  Active: 'Ativo',
-  Inactive: 'Inativo',
-};
-
 const STATUS_COLORS: Record<string, 'success' | 'warning' | 'error' | 'default'> = {
   Active: 'success',
   Pending: 'warning',
@@ -34,6 +29,14 @@ const STATUS_COLORS: Record<string, 'success' | 'warning' | 'error' | 'default'>
 };
 
 export function PatientTableRow({ row, selected, onSelectRow, onEdit, onDelete }: PatientTableRowProps) {
+  const { t } = useTranslation();
+  const statusLabels: Record<string, string> = {
+    PendingPayment: t('patient.status.pendingPayment'),
+    Pending: t('patient.status.pending'),
+    Active: t('patient.status.active'),
+    Inactive: t('patient.status.inactive'),
+  };
+
   return (
     <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
       <TableCell padding="checkbox">
@@ -61,12 +64,12 @@ export function PatientTableRow({ row, selected, onSelectRow, onEdit, onDelete }
       </TableCell>
 
       <TableCell>
-        {row.birthDate ? new Date(row.birthDate).toLocaleDateString('pt-BR') : '-'}
+        {row.birthDate ? fDateLocale(row.birthDate) : '-'}
       </TableCell>
 
       <TableCell>
         <Label color={(row.status && STATUS_COLORS[row.status as string]) || 'default'}>
-          {(row.status && STATUS_LABELS[row.status as string]) || '-'}
+          {(row.status && statusLabels[row.status as string]) || '-'}
         </Label>
       </TableCell>
 
@@ -75,12 +78,12 @@ export function PatientTableRow({ row, selected, onSelectRow, onEdit, onDelete }
           menuWidth={140}
           actions={[
             {
-              label: 'Editar',
+              label: t('actions.edit'),
               icon: 'solar:pen-bold',
               onClick: () => onEdit(row),
             },
             {
-              label: 'Excluir',
+              label: t('actions.delete'),
               icon: 'solar:trash-bin-trash-bold',
               color: 'error',
               onClick: () => onDelete(row),

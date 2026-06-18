@@ -3,6 +3,7 @@ import type { SyntheticEvent } from 'react';
 import type { ProfileFormValues } from 'src/types';
 
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -36,6 +37,7 @@ type Props = {
 };
 
 export function ProfilePopover({ open, loading, error, onClose, formik }: Props) {
+  const { t } = useTranslation();
   const router = useRouter();
   const [tab, setTab] = useState(0);
   const subscription = useCurrentSubscription({ auto: open });
@@ -57,17 +59,17 @@ export function ProfilePopover({ open, loading, error, onClose, formik }: Props)
     setChangingPassword(true);
     try {
       await authService.changePassword(values);
-      setChangePasswordFeedback({ type: 'success', message: 'Senha alterada com sucesso.' });
+      setChangePasswordFeedback({ type: 'success', message: t('profile.password.success') });
       return true;
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : 'Não foi possível alterar a senha no momento.';
+        err instanceof Error ? err.message : t('profile.password.error');
       setChangePasswordFeedback({ type: 'error', message });
       return false;
     } finally {
       setChangingPassword(false);
     }
-  }, []);
+  }, [t]);
 
   const handleCloseChangePassword = () => {
     setChangePasswordOpen(false);
@@ -95,8 +97,8 @@ export function ProfilePopover({ open, loading, error, onClose, formik }: Props)
               '& .MuiTab-root': { textTransform: 'none', fontWeight: 600, minWidth: 120 },
             }}
           >
-            <Tab label="Meus dados" />
-            <Tab label="Minha assinatura" />
+            <Tab label={t('profile.tabs.data')} />
+            <Tab label={t('profile.tabs.subscription')} />
           </Tabs>
         </Box>
 
@@ -112,7 +114,7 @@ export function ProfilePopover({ open, loading, error, onClose, formik }: Props)
           }}
         >
           <IconButton
-            aria-label="Fechar"
+            aria-label={t('actions.close')}
             onClick={onClose}
             sx={{ position: 'absolute', right: 12, top: 10 }}
           >
@@ -130,19 +132,19 @@ export function ProfilePopover({ open, loading, error, onClose, formik }: Props)
                 {subscription.loading && (
                   <Stack direction="row" spacing={1.5} alignItems="center">
                     <CircularProgress size={20} />
-                    <Typography variant="body2">Carregando assinatura...</Typography>
+                    <Typography variant="body2">{t('subscription.common.loading')}</Typography>
                   </Stack>
                 )}
 
                 {subscription.error && (
-                  <Alert severity="warning" action={<Button onClick={subscription.reload}>Tentar novamente</Button>}>
+                  <Alert severity="warning" action={<Button onClick={subscription.reload}>{t('shared.retry')}</Button>}>
                     {subscription.error}
                   </Alert>
                 )}
 
                 {subscription.empty && (
-                  <Alert severity="info" action={<Button onClick={() => router.push('/#planos')}>Escolher plano</Button>}>
-                    Nenhuma assinatura encontrada.
+                  <Alert severity="info" action={<Button onClick={() => router.push('/#planos')}>{t('subscription.common.choosePlan')}</Button>}>
+                    {t('subscription.common.empty')}
                   </Alert>
                 )}
 
@@ -155,13 +157,15 @@ export function ProfilePopover({ open, loading, error, onClose, formik }: Props)
                     />
                     <Box>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                        {subscription.data.planName ?? 'Plano não informado'}
+                        {subscription.data.planName ?? t('subscription.common.planUnknown')}
                       </Typography>
                       <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        Ciclo {billingCycleLabel(subscription.data.billingCycle)}
                         {formatDate(subscription.data.nextChargeDate ?? subscription.data.dueDate)
-                          ? ` · Próxima cobrança em ${formatDate(subscription.data.nextChargeDate ?? subscription.data.dueDate)}`
-                          : ''}
+                          ? t('subscription.management.cycleAndCharge', {
+                              cycle: billingCycleLabel(subscription.data.billingCycle),
+                              date: formatDate(subscription.data.nextChargeDate ?? subscription.data.dueDate),
+                            })
+                          : billingCycleLabel(subscription.data.billingCycle)}
                       </Typography>
                     </Box>
                   </Stack>
@@ -175,7 +179,7 @@ export function ProfilePopover({ open, loading, error, onClose, formik }: Props)
                   }}
                   sx={{ alignSelf: 'flex-start' }}
                 >
-                  Abrir área de assinatura
+                  {t('subscription.management.openArea')}
                 </Button>
               </Stack>
             </Box>
@@ -198,17 +202,17 @@ export function ProfilePopover({ open, loading, error, onClose, formik }: Props)
               sx={{ gridColumn: 1, justifySelf: 'start' }}
               onClick={() => setChangePasswordOpen(true)}
             >
-              Alterar senha
+              {t('profile.password.title')}
             </Button>
           )}
 
           {/* grupo da direita sempre na coluna 2 */}
           <Box sx={{ gridColumn: 2, display: 'grid', gridAutoFlow: 'column', columnGap: 1 }}>
             <Button onClick={onClose} variant="outlined">
-              Cancelar
+              {t('actions.cancel')}
             </Button>
             <Button variant="contained" type="submit" form="profile-form" disabled={tab !== 0}>
-              Salvar
+              {t('actions.save')}
             </Button>
           </Box>
         </DialogActions>

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useTranslation } from 'react-i18next';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -14,9 +15,11 @@ export function GenericTableToolbar({
     numSelected,
     filterValue,
     onFilterValue,
-    placeholder = 'Pesquisar...',
+    placeholder,
     onDeleteSelected,
 }: TableToolbarProps) {
+    const { t } = useTranslation();
+
     return (
         <Toolbar
             sx={{
@@ -32,14 +35,14 @@ export function GenericTableToolbar({
         >
             {numSelected > 0 ? (
                 <Typography component="div" variant="subtitle1">
-                    {numSelected} selecionado(s)
+                    {t('shared.selected', { count: numSelected })}
                 </Typography>
             ) : (
                 <OutlinedInput
                     fullWidth
                     value={filterValue}
                     onChange={onFilterValue}
-                    placeholder={placeholder}
+                    placeholder={placeholder ?? t('shared.search')}
                     startAdornment={
                         <InputAdornment position="start">
                             <Iconify width={20} icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
@@ -50,13 +53,13 @@ export function GenericTableToolbar({
             )}
 
             {numSelected > 0 && onDeleteSelected ? (
-                <Tooltip title="Excluir selecionados">
+                <Tooltip title={t('shared.deleteSelected')}>
                     <IconButton onClick={onDeleteSelected}>
                         <Iconify icon="solar:trash-bin-trash-bold" />
                     </IconButton>
                 </Tooltip>
             ) : (
-                <Tooltip title="Filtrar lista">
+                <Tooltip title={t('shared.filterList')}>
                     <Icon sx={{ paddingInline: 3 }}>
                         <Iconify icon="ic:round-filter-list" />
                     </Icon>

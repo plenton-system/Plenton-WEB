@@ -6,6 +6,7 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
+import { useTranslation } from 'react-i18next';
 
 import { getWorkspaceStatusColor, getWorkspaceStatusLabel } from '../../constants/status';
 
@@ -32,6 +33,7 @@ type WorkspaceTableRowProps = {
 // ----------------------------------------------------------------------
 
 export function WorkspaceTableRow({ row, selected, onSelectRow, onOpen }: WorkspaceTableRowProps) {
+    const { t } = useTranslation();
     const renderStatus = (value: WorkspaceStatus | null) => {
         if (!value) {
             return '-';
@@ -57,7 +59,7 @@ export function WorkspaceTableRow({ row, selected, onSelectRow, onOpen }: Worksp
                     size="small"
                     color="primary"
                     onClick={() => onOpen(row.patientId, row.patientName)}
-                    aria-label="Abrir área de trabalho"
+                    aria-label={t('workspace.list.open')}
                 >
                     <EditIcon fontSize="small" />
                 </IconButton>

@@ -2,6 +2,7 @@ import type { SubscriptionBillingType } from 'src/types';
 
 import { Icon } from '@iconify/react';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -24,25 +25,8 @@ import { useSubscriptionCatalog } from 'src/hooks/subscription/use-subscription-
 
 import { formatMoney, billingTypeLabel, billingCycleLabel } from '../utils';
 
-const PAYMENT_OPTIONS: { value: SubscriptionBillingType; title: string; description: string }[] = [
-  {
-    value: 'Pix',
-    title: 'PIX',
-    description: 'Inicie a assinatura e pague usando QR Code, copia e cola ou link retornado pelo backend.',
-  },
-  {
-    value: 'BankSlip',
-    title: 'Boleto',
-    description: 'Gere a cobrança e acompanhe a confirmação após a compensação.',
-  },
-  {
-    value: 'CreditCard',
-    title: 'Cartão de crédito',
-    description: 'Você será redirecionado para o checkout hospedado do Asaas.',
-  },
-];
-
 export function SubscriptionCheckoutView() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
   const [searchParams] = useSearchParams();
@@ -59,6 +43,23 @@ export function SubscriptionCheckoutView() {
     return null;
   }, [planPriceId, plans]);
   const isTrial = Boolean(selected && selected.plan.trialDays > 0 && selected.price.value === 0);
+  const paymentOptions: { value: SubscriptionBillingType; title: string; description: string }[] = [
+    {
+      value: 'Pix',
+      title: 'PIX',
+      description: t('subscription.checkout.pixDescription'),
+    },
+    {
+      value: 'BankSlip',
+      title: t('subscription.billingType.bankSlip'),
+      description: t('subscription.checkout.bankSlipDescription'),
+    },
+    {
+      value: 'CreditCard',
+      title: t('subscription.billingType.creditCard'),
+      description: t('subscription.checkout.creditCardDescription'),
+    },
+  ];
 
   const handleStart = async () => {
     if (!selected || !user?.profile?.id) return;
@@ -82,7 +83,7 @@ export function SubscriptionCheckoutView() {
         window.location.href = checkoutUrl;
         return;
       }
-      startSubscription.setError('O backend não retornou a URL do checkout hospedado.');
+      startSubscription.setError(t('subscription.checkout.missingHostedUrl'));
       return;
     }
 
@@ -101,12 +102,12 @@ export function SubscriptionCheckoutView() {
       <Stack spacing={3}>
         <Box>
           <Typography variant="h4" sx={{ fontWeight: 800 }}>
-            {isTrial ? 'Iniciar trial' : 'Finalizar assinatura'}
+            {isTrial ? t('subscription.checkout.trialTitle') : t('subscription.checkout.title')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
             {isTrial
-              ? 'Ative seu período grátis para começar a usar a plataforma.'
-              : 'Escolha a forma de pagamento para iniciar sua assinatura.'}
+              ? t('subscription.checkout.trialDescription')
+              : t('subscription.checkout.description')}
           </Typography>
         </Box>
 
@@ -114,13 +115,13 @@ export function SubscriptionCheckoutView() {
           <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
             <Stack direction="row" spacing={2} alignItems="center">
               <CircularProgress size={22} />
-              <Typography>Carregando plano selecionado...</Typography>
+              <Typography>{t('subscription.checkout.loadingPlan')}</Typography>
             </Stack>
           </Paper>
         )}
 
         {error && (
-          <Alert severity="error" action={<Button onClick={reload}>Tentar novamente</Button>}>
+          <Alert severity="error" action={<Button onClick={reload}>{t('shared.retry')}</Button>}>
             {error}
           </Alert>
         )}
@@ -128,9 +129,9 @@ export function SubscriptionCheckoutView() {
         {!loading && !error && !selected && (
           <Alert
             severity="warning"
-            action={<Button onClick={() => navigate('/#planos')}>Escolher plano</Button>}
+            action={<Button onClick={() => navigate('/#planos')}>{t('subscription.common.choosePlan')}</Button>}
           >
-            O preço selecionado não está mais disponível. Escolha um plano ativo para continuar.
+            {t('subscription.checkout.unavailable')}
           </Alert>
         )}
 
@@ -139,7 +140,7 @@ export function SubscriptionCheckoutView() {
             <Grid size={{ xs: 12, md: 5 }}>
               <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
                 <Stack spacing={2}>
-                  <Chip label="Plano selecionado" sx={{ alignSelf: 'flex-start' }} />
+                  <Chip label={t('subscription.checkout.selectedPlan')} sx={{ alignSelf: 'flex-start' }} />
                   <Box>
                     <Typography variant="h5" sx={{ fontWeight: 700 }}>
                       {selected.plan.name}
@@ -149,9 +150,11 @@ export function SubscriptionCheckoutView() {
                     </Typography>
                   </Box>
                   <Typography variant="h4" sx={{ fontWeight: 800 }}>
-                    {isTrial ? 'Grátis' : formatMoney(selected.price.value, selected.price.currency)}
+                    {isTrial ? t('subscription.checkout.free') : formatMoney(selected.price.value, selected.price.currency)}
                     <Typography component="span" variant="body2" sx={{ color: 'text.secondary', ml: 1 }}>
-                      {isTrial ? `${selected.plan.trialDays} dias` : `/ ${billingCycleLabel(selected.price.billingCycle)}`}
+                      {isTrial
+                        ? t('subscription.checkout.days', { count: selected.plan.trialDays })
+                        : `/ ${billingCycleLabel(selected.price.billingCycle)}`}
                     </Typography>
                   </Typography>
                 </Stack>
@@ -162,13 +165,12 @@ export function SubscriptionCheckoutView() {
               <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
                 <Stack spacing={2.5}>
                   <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                    {isTrial ? 'Ativação do trial' : 'Forma de pagamento'}
+                    {isTrial ? t('subscription.checkout.trialActivation') : t('subscription.checkout.paymentMethod')}
                   </Typography>
 
                   {isTrial ? (
                     <Alert severity="info">
-                      Seu acesso será liberado por {selected.plan.trialDays} dias. Nenhuma cobrança será efetuada
-                      para este plano.
+                      {t('subscription.checkout.trialInfo', { count: selected.plan.trialDays })}
                     </Alert>
                   ) : (
                     <RadioGroup
@@ -176,7 +178,7 @@ export function SubscriptionCheckoutView() {
                       onChange={(event) => setBillingType(event.target.value as SubscriptionBillingType)}
                     >
                       <Stack spacing={1.5}>
-                        {PAYMENT_OPTIONS.map((option) => (
+                        {paymentOptions.map((option) => (
                           <Paper key={option.value} variant="outlined" sx={{ px: 2, py: 1.5, borderRadius: 1.5 }}>
                             <FormControlLabel
                               value={option.value}
@@ -214,10 +216,10 @@ export function SubscriptionCheckoutView() {
                     sx={{ alignSelf: { xs: 'stretch', sm: 'flex-start' } }}
                   >
                     {isTrial
-                      ? 'Começar trial'
+                      ? t('subscription.checkout.startTrial')
                       : billingType === 'CreditCard'
-                        ? 'Ir para checkout Asaas'
-                        : `Iniciar pagamento por ${billingTypeLabel(billingType)}`}
+                        ? t('subscription.checkout.goToAsaas')
+                        : t('subscription.checkout.startPayment', { method: billingTypeLabel(billingType) })}
                   </Button>
                 </Stack>
               </Paper>

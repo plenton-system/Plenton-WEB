@@ -1,6 +1,7 @@
 import type { FormikProps } from 'formik';
 
 import { getIn } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import { Stack, TextField } from '@mui/material';
 
@@ -11,6 +12,7 @@ import type { ProfileFormValues } from '../../../../types';
 type Props = { formik: FormikProps<ProfileFormValues> };
 
 export default function ProfileAddressTab({ formik }: Props) {
+  const { t } = useTranslation();
   const fieldError = (path: string) => getIn(formik.touched, path) && getIn(formik.errors, path);
   const { lookupCep } = useCepLookup(formik.setFieldValue);
 
@@ -25,7 +27,7 @@ export default function ProfileAddressTab({ formik }: Props) {
         {/* CEP */}
         <TextField
           name="addressDto.zipCode"
-          label="CEP"
+          label={t('profile.fields.zipCode')}
           value={formik.values.addressDto?.zipCode ?? ''}
           onChange={formik.handleChange}
           onBlur={handleZipCodeBlur}
@@ -38,7 +40,7 @@ export default function ProfileAddressTab({ formik }: Props) {
         {/* Rua/Avenida */}
         <TextField
           name="addressDto.street"
-          label="Rua/Avenida"
+          label={t('profile.fields.street')}
           value={formik.values.addressDto?.street ?? ''}
           onChange={formik.handleChange}
           error={Boolean(fieldError('addressDto.street'))}
@@ -48,7 +50,7 @@ export default function ProfileAddressTab({ formik }: Props) {
 
         <TextField
           name="addressDto.number"
-          label="Número"
+          label={t('profile.fields.number')}
           value={formik.values.addressDto?.number ?? ''}
           onChange={formik.handleChange}
           error={Boolean(fieldError('addressDto.number'))}
@@ -61,7 +63,7 @@ export default function ProfileAddressTab({ formik }: Props) {
         {/* Cidade */}
         <TextField
           name="addressDto.city"
-          label="Cidade"
+          label={t('profile.fields.city')}
           value={formik.values.addressDto?.city ?? ''}
           onChange={formik.handleChange}
           error={Boolean(fieldError('addressDto.city'))}
@@ -72,7 +74,7 @@ export default function ProfileAddressTab({ formik }: Props) {
         {/* Bairro */}
         <TextField
           name="addressDto.neighborhood"
-          label="Bairro"
+          label={t('profile.fields.neighborhood')}
           value={formik.values.addressDto?.neighborhood ?? ''}
           onChange={formik.handleChange}
           error={Boolean(fieldError('addressDto.neighborhood'))}
@@ -84,7 +86,7 @@ export default function ProfileAddressTab({ formik }: Props) {
         {/* Estado */}
         <TextField
           name="addressDto.state"
-          label="Estado"
+          label={t('profile.fields.state')}
           value={formik.values.addressDto?.state ?? ''}
           onChange={formik.handleChange}
           error={Boolean(fieldError('addressDto.state'))}

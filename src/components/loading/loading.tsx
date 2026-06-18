@@ -1,5 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 import { Box, keyframes, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -30,15 +31,6 @@ const fadeMsg = keyframes`
 
 // ----------------------------------------------------------------------
 
-const DEFAULT_MESSAGES = [
-    'Carregando seu plano...',
-    'Calculando nutrientes...',
-    'Preparando o formulário...',
-    'Quase pronto...',
-];
-
-// ----------------------------------------------------------------------
-
 interface LoadingProps {
     /** Override the cycling message list */
     messages?: string[];
@@ -48,8 +40,15 @@ interface LoadingProps {
     inline?: boolean;
 }
 
-export function Loading({ messages = DEFAULT_MESSAGES, message, inline = false }: LoadingProps) {
+export function Loading({ messages, message, inline = false }: LoadingProps) {
     const theme = useTheme();
+    const { t } = useTranslation();
+    const resolvedMessages = messages ?? [
+        t('shared.loadingMessages.plan'),
+        t('shared.loadingMessages.nutrients'),
+        t('shared.loadingMessages.form'),
+        t('shared.loadingMessages.almost'),
+    ];
 
     /**
      * Semantic color mapping:
@@ -71,9 +70,9 @@ export function Loading({ messages = DEFAULT_MESSAGES, message, inline = false }
     ];
 
     const MACROS = [
-        { label: 'Proteínas', color: c.primary },
-        { label: 'Carboidratos', color: c.warning },
-        { label: 'Gorduras', color: c.error },
+        { label: t('shared.macros.protein'), color: c.primary },
+        { label: t('shared.macros.carbs'), color: c.warning },
+        { label: t('shared.macros.fat'), color: c.error },
     ];
 
     return (
@@ -183,7 +182,7 @@ export function Loading({ messages = DEFAULT_MESSAGES, message, inline = false }
                     animation: message ? 'none' : `${fadeMsg} 2.4s ease-in-out infinite`,
                 }}
             >
-                {message ?? messages[0]}
+                {message ?? resolvedMessages[0]}
             </Typography>
 
             {/* ── Brand label ── */}

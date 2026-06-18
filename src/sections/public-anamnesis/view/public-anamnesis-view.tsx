@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 
 import { usePatientAnamnesis } from 'src/hooks/public/use-public-anamnesis';
+import { fDateTimeLocale } from 'src/utils/format-time';
 
 import { Loading } from 'src/components/loading';
 import { Iconify } from 'src/components/iconify';
@@ -35,9 +36,7 @@ import { PublicAnamnesisQuestion } from '../components/form-question/public-anam
 
 function formatDate(value?: string | null) {
     if (!value) return null;
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return null;
-    return date.toLocaleString();
+    return fDateTimeLocale(value) || null;
 }
 
 // ----------------------------------------------------------------------

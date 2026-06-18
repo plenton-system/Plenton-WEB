@@ -2,6 +2,7 @@ import type { AnamnesisListQuery } from 'src/types/domain/anamnesis';
 import type { EditSystemSettingsDto } from 'src/types/domain/system-settings';
 
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -77,15 +78,16 @@ export function SettingsPopover({
   loading?: boolean;
   onSave?: (payload: EditSystemSettingsDto) => Promise<void> | void;
 }) {
+  const { t } = useTranslation();
   type SectionKey = 'general' | 'anamnese' | 'appSystemSettings' | 'preference';
 
   const [section, setSection] = useState<SectionKey>('general');
 
   const NAV: { key: SectionKey; label: string; badge?: string }[] = [
-    { key: 'general', label: 'Geral' },
-    { key: 'anamnese', label: 'Anamnese' },
-    { key: 'appSystemSettings', label: 'Aplicativo' },
-    { key: 'preference', label: 'Preferência' },
+    { key: 'general', label: t('settings.sections.general') },
+    { key: 'anamnese', label: t('settings.sections.anamnesis') },
+    { key: 'appSystemSettings', label: t('settings.sections.application') },
+    { key: 'preference', label: t('settings.sections.preference') },
   ];
 
   const [orderBy, setOrderBy] = useState('nome');
@@ -161,15 +163,15 @@ export function SettingsPopover({
     setDefaultTemplate({ id, title: selected?.title ?? '' });
   };
 
-  const capitalizar = (texto: string): string =>
-    texto ? texto.charAt(0).toUpperCase() + texto.slice(1) : '';
+  const themeLabel = (themeMode: ThemeMode | 'light' | 'dark') =>
+    t(`settings.theme.${themeMode}` as 'settings.theme.light' | 'settings.theme.dark' | 'settings.theme.system');
 
   return (
     <Dialog open={!!open} onClose={onClose} fullWidth maxWidth="lg">
       <DialogTitle sx={{ pr: 6 }}>
-        Configurações do sistema
+        {t('settings.title')}
         <IconButton
-          aria-label="Fechar"
+          aria-label={t('actions.close')}
           onClick={onClose}
           sx={{ position: 'absolute', right: 8, top: 8 }}
         >
@@ -203,22 +205,22 @@ export function SettingsPopover({
               {/* Meus pacientes */}
               {section === 'general' && (
                 <Box>
-                  <SectionTitle>Pacientes</SectionTitle>
+                  <SectionTitle>{t('settings.patients')}</SectionTitle>
                   <Box sx={{ display: 'grid', gap: 1.5, mt: 2 }}>
                     <TextField
                       select
                       size="small"
-                      label="Ordenação padrão"
+                      label={t('settings.defaultOrder')}
                       value={orderBy}
                       onChange={(e) => setOrderBy(String(e.target.value))}
                       sx={{ minWidth: 260 }}
                     >
-                      <MenuItem value="Name">Nome</MenuItem>
-                      <MenuItem value="CreatedAt">Data de criação</MenuItem>
-                      <MenuItem value="LastVisit">Último atendimento</MenuItem>
+                      <MenuItem value="Name">{t('settings.order.name')}</MenuItem>
+                      <MenuItem value="CreatedAt">{t('settings.order.createdAt')}</MenuItem>
+                      <MenuItem value="LastVisit">{t('settings.order.lastVisit')}</MenuItem>
                     </TextField>
 
-                    <Row label="Enviar E-mail de aniversário">
+                    <Row label={t('settings.birthdayEmail')}>
                       <Switch
                         checked={autoBirthday}
                         onChange={(e) => setAutoBirthday(e.target.checked)}
@@ -229,12 +231,12 @@ export function SettingsPopover({
               )}
               {section === 'anamnese' && (
                 <Box>
-                  <SectionTitle>Anamnese</SectionTitle>
+                  <SectionTitle>{t('settings.sections.anamnesis')}</SectionTitle>
                   <Box sx={{ display: 'grid', gap: 1.5 }}>
                     <TextField
                       select
                       size="small"
-                      label="Template padrão"
+                      label={t('settings.defaultTemplate')}
                       value={defaultTemplate?.id ?? ''}
                       onFocus={handleAnamnesisFocus}
                       onClick={handleAnamnesisFocus}
@@ -242,18 +244,18 @@ export function SettingsPopover({
                       disabled={loading}
                       sx={{ minWidth: 260 }}
                     >
-                      <MenuItem value="">Selecione...</MenuItem>
+                      <MenuItem value="">{t('settings.select')}</MenuItem>
 
                       {anamneseLoading && (
                         <MenuItem value="" disabled>
-                          <CircularProgress size={18} sx={{ mr: 2 }} /> Carregando...
+                          <CircularProgress size={18} sx={{ mr: 2 }} /> {t('settings.loading')}
                         </MenuItem>
                       )}
 
                       {/* se veio um defaultTemplateId do backend e ele não está no pageSize atual */}
                       {!anamnesis.some((p) => p.id === defaultTemplate?.id) && defaultTemplate?.id && (
                         <MenuItem value={defaultTemplate.id}>
-                          {defaultTemplate.title || 'Template selecionado'}
+                          {defaultTemplate.title || t('settings.selectedTemplate')}
                         </MenuItem>
                       )}
 
@@ -268,15 +270,15 @@ export function SettingsPopover({
               )}
               {section === 'appSystemSettings' && (
                 <Box>
-                  <SectionTitle>Permissões do aplicativo</SectionTitle>
+                  <SectionTitle>{t('settings.appPermissions')}</SectionTitle>
                   <Box sx={{ display: 'grid', gap: 1.5 }}>
-                    <Row label="Mostrar avaliação antropométrica no aplicativo">
+                    <Row label={t('settings.showAnthropometry')}>
                       <Switch
                         checked={showAntrop}
                         onChange={(e) => setShowAntrop(e.target.checked)}
                       />
                     </Row>
-                    <Row label="Mostrar prescrições no aplicativo">
+                    <Row label={t('settings.showPrescriptions')}>
                       <Switch checked={showRx} onChange={(e) => setShowRx(e.target.checked)} />
                     </Row>
                   </Box>
@@ -284,24 +286,29 @@ export function SettingsPopover({
               )}
               {section === 'preference' && (
                 <Box>
-                  <SectionTitle>Preferência</SectionTitle>
+                  <SectionTitle>{t('settings.sections.preference')}</SectionTitle>
                   <Box sx={{ display: 'grid', gap: 1.5 }}>
                     <TextField
                       select
                       size="small"
-                      label="Tema padrão"
+                      label={t('settings.defaultTheme')}
                       value={mode.toLowerCase()}
                       onChange={(e) => setMode(e.target.value as ThemeMode)}
                       sx={{ minWidth: 260 }}
                     >
-                      <MenuItem value="light">Claro</MenuItem>
-                      <MenuItem value="dark">Escuro</MenuItem>
-                      <MenuItem value="system">Sistema</MenuItem>
+                      <MenuItem value="light">{t('settings.theme.light')}</MenuItem>
+                      <MenuItem value="dark">{t('settings.theme.dark')}</MenuItem>
+                      <MenuItem value="system">{t('settings.theme.system')}</MenuItem>
                     </TextField>
 
                     {/* opcional: mostrar o que está valendo agora */}
                     <Typography variant="caption" color="text.secondary">
-                      Modo efetivo: {mode === 'system' ? `Sistema (${capitalizar(resolvedMode)})` : capitalizar(mode)}
+                      {t('settings.effectiveMode', {
+                        mode:
+                          mode === 'system'
+                            ? t('settings.systemMode', { mode: themeLabel(resolvedMode) })
+                            : themeLabel(mode),
+                      })}
                     </Typography>
                   </Box>
                 </Box>
@@ -313,10 +320,10 @@ export function SettingsPopover({
 
       <DialogActions sx={{ px: 3, py: 2 }}>
         <Button onClick={onClose} variant="outlined">
-          Cancelar
+          {t('actions.cancel')}
         </Button>
         <Button variant="contained" onClick={handleSave} disabled={loading}>
-          Salvar
+          {t('actions.save')}
         </Button>
       </DialogActions>
     </Dialog>

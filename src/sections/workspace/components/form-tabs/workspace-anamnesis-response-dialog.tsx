@@ -1,6 +1,8 @@
 import type { AnamnesisResponseDetail, AnamnesisResponseQuestion } from 'src/types';
+import type { TFunction } from 'i18next';
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -19,6 +21,7 @@ import { useAnamnesisResponsePdf } from 'src/hooks/anamnesis/use-anamnesis-respo
 
 import { QuestionType } from 'src/enums/anamnesis';
 import { anamnesisService } from 'src/services/anamnesis/anamnesisService';
+import { fDateTimeLocale } from 'src/utils/format-time';
 
 import { Loading } from 'src/components/loading';
 import { Iconify } from 'src/components/iconify';
@@ -42,7 +45,7 @@ function safeParse(value?: string | null) {
     }
 }
 
-function formatAnswer(question: AnamnesisResponseQuestion) {
+function formatAnswer(question: AnamnesisResponseQuestion, t: TFunction) {
     const parsed = safeParse(question.answerJson);
 
     if (parsed === undefined || parsed === null || parsed === '') {
@@ -51,7 +54,12 @@ function formatAnswer(question: AnamnesisResponseQuestion) {
 
     switch (question.type) {
         case QuestionType.Boolean:
-            return { kind: 'text' as const, value: parsed ? 'Sim' : 'Não' };
+            return {
+                kind: 'text' as const,
+                value: parsed
+                    ? t('workspace.anamnesis.response.yes')
+                    : t('workspace.anamnesis.response.no'),
+            };
         case QuestionType.Number:
             return { kind: 'text' as const, value: String(parsed) };
         case QuestionType.MultiSelect:
@@ -68,14 +76,13 @@ function formatAnswer(question: AnamnesisResponseQuestion) {
 
 function formatDate(value?: string | null) {
     if (!value) return null;
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return null;
-    return date.toLocaleString();
+    return fDateTimeLocale(value) || null;
 }
 
 // ----------------------------------------------------------------------
 
 export function WorkspaceAnamnesisResponseDialog({ open, onClose, responseId }: Props) {
+    const { t } = useTranslation();
     const [data, setData] = useState<AnamnesisResponseDetail | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -104,7 +111,7 @@ export function WorkspaceAnamnesisResponseDialog({ open, onClose, responseId }: 
                     setError(
                         e?.response?.data?.message ||
                             e?.message ||
-                            'Erro ao carregar respostas.'
+                            t('workspace.anamnesis.response.loadError')
                     );
                 }
             })
@@ -115,7 +122,7 @@ export function WorkspaceAnamnesisResponseDialog({ open, onClose, responseId }: 
         return () => {
             cancelled = true;
         };
-    }, [open, responseId]);
+    }, [open, responseId, t]);
 
     const submittedAt = formatDate(data?.submittedAtUtc);
 
@@ -130,7 +137,7 @@ export function WorkspaceAnamnesisResponseDialog({ open, onClose, responseId }: 
                     gap: 1,
                 }}
             >
-                <span>{data?.title ?? 'Respostas da anamnese'}</span>
+                <span>{data?.title ?? t('workspace.anamnesis.response.title')}</span>
                 <Stack direction="row" spacing={1} alignItems="center">
                     <Button
                         size="small"
@@ -147,16 +154,18 @@ export function WorkspaceAnamnesisResponseDialog({ open, onClose, responseId }: 
                             if (responseId) downloadPdf(responseId);
                         }}
                     >
-                        {pdfLoading ? 'Gerando...' : 'Baixar PDF'}
+                        {pdfLoading
+                            ? t('workspace.anamnesis.response.generating')
+                            : t('workspace.anamnesis.response.downloadPdf')}
                     </Button>
-                    <IconButton aria-label="Fechar" onClick={onClose} size="small">
+                    <IconButton aria-label={t('actions.close')} onClick={onClose} size="small">
                         <Iconify icon="mingcute:close-line" />
                     </IconButton>
                 </Stack>
             </DialogTitle>
 
             <DialogContent dividers>
-                {loading && <Loading inline message="Carregando respostas..." />}
+                {loading && <Loading inline message={t('workspace.anamnesis.response.loading')} />}
 
                 {!loading && pdfError && (
                     <Alert severity="error" sx={{ mb: 2 }}>{pdfError}</Alert>
@@ -170,7 +179,7 @@ export function WorkspaceAnamnesisResponseDialog({ open, onClose, responseId }: 
                     <Stack spacing={2}>
                         {submittedAt && (
                             <Typography variant="body2" color="text.secondary">
-                                Respondida em <strong>{submittedAt}</strong>
+                                {t('workspace.anamnesis.response.submittedAt', { date: submittedAt })}
                             </Typography>
                         )}
 
@@ -184,7 +193,7 @@ export function WorkspaceAnamnesisResponseDialog({ open, onClose, responseId }: 
 
                         <Stack spacing={2.5}>
                             {data.questions.map((question) => {
-                                const answer = formatAnswer(question);
+                                const answer = formatAnswer(question, t);
                                 return (
                                     <Box key={question.id}>
                                         <Typography variant="subtitle2" gutterBottom>
@@ -202,7 +211,7 @@ export function WorkspaceAnamnesisResponseDialog({ open, onClose, responseId }: 
 
                                         {answer.kind === 'empty' && (
                                             <Typography variant="body2" color="text.disabled" fontStyle="italic">
-                                                Sem resposta
+                                                {t('workspace.anamnesis.response.noAnswer')}
                                             </Typography>
                                         )}
 

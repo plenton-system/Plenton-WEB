@@ -8,6 +8,7 @@ import {
     Alert,
     Typography,
 } from '@mui/material';
+import { fDateTimeLocale } from 'src/utils/format-time';
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +45,7 @@ export function PublicAnamnesisHeader({
                 <Chip label={t('publicAnamnesis.header.status', { status: openData.status })} />
 
                 {openData.expiresAtUtc && (
-                    <Chip label={t('publicAnamnesis.header.expires', { date: new Date(openData.expiresAtUtc).toLocaleString() })} />
+                    <Chip label={t('publicAnamnesis.header.expires', { date: fDateTimeLocale(openData.expiresAtUtc) })} />
                 )}
 
                 {!readOnly && (
@@ -64,7 +65,7 @@ export function PublicAnamnesisHeader({
 
             {readOnly && (
                 <Alert severity="success" sx={{ mb: 2 }}>
-                    {t('publicAnamnesis.header.submitted', { date: new Date(openData.submittedAtUtc!).toLocaleString() })}
+                    {t('publicAnamnesis.header.submitted', { date: fDateTimeLocale(openData.submittedAtUtc) })}
                 </Alert>
             )}
         </>

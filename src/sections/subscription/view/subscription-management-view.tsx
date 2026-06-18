@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -17,6 +18,7 @@ import { useCurrentSubscription } from 'src/hooks/subscription/use-current-subsc
 import { formatDate, statusColor, statusLabel, billingTypeLabel, billingCycleLabel } from '../utils';
 
 export function SubscriptionManagementView() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data, loading, error, empty, reload } = useCurrentSubscription();
 
@@ -25,10 +27,10 @@ export function SubscriptionManagementView() {
       <Stack spacing={3}>
         <Box>
           <Typography variant="h4" sx={{ fontWeight: 800 }}>
-            Minha assinatura
+            {t('subscription.common.mySubscription')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
-            Acompanhe o plano, status e próximas cobranças da sua conta.
+            {t('subscription.management.description')}
           </Typography>
         </Box>
 
@@ -36,20 +38,20 @@ export function SubscriptionManagementView() {
           <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
             <Stack direction="row" spacing={2} alignItems="center">
               <CircularProgress size={22} />
-              <Typography>Carregando assinatura...</Typography>
+              <Typography>{t('subscription.common.loading')}</Typography>
             </Stack>
           </Paper>
         )}
 
         {error && (
-          <Alert severity="error" action={<Button onClick={reload}>Tentar novamente</Button>}>
+          <Alert severity="error" action={<Button onClick={reload}>{t('shared.retry')}</Button>}>
             {error}
           </Alert>
         )}
 
         {empty && (
-          <Alert severity="info" action={<Button onClick={() => navigate('/#planos')}>Escolher plano</Button>}>
-            Nenhuma assinatura encontrada.
+          <Alert severity="info" action={<Button onClick={() => navigate('/#planos')}>{t('subscription.common.choosePlan')}</Button>}>
+            {t('subscription.common.empty')}
           </Alert>
         )}
 
@@ -65,37 +67,37 @@ export function SubscriptionManagementView() {
                   />
                   <Box>
                     <Typography variant="h5" sx={{ fontWeight: 700 }}>
-                      {data.planName ?? 'Plano não informado'}
+                      {data.planName ?? t('subscription.common.planUnknown')}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      {data.planCode ?? 'Código não informado'}
+                      {data.planCode ?? t('subscription.common.codeUnknown')}
                     </Typography>
                   </Box>
 
                   <Grid container spacing={2}>
                     <Grid size={{ xs: 12, sm: 6 }}>
                       <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                        Ciclo
+                        {t('subscription.common.cycle')}
                       </Typography>
                       <Typography>{billingCycleLabel(data.billingCycle)}</Typography>
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
                       <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                        Pagamento
+                        {t('subscription.common.payment')}
                       </Typography>
                       <Typography>{billingTypeLabel(data.billingType)}</Typography>
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
                       <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                        Próxima cobrança
+                        {t('subscription.common.nextCharge')}
                       </Typography>
-                      <Typography>{formatDate(data.nextChargeDate ?? data.dueDate) ?? 'Não informado'}</Typography>
+                      <Typography>{formatDate(data.nextChargeDate ?? data.dueDate) ?? t('subscription.notProvided')}</Typography>
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
                       <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                        Expira em
+                        {t('subscription.common.expiresAt')}
                       </Typography>
-                      <Typography>{formatDate(data.expiresAt) ?? 'Não informado'}</Typography>
+                      <Typography>{formatDate(data.expiresAt) ?? t('subscription.notProvided')}</Typography>
                     </Grid>
                   </Grid>
                 </Stack>
@@ -106,13 +108,13 @@ export function SubscriptionManagementView() {
               <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
                 <Stack spacing={1.5}>
                   <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                    Ações
+                    {t('subscription.common.actions')}
                   </Typography>
                   {[
-                    ['solar:refresh-circle-bold', 'Alterar plano'],
-                    ['solar:card-2-bold', 'Alterar pagamento'],
-                    ['solar:bill-list-bold', 'Ver cobranças'],
-                    ['solar:trash-bin-trash-bold', 'Cancelar assinatura'],
+                    ['solar:refresh-circle-bold', t('subscription.management.changePlan')],
+                    ['solar:card-2-bold', t('subscription.management.changePayment')],
+                    ['solar:bill-list-bold', t('subscription.management.viewCharges')],
+                    ['solar:trash-bin-trash-bold', t('subscription.management.cancel')],
                   ].map(([icon, label]) => (
                     <Button
                       key={label}

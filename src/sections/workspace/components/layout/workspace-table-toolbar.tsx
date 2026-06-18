@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import { useTranslation } from 'react-i18next';
 
 import { GenericTableToolbar } from 'src/components/table';
 
@@ -13,6 +14,7 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export function WorkspaceTableToolbar({ filterValue, onFilterValue }: Props) {
+  const { t } = useTranslation();
   return (
     <Box sx={{ p: 2 }}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems={{ md: 'center' }}>
@@ -21,7 +23,7 @@ export function WorkspaceTableToolbar({ filterValue, onFilterValue }: Props) {
             numSelected={0}
             filterValue={filterValue}
             onFilterValue={(event) => onFilterValue(event.target.value)}
-            placeholder="Buscar paciente"
+            placeholder={t('workspace.list.search')}
           />
         </Box>
       </Stack>

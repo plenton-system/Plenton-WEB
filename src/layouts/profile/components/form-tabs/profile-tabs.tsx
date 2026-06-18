@@ -2,6 +2,7 @@ import type { FormikProps } from 'formik';
 import type { ProfileFormValues } from 'src/types';
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -14,13 +15,14 @@ import ProfileAddressTab from './profile-address-tab';
 type Props = { formik: FormikProps<ProfileFormValues> };
 
 export default function ProfileTabs({ formik }: Props) {
+  const { t } = useTranslation();
   const [tab, setTab] = useState(0);
 
   return (
       <Box sx={{ maxWidth: 960, mx: 'auto' }}>
         <Tabs value={tab} onChange={(_, v) => setTab(v)}>
-          <Tab label="Dados" />
-          <Tab label="Endereço" />
+          <Tab label={t('profile.tabs.personal')} />
+          <Tab label={t('profile.tabs.address')} />
         </Tabs>
 
         <Card sx={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>

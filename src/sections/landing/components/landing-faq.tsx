@@ -1,4 +1,5 @@
 import { varAlpha } from 'minimal-shared/utils';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -12,35 +13,17 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 
 // ----------------------------------------------------------------------
 
-const FAQS = [
-  {
-    q: 'Preciso instalar algum programa?',
-    a: 'Não. O Plenton funciona 100% no navegador, em qualquer dispositivo com internet.',
-  },
-  {
-    q: 'Como funciona o período gratuito?',
-    a: 'Você tem 14 dias para usar a plataforma sem custo e sem precisar cadastrar cartão de crédito. Ao fim do período, você decide se quer assinar.',
-  },
-  {
-    q: 'Meus dados e os dos meus pacientes ficam seguros?',
-    a: 'Sim. Todos os dados são isolados por conta (multi-tenant), criptografados em trânsito e armazenados em infraestrutura segura.',
-  },
-  {
-    q: 'O paciente também tem acesso?',
-    a: 'O paciente pode receber links públicos (como anamneses) sem precisar de conta. Em breve teremos também um aplicativo dedicado para o paciente.',
-  },
-  {
-    q: 'Posso cancelar a qualquer momento?',
-    a: 'Sim. Não há fidelidade. O cancelamento é feito direto pela plataforma e mantém o acesso até o fim do ciclo já pago.',
-  },
-  {
-    q: 'O Plenton tem o catálogo TACO?',
-    a: 'Sim, a base oficial brasileira de composição de alimentos já vem importada e disponível para uso nos planos alimentares.',
-  },
-];
-
 export function LandingFaq() {
+  const { t } = useTranslation();
   const theme = useTheme();
+  const faqs = [
+    { q: t('landing.faq.install.q'), a: t('landing.faq.install.a') },
+    { q: t('landing.faq.trial.q'), a: t('landing.faq.trial.a') },
+    { q: t('landing.faq.security.q'), a: t('landing.faq.security.a') },
+    { q: t('landing.faq.patientAccess.q'), a: t('landing.faq.patientAccess.a') },
+    { q: t('landing.faq.cancel.q'), a: t('landing.faq.cancel.a') },
+    { q: t('landing.faq.taco.q'), a: t('landing.faq.taco.a') },
+  ];
 
   return (
     <Box
@@ -57,12 +40,12 @@ export function LandingFaq() {
             FAQ
           </Typography>
           <Typography variant="h3" sx={{ fontWeight: 800, maxWidth: 720 }}>
-            Perguntas frequentes
+            {t('landing.faq.title')}
           </Typography>
         </Stack>
 
         <Stack spacing={1.5}>
-          {FAQS.map((item) => (
+          {faqs.map((item) => (
             <Accordion
               key={item.q}
               disableGutters

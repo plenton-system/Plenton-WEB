@@ -1,26 +1,30 @@
 import { CONFIG } from 'src/config-global';
+import { useTranslation } from 'react-i18next';
 
 import { ContactView } from 'src/sections/institutional/view';
 
 // ----------------------------------------------------------------------
 
-const TITLE = `Contato — ${CONFIG.appName}`;
-const DESCRIPTION = `Fale com a equipe ${CONFIG.appName}. Tire dúvidas, envie sugestões ou solicite suporte sobre a plataforma de gestão para nutricionistas.`;
 const CANONICAL = `${CONFIG.siteUrl}/contato`;
 
 export default function Page() {
+  const { t, i18n } = useTranslation();
+  const title = `${t('institutional.contact.eyebrow')} — ${CONFIG.appName}`;
+  const description = t('institutional.contact.description', { appName: CONFIG.appName });
+  const ogLocale = i18n.resolvedLanguage === 'en-US' ? 'en_US' : i18n.resolvedLanguage === 'es' ? 'es_ES' : 'pt_BR';
+
   return (
     <>
-      <title>{TITLE}</title>
-      <meta name="description" content={DESCRIPTION} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
       <link rel="canonical" href={CANONICAL} />
 
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={CONFIG.appName} />
-      <meta property="og:title" content={TITLE} />
-      <meta property="og:description" content={DESCRIPTION} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
       <meta property="og:url" content={CANONICAL} />
-      <meta property="og:locale" content="pt_BR" />
+      <meta property="og:locale" content={ogLocale} />
 
       <ContactView />
     </>

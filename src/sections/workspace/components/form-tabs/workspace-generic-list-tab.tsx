@@ -1,5 +1,6 @@
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
 import { Loading } from 'src/components/loading';
 
@@ -21,10 +22,12 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export function WorkspaceGenericListTab({ title, items, placeholder, loading, error, onReload }: Props) {
+  const { t } = useTranslation();
+
   if (loading) {
     return (
       <Card variant="outlined" sx={{ p: 2 }}>
-        <Loading inline message={`Carregando ${title.toLowerCase()}...`} />
+        <Loading inline message={t('workspace.generic.loading', { title: title.toLowerCase() })} />
       </Card>
     );
   }
@@ -42,7 +45,7 @@ export function WorkspaceGenericListTab({ title, items, placeholder, loading, er
             sx={{ mt: 1, color: 'primary.main', textDecoration: 'underline', cursor: 'pointer' }}
             onClick={onReload}
           >
-            Tentar novamente
+            {t('shared.retry')}
           </Typography>
         )}
       </Card>

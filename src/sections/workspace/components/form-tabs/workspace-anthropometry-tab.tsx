@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
@@ -17,7 +18,8 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { useConfirm } from 'src/hooks/common/use-confirm';
 import { useWorkspaceAnthropometries } from 'src/hooks/workspace/use-workspace-anthropometries';
 
-import { fDateTimePtBr } from 'src/utils/format-time';
+import { fNumber } from 'src/utils/format-number';
+import { fDateTimeLocale } from 'src/utils/format-time';
 
 import { workspaceAnthropometryService } from 'src/services/workspace/workspaceAnthropometryService';
 
@@ -39,9 +41,14 @@ const formatMetric = (
   value?: number | null,
   suffix = '',
   decimals = 1
-) => (typeof value === 'number' && Number.isFinite(value) ? `${value.toFixed(decimals)}${suffix}` : '-');
+) => (
+  typeof value === 'number' && Number.isFinite(value)
+    ? `${fNumber(value, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}${suffix}`
+    : '-'
+);
 
 export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
+  const { t } = useTranslation();
   const confirm = useConfirm();
   const { items, loading, error, refetch } = useWorkspaceAnthropometries(patientId);
   const [selectedEvaluationId, setSelectedEvaluationId] = useState<string | null>(null);
@@ -87,9 +94,9 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
     if (!patientId || deletingEvaluationId) return;
 
     const ok = await confirm({
-      title: 'Excluir avaliação antropométrica',
-      description: 'Esta ação é irreversível. Deseja continuar?',
-      confirmText: 'Excluir',
+      title: t('workspace.anthropometry.deleteTitle'),
+      description: t('workspace.anthropometry.deleteDescription'),
+      confirmText: t('actions.delete'),
       destructive: true,
     });
 
@@ -100,21 +107,21 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
       const deleted = await workspaceAnthropometryService.delete(patientId, evaluationId);
 
       if (!deleted) {
-        throw new Error('Não foi possível excluir a avaliação antropométrica.');
+        throw new Error(t('workspace.anthropometry.deleteError'));
       }
 
       await refetch();
       setNotify({
         open: true,
         kind: 'success',
-        message: 'Avaliação antropométrica excluída com sucesso.',
+        message: t('workspace.anthropometry.deleteSuccess'),
       });
       onDone?.();
     } catch (err: any) {
       setNotify({
         open: true,
         kind: 'error',
-        message: err?.message ?? 'Não foi possível excluir a avaliação antropométrica.',
+        message: err?.message ?? t('workspace.anthropometry.deleteError'),
       });
     } finally {
       setDeletingEvaluationId(null);
@@ -131,7 +138,7 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
             alignItems={{ sm: 'center' }}
           >
             <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              Antropometria
+              {t('workspace.anthropometry.title')}
             </Typography>
             <Button
               variant="contained"
@@ -142,13 +149,13 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
               startIcon={<Iconify icon="mingcute:add-line" />}
               disabled={!patientId || !!deletingEvaluationId}
             >
-              Novo
+              {t('workspace.new')}
             </Button>
           </Stack>
 
           {error ? <Alert severity="error">{error}</Alert> : null}
 
-          {loading ? <Loading inline message="Carregando antropometrias..." /> : null}
+          {loading ? <Loading inline message={t('workspace.anthropometry.loadingList')} /> : null}
 
           {!loading ? (
             <Table size="small">
@@ -160,7 +167,7 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
                       direction={orderBy === 'date' ? order : 'desc'}
                       onClick={() => handleSort('date')}
                     >
-                      Data
+                      {t('workspace.anthropometry.columns.date')}
                     </TableSortLabel>
                   </TableCell>
                   <TableCell sortDirection={orderBy === 'weight' ? order : false}>
@@ -169,17 +176,17 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
                       direction={orderBy === 'weight' ? order : 'asc'}
                       onClick={() => handleSort('weight')}
                     >
-                      Peso
+                      {t('workspace.anthropometry.columns.weight')}
                     </TableSortLabel>
                   </TableCell>
-                  <TableCell>Altura</TableCell>
+                  <TableCell>{t('workspace.anthropometry.columns.height')}</TableCell>
                   <TableCell sortDirection={orderBy === 'bmi' ? order : false}>
                     <TableSortLabel
                       active={orderBy === 'bmi'}
                       direction={orderBy === 'bmi' ? order : 'asc'}
                       onClick={() => handleSort('bmi')}
                     >
-                      IMC
+                      {t('workspace.anthropometry.columns.bmi')}
                     </TableSortLabel>
                   </TableCell>
                   <TableCell sortDirection={orderBy === 'bodyFat' ? order : false}>
@@ -188,18 +195,18 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
                       direction={orderBy === 'bodyFat' ? order : 'asc'}
                       onClick={() => handleSort('bodyFat')}
                     >
-                      Gordura
+                      {t('workspace.anthropometry.columns.bodyFat')}
                     </TableSortLabel>
                   </TableCell>
-                  <TableCell>Massa magra</TableCell>
-                  <TableCell>Energia</TableCell>
-                  <TableCell align="center">Ações</TableCell>
+                  <TableCell>{t('workspace.anthropometry.columns.leanMass')}</TableCell>
+                  <TableCell>{t('workspace.anthropometry.columns.energy')}</TableCell>
+                  <TableCell align="center">{t('workspace.anthropometry.columns.actions')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {sorted.map((row) => (
                   <TableRow key={row.id} hover>
-                    <TableCell>{fDateTimePtBr(row.evaluationDateUtc)}</TableCell>
+                    <TableCell>{fDateTimeLocale(row.evaluationDateUtc)}</TableCell>
                     <TableCell>{formatMetric(row.weight, ' kg')}</TableCell>
                     <TableCell>{formatMetric(row.height, ' m', 2)}</TableCell>
                     <TableCell>{formatMetric(row.bmi, '', 1)}</TableCell>
@@ -217,7 +224,7 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
                         </Stack>
                       ) : (
                         <Typography variant="body2" color="text.secondary">
-                          Sem cálculo salvo
+                          {t('workspace.anthropometry.noCalculation')}
                         </Typography>
                       )}
                     </TableCell>
@@ -226,13 +233,13 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
                         menuWidth={160}
                         actions={[
                           {
-                            label: 'Editar',
+                            label: t('actions.edit'),
                             icon: 'solar:pen-bold',
                             disabled: deletingEvaluationId === row.id,
                             onClick: () => handleEdit(row.id),
                           },
                           {
-                            label: 'Remover',
+                            label: t('actions.remove'),
                             icon: 'solar:trash-bin-trash-bold',
                             color: 'error',
                             disabled: !!deletingEvaluationId,
@@ -248,7 +255,7 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
                   <TableRow>
                     <TableCell colSpan={8} align="center">
                       <Typography variant="body2" color="text.secondary">
-                        Nenhuma avaliação antropométrica encontrada.
+                        {t('workspace.anthropometry.empty')}
                       </Typography>
                     </TableCell>
                   </TableRow>

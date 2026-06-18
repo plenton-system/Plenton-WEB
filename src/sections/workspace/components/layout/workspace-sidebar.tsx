@@ -7,6 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -18,6 +19,7 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export function WorkspaceSidebar({ onGeneratePdf, onSendWhatsapp }: Props) {
+  const { t } = useTranslation();
   const [checkPlan, setCheckPlan] = useState(false);
   const [checkNotes, setCheckNotes] = useState(false);
   const [notes, setNotes] = useState('');
@@ -28,7 +30,7 @@ export function WorkspaceSidebar({ onGeneratePdf, onSendWhatsapp }: Props) {
     <Stack spacing={2}>
       <Card variant="outlined" sx={{ p: 2 }}>
         <Typography variant="subtitle1" sx={{ mb: 1 }}>
-          Checklist da consulta
+          {t('workspace.sidebar.checklist')}
         </Typography>
         <Stack>
           <FormControlLabel
@@ -38,7 +40,7 @@ export function WorkspaceSidebar({ onGeneratePdf, onSendWhatsapp }: Props) {
                 onChange={(event) => setCheckPlan(event.target.checked)}
               />
             }
-            label="Plano alimentar revisado"
+            label={t('workspace.sidebar.planReviewed')}
           />
           <FormControlLabel
             control={
@@ -47,19 +49,19 @@ export function WorkspaceSidebar({ onGeneratePdf, onSendWhatsapp }: Props) {
                 onChange={(event) => setCheckNotes(event.target.checked)}
               />
             }
-            label="Orientações preenchidas"
+            label={t('workspace.sidebar.guidanceFilled')}
           />
         </Stack>
       </Card>
 
       <Card variant="outlined" sx={{ p: 2 }}>
         <Typography variant="subtitle1" sx={{ mb: 1 }}>
-          Notas rápidas
+          {t('workspace.sidebar.quickNotes')}
         </Typography>
         <TextField
           value={notes}
           onChange={(event) => setNotes(event.target.value)}
-          placeholder="Observações do atendimento..."
+          placeholder={t('workspace.sidebar.notesPlaceholder')}
           multiline
           minRows={4}
           fullWidth
@@ -68,14 +70,14 @@ export function WorkspaceSidebar({ onGeneratePdf, onSendWhatsapp }: Props) {
 
       <Card variant="outlined" sx={{ p: 2 }}>
         <Typography variant="subtitle1" sx={{ mb: 1 }}>
-          Ações rápidas
+          {t('workspace.sidebar.quickActions')}
         </Typography>
         <Stack spacing={1}>
           <Button variant="contained" disabled={!canSend} onClick={onSendWhatsapp}>
-            Enviar WhatsApp
+            {t('workspace.sidebar.sendWhatsapp')}
           </Button>
           <Button variant="outlined" disabled={!canSend} onClick={onGeneratePdf}>
-            Gerar PDF
+            {t('workspace.sidebar.generatePdf')}
           </Button>
         </Stack>
       </Card>

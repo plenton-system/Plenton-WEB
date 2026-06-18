@@ -1,4 +1,5 @@
 import { CONFIG } from 'src/config-global';
+import { useTranslation } from 'react-i18next';
 
 import { NoIndex } from 'src/components/seo';
 
@@ -7,9 +8,10 @@ import { ResetPasswordView } from 'src/sections/auth';
 // ----------------------------------------------------------------------
 
 export default function Page() {
+  const { t } = useTranslation();
   return (
     <>
-      <title>{`Nova senha - ${CONFIG.appName}`}</title>
+      <title>{`${t('pages.newPassword')} - ${CONFIG.appName}`}</title>
       <NoIndex />
 
       <ResetPasswordView />

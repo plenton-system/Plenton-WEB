@@ -4,6 +4,7 @@ import type { User, LoginRequest } from 'src/types';
 import { useMemo, useState, useEffect, createContext } from 'react';
 
 import { buildAndStoreUser } from 'src/utils/auth-helpers';
+import i18n from 'src/i18n';
 
 import { registerSessionExpiredHandler } from 'src/services/api';
 
@@ -87,7 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         } catch (error) {
             throw typeof error === 'string' ?
                 new Error(error) : error instanceof Error ?
-                    error : new Error('Falha no login');
+                    error : new Error(i18n.t('auth.createError'));
         } finally {
             setAuthenticating(false);
         }

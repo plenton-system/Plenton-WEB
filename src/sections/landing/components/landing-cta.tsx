@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 import { varAlpha } from 'minimal-shared/utils';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -12,6 +13,7 @@ import Typography from '@mui/material/Typography';
 // ----------------------------------------------------------------------
 
 export function LandingCta() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -30,10 +32,10 @@ export function LandingCta() {
         >
           <Stack spacing={3} alignItems="center">
             <Typography variant="h3" sx={{ fontWeight: 800, maxWidth: 720 }}>
-              Pronto para profissionalizar o seu consultório?
+              {t('landing.cta.title')}
             </Typography>
             <Typography variant="h6" sx={{ fontWeight: 400, opacity: 0.9, maxWidth: 640 }}>
-              Comece hoje mesmo, sem custo. Você só precisa do seu e-mail.
+              {t('landing.cta.description')}
             </Typography>
             <Button
               size="large"
@@ -53,7 +55,7 @@ export function LandingCta() {
                 ...theme.applyStyles('dark', { color: '#FFFFFF' }),
               }}
             >
-              Experimente grátis
+              {t('landing.nav.tryFree')}
             </Button>
           </Stack>
         </Box>

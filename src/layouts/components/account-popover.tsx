@@ -4,7 +4,8 @@ import type { SystemSettingsProps, EditSystemSettingsDto } from 'src/types/domai
 
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useState, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -26,20 +27,9 @@ import { systemSettingsService } from 'src/services/systemSettings/systemSetting
 import { ProfilePopover } from './profile-popover';
 import { SettingsPopover } from './settings-popover';
 
-const profileValidationSchema = Yup.object({
-  addressDto: Yup.object({
-    street: Yup.string().trim().required('Informe a rua ou avenida.'),
-    number: Yup.string().trim().required('Informe o número do endereço.'),
-    neighborhood: Yup.string().trim().required('Informe o bairro.'),
-    city: Yup.string().trim().required('Informe a cidade.'),
-    state: Yup.string().trim().required('Informe o estado.'),
-    zipCode: Yup.string().trim().required('Informe o CEP.'),
-  }).required(),
-});
-
 export type AccountPopoverProps = IconButtonProps & {
   data?: {
-    label: string;
+    labelKey: 'profile.menu.profile' | 'profile.menu.settings';
     href: string;
     icon?: React.ReactNode;
     info?: React.ReactNode;
@@ -48,6 +38,7 @@ export type AccountPopoverProps = IconButtonProps & {
 };
 
 export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const { signOut, user } = useAuth();
 
@@ -90,6 +81,20 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
     userId: user?.id ?? null,
     autoLoad: profileLoading,
   });
+  const profileValidationSchema = useMemo(
+    () =>
+      Yup.object({
+        addressDto: Yup.object({
+          street: Yup.string().trim().required(t('profile.validation.street')),
+          number: Yup.string().trim().required(t('profile.validation.number')),
+          neighborhood: Yup.string().trim().required(t('profile.validation.neighborhood')),
+          city: Yup.string().trim().required(t('profile.validation.city')),
+          state: Yup.string().trim().required(t('profile.validation.state')),
+          zipCode: Yup.string().trim().required(t('profile.validation.zipCode')),
+        }).required(),
+      }),
+    [t]
+  );
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
@@ -244,12 +249,12 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         >
           {data.map((option) => (
             <MenuItem
-              key={option.label}
+              key={option.labelKey}
               selected={option.href === pathname}
               onClick={() => handleClickItem(option)}
             >
               {option.icon}
-              {option.label}
+              {t(option.labelKey)}
             </MenuItem>
           ))}
         </MenuList>
@@ -267,7 +272,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
               router.push('/sign-in');
             }}
           >
-            Sair
+            {t('profile.menu.signOut')}
           </Button>
         </Box>
       </Popover>

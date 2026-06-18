@@ -2,6 +2,7 @@ import type { SubscriptionBillingType, SubscriptionPaymentDetails } from 'src/ty
 
 import { Icon } from '@iconify/react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -20,6 +21,7 @@ type PendingState = {
 };
 
 export function SubscriptionPendingView() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const state = (location.state ?? {}) as PendingState;
@@ -33,16 +35,20 @@ export function SubscriptionPendingView() {
           <Stack spacing={1}>
             <Box component={Icon} icon="solar:clock-circle-bold" sx={{ width: 42, height: 42, color: 'warning.main' }} />
             <Typography variant="h4" sx={{ fontWeight: 800 }}>
-              Pagamento iniciado
+              {t('subscription.pending.title')}
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              Aguardando confirmação do pagamento para liberar a assinatura.
+              {t('subscription.pending.description')}
             </Typography>
           </Stack>
 
           <Alert severity="info">
-            {state.planName ? `Plano: ${state.planName}. ` : ''}
-            Método: {billingTypeLabel(state.billingType)}.
+            {state.planName
+              ? t('subscription.pending.summary', {
+                  plan: state.planName,
+                  method: billingTypeLabel(state.billingType),
+                })
+              : t('subscription.pending.methodOnly', { method: billingTypeLabel(state.billingType) })}
           </Alert>
 
           {payment.pixQrCode && (
@@ -57,7 +63,7 @@ export function SubscriptionPendingView() {
           {payment.pixCopyPaste && (
             <Paper variant="outlined" sx={{ p: 2, borderRadius: 1.5, wordBreak: 'break-word' }}>
               <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                PIX copia e cola
+                {t('subscription.pending.pixCopyPaste')}
               </Typography>
               <Typography variant="body2">{payment.pixCopyPaste}</Typography>
             </Paper>
@@ -71,15 +77,15 @@ export function SubscriptionPendingView() {
               rel="noreferrer"
               sx={{ alignSelf: { xs: 'stretch', sm: 'flex-start' } }}
             >
-              Abrir link de pagamento
+              {t('subscription.pending.openPayment')}
             </Button>
           )}
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
             <Button variant="outlined" onClick={() => navigate('/subscription/success')}>
-              Verificar status
+              {t('subscription.pending.checkStatus')}
             </Button>
-            <Button onClick={() => navigate('/#planos')}>Escolher outro plano</Button>
+            <Button onClick={() => navigate('/#planos')}>{t('subscription.pending.chooseAnother')}</Button>
           </Stack>
         </Stack>
       </Paper>

@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -17,33 +18,32 @@ type Props = {
   state: 'success' | 'cancel' | 'expired';
 };
 
-const copy = {
-  success: {
-    icon: 'solar:hourglass-bold',
-    title: 'Aguardando confirmação',
-    description:
-      'Recebemos o retorno do checkout, mas a assinatura só será liberada quando o backend confirmar o pagamento.',
-    severity: 'info' as const,
-  },
-  cancel: {
-    icon: 'solar:close-circle-bold',
-    title: 'Checkout cancelado',
-    description: 'O pagamento não foi concluído. Você pode voltar aos planos e iniciar uma nova tentativa.',
-    severity: 'warning' as const,
-  },
-  expired: {
-    icon: 'solar:calendar-minimalistic-bold',
-    title: 'Checkout expirado',
-    description: 'O prazo desse checkout terminou. Escolha um plano para gerar uma nova tentativa.',
-    severity: 'error' as const,
-  },
-};
-
 export function SubscriptionStatusRouteView({ state }: Props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const shouldPoll = state === 'success' && isAuthenticated;
   const current = useCurrentSubscription({ auto: shouldPoll, poll: shouldPoll, pollIntervalMs: 7000 });
+  const copy = {
+    success: {
+      icon: 'solar:hourglass-bold',
+      title: t('subscription.statusRoute.successTitle'),
+      description: t('subscription.statusRoute.successDescription'),
+      severity: 'info' as const,
+    },
+    cancel: {
+      icon: 'solar:close-circle-bold',
+      title: t('subscription.statusRoute.cancelTitle'),
+      description: t('subscription.statusRoute.cancelDescription'),
+      severity: 'warning' as const,
+    },
+    expired: {
+      icon: 'solar:calendar-minimalistic-bold',
+      title: t('subscription.statusRoute.expiredTitle'),
+      description: t('subscription.statusRoute.expiredDescription'),
+      severity: 'error' as const,
+    },
+  };
   const content = copy[state];
 
   return (
@@ -60,41 +60,41 @@ export function SubscriptionStatusRouteView({ state }: Props) {
 
           <Alert severity={content.severity}>
             {state === 'success'
-              ? 'Aguardando confirmação do webhook de pagamento.'
+              ? t('subscription.statusRoute.waitingWebhook')
               : content.description}
           </Alert>
 
           {state === 'success' && !isAuthenticated && (
-            <Alert severity="info" action={<Button onClick={() => navigate('/sign-in')}>Entrar</Button>}>
-              Entre novamente para acompanhar o status da assinatura.
+            <Alert severity="info" action={<Button onClick={() => navigate('/sign-in')}>{t('auth.signIn')}</Button>}>
+              {t('subscription.statusRoute.signInAgain')}
             </Alert>
           )}
 
           {state === 'success' && current.loading && (
             <Stack direction="row" spacing={1.5} alignItems="center">
               <CircularProgress size={20} />
-              <Typography variant="body2">Consultando status da assinatura...</Typography>
+              <Typography variant="body2">{t('subscription.statusRoute.checking')}</Typography>
             </Stack>
           )}
 
           {state === 'success' && current.data?.status === 'active' && (
-            <Alert severity="success" action={<Button onClick={() => navigate('/dashboard')}>Ir para o app</Button>}>
-              Assinatura ativa.
+            <Alert severity="success" action={<Button onClick={() => navigate('/dashboard')}>{t('subscription.statusRoute.goToApp')}</Button>}>
+              {t('subscription.statusRoute.active')}
             </Alert>
           )}
 
           {state === 'success' && current.error && (
-            <Alert severity="warning" action={<Button onClick={current.reload}>Tentar novamente</Button>}>
+            <Alert severity="warning" action={<Button onClick={current.reload}>{t('shared.retry')}</Button>}>
               {current.error}
             </Alert>
           )}
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
             <Button variant="contained" onClick={() => navigate('/#planos')}>
-              Escolher plano
+              {t('subscription.common.choosePlan')}
             </Button>
             <Button variant="outlined" onClick={() => navigate('/settings/subscription')}>
-              Minha assinatura
+              {t('subscription.common.mySubscription')}
             </Button>
           </Stack>
         </Stack>

@@ -1,13 +1,16 @@
 import { CONFIG } from 'src/config-global';
+import { useTranslation } from 'react-i18next';
 
 import { NotFoundView } from 'src/sections/error';
 
 // ----------------------------------------------------------------------
 
 export default function Page() {
+  const { t } = useTranslation();
+
   return (
     <>
-      <title>{`404 page not found! | Error - ${CONFIG.appName}`}</title>
+      <title>{`${t('pages.notFoundTitle')} - ${CONFIG.appName}`}</title>
 
       <NotFoundView />
     </>

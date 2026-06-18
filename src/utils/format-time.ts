@@ -51,6 +51,8 @@ export const formatPatterns = {
 const isValidDate = (date: DatePickerFormat) =>
   date !== null && date !== undefined && dayjs(date).isValid();
 
+export const getCurrentLocale = () => i18n.resolvedLanguage ?? i18n.language ?? 'pt-BR';
+
 // ----------------------------------------------------------------------
 
 /**
@@ -79,7 +81,17 @@ export function fDateTimePtBr(date: DatePickerFormat): string {
     return '';
   }
 
-  return dayjs(date).format('DD/MM/YYYY HH:mm');
+  return new Intl.DateTimeFormat(getCurrentLocale(), {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(dayjs(date).toDate());
+}
+
+export const fDateTimeLocale = fDateTimePtBr;
+
+export function fDateLocale(date: DatePickerFormat): string {
+  if (!isValidDate(date)) return '';
+  return new Intl.DateTimeFormat(getCurrentLocale()).format(dayjs(date).toDate());
 }
 
 // ----------------------------------------------------------------------

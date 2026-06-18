@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
+import { useTranslation } from 'react-i18next';
 
 type AnthropometryFormValues = {
   evaluationDateUtc: string;
@@ -47,6 +48,7 @@ type Props = {
 };
 
 export function AnthropometryFormSection({ values, onChange, disabled = false }: Props) {
+  const { t } = useTranslation();
   const renderNumberField = (
     field: keyof AnthropometryFormValues,
     label: string,
@@ -67,14 +69,14 @@ export function AnthropometryFormSection({ values, onChange, disabled = false }:
   return (
     <Stack spacing={2.5}>
       <Stack spacing={0.5}>
-        <Typography variant="subtitle1">Antropometria</Typography>
+        <Typography variant="subtitle1">{t('workspace.anthropometry.title')}</Typography>
       </Stack>
 
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 3 }}>
           <TextField
             fullWidth
-            label="Data da avaliação"
+            label={t('workspace.anthropometry.form.evaluationDate')}
             type="datetime-local"
             value={values.evaluationDateUtc}
             onChange={(event) => onChange('evaluationDateUtc', event.target.value)}
@@ -85,7 +87,7 @@ export function AnthropometryFormSection({ values, onChange, disabled = false }:
         <Grid size={{ xs: 12, md: 3 }}>
           <TextField
             fullWidth
-            label="Peso (kg)"
+            label={t('workspace.anthropometry.form.weight')}
             type="number"
             value={values.weight}
             onChange={(event) => onChange('weight', event.target.value)}
@@ -95,7 +97,7 @@ export function AnthropometryFormSection({ values, onChange, disabled = false }:
         <Grid size={{ xs: 12, md: 3 }}>
           <TextField
             fullWidth
-            label="Altura (m)"
+            label={t('workspace.anthropometry.form.height')}
             type="number"
             value={values.height}
             onChange={(event) => onChange('height', event.target.value)}
@@ -105,7 +107,7 @@ export function AnthropometryFormSection({ values, onChange, disabled = false }:
         <Grid size={{ xs: 12, md: 3 }}>
           <TextField
             fullWidth
-            label="IMC"
+            label={t('workspace.anthropometry.form.bmi')}
             type="number"
             value={values.bmi}
             disabled
@@ -115,7 +117,7 @@ export function AnthropometryFormSection({ values, onChange, disabled = false }:
         <Grid size={{ xs: 12, md: 8 }}>
           <TextField
             fullWidth
-            label="Observações"
+            label={t('workspace.anthropometry.form.notes')}
             value={values.notes}
             onChange={(event) => onChange('notes', event.target.value)}
             disabled={disabled}
@@ -127,45 +129,45 @@ export function AnthropometryFormSection({ values, onChange, disabled = false }:
 
       <Accordion disableGutters>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="subtitle2">Circunferências</Typography>
+          <Typography variant="subtitle2">{t('workspace.anthropometry.form.circumferences')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={2}>
-            {renderNumberField('abdominalCircumference', 'Circ. abdominal (cm)')}
-            {renderNumberField('hipCircumference', 'Circ. quadril (cm)')}
-            {renderNumberField('waistCircumference', 'Circ. cintura (cm)')}
-            {renderNumberField('neckCircumference', 'Circ. pescoço (cm)')}
-            {renderNumberField('shoulderCircumference', 'Circ. ombros (cm)')}
-            {renderNumberField('chestCircumference', 'Circ. tórax (cm)')}
-            {renderNumberField('rightRelaxedArmCircumference', 'Braço relaxado direito (cm)')}
-            {renderNumberField('leftRelaxedArmCircumference', 'Braço relaxado esquerdo (cm)')}
-            {renderNumberField('rightFlexedArmCircumference', 'Braço flexionado direito (cm)')}
-            {renderNumberField('leftFlexedArmCircumference', 'Braço flexionado esquerdo (cm)')}
-            {renderNumberField('rightForearmCircumference', 'Antebraço direito (cm)')}
-            {renderNumberField('leftForearmCircumference', 'Antebraço esquerdo (cm)')}
-            {renderNumberField('rightWristCircumference', 'Punho direito (cm)')}
-            {renderNumberField('leftWristCircumference', 'Punho esquerdo (cm)')}
-            {renderNumberField('rightProximalThighCircumference', 'Coxa proximal direita (cm)')}
-            {renderNumberField('leftProximalThighCircumference', 'Coxa proximal esquerda (cm)')}
-            {renderNumberField('rightThighCircumference', 'Coxa direita (cm)')}
-            {renderNumberField('leftThighCircumference', 'Coxa esquerda (cm)')}
-            {renderNumberField('rightCalfCircumference', 'Panturrilha direita (cm)')}
-            {renderNumberField('leftCalfCircumference', 'Panturrilha esquerda (cm)')}
+            {renderNumberField('abdominalCircumference', t('workspace.anthropometry.form.abdominal'))}
+            {renderNumberField('hipCircumference', t('workspace.anthropometry.form.hip'))}
+            {renderNumberField('waistCircumference', t('workspace.anthropometry.form.waist'))}
+            {renderNumberField('neckCircumference', t('workspace.anthropometry.form.neck'))}
+            {renderNumberField('shoulderCircumference', t('workspace.anthropometry.form.shoulder'))}
+            {renderNumberField('chestCircumference', t('workspace.anthropometry.form.chest'))}
+            {renderNumberField('rightRelaxedArmCircumference', t('workspace.anthropometry.form.rightRelaxedArm'))}
+            {renderNumberField('leftRelaxedArmCircumference', t('workspace.anthropometry.form.leftRelaxedArm'))}
+            {renderNumberField('rightFlexedArmCircumference', t('workspace.anthropometry.form.rightFlexedArm'))}
+            {renderNumberField('leftFlexedArmCircumference', t('workspace.anthropometry.form.leftFlexedArm'))}
+            {renderNumberField('rightForearmCircumference', t('workspace.anthropometry.form.rightForearm'))}
+            {renderNumberField('leftForearmCircumference', t('workspace.anthropometry.form.leftForearm'))}
+            {renderNumberField('rightWristCircumference', t('workspace.anthropometry.form.rightWrist'))}
+            {renderNumberField('leftWristCircumference', t('workspace.anthropometry.form.leftWrist'))}
+            {renderNumberField('rightProximalThighCircumference', t('workspace.anthropometry.form.rightProximalThigh'))}
+            {renderNumberField('leftProximalThighCircumference', t('workspace.anthropometry.form.leftProximalThigh'))}
+            {renderNumberField('rightThighCircumference', t('workspace.anthropometry.form.rightThigh'))}
+            {renderNumberField('leftThighCircumference', t('workspace.anthropometry.form.leftThigh'))}
+            {renderNumberField('rightCalfCircumference', t('workspace.anthropometry.form.rightCalf'))}
+            {renderNumberField('leftCalfCircumference', t('workspace.anthropometry.form.leftCalf'))}
           </Grid>
         </AccordionDetails>
       </Accordion>
 
       <Accordion disableGutters>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="subtitle2">Composição corporal</Typography>
+          <Typography variant="subtitle2">{t('workspace.anthropometry.form.bodyComposition')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={2}>
-            {renderNumberField('bodyFatPercentage', 'Gordura corporal (%)')}
-            {renderNumberField('musclePercentage', 'Músculo (%)')}
-            {renderNumberField('leanMass', 'Massa magra (kg)')}
-            {renderNumberField('fatMass', 'Massa gorda (kg)')}
-            {renderNumberField('whr', 'WHR')}
+            {renderNumberField('bodyFatPercentage', t('workspace.anthropometry.form.bodyFat'))}
+            {renderNumberField('musclePercentage', t('workspace.anthropometry.form.muscle'))}
+            {renderNumberField('leanMass', t('workspace.anthropometry.form.leanMass'))}
+            {renderNumberField('fatMass', t('workspace.anthropometry.form.fatMass'))}
+            {renderNumberField('whr', t('workspace.anthropometry.form.whr'))}
           </Grid>
         </AccordionDetails>
       </Accordion>

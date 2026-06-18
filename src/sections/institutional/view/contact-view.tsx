@@ -3,6 +3,7 @@ import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { varAlpha } from 'minimal-shared/utils';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -19,11 +20,14 @@ import { PublicPageLayout } from '../components/public-page-layout';
 
 // ----------------------------------------------------------------------
 
-function buildMailtoHref(values: { name: string; email: string; subject: string; message: string }) {
-  const subject = values.subject.trim() || `Contato pelo site — ${values.name.trim()}`;
+function buildMailtoHref(
+  values: { name: string; email: string; subject: string; message: string },
+  copy: { defaultSubject: string; name: string; email: string }
+) {
+  const subject = values.subject.trim() || copy.defaultSubject;
   const body = [
-    `Nome: ${values.name.trim()}`,
-    `E-mail: ${values.email.trim()}`,
+    copy.name,
+    copy.email,
     '',
     values.message.trim(),
   ].join('\n');
@@ -32,6 +36,7 @@ function buildMailtoHref(values: { name: string; email: string; subject: string;
 }
 
 export function ContactView() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const [values, setValues] = useState({ name: '', email: '', subject: '', message: '' });
 
@@ -41,14 +46,18 @@ export function ContactView() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    window.location.href = buildMailtoHref(values);
+    window.location.href = buildMailtoHref(values, {
+      defaultSubject: t('institutional.contact.defaultSubject', { name: values.name.trim() }),
+      name: t('institutional.contact.mailName', { name: values.name.trim() }),
+      email: t('institutional.contact.mailEmail', { email: values.email.trim() }),
+    });
   };
 
   return (
     <PublicPageLayout
-      eyebrow="Contato"
-      title="Fale com a gente"
-      description={`Tem dúvidas, sugestões ou precisa de suporte? A equipe ${CONFIG.appName} está pronta para ajudar.`}
+      eyebrow={t('institutional.contact.eyebrow')}
+      title={t('institutional.contact.title')}
+      description={t('institutional.contact.description', { appName: CONFIG.appName })}
     >
       <Grid container spacing={{ xs: 4, md: 6 }}>
         <Grid size={{ xs: 12, md: 5 }}>
@@ -79,7 +88,7 @@ export function ContactView() {
                 </Box>
                 <Stack spacing={0.5}>
                   <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                    E-mail
+                    {t('institutional.contact.email')}
                   </Typography>
                   <Link
                     href={`mailto:${CONFIG.contactEmail}`}
@@ -89,15 +98,14 @@ export function ContactView() {
                     {CONFIG.contactEmail}
                   </Link>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Respondemos em até 1 dia útil.
+                    {t('institutional.contact.responseTime')}
                   </Typography>
                 </Stack>
               </Stack>
             </Box>
 
             <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7 }}>
-              Preencha o formulário ao lado e o seu aplicativo de e-mail será aberto com a mensagem
-              pronta para envio. Se preferir, escreva diretamente para{' '}
+              {t('institutional.contact.instructions')}{' '}
               <Link href={`mailto:${CONFIG.contactEmail}`} underline="hover">
                 {CONFIG.contactEmail}
               </Link>
@@ -121,7 +129,7 @@ export function ContactView() {
               <TextField
                 required
                 fullWidth
-                label="Nome"
+                label={t('institutional.contact.name')}
                 value={values.name}
                 onChange={handleChange('name')}
                 autoComplete="name"
@@ -130,14 +138,14 @@ export function ContactView() {
                 required
                 fullWidth
                 type="email"
-                label="E-mail"
+                label={t('institutional.contact.email')}
                 value={values.email}
                 onChange={handleChange('email')}
                 autoComplete="email"
               />
               <TextField
                 fullWidth
-                label="Assunto"
+                label={t('institutional.contact.subject')}
                 value={values.subject}
                 onChange={handleChange('subject')}
               />
@@ -146,7 +154,7 @@ export function ContactView() {
                 fullWidth
                 multiline
                 minRows={5}
-                label="Mensagem"
+                label={t('institutional.contact.message')}
                 value={values.message}
                 onChange={handleChange('message')}
               />
@@ -157,7 +165,7 @@ export function ContactView() {
                 endIcon={<Icon icon="solar:arrow-right-linear" width={20} />}
                 sx={{ alignSelf: 'flex-start', textTransform: 'none', boxShadow: 'none', px: 4 }}
               >
-                Enviar mensagem
+                {t('institutional.contact.send')}
               </Button>
             </Stack>
           </Box>

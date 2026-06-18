@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
 import { EnergyExpenditureResultCard } from './energy-expenditure-result-card';
 
@@ -41,14 +42,6 @@ const PROTOCOL_OPTIONS: Array<{ value: WorkspaceAnthropometryProtocol; label: st
   { value: 'FaoOms', label: 'FAO/OMS' },
 ];
 
-const ACTIVITY_OPTIONS = [
-  { value: '1.20', label: '1.20 · Sedentário' },
-  { value: '1.37', label: '1.37 · Leve' },
-  { value: '1.55', label: '1.55 · Moderado' },
-  { value: '1.72', label: '1.72 · Intenso' },
-  { value: '1.90', label: '1.90 · Muito intenso' },
-];
-
 export function EnergyExpenditureSection({
   values,
   onChange,
@@ -63,10 +56,19 @@ export function EnergyExpenditureSection({
   canCalculate,
   onCalculate,
 }: Props) {
+  const { t } = useTranslation();
+  const activityOptions = [
+    { value: '1.20', label: `1.20 · ${t('workspace.energy.activity.sedentary')}` },
+    { value: '1.37', label: `1.37 · ${t('workspace.energy.activity.light')}` },
+    { value: '1.55', label: `1.55 · ${t('workspace.energy.activity.moderate')}` },
+    { value: '1.72', label: `1.72 · ${t('workspace.energy.activity.intense')}` },
+    { value: '1.90', label: `1.90 · ${t('workspace.energy.activity.veryIntense')}` },
+  ];
+
   return (
     <Stack spacing={2}>
       <Stack spacing={0.5}>
-        <Typography variant="subtitle1">Gasto energético</Typography>
+        <Typography variant="subtitle1">{t('workspace.energy.title')}</Typography>
       </Stack>
 
       <Card variant="outlined" sx={{ p: 2 }}>
@@ -76,7 +78,7 @@ export function EnergyExpenditureSection({
               <TextField
                 select
                 fullWidth
-                label="Protocolo"
+                label={t('workspace.energy.protocol')}
                 value={values.protocol}
                 onChange={(event) =>
                   onChange('protocol', event.target.value as WorkspaceAnthropometryProtocol)
@@ -94,12 +96,12 @@ export function EnergyExpenditureSection({
               <TextField
                 select
                 fullWidth
-                label="Fator de atividade"
+                label={t('workspace.energy.activityFactor')}
                 value={values.activityFactor}
                 onChange={(event) => onChange('activityFactor', event.target.value)}
                 disabled={disabled}
               >
-                {ACTIVITY_OPTIONS.map((option) => (
+                {activityOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -109,10 +111,17 @@ export function EnergyExpenditureSection({
             <Grid size={{ xs: 12, md: 4 }}>
               <Stack spacing={0.5} sx={{ height: '100%', justifyContent: 'center' }}>
                 <Typography variant="body2" color="text.secondary">
-                  Idade: {patientAgeYears ?? '-'} anos
+                  {t('workspace.energy.age', { age: patientAgeYears ?? '-' })}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Sexo: {patientGender === 'Male' ? 'Masculino' : patientGender === 'Female' ? 'Feminino' : '-'}
+                  {t('workspace.energy.gender', {
+                    gender:
+                      patientGender === 'Male'
+                        ? t('workspace.energy.male')
+                        : patientGender === 'Female'
+                          ? t('workspace.energy.female')
+                          : '-',
+                  })}
                 </Typography>
               </Stack>
             </Grid>
@@ -120,7 +129,7 @@ export function EnergyExpenditureSection({
 
           {!canCalculate ? (
             <Alert severity="info" variant="outlined">
-              Preencha peso, altura, data de nascimento e gênero do paciente para calcular.
+              {t('workspace.energy.missingData')}
             </Alert>
           ) : null}
 
@@ -136,7 +145,7 @@ export function EnergyExpenditureSection({
               onClick={onCalculate}
               disabled={disabled || loading || !canCalculate}
             >
-              {loading ? 'Calculando...' : 'Calcular'}
+              {loading ? t('workspace.energy.calculating') : t('workspace.energy.calculate')}
             </Button>
           </Stack>
         </Stack>

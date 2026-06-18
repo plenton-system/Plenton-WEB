@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
 import { RouterLink } from 'src/routes/components';
 
@@ -10,6 +11,8 @@ import { Logo } from 'src/components/logo';
 // ----------------------------------------------------------------------
 
 export function NotFoundView() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Logo sx={{ position: 'fixed', top: 20, left: 20 }} />
@@ -25,12 +28,11 @@ export function NotFoundView() {
         }}
       >
         <Typography variant="h3" sx={{ mb: 2 }}>
-          Sorry, page not found!
+          {t('pages.notFoundTitle')}
         </Typography>
 
         <Typography sx={{ color: 'text.secondary', maxWidth: 480, textAlign: 'center' }}>
-          Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be
-          sure to check your spelling.
+          {t('pages.notFoundDescription')}
         </Typography>
 
         <Box
@@ -44,7 +46,7 @@ export function NotFoundView() {
         />
 
         <Button component={RouterLink} href="/" size="large" variant="contained" color="inherit">
-          Go to home
+          {t('pages.goHome')}
         </Button>
       </Container>
     </>

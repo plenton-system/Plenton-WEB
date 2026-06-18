@@ -2,6 +2,7 @@ import type { MouseEvent, ChangeEvent } from 'react';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
@@ -26,6 +27,7 @@ type WorkspaceListViewProps = {
 };
 
 export function WorkspaceListView({ onOpen }: WorkspaceListViewProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [newActionAnchorEl, setNewActionAnchorEl] = useState<null | HTMLElement>(null);
   const table = useTable({ initialOrderBy: 'patientName' });
@@ -64,14 +66,14 @@ export function WorkspaceListView({ onOpen }: WorkspaceListViewProps) {
     <>
       <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
         <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          Área de trabalho
+          {t('workspace.title')}
         </Typography>
         <Button
           variant="contained"
           startIcon={<Iconify icon="mingcute:add-line" />}
           onClick={handleOpenNewActionMenu}
         >
-          Novo
+          {t('workspace.new')}
         </Button>
         <Menu
           anchorEl={newActionAnchorEl}
@@ -82,7 +84,7 @@ export function WorkspaceListView({ onOpen }: WorkspaceListViewProps) {
         >
           {WORKSPACE_TABS.map((tab) => (
             <MenuItem key={tab.id} onClick={() => handleSelectNewAction(tab.id)}>
-              {tab.label}
+              {t(tab.labelKey)}
             </MenuItem>
           ))}
         </Menu>
@@ -99,13 +101,13 @@ export function WorkspaceListView({ onOpen }: WorkspaceListViewProps) {
           setPageIndex(0);
         }}
         headLabel={[
-          { id: 'actions', label: 'Ações', sortable: false, align: 'center', width: 96 },
-          { id: 'patientName', label: 'Paciente' },
-          { id: 'nextAppointment', label: 'Próxima consulta' },
-          { id: 'planStatus', label: 'Plano' },
-          { id: 'lastAnthropometry', label: 'Última antropometria' },
-          { id: 'lastAnamnesis', label: 'Última anamnese' },
-          { id: 'lastSend', label: 'Último envio' },
+          { id: 'actions', label: t('workspace.list.columns.actions'), sortable: false, align: 'center', width: 96 },
+          { id: 'patientName', label: t('workspace.list.columns.patient') },
+          { id: 'nextAppointment', label: t('workspace.list.columns.nextAppointment') },
+          { id: 'planStatus', label: t('workspace.list.columns.plan') },
+          { id: 'lastAnthropometry', label: t('workspace.list.columns.lastAnthropometry') },
+          { id: 'lastAnamnesis', label: t('workspace.list.columns.lastAnamnesis') },
+          { id: 'lastSend', label: t('workspace.list.columns.lastSend') },
         ]}
         table={{
           order: table.order,

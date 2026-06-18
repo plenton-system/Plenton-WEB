@@ -1,4 +1,5 @@
 import { varAlpha } from 'minimal-shared/utils';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -9,29 +10,14 @@ import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 
-const STEPS = [
-  {
-    number: '01',
-    title: 'Crie sua conta',
-    description:
-      'Cadastro em menos de 1 minuto. Comece o período gratuito sem informar cartão.',
-  },
-  {
-    number: '02',
-    title: 'Cadastre seus pacientes',
-    description:
-      'Importe dados, registre antropometria e personalize as fichas conforme sua prática.',
-  },
-  {
-    number: '03',
-    title: 'Atenda com mais agilidade',
-    description:
-      'Monte planos, envie anamneses e acompanhe a evolução em um único fluxo de trabalho.',
-  },
-];
-
 export function LandingHowItWorks() {
+  const { t } = useTranslation();
   const theme = useTheme();
+  const steps = [
+    { number: '01', title: t('landing.how.account.title'), description: t('landing.how.account.description') },
+    { number: '02', title: t('landing.how.patients.title'), description: t('landing.how.patients.description') },
+    { number: '03', title: t('landing.how.care.title'), description: t('landing.how.care.description') },
+  ];
 
   return (
     <Box
@@ -45,15 +31,15 @@ export function LandingHowItWorks() {
       <Container maxWidth="lg">
         <Stack spacing={2} alignItems="center" textAlign="center" sx={{ mb: { xs: 5, md: 8 } }}>
           <Typography variant="overline" sx={{ color: 'primary.main', fontWeight: 700 }}>
-            Como funciona
+            {t('landing.how.eyebrow')}
           </Typography>
           <Typography variant="h3" sx={{ fontWeight: 800, maxWidth: 720 }}>
-            Em 3 passos, do cadastro à primeira consulta.
+            {t('landing.how.title')}
           </Typography>
         </Stack>
 
         <Grid container spacing={4}>
-          {STEPS.map((step) => (
+          {steps.map((step) => (
             <Grid key={step.number} size={{ xs: 12, md: 4 }}>
               <Stack spacing={2}>
                 <Typography

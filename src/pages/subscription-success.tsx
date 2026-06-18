@@ -1,11 +1,13 @@
 import { CONFIG } from 'src/config-global';
+import { useTranslation } from 'react-i18next';
 
 import { SubscriptionStatusRouteView } from 'src/sections/subscription';
 
 export default function Page() {
+  const { t } = useTranslation();
   return (
     <>
-      <title>{`Aguardando confirmação - ${CONFIG.appName}`}</title>
+      <title>{`${t('subscription.statusRoute.successTitle')} - ${CONFIG.appName}`}</title>
       <SubscriptionStatusRouteView state="success" />
     </>
   );

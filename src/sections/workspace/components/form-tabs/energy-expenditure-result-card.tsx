@@ -5,8 +5,9 @@ import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
-import { fDateTimePtBr } from 'src/utils/format-time';
+import { fDateTimeLocale } from 'src/utils/format-time';
 
 type Props = {
   result: EnergyCalculationResult;
@@ -18,15 +19,17 @@ const formatKcal = (value?: number | null) =>
   typeof value === 'number' && Number.isFinite(value) ? `${value.toFixed(0)} kcal` : '-';
 
 export function EnergyExpenditureResultCard({ result, calculatedAtUtc, persisted = false }: Props) {
+  const { t } = useTranslation();
+
   return (
     <Card variant="outlined" sx={{ p: 2 }}>
       <Stack spacing={2}>
         <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
-          <Typography variant="subtitle1">Resultado do cálculo</Typography>
+          <Typography variant="subtitle1">{t('workspace.energy.result.title')}</Typography>
           <Chip
             size="small"
             color={persisted ? 'success' : 'warning'}
-            label={persisted ? 'Persistido' : 'Temporário'}
+            label={persisted ? t('workspace.energy.result.persisted') : t('workspace.energy.result.temporary')}
             variant={persisted ? 'filled' : 'outlined'}
           />
         </Stack>
@@ -34,13 +37,13 @@ export function EnergyExpenditureResultCard({ result, calculatedAtUtc, persisted
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Typography variant="caption" color="text.secondary">
-              Protocolo
+              {t('workspace.energy.result.protocol')}
             </Typography>
             <Typography variant="body1">{result.protocol}</Typography>
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Typography variant="caption" color="text.secondary">
-              Fator de atividade
+              {t('workspace.energy.result.activityFactor')}
             </Typography>
             <Typography variant="body1">{result.activityFactor.toFixed(2)}</Typography>
           </Grid>
@@ -60,7 +63,7 @@ export function EnergyExpenditureResultCard({ result, calculatedAtUtc, persisted
 
         {calculatedAtUtc ? (
           <Typography variant="caption" color="text.secondary">
-            Calculado em {fDateTimePtBr(calculatedAtUtc)}
+            {t('workspace.energy.result.calculatedAt', { date: fDateTimeLocale(calculatedAtUtc) })}
           </Typography>
         ) : null}
       </Stack>

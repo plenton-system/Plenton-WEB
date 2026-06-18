@@ -1,4 +1,5 @@
 import { CONFIG } from 'src/config-global';
+import { useTranslation } from 'react-i18next';
 
 import { NoIndex } from 'src/components/seo';
 
@@ -7,9 +8,10 @@ import { PublicAnamnesisView } from 'src/sections/public-anamnesis/view/public-a
 // ----------------------------------------------------------------------
 
 export default function Page() {
+    const { t } = useTranslation();
     return (
         <>
-            <title>{`Anamnese - ${CONFIG.appName}`}</title>
+            <title>{`${t('pages.anamnesis')} - ${CONFIG.appName}`}</title>
             <NoIndex />
 
             <PublicAnamnesisView />

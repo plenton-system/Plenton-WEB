@@ -8,10 +8,12 @@ import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useTranslation } from 'react-i18next';
 
 import { useWorkspaceAnthropometricEvolution } from 'src/hooks/workspace/use-workspace-anthropometric-evolution';
 
-import { fDateTimePtBr } from 'src/utils/format-time';
+import { fNumber } from 'src/utils/format-number';
+import { fDateTimeLocale } from 'src/utils/format-time';
 
 import { Loading } from 'src/components/loading';
 import { Iconify } from 'src/components/iconify';
@@ -20,62 +22,54 @@ type Props = {
   patientId?: string;
 };
 
-const METRIC_LABELS: Record<string, string> = {
-  Weight: 'Peso',
-  Height: 'Altura',
-  BMI: 'IMC',
-  BodyFatPercentage: 'Gordura corporal',
-  LeanMass: 'Massa magra',
-  FatMass: 'Massa gorda',
-  AbdominalCircumference: 'Circunferência abdominal',
-  HipCircumference: 'Circunferência do quadril',
-  RightRelaxedArmCircumference: 'Braço direito relaxado',
-  LeftRelaxedArmCircumference: 'Braço esquerdo relaxado',
-  RightFlexedArmCircumference: 'Braço direito flexionado',
-  LeftFlexedArmCircumference: 'Braço esquerdo flexionado',
-  RightForearmCircumference: 'Antebraço direito',
-  LeftForearmCircumference: 'Antebraço esquerdo',
-  RightWristCircumference: 'Punho direito',
-  LeftWristCircumference: 'Punho esquerdo',
-  NeckCircumference: 'Pescoço',
-  ShoulderCircumference: 'Ombro',
-  ChestCircumference: 'Peitoral',
-  WaistCircumference: 'Cintura',
-  RightCalfCircumference: 'Panturrilha direita',
-  LeftCalfCircumference: 'Panturrilha esquerda',
-  RightThighCircumference: 'Coxa direita',
-  LeftThighCircumference: 'Coxa esquerda',
-  RightProximalThighCircumference: 'Coxa proximal direita',
-  LeftProximalThighCircumference: 'Coxa proximal esquerda',
-};
+const METRIC_LABELS = {
+  Weight: 'workspace.evolution.metrics.weight',
+  Height: 'workspace.evolution.metrics.height',
+  BMI: 'workspace.evolution.metrics.bmi',
+  BodyFatPercentage: 'workspace.evolution.metrics.bodyFat',
+  LeanMass: 'workspace.evolution.metrics.leanMass',
+  FatMass: 'workspace.evolution.metrics.fatMass',
+  AbdominalCircumference: 'workspace.evolution.metrics.abdominal',
+  HipCircumference: 'workspace.evolution.metrics.hip',
+  RightRelaxedArmCircumference: 'workspace.evolution.metrics.rightRelaxedArm',
+  LeftRelaxedArmCircumference: 'workspace.evolution.metrics.leftRelaxedArm',
+  RightFlexedArmCircumference: 'workspace.evolution.metrics.rightFlexedArm',
+  LeftFlexedArmCircumference: 'workspace.evolution.metrics.leftFlexedArm',
+  RightForearmCircumference: 'workspace.evolution.metrics.rightForearm',
+  LeftForearmCircumference: 'workspace.evolution.metrics.leftForearm',
+  RightWristCircumference: 'workspace.evolution.metrics.rightWrist',
+  LeftWristCircumference: 'workspace.evolution.metrics.leftWrist',
+  NeckCircumference: 'workspace.evolution.metrics.neck',
+  ShoulderCircumference: 'workspace.evolution.metrics.shoulder',
+  ChestCircumference: 'workspace.evolution.metrics.chest',
+  WaistCircumference: 'workspace.evolution.metrics.waist',
+  RightCalfCircumference: 'workspace.evolution.metrics.rightCalf',
+  LeftCalfCircumference: 'workspace.evolution.metrics.leftCalf',
+  RightThighCircumference: 'workspace.evolution.metrics.rightThigh',
+  LeftThighCircumference: 'workspace.evolution.metrics.leftThigh',
+  RightProximalThighCircumference: 'workspace.evolution.metrics.rightProximalThigh',
+  LeftProximalThighCircumference: 'workspace.evolution.metrics.leftProximalThigh',
+} as const;
 
 const SUMMARY_FIELDS = [
-  { key: 'weightDelta', label: 'Peso', unit: 'kg' },
-  { key: 'bmiDelta', label: 'IMC', unit: '' },
-  { key: 'bodyFatPercentageDelta', label: 'Gordura corporal', unit: '%' },
-  { key: 'leanMassDelta', label: 'Massa magra', unit: 'kg' },
-  { key: 'fatMassDelta', label: 'Massa gorda', unit: 'kg' },
-  { key: 'waistCircumferenceDelta', label: 'Cintura', unit: 'cm' },
+  { key: 'weightDelta', labelKey: 'workspace.evolution.metrics.weight', unit: 'kg' },
+  { key: 'bmiDelta', labelKey: 'workspace.evolution.metrics.bmi', unit: '' },
+  { key: 'bodyFatPercentageDelta', labelKey: 'workspace.evolution.metrics.bodyFat', unit: '%' },
+  { key: 'leanMassDelta', labelKey: 'workspace.evolution.metrics.leanMass', unit: 'kg' },
+  { key: 'fatMassDelta', labelKey: 'workspace.evolution.metrics.fatMass', unit: 'kg' },
+  { key: 'waistCircumferenceDelta', labelKey: 'workspace.evolution.metrics.waist', unit: 'cm' },
 ] as const;
 
 const formatMetricValue = (value?: number | null, unit?: string | null, decimals = 1) => {
   if (typeof value !== 'number' || !Number.isFinite(value)) return '-';
-  return `${value.toFixed(decimals)}${unit ? ` ${unit}` : ''}`;
+  return `${fNumber(value, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}${unit ? ` ${unit}` : ''}`;
 };
 
 const formatDelta = (value?: number | null, unit?: string | null) => {
   if (typeof value !== 'number' || !Number.isFinite(value)) return '-';
   const prefix = value > 0 ? '+' : '';
-  return `${prefix}${value.toFixed(1)}${unit ? ` ${unit}` : ''}`;
+  return `${prefix}${fNumber(value, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}${unit ? ` ${unit}` : ''}`;
 };
-
-const directionChip = (direction?: 'up' | 'down' | 'stable' | null) => {
-  if (direction === 'up') return { label: 'Alta', color: 'warning' as const };
-  if (direction === 'down') return { label: 'Queda', color: 'success' as const };
-  return { label: 'Estável', color: 'default' as const };
-};
-
-const getMetricLabel = (metric: string) => METRIC_LABELS[metric] ?? metric;
 
 const getMetricUnit = (metric: string) => {
   if (metric === 'Weight' || metric === 'LeanMass' || metric === 'FatMass') return 'kg';
@@ -91,6 +85,7 @@ const getDeltaDirection = (value?: number | null) => {
 };
 
 export function WorkspaceEvolutionTab({ patientId }: Props) {
+  const { t } = useTranslation();
   const {
     options,
     selectedEvaluationIds,
@@ -106,15 +101,23 @@ export function WorkspaceEvolutionTab({ patientId }: Props) {
   } = useWorkspaceAnthropometricEvolution(patientId);
 
   const selectedOptions = options.filter((option) => selectedEvaluationIds.includes(option.evaluationId));
+  const getMetricLabel = (metric: string) => {
+    const key = METRIC_LABELS[metric as keyof typeof METRIC_LABELS];
+    return key ? t(key) : metric;
+  };
+  const directionChip = (direction?: 'up' | 'down' | 'stable' | null) => {
+    if (direction === 'up') return { label: t('workspace.evolution.direction.up'), color: 'warning' as const };
+    if (direction === 'down') return { label: t('workspace.evolution.direction.down'), color: 'success' as const };
+    return { label: t('workspace.evolution.direction.stable'), color: 'default' as const };
+  };
 
   return (
     <Card variant="outlined" sx={{ p: 2 }}>
       <Stack spacing={3}>
         <Stack spacing={1}>
-          <Typography variant="h6">Evolução</Typography>
+          <Typography variant="h6">{t('workspace.evolution.title')}</Typography>
           <Typography variant="body2" color="text.secondary">
-            Compare duas ou mais avaliações antropométricas para visualizar o período, o resumo e as tendências
-            retornadas pela evolução.
+            {t('workspace.evolution.description')}
           </Typography>
         </Stack>
 
@@ -128,12 +131,12 @@ export function WorkspaceEvolutionTab({ patientId }: Props) {
             onChange={(_event, value) => setSelectedEvaluationIds(value.map((item) => item.evaluationId))}
             isOptionEqualToValue={(option, value) => option.evaluationId === value.evaluationId}
             getOptionLabel={(option) => option.label}
-            noOptionsText={patientId ? 'Nenhuma avaliação disponível.' : 'Selecione um paciente.'}
+            noOptionsText={patientId ? t('workspace.evolution.noOptions') : t('workspace.evolution.selectPatient')}
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Avaliações antropométricas"
-                placeholder="Selecione duas ou mais avaliações"
+                label={t('workspace.evolution.evaluations')}
+                placeholder={t('workspace.evolution.placeholder')}
               />
             )}
           />
@@ -145,18 +148,18 @@ export function WorkspaceEvolutionTab({ patientId }: Props) {
               disabled={!patientId || loadingOptions || loadingEvolution}
               startIcon={loadingEvolution ? undefined : <Iconify icon="solar:restart-bold" />}
             >
-              {loadingEvolution ? 'Buscando evolução...' : 'Buscar evolução'}
+              {loadingEvolution ? t('workspace.evolution.searching') : t('workspace.evolution.search')}
             </Button>
 
             <Typography variant="body2" color="text.secondary">
               {selectedEvaluationIds.length === 0
-                ? 'Nenhuma avaliação selecionada.'
-                : `${selectedEvaluationIds.length} avaliação(ões) selecionada(s).`}
+                ? t('workspace.evolution.noneSelected')
+                : t('workspace.evolution.selected', { count: selectedEvaluationIds.length })}
             </Typography>
           </Stack>
 
           {optionsError ? (
-            <Alert severity="error" action={<Button color="inherit" size="small" onClick={refetchOptions}>Tentar novamente</Button>}>
+            <Alert severity="error" action={<Button color="inherit" size="small" onClick={refetchOptions}>{t('shared.retry')}</Button>}>
               {optionsError}
             </Alert>
           ) : null}
@@ -166,26 +169,29 @@ export function WorkspaceEvolutionTab({ patientId }: Props) {
           {evolutionError ? <Alert severity="error">{evolutionError}</Alert> : null}
         </Stack>
 
-        {loadingEvolution ? <Loading inline message="Buscando evolução antropométrica..." /> : null}
+        {loadingEvolution ? <Loading inline message={t('workspace.evolution.loading')} /> : null}
 
         {!loadingEvolution && result ? (
           <Stack spacing={3}>
             <Divider />
 
             <Stack spacing={1}>
-              <Typography variant="subtitle1">Período comparado</Typography>
+              <Typography variant="subtitle1">{t('workspace.evolution.period')}</Typography>
               <Typography variant="body2" color="text.secondary">
-                {fDateTimePtBr(result.periodStartUtc)} até {fDateTimePtBr(result.periodEndUtc)}
+                {t('workspace.evolution.periodDates', {
+                  start: fDateTimeLocale(result.periodStartUtc),
+                  end: fDateTimeLocale(result.periodEndUtc),
+                })}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Total de avaliações: {result.totalEvaluations}
+                {t('workspace.evolution.total', { count: result.totalEvaluations })}
               </Typography>
             </Stack>
 
             {result.summary ? (
               <Card variant="outlined" sx={{ p: 2, bgcolor: 'background.neutral' }}>
                 <Stack spacing={1.5}>
-                  <Typography variant="subtitle2">Resumo</Typography>
+                  <Typography variant="subtitle2">{t('workspace.evolution.summary')}</Typography>
 
                   <Box
                     sx={{
@@ -197,7 +203,7 @@ export function WorkspaceEvolutionTab({ patientId }: Props) {
                     {SUMMARY_FIELDS.map((field) => (
                       <MetricBlock
                         key={field.key}
-                        label={field.label}
+                        label={t(field.labelKey)}
                         value={formatDelta(result.summary?.[field.key], field.unit)}
                       />
                     ))}
@@ -205,11 +211,11 @@ export function WorkspaceEvolutionTab({ patientId }: Props) {
                 </Stack>
               </Card>
             ) : (
-              <Alert severity="info">O resumo desta comparação não foi disponibilizado pelo retorno atual.</Alert>
+              <Alert severity="info">{t('workspace.evolution.summaryUnavailable')}</Alert>
             )}
 
             <Stack spacing={2}>
-              <Typography variant="subtitle1">Tendências das medições</Typography>
+              <Typography variant="subtitle1">{t('workspace.evolution.trends')}</Typography>
 
               {result.trends.map((trend) => {
                 const chip = directionChip(getDeltaDirection(trend.delta));
@@ -236,15 +242,15 @@ export function WorkspaceEvolutionTab({ patientId }: Props) {
                           gridTemplateColumns: { xs: '1fr', md: 'repeat(3, minmax(0, 1fr))' },
                         }}
                       >
-                        <MetricBlock label="Valor inicial" value={formatMetricValue(trend.initialValue, unit)} />
-                        <MetricBlock label="Valor final" value={formatMetricValue(trend.finalValue, unit)} />
-                        <MetricBlock label="Variação" value={formatDelta(trend.delta, unit)} />
+                        <MetricBlock label={t('workspace.evolution.initialValue')} value={formatMetricValue(trend.initialValue, unit)} />
+                        <MetricBlock label={t('workspace.evolution.finalValue')} value={formatMetricValue(trend.finalValue, unit)} />
+                        <MetricBlock label={t('workspace.evolution.variation')} value={formatDelta(trend.delta, unit)} />
                       </Box>
 
                       {metricPoints.length ? (
                         <Stack spacing={1}>
                           <Typography variant="body2" color="text.secondary">
-                            Pontos avaliados
+                            {t('workspace.evolution.points')}
                           </Typography>
                           {metricPoints.map((point) => (
                             <Typography
@@ -252,7 +258,7 @@ export function WorkspaceEvolutionTab({ patientId }: Props) {
                               variant="caption"
                               color="text.secondary"
                             >
-                              {fDateTimePtBr(point.evaluationDateUtc)}: {formatMetricValue(point.value, unit)}
+                              {fDateTimeLocale(point.evaluationDateUtc)}: {formatMetricValue(point.value, unit)}
                             </Typography>
                           ))}
                         </Stack>

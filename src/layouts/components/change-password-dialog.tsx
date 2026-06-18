@@ -2,6 +2,8 @@ import type { ChangePasswordDto } from 'src/types';
 
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
@@ -29,16 +31,6 @@ type ChangePasswordDialogProps = {
   onSubmit: (values: ChangePasswordFormValues) => Promise<boolean>;
 };
 
-const ChangePasswordSchema = Yup.object({
-  currentPassword: Yup.string().required('Informe a senha atual'),
-  newPassword: Yup.string()
-    .min(6, 'A nova senha deve ter ao menos 6 caracteres')
-    .required('Informe a nova senha'),
-  confirmNewPassword: Yup.string()
-    .oneOf([Yup.ref('newPassword')], 'As senhas precisam ser iguais')
-    .required('Confirme a nova senha'),
-});
-
 export function ChangePasswordDialog({
   open,
   loading,
@@ -46,7 +38,21 @@ export function ChangePasswordDialog({
   onClose,
   onSubmit,
 }: ChangePasswordDialogProps) {
-  
+  const { t } = useTranslation();
+  const validationSchema = useMemo(
+    () =>
+      Yup.object({
+        currentPassword: Yup.string().required(t('profile.password.currentRequired')),
+        newPassword: Yup.string()
+          .min(6, t('profile.password.newMin'))
+          .required(t('profile.password.newRequired')),
+        confirmNewPassword: Yup.string()
+          .oneOf([Yup.ref('newPassword')], t('profile.password.match'))
+          .required(t('profile.password.confirmRequired')),
+      }),
+    [t]
+  );
+
   const formik = useFormik<ChangePasswordFormValues>({
     initialValues: {
       currentPassword: '',
@@ -54,7 +60,7 @@ export function ChangePasswordDialog({
       confirmNewPassword: '',
     },
     enableReinitialize: false,
-    validationSchema: ChangePasswordSchema,
+    validationSchema,
     onSubmit: async (values, helpers) => {
       const ok = await onSubmit(values);
       if (ok) helpers.resetForm();
@@ -64,7 +70,7 @@ export function ChangePasswordDialog({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle>Alterar senha</DialogTitle>
+      <DialogTitle>{t('profile.password.title')}</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 1 }}>
@@ -72,7 +78,7 @@ export function ChangePasswordDialog({
 
             <TextField
               type="password"
-              label="Senha atual"
+              label={t('profile.password.current')}
               name="currentPassword"
               value={formik.values.currentPassword}
               onChange={formik.handleChange}
@@ -83,7 +89,7 @@ export function ChangePasswordDialog({
 
             <TextField
               type="password"
-              label="Nova senha"
+              label={t('profile.password.new')}
               name="newPassword"
               value={formik.values.newPassword}
               onChange={formik.handleChange}
@@ -94,7 +100,7 @@ export function ChangePasswordDialog({
 
             <TextField
               type="password"
-              label="Confirmar nova senha"
+              label={t('profile.password.confirm')}
               name="confirmNewPassword"
               value={formik.values.confirmNewPassword}
               onChange={formik.handleChange}
@@ -107,14 +113,14 @@ export function ChangePasswordDialog({
 
         <DialogActions sx={{ px: 3, pb: 2 }}>
           <Button onClick={onClose} color="inherit" disabled={loading || formik.isSubmitting}>
-            Cancelar
+            {t('actions.cancel')}
           </Button>
           <Button
             onClick={() => void formik.submitForm()}
             variant="contained"
             disabled={loading || formik.isSubmitting}
           >
-            Salvar
+            {t('actions.save')}
           </Button>
         </DialogActions>
       </form>

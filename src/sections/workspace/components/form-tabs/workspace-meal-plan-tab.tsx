@@ -6,6 +6,7 @@ import type {
 } from 'src/sections/mealPlan/types/meal-plan-list';
 
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Chip from '@mui/material/Chip';
 import Alert from '@mui/material/Alert';
@@ -55,6 +56,7 @@ const toDrawerModelFromListItem = (item: MealPlanListItemVM): MealPlanDrawerMode
 });
 
 export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
+  const { t } = useTranslation();
   const { items: workspaceItems, loading, error: listError, refetch } = useWorkspacePlans(patientId);
 
   const [selected, setSelected] = useState<MealPlanDrawerModel | null>(null);
@@ -93,7 +95,7 @@ export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
       });
       setDrawerOpen(true);
     } catch (error: unknown) {
-      setDetailError(extractApiErrorMessage(error, 'Não foi possível carregar o plano para edição.'));
+      setDetailError(extractApiErrorMessage(error, t('workspace.mealPlan.loadError')));
     } finally {
       setDetailLoading(false);
     }
@@ -115,7 +117,7 @@ export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
 
       return true;
     } catch (error: unknown) {
-      setSubmitError(extractApiErrorMessage(error, 'Não foi possível salvar o plano alimentar.'));
+      setSubmitError(extractApiErrorMessage(error, t('workspace.mealPlan.saveError')));
       return false;
     } finally {
       setSubmitLoading(false);
@@ -131,7 +133,7 @@ export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
       )}
 
       <MealPlanListCard
-        title="Planos alimentares"
+        title={t('workspace.mealPlan.title')}
         items={listItems}
         loading={loading}
         sortState={sortState}

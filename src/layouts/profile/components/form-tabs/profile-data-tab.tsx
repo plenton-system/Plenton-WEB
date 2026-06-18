@@ -1,6 +1,7 @@
 import type { FormikProps } from 'formik';
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 import Button from '@mui/material/Button';
@@ -20,6 +21,7 @@ type EditableField = 'email' | 'document';
 // ----------------------------------------------------------------------
 
 export default function ProfileDataTab({ formik }: Props) {
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState<Record<EditableField, boolean>>({
     email: false,
     document: false,
@@ -38,14 +40,14 @@ export default function ProfileDataTab({ formik }: Props) {
       <Stack direction="row" spacing={2} alignItems="center" mb={3} sx={{ flex: 1 }}>
         <Avatar src={formik.values.photo} alt={formik.values.name} sx={{ width: 80, height: 80, mr: 2 }} />
         <Button component="label" variant="outlined">
-          Adicionar Foto
+          {t('profile.photo')}
           <input type="file" accept="image/*" hidden />
         </Button>
       </Stack>
       {/*Nome completo*/}
       <TextField
         name="name"
-        label="Nome Completo"
+        label={t('profile.fields.name')}
         value={formik.values.name}
         onChange={formik.handleChange}
         error={formik.touched.name && Boolean(formik.errors.name)}
@@ -57,7 +59,7 @@ export default function ProfileDataTab({ formik }: Props) {
         {/*E-mail*/}
         <TextField
           name="email"
-          label="E-mail"
+          label={t('profile.fields.email')}
           disabled={!isEditing.email}
           value={formik.values.email}
           onChange={formik.handleChange}
@@ -94,7 +96,7 @@ export default function ProfileDataTab({ formik }: Props) {
         {/*documento*/}
         <TextField
           name="document"
-          label="CPF"
+          label={t('profile.fields.document')}
           disabled={!isEditing.document}
           value={formik.values.document}
           onChange={(e) => formik.setFieldValue('document', maskCpfCnpjLive(e.target.value))}
@@ -129,7 +131,7 @@ export default function ProfileDataTab({ formik }: Props) {
         {/*Celular*/}
         <TextField
           name="phone"
-          label="Telefone"
+          label={t('profile.fields.phone')}
           value={formik.values.phone}
           onChange={(e) => formik.setFieldValue('phone', maskPhoneNumber(e.target.value))}
           error={formik.touched.phone && Boolean(formik.errors.phone)}

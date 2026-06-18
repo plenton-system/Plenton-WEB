@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -28,12 +29,13 @@ type Props = {
 };
 
 export function LegalDocument({ lastUpdated, disclaimer, intro, sections }: Props) {
+  const { t } = useTranslation();
   const theme = useTheme();
 
   return (
     <Stack spacing={4}>
       <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-        Última atualização: {lastUpdated}
+        {t('institutional.common.lastUpdated', { date: lastUpdated })}
       </Typography>
 
       {disclaimer && (
@@ -50,7 +52,7 @@ export function LegalDocument({ lastUpdated, disclaimer, intro, sections }: Prop
 
       <Box
         component="nav"
-        aria-label="Sumário do documento"
+        aria-label={t('institutional.common.summaryLabel')}
         sx={{
           p: 3,
           borderRadius: 2,
@@ -59,7 +61,7 @@ export function LegalDocument({ lastUpdated, disclaimer, intro, sections }: Prop
         }}
       >
         <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1.5 }}>
-          Conteúdo
+          {t('institutional.common.content')}
         </Typography>
         <Stack component="ol" spacing={1} sx={{ m: 0, pl: 2.5 }}>
           {sections.map((section) => (

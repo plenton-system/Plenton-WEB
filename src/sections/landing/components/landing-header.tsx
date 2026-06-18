@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -21,20 +22,20 @@ import { Logo } from 'src/components/logo';
 
 // ----------------------------------------------------------------------
 
-const NAV_LINKS = [
-  { label: 'Funcionalidades', href: '#funcionalidades' },
-  { label: 'Como funciona', href: '#como-funciona' },
-  { label: 'Planos', href: '#planos' },
-  { label: 'FAQ', href: '#faq' },
-];
-
 export function LandingHeader() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
   const pathname = usePathname();
   const { isAuthenticated } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const navLinks = [
+    { label: t('landing.nav.features'), href: '#funcionalidades' },
+    { label: t('landing.nav.howItWorks'), href: '#como-funciona' },
+    { label: t('landing.nav.plans'), href: '#planos' },
+    { label: t('landing.nav.faq'), href: '#faq' },
+  ];
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
@@ -68,7 +69,7 @@ export function LandingHeader() {
 
           {!isMobile && (
             <Stack direction="row" spacing={3} sx={{ flexGrow: 1 }}>
-              {NAV_LINKS.map((link) => (
+              {navLinks.map((link) => (
                 <Button
                   key={link.href}
                   onClick={() => scrollTo(link.href)}
@@ -92,20 +93,20 @@ export function LandingHeader() {
                 onClick={() => navigate(isAuthenticated ? '/dashboard' : '/sign-in')}
                 sx={{ textTransform: 'none' }}
               >
-                Entrar
+                {t('landing.nav.signIn')}
               </Button>
               <Button
                 variant="contained"
                 onClick={() => navigate('/sign-in?action=register')}
                 sx={{ textTransform: 'none', boxShadow: 'none' }}
               >
-                Experimente grátis
+                {t('landing.nav.tryFree')}
               </Button>
             </Stack>
           )}
 
           {isMobile && (
-            <IconButton onClick={() => setMobileOpen(true)} aria-label="Abrir menu">
+            <IconButton onClick={() => setMobileOpen(true)} aria-label={t('landing.nav.openMenu')}>
               <MenuRoundedIcon />
             </IconButton>
           )}
@@ -120,13 +121,13 @@ export function LandingHeader() {
       >
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
           <Logo />
-          <IconButton onClick={() => setMobileOpen(false)} aria-label="Fechar menu">
+          <IconButton onClick={() => setMobileOpen(false)} aria-label={t('landing.nav.closeMenu')}>
             <CloseRoundedIcon />
           </IconButton>
         </Stack>
 
         <Stack spacing={1}>
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <Button
               key={link.href}
               fullWidth
@@ -145,7 +146,7 @@ export function LandingHeader() {
             onClick={() => navigate(isAuthenticated ? '/dashboard' : '/sign-in')}
             sx={{ textTransform: 'none' }}
           >
-            Entrar
+            {t('landing.nav.signIn')}
           </Button>
           <Button
             variant="contained"
@@ -153,7 +154,7 @@ export function LandingHeader() {
             onClick={() => navigate('/sign-in?action=register')}
             sx={{ textTransform: 'none' }}
           >
-            Experimente grátis
+            {t('landing.nav.tryFree')}
           </Button>
         </Stack>
       </Drawer>

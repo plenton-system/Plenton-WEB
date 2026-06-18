@@ -1,14 +1,15 @@
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
 export const WORKSPACE_TABS = [
-  { id: 'mealPlan', label: 'Plano alimentar' },
-  { id: 'anthropometry', label: 'Antropometria' },
-  { id: 'anamnesis', label: 'Anamnese' },
-  { id: 'evolution', label: 'Evolução' },
-  { id: 'documents', label: 'Documentos' },
+  { id: 'mealPlan', labelKey: 'workspace.tabs.mealPlan' },
+  { id: 'anthropometry', labelKey: 'workspace.tabs.anthropometry' },
+  { id: 'anamnesis', labelKey: 'workspace.tabs.anamnesis' },
+  { id: 'evolution', labelKey: 'workspace.tabs.evolution' },
+  { id: 'documents', labelKey: 'workspace.tabs.documents' },
 ] as const;
 
 export type WorkspaceTabId = (typeof WORKSPACE_TABS)[number]['id'];
@@ -23,6 +24,7 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export function WorkspaceTabs({ value, onChange }: Props) {
+  const { t } = useTranslation();
   const currentIndex = WORKSPACE_TABS.findIndex((tab) => tab.id === value);
 
   return (
@@ -35,7 +37,7 @@ export function WorkspaceTabs({ value, onChange }: Props) {
       sx={{ px: 1 }}
     >
       {WORKSPACE_TABS.map((tab) => (
-        <Tab key={tab.id} label={tab.label} />
+        <Tab key={tab.id} label={t(tab.labelKey)} />
       ))}
     </Tabs>
   );

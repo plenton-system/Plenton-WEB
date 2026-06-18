@@ -1,4 +1,5 @@
 import { WorkspaceGenericListTab } from './workspace-generic-list-tab';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -9,11 +10,13 @@ type Props = {
 // ----------------------------------------------------------------------
 
 export function WorkspaceDocumentsTab({ items }: Props) {
+  const { t } = useTranslation();
+
   return (
     <WorkspaceGenericListTab
-      title="Documentos e envios"
+      title={t('workspace.documents.title')}
       items={items}
-      placeholder="Sem documentos ou envios."
+      placeholder={t('workspace.documents.empty')}
     />
   );
 }

@@ -7,6 +7,7 @@ import { useRef, useMemo, useState, useEffect, useCallback, createContext } from
 import { useAuth } from 'src/hooks/common/use-auth';
 
 import { notificationService } from 'src/services';
+import i18n from 'src/i18n';
 import { createNotificationHubConnection } from 'src/services/notifications/notificationHub';
 
 type NotificationsContextType = {
@@ -28,8 +29,8 @@ const mergeNotification = (items: Notification[], incoming: Notification) => [
   ...items.filter((item) => item.id !== incoming.id),
 ].slice(0, PAGE_SIZE);
 
-const getErrorMessage = (error: unknown) =>
-  error instanceof Error ? error.message : 'Nao foi possivel carregar as notificacoes.';
+const getErrorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : i18n.t('notifications.loadError');
 
 export function NotificationsProvider({ children }: { children: ReactNode }) {
   const { isAuthenticated, loading: authLoading } = useAuth();

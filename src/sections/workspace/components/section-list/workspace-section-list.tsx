@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +21,7 @@ type WorkspaceSectionListProps = {
 // ----------------------------------------------------------------------
 
 export function WorkspaceSectionList({ title, items, actionLabel, onAction }: WorkspaceSectionListProps) {
+    const { t } = useTranslation();
     return (
         <Card variant="outlined" sx={{ p: 2 }}>
             <Stack spacing={2}>
@@ -40,7 +42,7 @@ export function WorkspaceSectionList({ title, items, actionLabel, onAction }: Wo
                     ))}
                     {items.length === 0 && (
                         <Typography variant="body2" color="text.secondary">
-                            Nenhum item disponível.
+                            {t('workspace.generic.empty')}
                         </Typography>
                     )}
                 </List>

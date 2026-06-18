@@ -1,6 +1,8 @@
 import type { PatientViewProps, PatientAnamnesisItem, PatientAnamnesisStatus } from 'src/types';
+import type { TFunction } from 'i18next';
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -19,6 +21,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import { useAnamnesisByPatient } from 'src/hooks/anamnesis/use-anamnesis-by-patient';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
+import { fDateTimeLocale } from 'src/utils/format-time';
 
 import { patientService } from 'src/services/patient/patientService';
 
@@ -36,10 +39,10 @@ type Props = {
 
 type NotifyState = { open: boolean; kind: 'success' | 'error'; message: string };
 
-const STATUS_LABEL: Record<PatientAnamnesisStatus, string> = {
-    Sent: 'Enviada',
-    Submitted: 'Respondida',
-    Expired: 'Expirada',
+const STATUS_LABEL: Record<PatientAnamnesisStatus, 'workspace.anamnesis.status.sent' | 'workspace.anamnesis.status.submitted' | 'workspace.anamnesis.status.expired'> = {
+    Sent: 'workspace.anamnesis.status.sent',
+    Submitted: 'workspace.anamnesis.status.submitted',
+    Expired: 'workspace.anamnesis.status.expired',
 };
 
 const STATUS_COLOR: Record<PatientAnamnesisStatus, 'default' | 'success' | 'warning'> = {
@@ -50,29 +53,34 @@ const STATUS_COLOR: Record<PatientAnamnesisStatus, 'default' | 'success' | 'warn
 
 function formatDate(value?: string | null) {
     if (!value) return null;
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return null;
-    return date.toLocaleString();
+    return fDateTimeLocale(value) || null;
 }
 
-function buildSecondary(item: PatientAnamnesisItem) {
+function buildSecondary(item: PatientAnamnesisItem, t: TFunction) {
     if (item.status === 'Submitted') {
         const submitted = formatDate(item.submittedAtUtc);
-        return submitted ? `Respondida em ${submitted}` : 'Respondida';
+        return submitted
+            ? t('workspace.anamnesis.submittedAt', { date: submitted })
+            : t('workspace.anamnesis.status.submitted');
     }
     if (item.status === 'Expired') {
         const expired = formatDate(item.expiresAtUtc);
-        return expired ? `Expirou em ${expired}` : 'Expirou';
+        return expired
+            ? t('workspace.anamnesis.expiredAt', { date: expired })
+            : t('workspace.anamnesis.status.expired');
     }
     const sent = formatDate(item.createdAtUtc);
     const expiresAt = formatDate(item.expiresAtUtc);
-    const base = sent ? `Enviada em ${sent}` : 'Enviada';
-    return expiresAt ? `${base} · expira em ${expiresAt}` : base;
+    const base = sent
+        ? t('workspace.anamnesis.sentAt', { date: sent })
+        : t('workspace.anamnesis.status.sent');
+    return expiresAt ? t('workspace.anamnesis.expiresAt', { base, date: expiresAt }) : base;
 }
 
 // ----------------------------------------------------------------------
 
 export function WorkspaceAnamnesisTab({ patientId }: Props) {
+    const { t } = useTranslation();
     const [openSend, setOpenSend] = useState(false);
     const [openResponseId, setOpenResponseId] = useState<string | null>(null);
     const [patient, setPatient] = useState<PatientViewProps | null>(null);
@@ -100,7 +108,7 @@ export function WorkspaceAnamnesisTab({ patientId }: Props) {
                         open: true,
                         kind: 'error',
                         message:
-                            'Paciente sem e-mail/telefone cadastrados. Preencha manualmente para enviar.',
+                            t('workspace.anamnesis.patientMissingContact'),
                     });
                 }
             })
@@ -112,14 +120,14 @@ export function WorkspaceAnamnesisTab({ patientId }: Props) {
                     kind: 'error',
                     message: extractApiErrorMessage(
                         err,
-                        'Não foi possível carregar os dados do paciente (e-mail/telefone).'
+                        t('workspace.anamnesis.patientLoadError')
                     ),
                 });
             });
         return () => {
             cancelled = true;
         };
-    }, [patientId]);
+    }, [patientId, t]);
 
     const handleNotify = (evt: { kind: 'success' | 'error'; message: string }) =>
         setNotify({ open: true, kind: evt.kind, message: evt.message });
@@ -129,7 +137,7 @@ export function WorkspaceAnamnesisTab({ patientId }: Props) {
             <Card variant="outlined" sx={{ p: 2 }}>
                 <Stack spacing={2}>
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Typography variant="h6">Anamnese</Typography>
+                        <Typography variant="h6">{t('workspace.anamnesis.title')}</Typography>
                         <Button
                             variant="contained"
                             size="small"
@@ -137,11 +145,11 @@ export function WorkspaceAnamnesisTab({ patientId }: Props) {
                             onClick={() => setOpenSend(true)}
                             disabled={!patientId}
                         >
-                            Enviar
+                            {t('workspace.anamnesis.send')}
                         </Button>
                     </Stack>
 
-                    {loading && <Loading inline message="Carregando anamneses..." />}
+                    {loading && <Loading inline message={t('workspace.anamnesis.loading')} />}
 
                     {!loading && error && (
                         <MuiAlert severity="error" variant="outlined">
@@ -151,7 +159,7 @@ export function WorkspaceAnamnesisTab({ patientId }: Props) {
 
                     {!loading && !error && items.length === 0 && (
                         <Typography variant="body2" color="text.secondary">
-                            Nenhuma anamnese enviada ainda para este paciente.
+                            {t('workspace.anamnesis.empty')}
                         </Typography>
                     )}
 
@@ -161,7 +169,7 @@ export function WorkspaceAnamnesisTab({ patientId }: Props) {
                                 const clickable = item.status === 'Submitted';
                                 const chip = (
                                     <Chip
-                                        label={STATUS_LABEL[item.status]}
+                                        label={t(STATUS_LABEL[item.status])}
                                         color={STATUS_COLOR[item.status]}
                                         size="small"
                                         variant="outlined"
@@ -179,7 +187,7 @@ export function WorkspaceAnamnesisTab({ patientId }: Props) {
                                             >
                                                 <ListItemText
                                                     primary={item.title}
-                                                    secondary={buildSecondary(item)}
+                                                    secondary={buildSecondary(item, t)}
                                                 />
                                                 {chip}
                                             </ListItemButton>
@@ -187,7 +195,7 @@ export function WorkspaceAnamnesisTab({ patientId }: Props) {
                                             <ListItem disableGutters secondaryAction={chip}>
                                                 <ListItemText
                                                     primary={item.title}
-                                                    secondary={buildSecondary(item)}
+                                                    secondary={buildSecondary(item, t)}
                                                 />
                                             </ListItem>
                                         )}

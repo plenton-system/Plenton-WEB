@@ -5,6 +5,7 @@ import type {
 } from 'src/types';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -73,6 +74,7 @@ function sanitizePhoneForWhatsApp(value: string): string {
 // ----------------------------------------------------------------------
 
 export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify, onSent }: Props) {
+    const { t } = useTranslation();
     const [templates, setTemplates] = useState<AnamnesisListProps[]>([]);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
     const [form, setForm] = useState<FormState>({
@@ -110,7 +112,7 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
                 if (!cancelled) setTemplates(page?.items ?? []);
             })
             .catch(() => {
-                if (!cancelled) setError('Não foi possível carregar a lista de anamneses.');
+                if (!cancelled) setError(t('workspace.anamnesis.sendDialog.loadError'));
             })
             .finally(() => {
                 if (!cancelled) setLoadingTemplates(false);
@@ -119,7 +121,7 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
         return () => {
             cancelled = true;
         };
-    }, [open]);
+    }, [open, t]);
 
     const handleChange =
         (field: keyof FormState) =>
@@ -128,10 +130,10 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
             };
 
     const validateBase = (channel: Channel): string | null => {
-        if (!form.anamnesisId) return 'Selecione qual anamnese enviar.';
-        if (channel === 'email' && !form.email.trim()) return 'Informe o e-mail do paciente.';
+        if (!form.anamnesisId) return t('workspace.anamnesis.sendDialog.selectRequired');
+        if (channel === 'email' && !form.email.trim()) return t('workspace.anamnesis.sendDialog.emailRequired');
         if (channel === 'whatsapp' && !form.phone.trim())
-            return 'Informe o telefone do paciente para enviar pelo WhatsApp.';
+            return t('workspace.anamnesis.sendDialog.phoneRequired');
         return null;
     };
 
@@ -160,13 +162,13 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
                 onSent?.();
                 return result;
             } catch (e: any) {
-                const message = extractApiErrorMessage(e, 'Falha ao gerar o link público.');
+                const message = extractApiErrorMessage(e, t('workspace.anamnesis.sendDialog.linkError'));
                 setError(message);
                 onNotify?.({ kind: 'error', message });
                 return null;
             }
         },
-        [lastLink, form.anamnesisId, form.email, form.phone, form.expiresAtLocal, patient.id, patient.name, patient.email, patient.phone, onNotify, onSent]
+        [lastLink, form.anamnesisId, form.email, form.phone, form.expiresAtLocal, patient.id, patient.name, patient.email, patient.phone, onNotify, onSent, t]
     );
 
     const handleCopy = async () => {
@@ -183,9 +185,9 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
             if (!link) return;
 
             await navigator.clipboard.writeText(link.url);
-            onNotify?.({ kind: 'success', message: 'Link copiado para a área de transferência.' });
+            onNotify?.({ kind: 'success', message: t('workspace.anamnesis.sendDialog.copied') });
         } catch {
-            onNotify?.({ kind: 'error', message: 'Não foi possível acessar a área de transferência.' });
+            onNotify?.({ kind: 'error', message: t('workspace.anamnesis.sendDialog.clipboardError') });
         } finally {
             setSubmittingChannel(null);
         }
@@ -205,14 +207,17 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
             if (!link) return;
 
             const phone = sanitizePhoneForWhatsApp(form.phone);
-            const greetingName = patient.name?.trim();
-            const intro = greetingName ? `Olá ${greetingName}!` : 'Olá!';
             const text = encodeURIComponent(
-                `${intro} Aqui está o link da sua anamnese: ${link.url}`
+                patient.name?.trim()
+                    ? t('workspace.anamnesis.sendDialog.whatsappGreeting', {
+                        name: patient.name.trim(),
+                        link: link.url,
+                    })
+                    : t('workspace.anamnesis.sendDialog.whatsappGreetingGeneric', { link: link.url })
             );
             const url = `https://wa.me/${phone}?text=${text}`;
             window.open(url, '_blank', 'noopener,noreferrer');
-            onNotify?.({ kind: 'success', message: 'WhatsApp aberto com o link.' });
+            onNotify?.({ kind: 'success', message: t('workspace.anamnesis.sendDialog.whatsappOpened') });
         } finally {
             setSubmittingChannel(null);
         }
@@ -245,15 +250,18 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
             onSent?.();
 
             if (result.emailSent) {
-                onNotify?.({ kind: 'success', message: `E-mail enviado para ${dto.email}.` });
+                onNotify?.({
+                    kind: 'success',
+                    message: t('workspace.anamnesis.sendDialog.emailSent', { email: dto.email }),
+                });
             } else {
                 onNotify?.({
                     kind: 'error',
-                    message: 'Link gerado, mas falhou ao enviar o e-mail. Use Copiar ou WhatsApp.',
+                    message: t('workspace.anamnesis.sendDialog.emailPartialError'),
                 });
             }
         } catch (e: any) {
-            const message = extractApiErrorMessage(e, 'Falha ao enviar o e-mail.');
+            const message = extractApiErrorMessage(e, t('workspace.anamnesis.sendDialog.emailError'));
             setError(message);
             onNotify?.({ kind: 'error', message });
         } finally {
@@ -273,9 +281,9 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
                     pr: 1,
                 }}
             >
-                <span>Enviar anamnese para o paciente</span>
+                <span>{t('workspace.anamnesis.sendDialog.title')}</span>
                 <IconButton
-                    aria-label="Fechar"
+                    aria-label={t('actions.close')}
                     onClick={onClose}
                     disabled={closing}
                     size="small"
@@ -288,65 +296,65 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
                 <Stack spacing={2}>
                     {patient.name && (
                         <Typography variant="body2" color="text.secondary">
-                            Paciente: <strong>{patient.name}</strong>
+                            {t('workspace.anamnesis.sendDialog.patient', { name: patient.name })}
                         </Typography>
                     )}
 
                     <TextField
                         select
-                        label="Questionário"
+                        label={t('workspace.anamnesis.sendDialog.questionnaire')}
                         value={form.anamnesisId}
                         onChange={handleChange('anamnesisId')}
                         fullWidth
                         disabled={loadingTemplates || closing}
-                        helperText={loadingTemplates ? 'Carregando questionários...' : undefined}
+                        helperText={loadingTemplates ? t('workspace.anamnesis.sendDialog.loadingQuestionnaires') : undefined}
                     >
                         {templates.length === 0 && !loadingTemplates && (
                             <MenuItem value="" disabled>
-                                Nenhum questionário disponível
+                                {t('workspace.anamnesis.sendDialog.emptyQuestionnaires')}
                             </MenuItem>
                         )}
-                        {templates.map((t) => (
-                            <MenuItem key={t.id} value={t.id}>
-                                {t.title}
+                        {templates.map((template) => (
+                            <MenuItem key={template.id} value={template.id}>
+                                {template.title}
                             </MenuItem>
                         ))}
                     </TextField>
 
                     <TextField
-                        label="E-mail do paciente"
+                        label={t('workspace.anamnesis.sendDialog.email')}
                         type="email"
                         value={form.email}
                         onChange={handleChange('email')}
                         fullWidth
                         disabled={closing}
-                        helperText="Obrigatório apenas para envio por e-mail."
+                        helperText={t('workspace.anamnesis.sendDialog.emailHint')}
                     />
 
                     <TextField
-                        label="Telefone do paciente"
+                        label={t('workspace.anamnesis.sendDialog.phone')}
                         value={form.phone}
                         onChange={handleChange('phone')}
                         fullWidth
                         disabled={closing}
-                        helperText="Obrigatório apenas para envio por WhatsApp."
+                        helperText={t('workspace.anamnesis.sendDialog.phoneHint')}
                     />
 
                     <TextField
-                        label="Expira em"
+                        label={t('workspace.anamnesis.sendDialog.expiresAt')}
                         type="datetime-local"
                         value={form.expiresAtLocal}
                         onChange={handleChange('expiresAtLocal')}
                         fullWidth
                         disabled={closing}
                         slotProps={{ inputLabel: { shrink: true } }}
-                        helperText="Deixe em branco para não expirar."
+                        helperText={t('workspace.anamnesis.sendDialog.expiresHint')}
                     />
 
                     {lastLink && (
                         <Alert severity="info">
                             <Typography variant="body2" sx={{ wordBreak: 'break-all' }}>
-                                Link gerado: {lastLink}
+                                {t('workspace.anamnesis.sendDialog.generatedLink', { link: lastLink })}
                             </Typography>
                         </Alert>
                     )}
@@ -355,12 +363,12 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
 
                     <Box sx={{ pt: 1 }}>
                         <Typography variant="caption" color="text.secondary">
-                            Escolha um canal de envio:
+                            {t('workspace.anamnesis.sendDialog.chooseChannel')}
                         </Typography>
                     </Box>
 
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-                        <Tooltip title="Gerar link e copiar para a área de transferência">
+                        <Tooltip title={t('workspace.anamnesis.sendDialog.copyTooltip')}>
                             <Button
                                 fullWidth
                                 variant="outlined"
@@ -374,11 +382,11 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
                                     )
                                 }
                             >
-                                Copiar link
+                                {t('workspace.anamnesis.sendDialog.copy')}
                             </Button>
                         </Tooltip>
 
-                        <Tooltip title="Gerar link e abrir conversa do WhatsApp">
+                        <Tooltip title={t('workspace.anamnesis.sendDialog.whatsappTooltip')}>
                             <Button
                                 fullWidth
                                 variant="outlined"
@@ -396,7 +404,7 @@ export function WorkspaceSendAnamnesisDialog({ open, onClose, patient, onNotify,
                             </Button>
                         </Tooltip>
 
-                        <Tooltip title="Gerar link e enviar por e-mail">
+                        <Tooltip title={t('workspace.anamnesis.sendDialog.emailTooltip')}>
                             <Button
                                 fullWidth
                                 variant="contained"

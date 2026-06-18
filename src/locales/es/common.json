@@ -34,7 +34,8 @@
     "unread_other": "{{count}} no leídas",
     "markAll": "Marcar todas como leídas",
     "recent": "Recientes",
-    "empty": "No hay notificaciones"
+    "empty": "No hay notificaciones",
+    "loadError": "No se pudieron cargar las notificaciones."
   },
   "calendar": {
     "today": "Hoy",
@@ -388,5 +389,820 @@
       "max": "Máximo: {{max}}",
       "minOne": "Seleccione al menos 1 opción"
     }
+  },
+  "shared": {
+    "retry": "Intentar de nuevo",
+    "search": "Buscar...",
+    "searchAction": "Buscar",
+    "selected_one": "{{count}} seleccionado",
+    "selected_other": "{{count}} seleccionados",
+    "deleteSelected": "Eliminar seleccionados",
+    "filterList": "Filtrar lista",
+    "notFound": "No encontrado",
+    "noSearchResults": "No se encontraron resultados para \"{{query}}\".",
+    "searchHint": "Revise si hay errores de escritura o utilice palabras completas.",
+    "confirmAction": "Confirmar acción",
+    "irreversibleAction": "Esta acción no se puede deshacer.",
+    "help": "¿Necesita ayuda?",
+    "invalidDate": "Fecha inválida",
+    "loadingMessages": {
+      "plan": "Cargando su plan...",
+      "nutrients": "Calculando nutrientes...",
+      "form": "Preparando el formulario...",
+      "almost": "Casi listo..."
+    },
+    "macros": {
+      "protein": "Proteínas",
+      "carbs": "Carbohidratos",
+      "fat": "Grasas"
+    }
+  },
+  "profile": {
+    "menu": {
+      "profile": "Perfil",
+      "settings": "Configuración",
+      "signOut": "Salir"
+    },
+    "tabs": {
+      "data": "Mis datos",
+      "subscription": "Mi suscripción",
+      "personal": "Datos",
+      "address": "Dirección"
+    },
+    "photo": "Agregar foto",
+    "fields": {
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "document": "Documento",
+      "phone": "Teléfono",
+      "zipCode": "Código postal",
+      "street": "Calle/Avenida",
+      "number": "Número",
+      "city": "Ciudad",
+      "neighborhood": "Barrio",
+      "state": "Estado"
+    },
+    "validation": {
+      "street": "Indique la calle o avenida.",
+      "number": "Indique el número de la dirección.",
+      "neighborhood": "Indique el barrio.",
+      "city": "Indique la ciudad.",
+      "state": "Indique el estado.",
+      "zipCode": "Indique el código postal."
+    },
+    "password": {
+      "title": "Cambiar contraseña",
+      "current": "Contraseña actual",
+      "new": "Nueva contraseña",
+      "confirm": "Confirmar nueva contraseña",
+      "currentRequired": "Indique la contraseña actual",
+      "newMin": "La nueva contraseña debe tener al menos 6 caracteres",
+      "newRequired": "Indique la nueva contraseña",
+      "match": "Las contraseñas deben coincidir",
+      "confirmRequired": "Confirme la nueva contraseña",
+      "success": "Contraseña cambiada con éxito.",
+      "error": "No se pudo cambiar la contraseña en este momento."
+    }
+  },
+  "settings": {
+    "title": "Configuración del sistema",
+    "sections": {
+      "general": "General",
+      "anamnesis": "Anamnesis",
+      "application": "Aplicación",
+      "preference": "Preferencias"
+    },
+    "patients": "Pacientes",
+    "defaultOrder": "Orden predeterminado",
+    "order": {
+      "name": "Nombre",
+      "createdAt": "Fecha de creación",
+      "lastVisit": "Última consulta"
+    },
+    "birthdayEmail": "Enviar correo de cumpleaños",
+    "defaultTemplate": "Plantilla predeterminada",
+    "select": "Seleccione...",
+    "loading": "Cargando...",
+    "selectedTemplate": "Plantilla seleccionada",
+    "appPermissions": "Permisos de la aplicación",
+    "showAnthropometry": "Mostrar evaluación antropométrica en la aplicación",
+    "showPrescriptions": "Mostrar prescripciones en la aplicación",
+    "defaultTheme": "Tema predeterminado",
+    "theme": {
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    },
+    "effectiveMode": "Modo activo: {{mode}}",
+    "systemMode": "Sistema ({{mode}})"
+  },
+  "subscription": {
+    "notProvided": "No informado",
+    "billingCycle": {
+      "weekly": "semanal",
+      "monthly": "mensual",
+      "semiannually": "semestral",
+      "annually": "anual"
+    },
+    "billingType": {
+      "bankSlip": "Boleto",
+      "creditCard": "Tarjeta de crédito"
+    },
+    "status": {
+      "trial": "Prueba",
+      "active": "Activa",
+      "pending": "Pendiente",
+      "overdue": "Vencida",
+      "suspended": "Suspendida",
+      "canceled": "Cancelada",
+      "expired": "Expirada",
+      "none": "Sin suscripción",
+      "undefined": "Indefinida"
+    },
+    "common": {
+      "mySubscription": "Mi suscripción",
+      "choosePlan": "Elegir plan",
+      "loading": "Cargando suscripción...",
+      "empty": "No se encontró ninguna suscripción.",
+      "planUnknown": "Plan no informado",
+      "codeUnknown": "Código no informado",
+      "cycle": "Ciclo",
+      "payment": "Pago",
+      "nextCharge": "Próximo cobro",
+      "expiresAt": "Expira el",
+      "actions": "Acciones"
+    },
+    "checkout": {
+      "trialTitle": "Iniciar prueba",
+      "title": "Finalizar suscripción",
+      "trialDescription": "Active su período gratuito para comenzar a usar la plataforma.",
+      "description": "Elija la forma de pago para iniciar su suscripción.",
+      "loadingPlan": "Cargando el plan seleccionado...",
+      "unavailable": "El precio seleccionado ya no está disponible. Elija un plan activo para continuar.",
+      "selectedPlan": "Plan seleccionado",
+      "free": "Gratis",
+      "days": "{{count}} días",
+      "trialActivation": "Activación de la prueba",
+      "paymentMethod": "Forma de pago",
+      "trialInfo": "Su acceso estará disponible durante {{count}} días. No se realizará ningún cobro por este plan.",
+      "startTrial": "Comenzar prueba",
+      "goToAsaas": "Ir al checkout de Asaas",
+      "startPayment": "Iniciar pago por {{method}}",
+      "missingHostedUrl": "El backend no devolvió la URL del checkout alojado.",
+      "pixDescription": "Inicie la suscripción y pague mediante código QR, código para copiar o el enlace devuelto por el backend.",
+      "bankSlipDescription": "Genere el cobro y acompañe la confirmación después de la compensación.",
+      "creditCardDescription": "Será redirigido al checkout alojado de Asaas."
+    },
+    "management": {
+      "description": "Acompañe el plan, el estado y los próximos cobros de su cuenta.",
+      "changePlan": "Cambiar plan",
+      "changePayment": "Cambiar pago",
+      "viewCharges": "Ver cobros",
+      "cancel": "Cancelar suscripción",
+      "openArea": "Abrir área de suscripción",
+      "cycleAndCharge": "Ciclo {{cycle}} · Próximo cobro el {{date}}"
+    },
+    "statusRoute": {
+      "successTitle": "Esperando confirmación",
+      "successDescription": "Recibimos el retorno del checkout, pero la suscripción solo se habilitará cuando el backend confirme el pago.",
+      "cancelTitle": "Checkout cancelado",
+      "cancelDescription": "El pago no se completó. Puede volver a los planes e iniciar un nuevo intento.",
+      "expiredTitle": "Checkout expirado",
+      "expiredDescription": "El plazo de este checkout terminó. Elija un plan para generar un nuevo intento.",
+      "waitingWebhook": "Esperando la confirmación del webhook de pago.",
+      "signInAgain": "Inicie sesión nuevamente para acompañar el estado de la suscripción.",
+      "checking": "Consultando el estado de la suscripción...",
+      "active": "Suscripción activa.",
+      "goToApp": "Ir a la aplicación"
+    },
+    "pending": {
+      "title": "Pago iniciado",
+      "description": "Esperando la confirmación del pago para habilitar la suscripción.",
+      "summary": "Plan: {{plan}}. Método: {{method}}.",
+      "methodOnly": "Método: {{method}}.",
+      "pixCopyPaste": "PIX copia y pega",
+      "openPayment": "Abrir enlace de pago",
+      "checkStatus": "Verificar estado",
+      "chooseAnother": "Elegir otro plan"
+    }
+  },
+  "workspace": {
+    "title": "Área de trabajo",
+    "saved": "Área de trabajo guardada",
+    "new": "Nuevo",
+    "header": {
+      "back": "Volver a la lista",
+      "title": "Área de trabajo del paciente",
+      "description": "Gestione planes alimentarios, antropometría y anamnesis en un solo lugar.",
+      "newAppointment": "Nueva consulta"
+    },
+    "tabs": {
+      "mealPlan": "Plan alimentario",
+      "anthropometry": "Antropometría",
+      "anamnesis": "Anamnesis",
+      "evolution": "Evolución",
+      "documents": "Documentos"
+    },
+    "list": {
+      "search": "Buscar paciente",
+      "open": "Abrir área de trabajo",
+      "columns": {
+        "actions": "Acciones",
+        "patient": "Paciente",
+        "nextAppointment": "Próxima consulta",
+        "plan": "Plan",
+        "lastAnthropometry": "Última antropometría",
+        "lastAnamnesis": "Última anamnesis",
+        "lastSend": "Último envío"
+      }
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "suspended": "Suspendido"
+    },
+    "documents": {
+      "title": "Documentos y envíos",
+      "empty": "Sin documentos ni envíos.",
+      "planSent": "Plan enviado (PDF)",
+      "sentYesterday": "Enviado ayer"
+    },
+    "generic": {
+      "loading": "Cargando {{title}}...",
+      "empty": "Ningún elemento disponible."
+    },
+    "mealPlan": {
+      "title": "Planes alimentarios",
+      "loadError": "No se pudo cargar el plan para editarlo.",
+      "saveError": "No se pudo guardar el plan alimentario."
+    },
+    "anamnesis": {
+      "title": "Anamnesis",
+      "send": "Enviar",
+      "loading": "Cargando anamnesis...",
+      "empty": "Todavía no se envió ninguna anamnesis a este paciente.",
+      "patientMissingContact": "El paciente no tiene correo ni teléfono registrados. Ingréselos manualmente para enviar.",
+      "patientLoadError": "No se pudieron cargar los datos de contacto del paciente.",
+      "status": {
+        "sent": "Enviada",
+        "submitted": "Respondida",
+        "expired": "Expirada"
+      },
+      "sentAt": "Enviada el {{date}}",
+      "submittedAt": "Respondida el {{date}}",
+      "expiredAt": "Expiró el {{date}}",
+      "expiresAt": "{{base}} · expira el {{date}}",
+      "response": {
+        "title": "Respuestas de la anamnesis",
+        "loadError": "Error al cargar las respuestas.",
+        "generating": "Generando...",
+        "downloadPdf": "Descargar PDF",
+        "loading": "Cargando respuestas...",
+        "submittedAt": "Respondida el {{date}}",
+        "noAnswer": "Sin respuesta",
+        "yes": "Sí",
+        "no": "No"
+      },
+      "sendDialog": {
+        "title": "Enviar anamnesis al paciente",
+        "patient": "Paciente: {{name}}",
+        "questionnaire": "Cuestionario",
+        "loadingQuestionnaires": "Cargando cuestionarios...",
+        "emptyQuestionnaires": "Ningún cuestionario disponible",
+        "email": "Correo del paciente",
+        "emailHint": "Obligatorio solo para el envío por correo.",
+        "phone": "Teléfono del paciente",
+        "phoneHint": "Obligatorio solo para el envío por WhatsApp.",
+        "expiresAt": "Expira el",
+        "expiresHint": "Déjelo en blanco para que no expire.",
+        "generatedLink": "Enlace generado: {{link}}",
+        "chooseChannel": "Elija un canal de envío:",
+        "copy": "Copiar enlace",
+        "copyTooltip": "Generar un enlace y copiarlo al portapapeles",
+        "whatsappTooltip": "Generar un enlace y abrir una conversación de WhatsApp",
+        "emailTooltip": "Generar un enlace y enviarlo por correo",
+        "loadError": "No se pudo cargar la lista de anamnesis.",
+        "selectRequired": "Seleccione la anamnesis que desea enviar.",
+        "emailRequired": "Indique el correo del paciente.",
+        "phoneRequired": "Indique el teléfono del paciente para enviar por WhatsApp.",
+        "linkError": "No se pudo generar el enlace público.",
+        "copied": "Enlace copiado al portapapeles.",
+        "clipboardError": "No se pudo acceder al portapapeles.",
+        "whatsappOpened": "WhatsApp abierto con el enlace.",
+        "emailSent": "Correo enviado a {{email}}.",
+        "emailPartialError": "El enlace se generó, pero no se pudo enviar el correo. Use Copiar o WhatsApp.",
+        "emailError": "No se pudo enviar el correo.",
+        "whatsappGreeting": "¡Hola, {{name}}! Aquí está el enlace de su anamnesis: {{link}}",
+        "whatsappGreetingGeneric": "¡Hola! Aquí está el enlace de su anamnesis: {{link}}"
+      }
+    },
+    "anthropometry": {
+      "title": "Antropometría",
+      "new": "Nueva evaluación antropométrica",
+      "edit": "Editar evaluación antropométrica",
+      "loading": "Cargando evaluación antropométrica...",
+      "loadingList": "Cargando evaluaciones antropométricas...",
+      "deleteTitle": "Eliminar evaluación antropométrica",
+      "deleteDescription": "Esta acción es irreversible. ¿Desea continuar?",
+      "deleteError": "No se pudo eliminar la evaluación antropométrica.",
+      "deleteSuccess": "Evaluación antropométrica eliminada con éxito.",
+      "empty": "No se encontró ninguna evaluación antropométrica.",
+      "noCalculation": "Sin cálculo guardado",
+      "columns": {
+        "date": "Fecha",
+        "weight": "Peso",
+        "height": "Altura",
+        "bmi": "IMC",
+        "bodyFat": "Grasa",
+        "leanMass": "Masa magra",
+        "energy": "Energía",
+        "actions": "Acciones"
+      },
+      "form": {
+        "evaluationDate": "Fecha de evaluación",
+        "weight": "Peso (kg)",
+        "height": "Altura (m)",
+        "bmi": "IMC",
+        "notes": "Observaciones",
+        "circumferences": "Circunferencias",
+        "bodyComposition": "Composición corporal",
+        "abdominal": "Circ. abdominal (cm)",
+        "hip": "Circ. cadera (cm)",
+        "waist": "Circ. cintura (cm)",
+        "neck": "Circ. cuello (cm)",
+        "shoulder": "Circ. hombros (cm)",
+        "chest": "Circ. tórax (cm)",
+        "rightRelaxedArm": "Brazo relajado derecho (cm)",
+        "leftRelaxedArm": "Brazo relajado izquierdo (cm)",
+        "rightFlexedArm": "Brazo flexionado derecho (cm)",
+        "leftFlexedArm": "Brazo flexionado izquierdo (cm)",
+        "rightForearm": "Antebrazo derecho (cm)",
+        "leftForearm": "Antebrazo izquierdo (cm)",
+        "rightWrist": "Muñeca derecha (cm)",
+        "leftWrist": "Muñeca izquierda (cm)",
+        "rightProximalThigh": "Muslo proximal derecho (cm)",
+        "leftProximalThigh": "Muslo proximal izquierdo (cm)",
+        "rightThigh": "Muslo derecho (cm)",
+        "leftThigh": "Muslo izquierdo (cm)",
+        "rightCalf": "Pantorrilla derecha (cm)",
+        "leftCalf": "Pantorrilla izquierda (cm)",
+        "bodyFat": "Grasa corporal (%)",
+        "muscle": "Músculo (%)",
+        "leanMass": "Masa magra (kg)",
+        "fatMass": "Masa grasa (kg)",
+        "whr": "WHR"
+      }
+    },
+    "energy": {
+      "title": "Gasto energético",
+      "protocol": "Protocolo",
+      "activityFactor": "Factor de actividad",
+      "age": "Edad: {{age}} años",
+      "gender": "Sexo: {{gender}}",
+      "missingData": "Indique el peso, la altura, la fecha de nacimiento y el género del paciente para calcular.",
+      "calculating": "Calculando...",
+      "calculate": "Calcular",
+      "male": "Masculino",
+      "female": "Femenino",
+      "activity": {
+        "sedentary": "Sedentario",
+        "light": "Leve",
+        "moderate": "Moderado",
+        "intense": "Intenso",
+        "veryIntense": "Muy intenso"
+      },
+      "result": {
+        "title": "Resultado del cálculo",
+        "persisted": "Guardado",
+        "temporary": "Temporal",
+        "protocol": "Protocolo",
+        "activityFactor": "Factor de actividad",
+        "calculatedAt": "Calculado el {{date}}"
+      }
+    },
+    "evolution": {
+      "title": "Evolución",
+      "description": "Compare dos o más evaluaciones antropométricas para ver el período, el resumen y las tendencias.",
+      "noOptions": "Ninguna evaluación disponible.",
+      "selectPatient": "Seleccione un paciente.",
+      "evaluations": "Evaluaciones antropométricas",
+      "placeholder": "Seleccione dos o más evaluaciones",
+      "searching": "Buscando evolución...",
+      "search": "Buscar evolución",
+      "noneSelected": "Ninguna evaluación seleccionada.",
+      "selected_one": "{{count}} evaluación seleccionada.",
+      "selected_other": "{{count}} evaluaciones seleccionadas.",
+      "loading": "Buscando evolución antropométrica...",
+      "period": "Período comparado",
+      "periodDates": "{{start}} hasta {{end}}",
+      "total": "Total de evaluaciones: {{count}}",
+      "summary": "Resumen",
+      "summaryUnavailable": "El resumen de esta comparación no está disponible.",
+      "trends": "Tendencias de las mediciones",
+      "initialValue": "Valor inicial",
+      "finalValue": "Valor final",
+      "variation": "Variación",
+      "points": "Puntos evaluados",
+      "direction": {
+        "up": "Aumento",
+        "down": "Disminución",
+        "stable": "Estable"
+      },
+      "metrics": {
+        "weight": "Peso",
+        "height": "Altura",
+        "bmi": "IMC",
+        "bodyFat": "Grasa corporal",
+        "leanMass": "Masa magra",
+        "fatMass": "Masa grasa",
+        "abdominal": "Circunferencia abdominal",
+        "hip": "Circunferencia de cadera",
+        "rightRelaxedArm": "Brazo derecho relajado",
+        "leftRelaxedArm": "Brazo izquierdo relajado",
+        "rightFlexedArm": "Brazo derecho flexionado",
+        "leftFlexedArm": "Brazo izquierdo flexionado",
+        "rightForearm": "Antebrazo derecho",
+        "leftForearm": "Antebrazo izquierdo",
+        "rightWrist": "Muñeca derecha",
+        "leftWrist": "Muñeca izquierda",
+        "neck": "Cuello",
+        "shoulder": "Hombro",
+        "chest": "Pecho",
+        "waist": "Cintura",
+        "rightCalf": "Pantorrilla derecha",
+        "leftCalf": "Pantorrilla izquierda",
+        "rightThigh": "Muslo derecho",
+        "leftThigh": "Muslo izquierdo",
+        "rightProximalThigh": "Muslo proximal derecho",
+        "leftProximalThigh": "Muslo proximal izquierdo"
+      }
+    },
+    "sidebar": {
+      "checklist": "Lista de la consulta",
+      "planReviewed": "Plan alimentario revisado",
+      "guidanceFilled": "Orientaciones completadas",
+      "quickNotes": "Notas rápidas",
+      "notesPlaceholder": "Observaciones de la consulta...",
+      "quickActions": "Acciones rápidas",
+      "sendWhatsapp": "Enviar por WhatsApp",
+      "generatePdf": "Generar PDF"
+    }
+  },
+  "landing": {
+    "nav": {
+      "features": "Funcionalidades",
+      "howItWorks": "Cómo funciona",
+      "plans": "Planes",
+      "faq": "FAQ",
+      "signIn": "Entrar",
+      "tryFree": "Pruebe gratis",
+      "openMenu": "Abrir menú",
+      "closeMenu": "Cerrar menú"
+    },
+    "hero": {
+      "eyebrow": "Plataforma para nutricionistas",
+      "title": "Gestión completa de su consultorio nutricional en un solo lugar.",
+      "description": "Registre pacientes, cree planes alimentarios, envíe anamnesis, organice su agenda y acompañe la evolución — todo integrado y listo para usar.",
+      "haveAccount": "Ya tengo cuenta",
+      "noCard": "Sin tarjeta de crédito",
+      "cancelAnytime": "Cancele cuando quiera"
+    },
+    "features": {
+      "eyebrow": "Funcionalidades",
+      "title": "Todo lo que necesita para atender bien.",
+      "description": "Los módulos fueron pensados para la rutina real del nutricionista, sin complicaciones ni burocracia.",
+      "patients": {
+        "title": "Pacientes",
+        "description": "Historia clínica completa, antropometría, fotos e historial clínico en un solo lugar."
+      },
+      "anamnesis": {
+        "title": "Anamnesis",
+        "description": "Cree plantillas personalizadas y envíe un enlace público para que el paciente responda."
+      },
+      "mealPlans": {
+        "title": "Planes alimentarios",
+        "description": "Comidas, ítems, sustitutos, medidas caseras y cálculo automático de macros."
+      },
+      "calendar": {
+        "title": "Agenda",
+        "description": "Programe consultas, controle estados, evite conflictos y vea todo en el calendario."
+      },
+      "taco": {
+        "title": "Catálogo TACO",
+        "description": "La base oficial brasileña de alimentos ya está importada y lista para usar."
+      },
+      "workspace": {
+        "title": "Área de trabajo",
+        "description": "Vista consolidada por paciente: próxima consulta, plan, antropometría y envíos."
+      }
+    },
+    "how": {
+      "eyebrow": "Cómo funciona",
+      "title": "En tres pasos, desde el registro hasta la primera consulta.",
+      "account": {
+        "title": "Cree su cuenta",
+        "description": "Regístrese en menos de un minuto. Comience el período gratuito sin informar una tarjeta."
+      },
+      "patients": {
+        "title": "Registre sus pacientes",
+        "description": "Importe datos, registre antropometría y personalice las fichas según su práctica."
+      },
+      "care": {
+        "title": "Atienda con más agilidad",
+        "description": "Cree planes, envíe anamnesis y acompañe la evolución en un único flujo de trabajo."
+      }
+    },
+    "pricing": {
+      "eyebrow": "Planes",
+      "title": "Elija el plan ideal para su momento.",
+      "description": "Comience gratis y evolucione a medida que crece el consultorio. Cancele cuando quiera.",
+      "loading": "Cargando planes disponibles...",
+      "loadError": "No se pudo cargar el catálogo en este momento. Mostramos los planes de referencia.",
+      "featured": "Más elegido",
+      "planFallback": "Plan Plenton",
+      "subscribe": "Suscribirse",
+      "trial": {
+        "description": "Para probar la plataforma.",
+        "period": "14 días",
+        "cta": "Comenzar ahora"
+      },
+      "professional": {
+        "name": "Profesional",
+        "description": "Para el consultorio individual.",
+        "cta": "Suscribirse"
+      },
+      "premium": {
+        "name": "Premium",
+        "description": "Para clínicas con equipo.",
+        "cta": "Hablar con ventas"
+      },
+      "features": {
+        "upToFivePatients": "Hasta 5 pacientes",
+        "mealPlans": "Planes alimentarios",
+        "anamnesis": "Anamnesis",
+        "calendar": "Agenda",
+        "taco": "Catálogo TACO",
+        "unlimitedPatients": "Pacientes ilimitados",
+        "unlimitedPlans": "Planes y anamnesis ilimitados",
+        "publicAnamnesis": "Anamnesis pública por enlace",
+        "dashboard": "Dashboard con KPI",
+        "workspace": "Área de trabajo consolidada",
+        "emailSupport": "Soporte por correo",
+        "everythingProfessional": "Todo lo del Profesional",
+        "assistantAccess": "Acceso para asistente",
+        "reminders": "Recordatorios automáticos",
+        "advancedReports": "Informes avanzados",
+        "prioritySupport": "Soporte prioritario"
+      }
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "install": {
+        "q": "¿Necesito instalar algún programa?",
+        "a": "No. Plenton funciona completamente en el navegador, en cualquier dispositivo con internet."
+      },
+      "trial": {
+        "q": "¿Cómo funciona el período gratuito?",
+        "a": "Tiene 14 días para usar la plataforma sin costo y sin registrar una tarjeta. Al finalizar, decide si desea suscribirse."
+      },
+      "security": {
+        "q": "¿Mis datos y los de mis pacientes están seguros?",
+        "a": "Sí. Todos los datos están aislados por cuenta, cifrados durante la transmisión y almacenados en infraestructura segura."
+      },
+      "patientAccess": {
+        "q": "¿El paciente también tiene acceso?",
+        "a": "El paciente puede recibir enlaces públicos, como anamnesis, sin necesidad de una cuenta. También está previsto un aplicativo para pacientes."
+      },
+      "cancel": {
+        "q": "¿Puedo cancelar en cualquier momento?",
+        "a": "Sí. No hay permanencia. La cancelación se realiza en la plataforma y mantiene el acceso hasta el final del ciclo pagado."
+      },
+      "taco": {
+        "q": "¿Plenton tiene el catálogo TACO?",
+        "a": "Sí. La base oficial brasileña de composición de alimentos ya está importada y disponible para los planes alimentarios."
+      }
+    },
+    "cta": {
+      "title": "¿Listo para profesionalizar su consultorio?",
+      "description": "Comience hoy sin costo. Solo necesita su correo."
+    },
+    "footer": {
+      "description": "Plataforma de gestión completa para nutricionistas. Atienda más y mejor.",
+      "product": "Producto",
+      "account": "Cuenta",
+      "support": "Soporte",
+      "contact": "Contacto",
+      "privacy": "Política de privacidad",
+      "terms": "Términos de uso",
+      "rights": "© {{year}} Plenton. Todos los derechos reservados.",
+      "care": "Hecho con cuidado para profesionales de la nutrición."
+    }
+  },
+  "institutional": {
+    "common": {
+      "lastUpdated": "Última actualización: {{date}}",
+      "summaryLabel": "Resumen del documento",
+      "content": "Contenido",
+      "legalReview": "Esta traducción es informativa y debe ser revisada por un profesional jurídico antes de entrar en vigor."
+    },
+    "contact": {
+      "eyebrow": "Contacto",
+      "title": "Hable con nosotros",
+      "description": "¿Tiene dudas, sugerencias o necesita soporte? El equipo de {{appName}} está listo para ayudar.",
+      "email": "Correo electrónico",
+      "responseTime": "Respondemos en un día hábil.",
+      "instructions": "Complete el formulario y su aplicación de correo se abrirá con el mensaje listo para enviar. Si lo prefiere, escriba directamente a",
+      "name": "Nombre",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "send": "Enviar mensaje",
+      "defaultSubject": "Contacto desde el sitio — {{name}}",
+      "mailName": "Nombre: {{name}}",
+      "mailEmail": "Correo: {{email}}"
+    },
+    "privacy": {
+      "eyebrow": "Privacidad",
+      "title": "Política de Privacidad",
+      "description": "Cómo {{appName}} trata y protege los datos personales en la plataforma.",
+      "lastUpdated": "9 de junio de 2026",
+      "disclaimer": "Este documento es un modelo inicial y debe ser revisado por un profesional jurídico antes de entrar en vigor, para reflejar con precisión las prácticas reales de tratamiento de datos y la legislación aplicable.",
+      "intro": "Su privacidad es importante para nosotros. Este documento describe de forma transparente cómo {{appName}} recopila, utiliza, comparte y protege los datos personales tratados en la plataforma.",
+      "sections": {
+        "about": {
+          "heading": "Quiénes somos",
+          "p1": "{{appName}} es una plataforma de gestión para nutricionistas que reúne pacientes, planes alimentarios, anamnesis, agenda e indicadores. Esta Política explica cómo tratamos los datos de los usuarios y de sus pacientes.",
+          "p2": "Al crear una cuenta o utilizar la plataforma, usted declara conocer las prácticas descritas en este documento."
+        },
+        "collected": {
+          "heading": "Datos que recopilamos",
+          "intro": "Recopilamos distintas categorías de datos según su interacción con la plataforma:",
+          "b1": "Datos de registro: nombre, correo, teléfono, identificación profesional y credenciales de acceso.",
+          "b2": "Datos de suscripción y pago: plan, estado e identificadores de cobro. No almacenamos los datos completos de la tarjeta.",
+          "b3": "Datos de pacientes ingresados por el usuario: identificación, contacto, datos clínicos y antropométricos, anamnesis, planes y registros de atención.",
+          "b4": "Datos técnicos y de uso: dirección IP, dispositivo, navegador, páginas, fechas, horarios y registros de actividad.",
+          "b5": "Cookies y tecnologías similares necesarias para autenticación, preferencias y mejora de la experiencia."
+        },
+        "purpose": {
+          "heading": "Finalidad del uso de los datos",
+          "intro": "Utilizamos los datos personales para las siguientes finalidades, respaldadas por una base legal de la Ley General de Protección de Datos de Brasil (LGPD):",
+          "b1": "Permitir el registro, la autenticación y el funcionamiento de la cuenta.",
+          "b2": "Ofrecer y operar recursos como pacientes, planes, anamnesis y agenda.",
+          "b3": "Procesar suscripciones, cobros y renovaciones.",
+          "b4": "Enviar comunicaciones operativas y de soporte.",
+          "b5": "Mantener la seguridad, prevenir fraudes y cumplir obligaciones legales.",
+          "b6": "Mejorar la plataforma con datos de uso agregados."
+        },
+        "patients": {
+          "heading": "Tratamiento de datos de pacientes",
+          "p1": "Para los datos de pacientes, el nutricionista titular de la cuenta actúa como responsable y debe definir las bases legales adecuadas. {{appName}} actúa como operador y trata los datos según las instrucciones del usuario.",
+          "p2": "El usuario debe garantizar que posee base legal para ingresar y tratar los datos y responder a las solicitudes de sus titulares."
+        },
+        "sharing": {
+          "heading": "Compartir datos",
+          "intro": "No vendemos datos personales. Podemos compartirlos estrictamente en estas situaciones:",
+          "b1": "Proveedores de infraestructura y alojamiento responsables del almacenamiento y procesamiento.",
+          "b2": "Proveedores de pago para procesar suscripciones y cobros.",
+          "b3": "Proveedores de comunicación y soporte cuando sea necesario.",
+          "b4": "Autoridades competentes por obligación legal, regulatoria o judicial.",
+          "p2": "Los terceros que tratan datos en nuestro nombre deben adoptar medidas de seguridad y seguir nuestras instrucciones."
+        },
+        "cookies": {
+          "heading": "Cookies y tecnologías de seguimiento",
+          "p1": "Usamos cookies para mantener la sesión, recordar preferencias y entender el uso de la plataforma. Las cookies esenciales son necesarias; las demás pueden gestionarse en el navegador."
+        },
+        "security": {
+          "heading": "Seguridad de la información",
+          "p1": "Adoptamos medidas como cifrado en tránsito, aislamiento por cuenta, control de acceso y monitoreo. Ningún método es completamente seguro, pero trabajamos continuamente para reducir riesgos."
+        },
+        "retention": {
+          "heading": "Retención y eliminación de datos",
+          "p1": "Conservamos los datos durante el tiempo necesario para las finalidades de esta política, obligaciones legales y ejercicio de derechos. Al cerrar la cuenta, pueden eliminarse o anonimizarse según los plazos legales."
+        },
+        "rights": {
+          "heading": "Derechos del titular",
+          "intro": "Según la LGPD, el titular puede solicitar en cualquier momento:",
+          "b1": "Confirmación del tratamiento y acceso a sus datos.",
+          "b2": "Corrección de datos incompletos, inexactos o desactualizados.",
+          "b3": "Anonimización, bloqueo o eliminación de datos innecesarios o irregulares.",
+          "b4": "Portabilidad a otro proveedor.",
+          "b5": "Información sobre el intercambio con terceros.",
+          "b6": "Revocación del consentimiento cuando corresponda.",
+          "contactBefore": "Para ejercer sus derechos, contacte por correo a",
+          "contactAfter": "Si los datos pertenecen a un paciente, la solicitud debe dirigirse al nutricionista responsable de la cuenta."
+        },
+        "changes": {
+          "heading": "Cambios en esta política",
+          "p1": "Esta Política puede actualizarse por cambios legales, técnicos o del servicio. La última actualización aparece al inicio del documento."
+        },
+        "contact": {
+          "heading": "Responsable y contacto",
+          "before": "Para preguntas sobre esta Política o el tratamiento de datos personales, contacte por correo a"
+        }
+      }
+    },
+    "terms": {
+      "eyebrow": "Términos",
+      "title": "Términos de Uso",
+      "description": "Reglas y condiciones para utilizar la plataforma {{appName}}.",
+      "lastUpdated": "9 de junio de 2026",
+      "disclaimer": "Este documento es un modelo inicial y debe ser revisado por un profesional jurídico antes de entrar en vigor, para reflejar con precisión el servicio y la legislación aplicable.",
+      "intro": "Estos Términos establecen las reglas para utilizar la plataforma {{appName}}. Léalos atentamente antes de usar el servicio.",
+      "privacyLink": "Política de Privacidad",
+      "sections": {
+        "acceptance": {
+          "heading": "Aceptación de los términos",
+          "before": "Estos Términos regulan el acceso y uso de la plataforma {{appName}}. Al crear una cuenta, acceder o utilizar la plataforma, declara haber leído, comprendido y aceptado estos términos y la",
+          "after": "Si no acepta alguna condición, no debe utilizar la plataforma."
+        },
+        "platform": {
+          "heading": "Descripción de la plataforma",
+          "p1": "{{appName}} es una herramienta de gestión para nutricionistas con pacientes, planes, anamnesis, agenda e indicadores. Apoya la actividad profesional y no sustituye el criterio técnico del profesional habilitado."
+        },
+        "account": {
+          "heading": "Registro y cuenta",
+          "intro": "Para utilizar la plataforma debe crear una cuenta con información verdadera, exacta y actualizada. Es responsable de la confidencialidad de las credenciales y de las actividades de la cuenta.",
+          "b1": "Debe tener capacidad legal para contratar y, cuando corresponda, registro profesional válido.",
+          "b2": "El acceso es personal e intransferible; compartir credenciales es su responsabilidad.",
+          "b3": "Notifíquenos inmediatamente sobre usos no autorizados o sospechas de violación de seguridad."
+        },
+        "use": {
+          "heading": "Uso de la plataforma",
+          "intro": "Se compromete a utilizar la plataforma de forma lícita y conforme a estos términos. Está prohibido:",
+          "b1": "Usar la plataforma con fines ilícitos o que violen derechos de terceros.",
+          "b2": "Intentar acceder a áreas, datos o cuentas ajenas.",
+          "b3": "Realizar ingeniería inversa, copiar, modificar o explotar la plataforma sin autorización.",
+          "b4": "Introducir código malicioso o comprometer la seguridad y disponibilidad del servicio.",
+          "b5": "Sobrecargar la infraestructura mediante automatizaciones no autorizadas."
+        },
+        "responsibilities": {
+          "heading": "Responsabilidades del usuario",
+          "intro": "Es responsable de los datos y contenidos ingresados, incluidos los datos de pacientes, y se compromete a:",
+          "b1": "Garantizar una base legal para recopilar y tratar los datos conforme a la LGPD.",
+          "b2": "Obtener consentimiento u otra base legal para datos de salud cuando corresponda.",
+          "b3": "Atender las solicitudes de los titulares de los datos que controla.",
+          "b4": "Usar la plataforma según las normas profesionales y la legislación vigente."
+        },
+        "plans": {
+          "heading": "Planes, suscripciones y pagos",
+          "intro": "La plataforma se ofrece mediante planes gratuitos o pagos. Los valores, ciclos y recursos se muestran durante la contratación y pueden actualizarse con aviso.",
+          "b1": "Las suscripciones pagas se renuevan automáticamente al final de cada ciclo, salvo cancelación.",
+          "b2": "Los pagos son procesados por terceros; las fallas pueden suspender el acceso a recursos pagos.",
+          "b3": "Los cambios de precio se comunicarán con antelación y regirán en el ciclo siguiente."
+        },
+        "trial": {
+          "heading": "Período de prueba gratuito",
+          "p1": "Podemos ofrecer una prueba gratuita. Al finalizar, los recursos pagos requieren una suscripción. Podemos cambiar o finalizar la oferta."
+        },
+        "cancellation": {
+          "heading": "Cancelación",
+          "p1": "Puede cancelar desde la plataforma. La cancelación detiene renovaciones futuras y mantiene el acceso hasta el fin del ciclo pagado. Salvo obligación legal, los períodos utilizados no se reembolsan."
+        },
+        "intellectual": {
+          "heading": "Propiedad intelectual",
+          "p1": "Los derechos sobre la plataforma {{appName}}, incluida la marca, software, diseño y textos, pertenecen a {{appName}} o sus licenciantes. El uso no transfiere propiedad intelectual. Sus datos y contenidos siguen siendo suyos."
+        },
+        "availability": {
+          "heading": "Disponibilidad y soporte",
+          "p1": "Buscamos mantener la plataforma disponible y segura, pero pueden ocurrir mantenimientos o interrupciones fuera de nuestro control. No garantizamos disponibilidad ininterrumpida."
+        },
+        "liability": {
+          "heading": "Limitación de responsabilidad",
+          "p1": "En la máxima extensión legal, {{appName}} no responde por decisiones clínicas o profesionales basadas en la plataforma, daños indirectos, lucro cesante, pérdida de datos por uso indebido o contenido de usuarios."
+        },
+        "suspension": {
+          "heading": "Suspensión y cierre de cuenta",
+          "p1": "Podemos suspender o cerrar cuentas por incumplimiento, fraude, exigencia legal o falta de pago. También puede cerrar su cuenta, respetando las reglas de retención de la Política de Privacidad."
+        },
+        "changes": {
+          "heading": "Cambios en los términos",
+          "p1": "Estos términos pueden actualizarse. Los cambios relevantes se comunicarán y la fecha se indicará. El uso continuado implica aceptación de los términos vigentes."
+        },
+        "law": {
+          "heading": "Ley aplicable y jurisdicción",
+          "p1": "Estos términos se rigen por las leyes de la República Federativa de Brasil. Será competente el foro del domicilio del usuario, salvo disposición legal en contrario."
+        },
+        "contact": {
+          "heading": "Contacto",
+          "before": "Para preguntas sobre estos Términos, contacte por correo a"
+        }
+      }
+    }
+  },
+  "pages": {
+    "landingTitle": "{{appName}} — Software de gestión para nutricionistas",
+    "landingDescription": "Plataforma completa para nutricionistas: pacientes, planes alimentarios, anamnesis, agenda y dashboard en un solo lugar. Pruébela gratis.",
+    "notFoundTitle": "Página no encontrada",
+    "notFoundDescription": "No encontramos la página que busca. Verifique si la dirección fue escrita correctamente.",
+    "goHome": "Ir al inicio",
+    "subscription": "Suscripción",
+    "pendingPayment": "Pago pendiente",
+    "forgotPassword": "Recuperar contraseña",
+    "newPassword": "Nueva contraseña",
+    "signIn": "Entrar",
+    "workspace": "Área de trabajo",
+    "patient": "Paciente",
+    "appointment": "Consulta",
+    "anamnesis": "Anamnesis",
+    "dashboard": "Dashboard"
   }
 }

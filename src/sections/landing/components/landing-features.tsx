@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import { varAlpha } from 'minimal-shared/utils';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -10,60 +11,35 @@ import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 
-const FEATURES = [
-  {
-    icon: 'solar:users-group-rounded-bold-duotone',
-    title: 'Pacientes',
-    description: 'Prontuário completo, antropometria, fotos e histórico clínico em um só lugar.',
-  },
-  {
-    icon: 'solar:clipboard-list-bold-duotone',
-    title: 'Anamneses',
-    description: 'Crie templates personalizados e envie um link público para o paciente responder.',
-  },
-  {
-    icon: 'solar:plate-bold-duotone',
-    title: 'Planos alimentares',
-    description: 'Refeições, itens, substitutos, medidas caseiras e cálculo automático de macros.',
-  },
-  {
-    icon: 'solar:calendar-bold-duotone',
-    title: 'Agenda',
-    description: 'Marque consultas, controle status, evite conflitos e visualize tudo no calendário.',
-  },
-  {
-    icon: 'solar:database-bold-duotone',
-    title: 'Catálogo TACO',
-    description: 'Base oficial brasileira de alimentos já importada e pronta para usar.',
-  },
-  {
-    icon: 'solar:chart-square-bold-duotone',
-    title: 'Workspace',
-    description: 'Visão consolidada por paciente: próxima consulta, plano, antropometria e envios.',
-  },
-];
-
 export function LandingFeatures() {
+  const { t } = useTranslation();
   const theme = useTheme();
+  const features = [
+    { icon: 'solar:users-group-rounded-bold-duotone', title: t('landing.features.patients.title'), description: t('landing.features.patients.description') },
+    { icon: 'solar:clipboard-list-bold-duotone', title: t('landing.features.anamnesis.title'), description: t('landing.features.anamnesis.description') },
+    { icon: 'solar:plate-bold-duotone', title: t('landing.features.mealPlans.title'), description: t('landing.features.mealPlans.description') },
+    { icon: 'solar:calendar-bold-duotone', title: t('landing.features.calendar.title'), description: t('landing.features.calendar.description') },
+    { icon: 'solar:database-bold-duotone', title: t('landing.features.taco.title'), description: t('landing.features.taco.description') },
+    { icon: 'solar:chart-square-bold-duotone', title: t('landing.features.workspace.title'), description: t('landing.features.workspace.description') },
+  ];
 
   return (
     <Box id="funcionalidades" sx={{ py: { xs: 8, md: 12 }, scrollMarginTop: 80 }}>
       <Container maxWidth="lg">
         <Stack spacing={2} alignItems="center" textAlign="center" sx={{ mb: { xs: 5, md: 8 } }}>
           <Typography variant="overline" sx={{ color: 'primary.main', fontWeight: 700 }}>
-            Funcionalidades
+            {t('landing.features.eyebrow')}
           </Typography>
           <Typography variant="h3" sx={{ fontWeight: 800, maxWidth: 720 }}>
-            Tudo que você precisa para atender bem.
+            {t('landing.features.title')}
           </Typography>
           <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 640 }}>
-            Os módulos foram pensados para a rotina real do nutricionista — sem firulas e sem
-            burocracia.
+            {t('landing.features.description')}
           </Typography>
         </Stack>
 
         <Grid container spacing={3}>
-          {FEATURES.map((feature) => (
+          {features.map((feature) => (
             <Grid key={feature.title} size={{ xs: 12, sm: 6, md: 4 }}>
               <Box
                 sx={{

@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useTranslation } from 'react-i18next';
 
 import type { ConfirmDialogProps } from './types';
 
@@ -46,14 +47,15 @@ function WarningTriangle({ color }: { color: 'error' | 'primary' }) {
 
 export function ConfirmDialog({
     open,
-    title = 'Confirmar ação',
+    title,
     description,
-    confirmText = 'Confirmar',
-    cancelText = 'Cancelar',
+    confirmText,
+    cancelText,
     destructive = false,
     onClose,
     onConfirm,
 }: ConfirmDialogProps) {
+    const { t } = useTranslation();
     const [submitting, setSubmitting] = useState(false);
     const accent = useMemo(() => (destructive ? 'error' : 'primary'), [destructive]);
 
@@ -95,13 +97,13 @@ export function ConfirmDialog({
             <DialogTitle sx={{ p: 0 }}>
                 <Stack spacing={2} alignItems="center" textAlign="center" sx={{ pt: 3 }}>
                     <WarningTriangle color={accent} />
-                    <Typography variant="h6" component="h2">{title}</Typography>
+                    <Typography variant="h6" component="h2">{title ?? t('shared.confirmAction')}</Typography>
                 </Stack>
             </DialogTitle>
 
             <DialogContent sx={{ px: 3, pt: 1, pb: 0 }}>
                 <Typography variant="body2" color="text.secondary" textAlign="center">
-                    {description ?? 'This action cannot be undone. All values associated with this field will be lost.'}
+                    {description ?? t('shared.irreversibleAction')}
                 </Typography>
             </DialogContent>
 
@@ -128,7 +130,7 @@ export function ConfirmDialog({
                         color: (t) => t.palette[accent].main
                     }}
                 >
-                    {cancelText}
+                    {cancelText ?? t('actions.cancel')}
                 </Button>
 
                 {/* Botão principal ermelho */}
@@ -145,7 +147,7 @@ export function ConfirmDialog({
                         fontWeight: 600,
                     }}
                 >
-                    {submitting ? <CircularProgress size={20} /> : confirmText}
+                    {submitting ? <CircularProgress size={20} /> : (confirmText ?? t('actions.confirm'))}
                 </Button>
             </DialogActions>
         </Dialog>

@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { varAlpha } from 'minimal-shared/utils';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -35,59 +36,59 @@ type Plan = {
   features: string[];
 };
 
-const PLANS: Plan[] = [
-  {
-    name: 'Trial',
-    description: 'Para experimentar a plataforma.',
-    price: 'Grátis',
-    period: '14 dias',
-    ctaLabel: 'Começar agora',
-    features: [
-      'Até 5 pacientes',
-      'Planos alimentares',
-      'Anamneses',
-      'Agenda',
-      'Catálogo TACO',
-    ],
-  },
-  {
-    name: 'Profissional',
-    description: 'Para o consultório individual.',
-    price: 'R$ 79',
-    period: '/mês',
-    featured: true,
-    ctaLabel: 'Assinar',
-    features: [
-      'Pacientes ilimitados',
-      'Planos e anamneses ilimitados',
-      'Anamnese pública por link',
-      'Dashboard com KPIs',
-      'Workspace consolidado',
-      'Suporte por e-mail',
-    ],
-  },
-  {
-    name: 'Premium',
-    description: 'Para clínicas com equipe.',
-    price: 'R$ 149',
-    period: '/mês',
-    ctaLabel: 'Falar com vendas',
-    features: [
-      'Tudo do Profissional',
-      'Acesso para secretária',
-      'Lembretes automáticos',
-      'Relatórios avançados',
-      'Suporte prioritário',
-    ],
-  },
-];
-
 export function LandingPricing() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const { plans: catalogPlans, loading, error, reload, hasCatalog } = useSubscriptionCatalog();
   const [selectedPrices, setSelectedPrices] = useState<Record<string, string>>({});
+  const fallbackPlans: Plan[] = [
+    {
+      name: 'Trial',
+      description: t('landing.pricing.trial.description'),
+      price: t('subscription.checkout.free'),
+      period: t('landing.pricing.trial.period'),
+      ctaLabel: t('landing.pricing.trial.cta'),
+      features: [
+        t('landing.pricing.features.upToFivePatients'),
+        t('landing.pricing.features.mealPlans'),
+        t('landing.pricing.features.anamnesis'),
+        t('landing.pricing.features.calendar'),
+        t('landing.pricing.features.taco'),
+      ],
+    },
+    {
+      name: t('landing.pricing.professional.name'),
+      description: t('landing.pricing.professional.description'),
+      price: formatMoney(79),
+      period: `/ ${billingCycleLabel('monthly')}`,
+      featured: true,
+      ctaLabel: t('landing.pricing.professional.cta'),
+      features: [
+        t('landing.pricing.features.unlimitedPatients'),
+        t('landing.pricing.features.unlimitedPlans'),
+        t('landing.pricing.features.publicAnamnesis'),
+        t('landing.pricing.features.dashboard'),
+        t('landing.pricing.features.workspace'),
+        t('landing.pricing.features.emailSupport'),
+      ],
+    },
+    {
+      name: t('landing.pricing.premium.name'),
+      description: t('landing.pricing.premium.description'),
+      price: formatMoney(149),
+      period: `/ ${billingCycleLabel('monthly')}`,
+      ctaLabel: t('landing.pricing.premium.cta'),
+      features: [
+        t('landing.pricing.features.everythingProfessional'),
+        t('landing.pricing.features.assistantAccess'),
+        t('landing.pricing.features.reminders'),
+        t('landing.pricing.features.advancedReports'),
+        t('landing.pricing.features.prioritySupport'),
+      ],
+    },
+  ];
 
   const activePlans = useMemo(
     () =>
@@ -127,7 +128,12 @@ export function LandingPricing() {
     const featured = plan.isFeatured;
     const features = plan.features.length > 0
       ? plan.features
-      : ['Planos alimentares', 'Anamneses', 'Agenda', 'Workspace consolidado'];
+      : [
+          t('landing.pricing.features.mealPlans'),
+          t('landing.pricing.features.anamnesis'),
+          t('landing.pricing.features.calendar'),
+          t('landing.pricing.features.workspace'),
+        ];
 
     return (
       <Grid key={plan.planId} size={{ xs: 12, md: 4 }}>
@@ -146,7 +152,7 @@ export function LandingPricing() {
         >
           {featured && (
             <Chip
-              label="Mais escolhido"
+              label={t('landing.pricing.featured')}
               color="primary"
               size="small"
               sx={{
@@ -163,7 +169,7 @@ export function LandingPricing() {
             {plan.name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5, mb: 3 }}>
-            {plan.description || 'Plano Plenton'}
+            {plan.description || t('landing.pricing.planFallback')}
           </Typography>
 
           {plan.prices.length > 1 && (
@@ -212,7 +218,7 @@ export function LandingPricing() {
             onClick={() => handleRealPlanClick(selectedPrice.planPriceId)}
             sx={{ textTransform: 'none', boxShadow: 'none' }}
           >
-            Assinar
+            {t('landing.pricing.subscribe')}
           </Button>
         </Box>
       </Grid>
@@ -224,13 +230,13 @@ export function LandingPricing() {
       <Container maxWidth="lg">
         <Stack spacing={2} alignItems="center" textAlign="center" sx={{ mb: { xs: 5, md: 8 } }}>
           <Typography variant="overline" sx={{ color: 'primary.main', fontWeight: 700 }}>
-            Planos
+            {t('landing.pricing.eyebrow')}
           </Typography>
           <Typography variant="h3" sx={{ fontWeight: 800, maxWidth: 720 }}>
-            Escolha o plano ideal para o seu momento.
+            {t('landing.pricing.title')}
           </Typography>
           <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 640 }}>
-            Comece grátis e evolua à medida que o consultório cresce. Cancele quando quiser.
+            {t('landing.pricing.description')}
           </Typography>
         </Stack>
 
@@ -238,21 +244,21 @@ export function LandingPricing() {
           <Stack direction="row" spacing={1.5} justifyContent="center" alignItems="center" sx={{ mb: 3 }}>
             <CircularProgress size={20} />
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Carregando planos disponíveis...
+              {t('landing.pricing.loading')}
             </Typography>
           </Stack>
         )}
 
         {error && (
-          <Alert severity="info" action={<Button onClick={reload}>Tentar novamente</Button>} sx={{ mb: 3 }}>
-            Não foi possível carregar o catálogo agora. Mantivemos os planos de referência abaixo.
+          <Alert severity="info" action={<Button onClick={reload}>{t('shared.retry')}</Button>} sx={{ mb: 3 }}>
+            {t('landing.pricing.loadError')}
           </Alert>
         )}
 
         <Grid container spacing={3} alignItems="stretch">
           {hasCatalog && activePlans.length > 0
             ? activePlans.map(renderCatalogPlan)
-            : PLANS.map((plan) => (
+            : fallbackPlans.map((plan) => (
             <Grid key={plan.name} size={{ xs: 12, md: 4 }}>
               <Box
                 sx={{
@@ -273,7 +279,7 @@ export function LandingPricing() {
               >
                 {plan.featured && (
                   <Chip
-                    label="Mais escolhido"
+                    label={t('landing.pricing.featured')}
                     color="primary"
                     size="small"
                     sx={{

@@ -1,12 +1,7 @@
 import type { WorkspaceStatus } from 'src/types';
+import i18n from 'src/i18n';
 
 export const WORKSPACE_STATUS_ORDER: WorkspaceStatus[] = ['ACTIVE', 'INACTIVE', 'SUSPENDED'];
-
-export const WORKSPACE_STATUS_LABEL: Record<WorkspaceStatus, string> = {
-  ACTIVE: 'Ativo',
-  INACTIVE: 'Inativo',
-  SUSPENDED: 'Suspenso',
-};
 
 export const WORKSPACE_STATUS_COLOR: Record<WorkspaceStatus, 'default' | 'warning' | 'success'> = {
   ACTIVE: 'success',
@@ -32,7 +27,13 @@ export const getWorstStatus = (item: {
 };
 
 export const getWorkspaceStatusLabel = (status: WorkspaceStatus | null | undefined) =>
-  status ? WORKSPACE_STATUS_LABEL[status] : '-';
+  status === 'ACTIVE'
+    ? i18n.t('workspace.status.active')
+    : status === 'INACTIVE'
+      ? i18n.t('workspace.status.inactive')
+      : status === 'SUSPENDED'
+        ? i18n.t('workspace.status.suspended')
+        : '-';
 
 export const getWorkspaceStatusColor = (
   status: WorkspaceStatus | null | undefined

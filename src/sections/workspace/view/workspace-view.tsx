@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
@@ -17,6 +18,7 @@ type Toast = { kind: 'idle' } | { kind: 'success'; message: string } | { kind: '
 // ----------------------------------------------------------------------
 
 export function WorkspaceView() {
+  const { t } = useTranslation();
   const [currentView, setCurrentView] = useState<'list' | 'form'>('list');
   const [patientId, setPatientId] = useState<string | undefined>(undefined);
   const [patientName, setPatientName] = useState<string | undefined>(undefined);
@@ -54,7 +56,7 @@ export function WorkspaceView() {
               setPatientId(undefined);
               setPatientName(undefined);
               setInitialTab('mealPlan');
-              setToast({ kind: 'success', message: 'Área de trabalho salva' });
+              setToast({ kind: 'success', message: t('workspace.saved') });
             }}
           />
         )}

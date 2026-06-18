@@ -4,6 +4,7 @@ import { merge } from 'es-toolkit';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import { useTranslation } from 'react-i18next';
 
 import { RouterLink } from 'src/routes/components';
 
@@ -40,6 +41,8 @@ export function AuthLayout({
   slotProps,
   layoutQuery = 'md',
 }: AuthLayoutProps) {
+  const { t } = useTranslation();
+
   const renderHeader = () => {
     const headerSlotProps: HeaderSectionProps['slotProps'] = { container: { maxWidth: false } };
 
@@ -54,7 +57,7 @@ export function AuthLayout({
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 1.5 } }}>
           {/** @slot Help link */}
           <Link href="/contato" component={RouterLink} color="inherit" sx={{ typography: 'subtitle2' }}>
-            Precisa de ajuda?
+            {t('shared.help')}
           </Link>
         </Box>
       ),
