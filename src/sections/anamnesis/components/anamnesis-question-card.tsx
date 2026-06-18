@@ -76,9 +76,9 @@ export function AnamnesisQuestionCard({ value: q, index, total, onChange, onMove
                             size="small"
                             value={q.type}
                             onChange={(e) => {
-                                const t = e.target.value as QuestionType;
-                                const patch: Partial<AnamnesisQuestionDto> = { type: t };
-                                if (t !== QuestionType.Select && t !== QuestionType.MultiSelect) patch.options = null;
+                                const target = e.target.value as QuestionType;
+                                const patch: Partial<AnamnesisQuestionDto> = { type: target };
+                                if (target !== QuestionType.Select && target !== QuestionType.MultiSelect) patch.options = null;
                                 onChange(patch);
                             }}
                         >

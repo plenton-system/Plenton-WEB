@@ -2,8 +2,8 @@ import type { FastFieldProps } from 'formik';
 import type { FocusEvent, ChangeEvent } from 'react';
 import type { FoodGroup, FoodFormValues } from 'src/types';
 
-import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useState, useEffect, useCallback } from 'react';
 import { getIn, useFormik, FastField, FieldArray, FormikProvider } from 'formik';
 
 import Box from '@mui/material/Box';
@@ -247,9 +247,9 @@ export function FoodFormView({ foodId, onReturn }: Props) {
       const measures =
         data.homemadeMeasures?.length && data.homemadeMeasures.length > 0
           ? data.homemadeMeasures.map((measure) => ({
-              description: measure?.description ?? '',
-              quantityInGrams: measure?.quantityInGrams ?? 0,
-            }))
+            description: measure?.description ?? '',
+            quantityInGrams: measure?.quantityInGrams ?? 0,
+          }))
           : [];
 
       setInitialValues({

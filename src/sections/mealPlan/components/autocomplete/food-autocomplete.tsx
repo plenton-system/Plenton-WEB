@@ -1,7 +1,7 @@
 import type { FoodDto } from 'src/types';
 
-import { useRef, useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -25,7 +25,7 @@ export default function FoodAutocomplete({ value, onChange }: Props) {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [currentMode, setCurrentMode] = useState<'search' | 'all'>('all');
-    
+
     const skipSearchRef = useRef(false);
 
     useEffect(() => {

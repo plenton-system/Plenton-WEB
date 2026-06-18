@@ -1,5 +1,5 @@
-import type { TFunction } from 'i18next';
 import type { ReactNode } from 'react';
+import type { TFunction } from 'i18next';
 
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
