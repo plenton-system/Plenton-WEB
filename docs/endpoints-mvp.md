@@ -2,8 +2,9 @@
 
 Mapeamento dos endpoints que o frontend consome, por domínio/fase do MVP.
 Base URL configurada em `VITE_BASE_URL` (ver README). Todas as rotas
-autenticadas enviam `Authorization: Bearer <token>` e `X-TenantId`
-(ver [src/services/api/index.ts](../src/services/api/index.ts)).
+autenticadas enviam `Authorization: Bearer <token>`
+(ver [src/services/api/index.ts](../src/services/api/index.ts)), e o tenant
+é extraído a partir deste token pelo backend.
 
 Coluna "Back": `OK` = controller correspondente existe em `Plenton-Back`;
 `—` = não verificado/sem controller dedicado.

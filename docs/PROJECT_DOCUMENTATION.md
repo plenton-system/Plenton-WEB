@@ -16,8 +16,7 @@ forma consistente no produto, no repositório e na documentação.
 
 Aplicação **SPA** (Single Page Application) servida pelo Vite, consumindo uma
 API REST por HTTP (axios). Autenticação por **JWT (access token) + refresh
-token em cookie HttpOnly** e isolamento **multi-tenant** via header
-`X-TenantId`.
+token em cookie HttpOnly** e isolamento **multi-tenant** resolvido pelo backend a partir do token.
 
 ---
 
@@ -216,11 +215,9 @@ voo** (`abortAllRequests`), zera o token, limpa o storage e chama
 ### 7.6 Multi-tenant
 
 Em toda requisição autenticada, o interceptor de request injeta:
-- `Authorization: Bearer <accessToken>`;
-- `X-TenantId: <tenantId>` — extraído do claim `tenantId` do JWT
-  (`JwtUtils.getTenantId`).
+- `Authorization: Bearer <accessToken>`.
 
-O tenant corresponde ao nutricionista (chave de isolamento aplicada no backend).
+O tenant corresponde ao nutricionista e é tratado como dado do token (claim `tenantId`), com isolamento aplicado no backend.
 
 ---
 
@@ -302,7 +299,7 @@ Dashboard, Paciente, Consulta, Workspace, Alimentos, Anamnese.
   - `timeout: 30000`, `withCredentials: true` (envia o cookie de refresh);
   - suporte a **ngrok** (`ngrok-skip-browser-warning`) quando a base contém
     `ngrok-free.app`;
-  - interceptors de request (Authorization + X-TenantId) e response (refresh em
+  - interceptors de request (Authorization) e response (refresh em
     401), fila de refresh e `AbortController` global para cancelamento em massa.
 - **`utils/http-client.ts`** — wrappers tipados sobre a instância: `get`, `post`,
   `put`, `del`, `postMultipart`, `putMultipart` (este último converte objetos

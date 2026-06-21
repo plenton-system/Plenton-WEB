@@ -91,7 +91,7 @@ src/
 
 ## Multi-tenant
 
-Todas as requisições autenticadas enviam o header `X-TenantId`. Veja [src/services/api](src/services/api).
+Todas as requisições autenticadas enviam o token no header `Authorization: Bearer <token>`, e o tenant é extraído do token pelo backend. Veja [src/services/api](src/services/api).
 
 ## Rotas
 
