@@ -2,8 +2,6 @@ import type { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 import axios from 'axios';
 
-import { JwtUtils } from 'src/utils/jwt-utils';
-
 import i18n from 'src/i18n';
 
 // ----------------------------------------------------------------------
@@ -128,11 +126,6 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     if (token) {
         config.headers = config.headers ?? {};
         config.headers.Authorization = `Bearer ${token}`;
-
-        const tenantId = JwtUtils.getTenantId(token);
-
-        if (tenantId)
-            config.headers['X-TenantId'] = tenantId;
     }
 
     // opcional: garantir signal p/ cancelar em massa
