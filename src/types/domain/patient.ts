@@ -38,23 +38,31 @@ export type PatientFormValues = PatientDetailProps & {
 
 // ----------------------------------------------------------------------
 
-/**
- * Propriedades da Lista de pacientes
- */
-export interface PatientListProps {
+interface PatientBaseProps {
     id: string;
     name: string;
     status?: Patient.Status | string | null;
     birthDate?: string | null;
     profilePhoto?: string | File;
-};
+}
+
+/**
+ * Propriedades da Lista de pacientes
+ */
+export interface PatientListProps extends PatientBaseProps {
+    /**
+     * Indica que um usuário já foi criado e associado ao paciente.
+     * Não representa ativação da conta nem entrega do e-mail.
+     */
+    hasAccess: boolean;
+}
 
 // ----------------------------------------------------------------------
 
 /**
  * Criação e Edição de um paciente
  */
-export interface PatientDetailProps extends PatientListProps {
+export interface PatientDetailProps extends PatientBaseProps {
     phone: string;
     email: string;
     document: string;

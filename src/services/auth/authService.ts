@@ -1,4 +1,13 @@
-import type { Profile, LoginRequest, LoginResponse, RegisterRequest, ChangePasswordDto, ResetPasswordRequest, ForgotPasswordRequest } from 'src/types';
+import type {
+    Profile,
+    LoginRequest,
+    LoginResponse,
+    RegisterRequest,
+    ChangePasswordDto,
+    ResetPasswordRequest,
+    ForgotPasswordRequest,
+    ActivatePatientAccountRequest,
+} from 'src/types';
 
 import { get, post } from 'src/utils/http-client';
 import { authStorage } from 'src/utils/auth-storage';
@@ -32,6 +41,14 @@ export const authService = {
             await post('/api/auth/reset-password', payload);
         } catch (err) {
             throw new Error(extractApiErrorMessage(err, i18n.t('auth.reset.requestError')));
+        }
+    },
+
+    activatePatientAccount: async (payload: ActivatePatientAccountRequest): Promise<void> => {
+        try {
+            await post('/api/auth/patient/activate', payload);
+        } catch (err) {
+            throw new Error(extractApiErrorMessage(err, i18n.t('auth.activate.requestError')));
         }
     },
 

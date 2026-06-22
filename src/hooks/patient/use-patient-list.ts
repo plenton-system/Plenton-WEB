@@ -29,6 +29,7 @@ type UsePatientListReturn = {
     setPageIndex: (i: number) => void;
     setPageSize: (s: number) => void;
     deletePatient?: (id: string) => Promise<boolean>;
+    createAccess?: (id: string) => Promise<boolean>;
 };
 
 // ----------------------------------------------------------------------
@@ -95,6 +96,29 @@ export function usePatientList({ initialFilters }: UsePatientListOptions = {}): 
 
     }, [fetchList]);
 
+    const createAccess = useCallback(async (id: string): Promise<boolean> => {
+        if (!id)
+            return false;
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            await patientService.createUser(id);
+            await fetchList();
+            return true;
+        } catch (erro) {
+            const message = extractApiErrorMessage(
+                erro,
+                i18n.t('patient.actions.createAccessError')
+            );
+            setError(message);
+            throw new Error(message);
+        } finally {
+            setLoading(false);
+        }
+    }, [fetchList]);
+
     useEffect(() => {
         const controller = new AbortController();
         fetchList().then(() => { });
@@ -114,6 +138,7 @@ export function usePatientList({ initialFilters }: UsePatientListOptions = {}): 
         setFilters,
         setPageIndex,
         setPageSize,
-        deletePatient
+        deletePatient,
+        createAccess
     };
 }

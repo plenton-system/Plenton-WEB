@@ -24,6 +24,7 @@ export const FoodPage = lazy(() => import('src/pages/food'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
 export const ForgotPasswordPage = lazy(() => import('src/pages/forgot-password'));
 export const ResetPasswordPage = lazy(() => import('src/pages/reset-password'));
+export const ActivatePatientAccountPage = lazy(() => import('src/pages/activate-patient-account'));
 export const SubscriptionCheckoutPage = lazy(() => import('src/pages/subscription-checkout'));
 export const SubscriptionPendingPage = lazy(() => import('src/pages/subscription-pending'));
 export const SubscriptionSuccessPage = lazy(() => import('src/pages/subscription-success'));
@@ -100,6 +101,7 @@ export const routesSection: RouteObject[] = [
       { path: 'sign-in', element: <SignInPage /> },
       { path: 'forgot-password', element: <ForgotPasswordPage /> },
       { path: 'reset-password', element: <ResetPasswordPage /> },
+      { path: 'activate-patient-account', element: <ActivatePatientAccountPage /> },
     ],
   },
 

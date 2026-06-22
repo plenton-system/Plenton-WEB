@@ -19,7 +19,8 @@
     "downloadPdf": "Baixar PDF",
     "generatingPdf": "Gerando PDF...",
     "completed": "Concluído",
-    "viewAll": "Ver tudo"
+    "viewAll": "Ver tudo",
+    "createAccess": "Criar acesso"
   },
   "common": {
     "yes": "Sim",
@@ -115,6 +116,25 @@
       "submit": "Redefinir senha",
       "requestError": "Não foi possível redefinir a senha."
     },
+    "activate": {
+      "heroTitle": "Ative seu acesso",
+      "heroDescription": "Defina uma senha segura para acessar sua conta de paciente no Plenton.",
+      "backToLogin": "Voltar ao login",
+      "title": "Ativar conta",
+      "forEmail": "Criando acesso para",
+      "password": "Senha",
+      "confirmPassword": "Confirmar senha",
+      "passwordRequired": "Informe a senha",
+      "confirmRequired": "Confirme a senha",
+      "passwordRules": "Use pelo menos 8 caracteres, com maiúscula, minúscula, número e caractere especial.",
+      "passwordMismatch": "As senhas não coincidem",
+      "submit": "Ativar minha conta",
+      "saving": "Ativando...",
+      "success": "Conta ativada com sucesso. Redirecionando para o login...",
+      "invalidLink": "Link de ativação inválido ou incompleto.",
+      "requestError": "Não foi possível ativar a conta.",
+      "togglePasswordVisibility": "Mostrar ou ocultar senha"
+    },
     "errors": {
       "register": "Não foi possível concluir o cadastro.",
       "login": "Falha no login",
@@ -138,6 +158,15 @@
       },
       "deleteSuccess": "Paciente excluído com sucesso.",
       "deleteError": "Falha ao excluir o paciente."
+    },
+    "actions": {
+      "createAccess": {
+        "title": "Criar acesso do paciente",
+        "description": "Um e-mail de ativação será enviado ao paciente para que ele defina a própria senha.",
+        "confirm": "Criar acesso"
+      },
+      "createAccessSuccess": "Acesso criado. O e-mail de ativação será enviado ao paciente.",
+      "createAccessError": "Não foi possível criar o acesso do paciente."
     },
     "form": {
       "back": "Voltar",
@@ -1403,6 +1432,7 @@
     "pendingPayment": "Pagamento pendente",
     "forgotPassword": "Recuperar senha",
     "newPassword": "Nova senha",
+    "activatePatientAccount": "Ativar conta",
     "signIn": "Entrar",
     "workspace": "Área de trabalho",
     "patient": "Paciente",

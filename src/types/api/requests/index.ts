@@ -68,3 +68,12 @@ export type ResetPasswordRequest = {
     token: string;
     newPassword: string;
 };
+
+/**
+ * Payload para ativar a conta de um paciente e definir sua primeira senha.
+ */
+export type ActivatePatientAccountRequest = {
+    email: string;
+    token: string;
+    password: string;
+};

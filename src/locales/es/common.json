@@ -19,7 +19,8 @@
     "downloadPdf": "Descargar PDF",
     "generatingPdf": "Generando PDF...",
     "completed": "Completado",
-    "viewAll": "Ver todo"
+    "viewAll": "Ver todo",
+    "createAccess": "Crear acceso"
   },
   "common": {
     "yes": "Sí",
@@ -115,6 +116,25 @@
       "submit": "Restablecer contraseña",
       "requestError": "No se pudo restablecer la contraseña."
     },
+    "activate": {
+      "heroTitle": "Active su acceso",
+      "heroDescription": "Defina una contraseña segura para acceder a su cuenta de paciente en Plenton.",
+      "backToLogin": "Volver al inicio de sesión",
+      "title": "Activar cuenta",
+      "forEmail": "Creando acceso para",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "passwordRequired": "Introduzca una contraseña",
+      "confirmRequired": "Confirme la contraseña",
+      "passwordRules": "Use al menos 8 caracteres con mayúscula, minúscula, número y carácter especial.",
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "submit": "Activar mi cuenta",
+      "saving": "Activando...",
+      "success": "Cuenta activada con éxito. Redirigiendo al inicio de sesión...",
+      "invalidLink": "El enlace de activación no es válido o está incompleto.",
+      "requestError": "No se pudo activar la cuenta.",
+      "togglePasswordVisibility": "Mostrar u ocultar contraseña"
+    },
     "errors": {
       "register": "No se pudo completar el registro.",
       "login": "Error al iniciar sesión",
@@ -138,6 +158,15 @@
       },
       "deleteSuccess": "Paciente eliminado con éxito.",
       "deleteError": "No se pudo eliminar el paciente."
+    },
+    "actions": {
+      "createAccess": {
+        "title": "Crear acceso del paciente",
+        "description": "Se enviará un correo de activación para que el paciente defina su propia contraseña.",
+        "confirm": "Crear acceso"
+      },
+      "createAccessSuccess": "Acceso creado. Se enviará el correo de activación al paciente.",
+      "createAccessError": "No se pudo crear el acceso del paciente."
     },
     "form": {
       "back": "Volver",
@@ -1403,6 +1432,7 @@
     "pendingPayment": "Pago pendiente",
     "forgotPassword": "Recuperar contraseña",
     "newPassword": "Nueva contraseña",
+    "activatePatientAccount": "Activar cuenta",
     "signIn": "Entrar",
     "workspace": "Área de trabajo",
     "patient": "Paciente",

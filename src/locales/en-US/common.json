@@ -19,7 +19,8 @@
     "downloadPdf": "Download PDF",
     "generatingPdf": "Generating PDF...",
     "completed": "Completed",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "createAccess": "Create access"
   },
   "common": {
     "yes": "Yes",
@@ -115,6 +116,25 @@
       "submit": "Reset password",
       "requestError": "We could not reset the password."
     },
+    "activate": {
+      "heroTitle": "Activate your access",
+      "heroDescription": "Set a secure password to access your Plenton patient account.",
+      "backToLogin": "Back to sign in",
+      "title": "Activate account",
+      "forEmail": "Creating access for",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "passwordRequired": "Enter a password",
+      "confirmRequired": "Confirm the password",
+      "passwordRules": "Use at least 8 characters with uppercase, lowercase, a number, and a special character.",
+      "passwordMismatch": "Passwords do not match",
+      "submit": "Activate my account",
+      "saving": "Activating...",
+      "success": "Account activated successfully. Redirecting to sign in...",
+      "invalidLink": "The activation link is invalid or incomplete.",
+      "requestError": "We could not activate the account.",
+      "togglePasswordVisibility": "Show or hide password"
+    },
     "errors": {
       "register": "We could not complete your registration.",
       "login": "Sign-in failed",
@@ -138,6 +158,15 @@
       },
       "deleteSuccess": "Patient deleted successfully.",
       "deleteError": "Failed to delete the patient."
+    },
+    "actions": {
+      "createAccess": {
+        "title": "Create patient access",
+        "description": "An activation email will be sent so the patient can set their own password.",
+        "confirm": "Create access"
+      },
+      "createAccessSuccess": "Access created. The activation email will be sent to the patient.",
+      "createAccessError": "Could not create patient access."
     },
     "form": {
       "back": "Back",
@@ -1403,6 +1432,7 @@
     "pendingPayment": "Pending payment",
     "forgotPassword": "Recover password",
     "newPassword": "New password",
+    "activatePatientAccount": "Activate account",
     "signIn": "Sign in",
     "workspace": "Workspace",
     "patient": "Patient",

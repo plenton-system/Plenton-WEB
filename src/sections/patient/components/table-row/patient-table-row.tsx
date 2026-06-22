@@ -21,6 +21,7 @@ type PatientTableRowProps = {
   onSelectRow: () => void;
   onEdit: (patient: PatientListProps) => void;
   onDelete: (patient: PatientListProps) => void;
+  onCreateAccess: (patient: PatientListProps) => void;
 };
 
 const STATUS_COLORS: Record<string, 'success' | 'warning' | 'error' | 'default'> = {
@@ -30,7 +31,14 @@ const STATUS_COLORS: Record<string, 'success' | 'warning' | 'error' | 'default'>
   Inactive: 'error',
 };
 
-export function PatientTableRow({ row, selected, onSelectRow, onEdit, onDelete }: PatientTableRowProps) {
+export function PatientTableRow({
+  row,
+  selected,
+  onSelectRow,
+  onEdit,
+  onDelete,
+  onCreateAccess,
+}: PatientTableRowProps) {
   const { t } = useTranslation();
   const statusLabels: Record<string, string> = {
     PendingPayment: t('patient.status.pendingPayment'),
@@ -79,6 +87,11 @@ export function PatientTableRow({ row, selected, onSelectRow, onEdit, onDelete }
         <RowActionsMenu
           menuWidth={140}
           actions={[
+            ...(!row.hasAccess ? [{
+              label: t('actions.createAccess'),
+              icon: 'mingcute:add-line' as const,
+              onClick: () => onCreateAccess(row),
+            }] : []),
             {
               label: t('actions.edit'),
               icon: 'solar:pen-bold',

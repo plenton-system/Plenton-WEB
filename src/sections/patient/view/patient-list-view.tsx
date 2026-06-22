@@ -45,7 +45,8 @@ export function PatientListView({
         pageSize,
         setPageIndex,
         setPageSize,
-        deletePatient
+        deletePatient,
+        createAccess
     } = usePatientList({ initialFilters: { pageSize: 5 } });
 
     const data = useMemo(() => items.map(r => ({ ...r, id: String(r.id) })), [items]);
@@ -83,6 +84,29 @@ export function PatientListView({
             onNotify?.({ kind: 'success', message: t('patient.list.deleteSuccess') });
         } catch (e: any) {
             onNotify?.({ kind: 'error', message: e?.message ?? t('patient.list.deleteError') });
+        }
+    };
+
+    const handleCreateAccess = async (id: string) => {
+        const ok = await confirm({
+            title: t('patient.actions.createAccess.title'),
+            description: t('patient.actions.createAccess.description'),
+            confirmText: t('patient.actions.createAccess.confirm'),
+        });
+
+        if (!ok) return;
+
+        try {
+            await createAccess?.(id);
+            onNotify?.({
+                kind: 'success',
+                message: t('patient.actions.createAccessSuccess'),
+            });
+        } catch (e: any) {
+            onNotify?.({
+                kind: 'error',
+                message: e?.message ?? t('patient.actions.createAccessError'),
+            });
         }
     };
 
@@ -141,6 +165,7 @@ export function PatientListView({
                         onSelectRow={onRowSelect}
                         onEdit={() => onEdit?.(row.id)}
                         onDelete={() => handleDelete?.(row.id)}
+                        onCreateAccess={() => handleCreateAccess(row.id)}
                     />
                 )}
             />

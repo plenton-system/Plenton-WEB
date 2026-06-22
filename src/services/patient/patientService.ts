@@ -42,6 +42,10 @@ export const patientService = {
 
     delete: async (id: string): Promise<void> => {
         await del(`/api/patient/${id}`);
-    }
+    },
+
+    createUser: async (id: string): Promise<void> => {
+        await post('/api/patient/create-user', { idPatient: id });
+    },
 
 };
