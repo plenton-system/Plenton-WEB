@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -19,17 +20,19 @@ import type { ConfirmDialogProps } from './types';
 function WarningTriangle({ color }: { color: 'error' | 'primary' }) {
     return (
         <Box
-            sx={{
+            sx={(theme) => ({
                 width: 56,
                 height: 56,
                 borderRadius: '50%',
                 display: 'grid',
                 placeItems: 'center',
-                bgcolor: (t) =>
-                    t.palette.mode === 'light' ?
-                        `${t.palette[color].main}22` : `${t.palette[color].main}33`,
-                color: (t) => t.palette[color].main,
-            }}
+                bgcolor: varAlpha(theme.vars.palette[color].mainChannel, 0.12),
+                color: theme.vars.palette[color].main,
+                ...theme.applyStyles('dark', {
+                    bgcolor: varAlpha(theme.vars.palette[color].mainChannel, 0.2),
+                    color: theme.vars.palette[color].light,
+                }),
+            })}
         >
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
                 <path
@@ -88,8 +91,11 @@ export function ConfirmDialog({
                     elevation: 0,
                     sx: (theme) => ({
                         borderRadius: 3,
-                        border: `1px solid ${theme.palette.divider}`,
-                        boxShadow: `0 10px 30px ${theme.palette.mode === 'light' ? 'rgba(16,24,40,0.08)' : 'rgba(0,0,0,0.5)'}`,
+                        color: theme.vars.palette.text.primary,
+                        backgroundColor: theme.vars.palette.background.paper,
+                        backgroundImage: 'none',
+                        border: `1px solid ${varAlpha(theme.vars.palette.grey['500Channel'], 0.2)}`,
+                        boxShadow: theme.vars.customShadows.dialog,
                     })
                 }
             }}
@@ -117,7 +123,7 @@ export function ConfirmDialog({
                 {/* Cancel: claro com borda */}
                 <Button
                     onClick={onClose}
-                    color='error'
+                    color="inherit"
                     disabled={submitting}
                     fullWidth
                     variant="outlined"
@@ -126,8 +132,15 @@ export function ConfirmDialog({
                         borderRadius: 2,
                         textTransform: 'none',
                         fontWeight: 600,
-                        borderColor: (theme) => theme.palette[accent].main,
-                        color: (theme) => theme.palette[accent].main
+                        color: 'text.secondary',
+                        borderColor: (theme) =>
+                            varAlpha(theme.vars.palette.grey['500Channel'], 0.32),
+                        '&:hover': {
+                            color: 'text.primary',
+                            borderColor: (theme) =>
+                                varAlpha(theme.vars.palette.grey['500Channel'], 0.56),
+                            bgcolor: 'action.hover',
+                        },
                     }}
                 >
                     {cancelText ?? t('actions.cancel')}

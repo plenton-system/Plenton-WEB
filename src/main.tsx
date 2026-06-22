@@ -8,7 +8,6 @@ import App from './app';
 import { routesSection } from './routes/sections';
 import { ErrorBoundary } from './routes/components';
 import { AuthProvider } from './contexts/auth-context';
-import { ConfirmProvider } from './contexts/confirm-context';
 import { NotificationsProvider } from './contexts/notifications-context';
 
 // ----------------------------------------------------------------------
@@ -31,9 +30,7 @@ root.render(
   <StrictMode>
     <AuthProvider>
       <NotificationsProvider>
-        <ConfirmProvider>
-          <RouterProvider router={router} />
-        </ConfirmProvider>
+        <RouterProvider router={router} />
       </NotificationsProvider>
     </AuthProvider>
   </StrictMode>

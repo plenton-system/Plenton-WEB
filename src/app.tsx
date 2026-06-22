@@ -9,6 +9,8 @@ import { usePathname } from 'src/routes/hooks';
 
 import { ThemeProvider } from 'src/theme/theme-provider';
 
+import { ConfirmProvider } from 'src/contexts/confirm-context';
+
 //import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
@@ -48,8 +50,10 @@ export default function App({ children }: AppProps) {
         modeStorageKey="theme"
       />
       <ThemeProvider>
-        {children}
-        {/* {githubButton()} */}
+        <ConfirmProvider>
+          {children}
+          {/* {githubButton()} */}
+        </ConfirmProvider>
       </ThemeProvider>
     </>
   );
