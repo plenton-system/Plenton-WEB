@@ -67,10 +67,10 @@ export const authService = {
         try {
             HttpAuthState.setLoggingOut(true);
             abortAllRequests();                 // cancela requisições em voo
-            HttpAuthState.setAccessToken(null); // zera token antes de chamar o backend
-            authStorage.clear();
             await post('/api/auth/logout');     // limpa cookie httpOnly no servidor
         } finally {
+            HttpAuthState.setAccessToken(null);
+            authStorage.clear();
             HttpAuthState.setLoggingOut(false);
         }
     },
