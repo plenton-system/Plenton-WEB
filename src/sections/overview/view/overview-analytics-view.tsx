@@ -121,7 +121,7 @@ export function OverviewAnalyticsView() {
               />
             </Grid>
 
-            <Grid size={{ xs: 8, md: 6, lg: 6 }}>
+            <Grid size={{ xs: 12, md: 6, lg: 6 }}>
               <AnalyticsBar
                 title={t('overview.bmi.title')}
                 subheader={t('overview.bmi.subheader')}
