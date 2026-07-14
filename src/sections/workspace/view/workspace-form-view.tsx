@@ -1,7 +1,6 @@
 import type { AppointmentDetailProps } from 'src/types';
 
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -21,8 +20,8 @@ import { WorkspaceMealPlanTab } from '../components/form-tabs/workspace-meal-pla
 import { WorkspaceAnamnesisTab } from '../components/form-tabs/workspace-anamnesis-tab';
 import { WorkspaceEvolutionTab } from '../components/form-tabs/workspace-evolution-tab';
 import { WorkspaceTabs, type WorkspaceTabId } from '../components/form-tabs/workspace-tabs';
-import { WorkspaceGenericListTab } from '../components/form-tabs/workspace-generic-list-tab';
 import { WorkspaceAnthropometryTab } from '../components/form-tabs/workspace-anthropometry-tab';
+import { WorkspaceClinicalDocumentTab } from '../components/form-tabs/workspace-clinical-document-tab';
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +42,6 @@ export function WorkspaceFormView({
   onBack,
   onReturn,
 }: WorkspaceFormViewProps) {
-  const { t } = useTranslation();
   const [tab, setTab] = useState<WorkspaceTabId>(initialTab ?? 'mealPlan');
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
   const [appointmentInitialData, setAppointmentInitialData] = useState<AppointmentDetailProps | null>(null);
@@ -93,17 +91,6 @@ export function WorkspaceFormView({
     resetFormStatesHook(false);
   };
 
-  const mockLists = {
-    anthropometry: [
-      { primary: `${t('workspace.anthropometry.columns.weight')}: 72 kg`, secondary: t('mealplan.list.updated', { date: '2d' }) },
-      { primary: `${t('workspace.anthropometry.columns.height')}: 1.70 m`, secondary: t('mealplan.list.updated', { date: '2d' }) },
-    ],
-    documents: [
-      { primary: t('workspace.documents.planSent'), secondary: '01/02' },
-      { primary: 'WhatsApp', secondary: t('workspace.documents.sentYesterday') },
-    ],
-  } as const;
-
   return (
     <Card variant="outlined" sx={{ p: { xs: 1.5, md: 2 }, borderRadius: 3 }}>
       <Stack spacing={3}>
@@ -135,12 +122,10 @@ export function WorkspaceFormView({
 
             {tab === 'evolution' && <WorkspaceEvolutionTab patientId={patientId} />}
 
-            {tab === 'documents' && (
-              <WorkspaceGenericListTab
-                title={t('workspace.documents.title')}
-                items={mockLists.documents}
-                placeholder={t('workspace.documents.empty')}
-              />
+            {tab === 'exams' && <WorkspaceClinicalDocumentTab kind="exams" patientId={patientId} />}
+
+            {tab === 'prescriptions' && (
+              <WorkspaceClinicalDocumentTab kind="prescriptions" patientId={patientId} />
             )}
           </Stack>
         </Box>

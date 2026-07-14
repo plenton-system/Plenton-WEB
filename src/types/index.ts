@@ -27,3 +27,5 @@ export * from './domain/subscription';
 export * from './domain/notification';
 
 export * from './domain/public-anamnesis';
+
+export * from './domain/clinical-documents';

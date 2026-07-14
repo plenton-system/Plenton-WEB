@@ -10,7 +10,8 @@ export const WORKSPACE_TABS = [
   { id: 'anthropometry', labelKey: 'workspace.tabs.anthropometry' },
   { id: 'anamnesis', labelKey: 'workspace.tabs.anamnesis' },
   { id: 'evolution', labelKey: 'workspace.tabs.evolution' },
-  { id: 'documents', labelKey: 'workspace.tabs.documents' },
+  { id: 'exams', labelKey: 'workspace.tabs.exams' },
+  { id: 'prescriptions', labelKey: 'workspace.tabs.prescriptions' },
 ] as const;
 
 export type WorkspaceTabId = (typeof WORKSPACE_TABS)[number]['id'];

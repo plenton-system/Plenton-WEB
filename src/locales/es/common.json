@@ -786,7 +786,9 @@
       "anthropometry": "Antropometría",
       "anamnesis": "Anamnesis",
       "evolution": "Evolución",
-      "documents": "Documentos"
+      "documents": "Documentos",
+      "exams": "Exámenes",
+      "prescriptions": "Prescripción"
     },
     "list": {
       "search": "Buscar paciente",
@@ -840,6 +842,63 @@
       "empty": "Sin documentos ni envíos.",
       "planSent": "Plan enviado (PDF)",
       "sentYesterday": "Enviado ayer"
+    },
+    "clinicalDocuments": {
+      "subtitle": "Cree, edite y acompañe documentos clínicos del paciente.",
+      "search": "Buscar documento",
+      "untitled": "Sin título",
+      "exams": {
+        "title": "Exámenes",
+        "search": "Buscar examen",
+        "newTitle": "Nuevo examen",
+        "editTitle": "Editar examen",
+        "empty": "No se encontró ningún pedido de examen."
+      },
+      "prescriptions": {
+        "title": "Prescripción",
+        "search": "Buscar prescripción",
+        "newTitle": "Nueva prescripción",
+        "editTitle": "Editar prescripción",
+        "empty": "No se encontró ninguna prescripción."
+      },
+      "types": {
+        "ExamRequest": "Pedido de examen",
+        "Medication": "Medicamento",
+        "Compounded": "Manipulado"
+      },
+      "columns": {
+        "title": "Título",
+        "type": "Tipo",
+        "updatedAt": "Última actualización",
+        "actions": "Acciones"
+      },
+      "fields": {
+        "title": "Título",
+        "content": "Contenido"
+      },
+      "editor": {
+        "new": "Nuevo documento",
+        "edit": "Editar documento",
+        "subtitle": "Use título y contenido libre para armar el documento."
+      },
+      "actions": {
+        "newDocument": "Nuevo documento",
+        "print": "Imprimir",
+        "saving": "Guardando..."
+      },
+      "validation": {
+        "title": "Indique el título.",
+        "content": "Indique el contenido.",
+        "type": "Seleccione un tipo de documento válido.",
+        "patient": "Seleccione un paciente para crear documentos."
+      },
+      "errors": {
+        "load": "No se pudieron cargar los documentos clínicos.",
+        "save": "No se pudo guardar el documento clínico."
+      },
+      "success": {
+        "saved": "Documento guardado con éxito."
+      }
     },
     "generic": {
       "loading": "Cargando {{title}}...",

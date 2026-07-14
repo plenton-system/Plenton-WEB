@@ -12,3 +12,5 @@ export { appointmentService } from './appointment/appointmentService';
 export { subscriptionService } from './subscription/subscriptionService';
 
 export { notificationService } from './notifications/notificationService';
+
+export { clinicalDocumentService } from './clinicalDocuments/clinicalDocumentService';

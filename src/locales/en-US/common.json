@@ -786,7 +786,9 @@
       "anthropometry": "Anthropometry",
       "anamnesis": "Anamnesis",
       "evolution": "Progress",
-      "documents": "Documents"
+      "documents": "Documents",
+      "exams": "Exams",
+      "prescriptions": "Prescription"
     },
     "list": {
       "search": "Search patient",
@@ -840,6 +842,63 @@
       "empty": "No documents or deliveries.",
       "planSent": "Plan sent (PDF)",
       "sentYesterday": "Sent yesterday"
+    },
+    "clinicalDocuments": {
+      "subtitle": "Create, edit, and track patient clinical documents.",
+      "search": "Search document",
+      "untitled": "Untitled",
+      "exams": {
+        "title": "Exams",
+        "search": "Search exam",
+        "newTitle": "New exam",
+        "editTitle": "Edit exam",
+        "empty": "No exam request found."
+      },
+      "prescriptions": {
+        "title": "Prescription",
+        "search": "Search prescription",
+        "newTitle": "New prescription",
+        "editTitle": "Edit prescription",
+        "empty": "No prescription found."
+      },
+      "types": {
+        "ExamRequest": "Exam request",
+        "Medication": "Medication",
+        "Compounded": "Compounded"
+      },
+      "columns": {
+        "title": "Title",
+        "type": "Type",
+        "updatedAt": "Last update",
+        "actions": "Actions"
+      },
+      "fields": {
+        "title": "Title",
+        "content": "Content"
+      },
+      "editor": {
+        "new": "New document",
+        "edit": "Edit document",
+        "subtitle": "Use title and free content to assemble the document."
+      },
+      "actions": {
+        "newDocument": "New document",
+        "print": "Print",
+        "saving": "Saving..."
+      },
+      "validation": {
+        "title": "Enter the title.",
+        "content": "Enter the content.",
+        "type": "Select a valid document type.",
+        "patient": "Select a patient to create documents."
+      },
+      "errors": {
+        "load": "Could not load clinical documents.",
+        "save": "Could not save the clinical document."
+      },
+      "success": {
+        "saved": "Document saved successfully."
+      }
     },
     "generic": {
       "loading": "Loading {{title}}...",
