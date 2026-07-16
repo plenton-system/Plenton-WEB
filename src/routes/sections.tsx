@@ -20,6 +20,7 @@ export const PatientPage = lazy(() => import('src/pages/patient'));
 export const AppointmentPage = lazy(() => import('src/pages/appointment'));
 export const AnamnesisPage = lazy(() => import('src/pages/anamnesis'));
 export const WorkspacePage = lazy(() => import('src/pages/workspace'));
+export const PlannerPage = lazy(() => import('src/pages/planner'));
 export const FoodPage = lazy(() => import('src/pages/food'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
 export const ForgotPasswordPage = lazy(() => import('src/pages/forgot-password'));
@@ -123,6 +124,7 @@ export const routesSection: RouteObject[] = [
       { path: 'patient', element: <PatientPage /> },
       { path: 'appointment', element: <AppointmentPage /> },
       { path: 'workspace', element: <WorkspacePage /> },
+      { path: 'planner', element: <PlannerPage /> },
       { path: 'food', element: <FoodPage /> },
       { path: 'anamnesis', element: <AnamnesisPage /> },
       { path: 'subscription/checkout', element: <SubscriptionCheckoutPage /> },

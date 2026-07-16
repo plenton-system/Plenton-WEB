@@ -116,7 +116,13 @@ export function WorkspaceFormView({
           <Stack spacing={3}>
             {tab === 'mealPlan' && <WorkspaceMealPlanTab patientId={patientId} onDone={onReturn} />}
 
-            {tab === 'anthropometry' && <WorkspaceAnthropometryTab patientId={patientId} onDone={onReturn} />}
+            {tab === 'anthropometry' && (
+              <WorkspaceAnthropometryTab
+                patientId={patientId}
+                patientName={patientName}
+                onDone={onReturn}
+              />
+            )}
 
             {tab === 'anamnesis' && <WorkspaceAnamnesisTab patientId={patientId} />}
 
@@ -127,6 +133,7 @@ export function WorkspaceFormView({
             {tab === 'prescriptions' && (
               <WorkspaceClinicalDocumentTab kind="prescriptions" patientId={patientId} />
             )}
+
           </Stack>
         </Box>
       </Stack>

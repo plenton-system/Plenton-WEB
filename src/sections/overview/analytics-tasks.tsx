@@ -1,60 +1,68 @@
-import type { BoxProps } from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
+import type { PlannerTask, PlannerTaskPriority } from 'src/types';
 
-import { useState } from 'react';
+import dayjs from 'dayjs';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import Popover from '@mui/material/Popover';
 import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 
-import { Iconify } from 'src/components/iconify';
+import { usePlanner } from 'src/hooks/planner/use-planner';
+
+import { Label } from 'src/components/label';
 import { Scrollbar } from 'src/components/scrollbar';
 
-// ----------------------------------------------------------------------
+type Props = CardProps & { title?: string; subheader?: string };
 
-type Props = CardProps & {
-  title?: string;
-  subheader?: string;
-  list: {
-    id: string;
-    name: string;
-  }[];
+const priorityColor = (priority: PlannerTaskPriority) => {
+  if (priority === 'High') return 'error' as const;
+  if (priority === 'Medium') return 'warning' as const;
+  return 'success' as const;
 };
 
-export function AnalyticsTasks({ title, subheader, list, sx, ...other }: Props) {
-  const [selected, setSelected] = useState(['2']);
+const priorityLabelKey = (priority: PlannerTaskPriority) => {
+  if (priority === 'High') return 'planner.priority.high' as const;
+  if (priority === 'Medium') return 'planner.priority.medium' as const;
+  return 'planner.priority.low' as const;
+};
 
-  const handleClickComplete = (taskId: string) => {
-    const tasksCompleted = selected.includes(taskId)
-      ? selected.filter((value) => value !== taskId)
-      : [...selected, taskId];
-
-    setSelected(tasksCompleted);
-  };
+export function AnalyticsTasks({ title, subheader, sx, ...other }: Props) {
+  const { t } = useTranslation();
+  const planner = usePlanner();
+  const tasks = useMemo(
+    () => planner.tasks.filter((task) => task.status !== 'Completed' && task.status !== 'Canceled'),
+    [planner.tasks]
+  );
 
   return (
-    <Card sx={sx} {...other}>
+    <Card sx={[{ minWidth: 0, overflow: 'hidden' }, ...(Array.isArray(sx) ? sx : [sx])]} {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 1 }} />
 
+      {planner.error && (
+        <Alert severity="error" sx={{ mx: 2, mb: 1 }}>
+          {planner.error}
+        </Alert>
+      )}
+
+      {!planner.loading && tasks.length === 0 && (
+        <Typography color="text.secondary" sx={{ px: 3, py: 2 }}>
+          {t('planner.empty')}
+        </Typography>
+      )}
+
       <Scrollbar sx={{ minHeight: 0 }}>
-        <Stack divider={<Divider sx={{ borderStyle: 'dashed' }} />} sx={{ minWidth: 560 }}>
-          {list.map((item) => (
-            <TaskItem
-              key={item.id}
-              item={item}
-              selected={selected.includes(item.id)}
-              onChange={() => handleClickComplete(item.id)}
-            />
+        <Stack
+          divider={<Divider sx={{ borderStyle: 'dashed' }} />}
+          sx={{ minWidth: 0, width: 1 }}
+        >
+          {tasks.map((task) => (
+            <TaskItem key={task.id} task={task} />
           ))}
         </Stack>
       </Scrollbar>
@@ -62,120 +70,44 @@ export function AnalyticsTasks({ title, subheader, list, sx, ...other }: Props) 
   );
 }
 
-// ----------------------------------------------------------------------
-
-type TaskItemProps = BoxProps & {
-  selected: boolean;
-  item: Props['list'][number];
-  onChange: (id: string) => void;
-};
-
-function TaskItem({ item, selected, onChange, sx, ...other }: TaskItemProps) {
+function TaskItem({ task }: { task: PlannerTask }) {
   const { t } = useTranslation();
-  const menuActions = usePopover();
-
-  const handleMarkComplete = () => {
-    menuActions.onClose();
-    console.info('MARK COMPLETE', item.id);
-  };
-
-  const handleShare = () => {
-    menuActions.onClose();
-    console.info('SHARE', item.id);
-  };
-
-  const handleEdit = () => {
-    menuActions.onClose();
-    console.info('EDIT', item.id);
-  };
-
-  const handleDelete = () => {
-    menuActions.onClose();
-    console.info('DELETE', item.id);
-  };
+  const overdue = Boolean(task.dueDate && dayjs(task.dueDate).isBefore(dayjs()));
 
   return (
-    <>
-      <Box
-        sx={[
-          () => ({
-            pl: 2,
-            pr: 1,
-            py: 1.5,
-            display: 'flex',
-            ...(selected && {
-              color: 'text.disabled',
-              textDecoration: 'line-through',
-            }),
-          }),
-          ...(Array.isArray(sx) ? sx : [sx]),
-        ]}
-        {...other}
-      >
-        <FormControlLabel
-          label={item.name}
-          control={
-            <Checkbox
-              disableRipple
-              checked={selected}
-              onChange={onChange}
-              slotProps={{ input: { id: `${item.name}-checkbox` } }}
-            />
-          }
-          sx={{ flexGrow: 1, m: 0 }}
-        />
+    <Box
+      sx={{
+        px: { xs: 1.5, sm: 2 },
+        py: 1.5,
+        gap: 1,
+        minWidth: 0,
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
+        <Typography variant="body2" noWrap title={task.title}>
+          {task.title}
+        </Typography>
 
-        <IconButton color={menuActions.open ? 'inherit' : 'default'} onClick={menuActions.onOpen}>
-          <Iconify icon="eva:more-vertical-fill" />
-        </IconButton>
+        {task.dueDate && (
+          <Typography
+            variant="caption"
+            color={overdue ? 'error.main' : 'text.secondary'}
+            sx={{ display: 'block' }}
+          >
+            {dayjs(task.dueDate).format('DD/MM/YYYY HH:mm')}
+          </Typography>
+        )}
       </Box>
 
-      <Popover
-        open={menuActions.open}
-        anchorEl={menuActions.anchorEl}
-        onClose={menuActions.onClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <Label
+        color={priorityColor(task.priority)}
+        sx={{ flexShrink: 0, display: { xs: 'none', sm: 'inline-flex' } }}
       >
-        <MenuList
-          disablePadding
-          sx={{
-            p: 0.5,
-            gap: 0.5,
-            display: 'flex',
-            flexDirection: 'column',
-            [`& .${menuItemClasses.root}`]: {
-              pl: 1,
-              pr: 2,
-              gap: 2,
-              borderRadius: 0.75,
-              [`&.${menuItemClasses.selected}`]: { bgcolor: 'action.selected' },
-            },
-          }}
-        >
-          <MenuItem onClick={handleMarkComplete}>
-            <Iconify icon="solar:check-circle-bold" />
-            {t('actions.completed')}
-          </MenuItem>
+        {t(priorityLabelKey(task.priority))}
+      </Label>
 
-          <MenuItem onClick={handleEdit}>
-            <Iconify icon="solar:pen-bold" />
-            {t('actions.edit')}
-          </MenuItem>
-
-          <MenuItem onClick={handleShare}>
-            <Iconify icon="solar:share-bold" />
-            {t('actions.share')}
-          </MenuItem>
-
-          <Divider sx={{ borderStyle: 'dashed' }} />
-
-          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-            <Iconify icon="solar:trash-bin-trash-bold" />
-            {t('actions.delete')}
-          </MenuItem>
-        </MenuList>
-      </Popover>
-    </>
+    </Box>
   );
 }

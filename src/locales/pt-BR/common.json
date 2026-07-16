@@ -32,6 +32,7 @@
     "patients": "Pacientes",
     "appointments": "Consultas",
     "workspace": "Área de trabalho",
+    "tasks": "Tarefas",
     "foods": "Alimentos",
     "anamnesis": "Anamnese"
   },
@@ -240,6 +241,19 @@
       "deleteError": "Não foi possível excluir a consulta."
     }
   },
+  "planner": {
+    "empty": "Nenhuma tarefa encontrada.",
+    "fields": { "title": "Título", "description": "Descrição", "priority": "Prioridade", "dueDate": "Prazo", "patient": "Paciente" },
+    "priority": { "low": "Baixa", "medium": "Média", "high": "Alta" },
+    "actions": { "add": "Adicionar tarefa", "complete": "Marcar como concluída", "reopen": "Reabrir tarefa" },
+    "delete": { "title": "Excluir tarefa", "description": "Deseja excluir a tarefa “{{title}}”? Esta ação não pode ser desfeita." },
+    "dialog": { "newTitle": "Nova tarefa", "editTitle": "Editar tarefa" },
+    "workspace": { "title": "Tarefas do paciente" },
+    "page": { "title": "Tarefas", "description": "Organize lembretes e pendências dos seus pacientes." },
+    "filters": { "patient": "Exibindo tarefas de {{patient}}.", "clear": "Ver todas", "search": "Buscar tarefas", "searchPlaceholder": "Título, descrição ou paciente", "noResults": "Nenhuma tarefa encontrada para esta busca." },
+    "validation": { "titleRequired": "Informe o título.", "dueDateInvalid": "Informe uma data válida." },
+    "messages": { "loadError": "Não foi possível carregar as tarefas.", "saveError": "Não foi possível salvar a tarefa.", "saveSuccess": "Tarefa salva com sucesso!" }
+  },
   "overview": {
     "welcome": "Olá, bem-vindo de volta 👋",
     "widgets": {
@@ -248,7 +262,7 @@
       "returnRate": "Taxa de retorno",
       "attendanceRate": "Taxa de comparecimento"
     },
-    "tasks": { "title": "Consultas pendentes" },
+    "tasks": { "title": "Tarefas pendentes" },
     "bmi": { "title": "IMC médio (últimos 12 meses)", "subheader": "Último IMC de cada paciente/mês" },
     "loadError": "Erro ao buscar dados"
   },
@@ -788,7 +802,8 @@
       "evolution": "Evolução",
       "documents": "Documentos",
       "exams": "Exames",
-      "prescriptions": "Prescrição"
+      "prescriptions": "Prescrição",
+      "tasks": "Tarefas"
     },
     "list": {
       "search": "Buscar paciente",
@@ -981,6 +996,15 @@
       "deleteSuccess": "Avaliação antropométrica excluída com sucesso.",
       "empty": "Nenhuma avaliação antropométrica encontrada.",
       "noCalculation": "Sem cálculo salvo",
+      "reminder": {
+        "title": "Criar lembrete para o plano alimentar?",
+        "description": "A antropometria foi salva. Deseja criar uma tarefa para lembrar de enviar o plano alimentar em até 48 horas?",
+        "confirm": "Criar lembrete",
+        "taskTitle": "Enviar plano alimentar de {{patient}} em até 48h",
+        "patientFallback": "paciente",
+        "success": "Lembrete criado com sucesso.",
+        "error": "A antropometria foi salva, mas não foi possível criar o lembrete."
+      },
       "columns": {
         "date": "Data",
         "weight": "Peso",
@@ -1494,6 +1518,7 @@
     "activatePatientAccount": "Ativar conta",
     "signIn": "Entrar",
     "workspace": "Área de trabalho",
+    "planner": "Tarefas",
     "patient": "Paciente",
     "appointment": "Consulta",
     "anamnesis": "Anamnese",

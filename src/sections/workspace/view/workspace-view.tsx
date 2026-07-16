@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
@@ -8,21 +9,33 @@ import { DashboardContent } from 'src/layouts/dashboard';
 
 import { WorkspaceFormView } from './workspace-form-view';
 import { WorkspaceListView } from './workspace-list-view';
-
-import type { WorkspaceTabId } from '../components/form-tabs/workspace-tabs';
+import {
+  WORKSPACE_TABS,
+  type WorkspaceTabId,
+} from '../components/form-tabs/workspace-tabs';
 
 // ----------------------------------------------------------------------
 
 type Toast = { kind: 'idle' } | { kind: 'success'; message: string } | { kind: 'error'; message: string };
 
+const isWorkspaceTabId = (value: string | null): value is WorkspaceTabId =>
+  WORKSPACE_TABS.some((tab) => tab.id === value);
+
 // ----------------------------------------------------------------------
 
 export function WorkspaceView() {
   const { t } = useTranslation();
-  const [currentView, setCurrentView] = useState<'list' | 'form'>('list');
-  const [patientId, setPatientId] = useState<string | undefined>(undefined);
-  const [patientName, setPatientName] = useState<string | undefined>(undefined);
-  const [initialTab, setInitialTab] = useState<WorkspaceTabId>('mealPlan');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPatientId = searchParams.get('patientId') ?? undefined;
+  const initialPatientName = searchParams.get('patientName') ?? undefined;
+  const tabParam = searchParams.get('tab');
+  const initialWorkspaceTab = isWorkspaceTabId(tabParam) ? tabParam : 'mealPlan';
+  const [currentView, setCurrentView] = useState<'list' | 'form'>(
+    initialPatientId ? 'form' : 'list'
+  );
+  const [patientId, setPatientId] = useState<string | undefined>(initialPatientId);
+  const [patientName, setPatientName] = useState<string | undefined>(initialPatientName);
+  const [initialTab, setInitialTab] = useState<WorkspaceTabId>(initialWorkspaceTab);
   const [toast, setToast] = useState<Toast>({ kind: 'idle' });
 
   const handleOpen = (id?: string, tab: WorkspaceTabId = 'mealPlan', nextPatientName?: string) => {
@@ -30,6 +43,13 @@ export function WorkspaceView() {
     setPatientName(nextPatientName);
     setInitialTab(tab);
     setCurrentView('form');
+
+    if (id) {
+      const params = new URLSearchParams({ patientId: id });
+      if (nextPatientName) params.set('patientName', nextPatientName);
+      if (tab !== 'mealPlan') params.set('tab', tab);
+      setSearchParams(params);
+    }
   };
 
   const handleBackToList = () => {
@@ -38,6 +58,7 @@ export function WorkspaceView() {
     setPatientName(undefined);
     setInitialTab('mealPlan');
     setToast({ kind: 'idle' });
+    setSearchParams({});
   };
 
   return (
@@ -57,6 +78,7 @@ export function WorkspaceView() {
               setPatientName(undefined);
               setInitialTab('mealPlan');
               setToast({ kind: 'success', message: t('workspace.saved') });
+              setSearchParams({});
             }}
           />
         )}

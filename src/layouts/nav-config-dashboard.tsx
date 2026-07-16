@@ -10,6 +10,7 @@ export type NavItem = {
     | 'nav.patients'
     | 'nav.appointments'
     | 'nav.workspace'
+    | 'nav.tasks'
     | 'nav.foods'
     | 'nav.anamnesis';
   path: string;
@@ -37,6 +38,11 @@ export const navData: NavItem[] = [
     title: 'nav.workspace',
     path: '/workspace',
     icon: icon('ic-folder'),
+  },
+  {
+    title: 'nav.tasks',
+    path: '/planner',
+    icon: icon('ic-clipboard'),
   },
   {
     title: 'nav.foods',

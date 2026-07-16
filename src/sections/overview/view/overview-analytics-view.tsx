@@ -20,7 +20,6 @@ export function OverviewAnalyticsView() {
   const { t } = useTranslation();
   const { data, loading } = useOverview();
 
-  const tasksTodas = data?.tasks;
   const barBmiAverage = data?.bar?.chart;
   const active = data?.widgets?.find(w => w.overviewId === "Active");
   const returnn = data?.widgets?.find(w => w.overviewId === "Return");
@@ -112,7 +111,6 @@ export function OverviewAnalyticsView() {
               <AnalyticsTasks
                 title={t('overview.tasks.title')}
                 subheader={t('calendar.today')}
-                list={tasksTodas?.list ?? []}
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
