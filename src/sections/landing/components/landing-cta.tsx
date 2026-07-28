@@ -42,7 +42,7 @@ export function LandingCta() {
               variant="contained"
               color="inherit"
               endIcon={<Icon icon="solar:arrow-right-linear" width={20} />}
-              onClick={() => navigate('/sign-in?action=register')}
+              onClick={() => navigate('/#planos')}
               sx={{
                 textTransform: 'none',
                 px: 4,

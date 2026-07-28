@@ -97,7 +97,7 @@ export function LandingHeader() {
               </Button>
               <Button
                 variant="contained"
-                onClick={() => navigate('/sign-in?action=register')}
+                onClick={() => scrollTo('#planos')}
                 sx={{ textTransform: 'none', boxShadow: 'none' }}
               >
                 {t('landing.nav.tryFree')}
@@ -151,7 +151,7 @@ export function LandingHeader() {
           <Button
             variant="contained"
             fullWidth
-            onClick={() => navigate('/sign-in?action=register')}
+            onClick={() => scrollTo('#planos')}
             sx={{ textTransform: 'none' }}
           >
             {t('landing.nav.tryFree')}

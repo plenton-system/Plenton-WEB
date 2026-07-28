@@ -57,7 +57,7 @@ export function LandingHero() {
               size="large"
               variant="contained"
               endIcon={<Icon icon="solar:arrow-right-linear" width={20} />}
-              onClick={() => navigate('/sign-in?action=register')}
+              onClick={() => navigate('/#planos')}
               sx={{ textTransform: 'none', boxShadow: 'none', px: 4, py: 1.5 }}
             >
               {t('landing.nav.tryFree')}

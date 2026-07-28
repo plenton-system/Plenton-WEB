@@ -37,7 +37,7 @@ export function LandingFooter() {
       title: t('landing.footer.account'),
       items: [
         { label: t('landing.nav.signIn'), href: '/sign-in' },
-        { label: t('landing.nav.tryFree'), href: '/sign-in?action=register' },
+        { label: t('landing.nav.tryFree'), href: '#planos' },
       ],
     },
     {
