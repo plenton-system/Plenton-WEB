@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Developer"
+  short_description: "Implementa mudanças no frontend Plenton"
+  default_prompt: "Use $frontend-dev-agent para implementar esta demanda no Plenton Web seguindo os padrões do projeto."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Reviewer"
+  short_description: "Revisa qualidade e UX do Plenton Web"
+  default_prompt: "Use $frontend-reviewer-agent para revisar esta mudança frontend e classificar os achados."

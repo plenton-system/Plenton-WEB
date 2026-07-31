@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Tech Lead"
+  short_description: "Orquestra entregas técnicas do Plenton Web"
+  default_prompt: "Use $frontend-techlead-agent para conduzir esta demanda frontend com implementação e revisão independentes."
