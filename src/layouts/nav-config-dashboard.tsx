@@ -12,7 +12,13 @@ export type NavItem = {
     | 'nav.workspace'
     | 'nav.tasks'
     | 'nav.foods'
-    | 'nav.anamnesis';
+    | 'nav.anamnesis'
+    | 'admin.nav.overview'
+    | 'admin.nav.tenants'
+    | 'admin.nav.users'
+    | 'admin.nav.subscriptions'
+    | 'admin.nav.operations'
+    | 'admin.nav.audit';
   path: string;
   icon: React.ReactNode;
   info?: React.ReactNode;

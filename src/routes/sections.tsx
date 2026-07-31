@@ -8,9 +8,12 @@ import Box from '@mui/material/Box';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
 import { AuthLayout } from 'src/layouts/auth';
+import { AdminLayout } from 'src/layouts/admin';
 import { DashboardLayout } from 'src/layouts/dashboard';
 
 import { RequireAuth } from './components/require-auth';
+import { RequireAdmin } from './components/require-admin';
+import { AdminErrorBoundary } from './components/admin-error-boundary';
 
 // ----------------------------------------------------------------------
 
@@ -32,6 +35,8 @@ export const SubscriptionSuccessPage = lazy(() => import('src/pages/subscription
 export const SubscriptionCancelPage = lazy(() => import('src/pages/subscription-cancel'));
 export const SubscriptionExpiredPage = lazy(() => import('src/pages/subscription-expired'));
 export const SettingsSubscriptionPage = lazy(() => import('src/pages/settings-subscription'));
+export const AdminPage = lazy(() => import('src/pages/admin'));
+export const AdminSectionPage = lazy(() => import('src/pages/admin-section'));
 
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const PublicAnamnesisPage = lazy(() => import('src/pages/public-anamnesis'));
@@ -84,6 +89,29 @@ export const routesSection: RouteObject[] = [
       // Compatibilidade com links antigos
       { path: 'politica-de-privacidade', element: <Navigate to="/privacidade" replace /> },
       { path: 'termos-de-uso', element: <Navigate to="/termos" replace /> },
+    ],
+  },
+
+  {
+    path: 'admin',
+    errorElement: <AdminErrorBoundary />,
+    element: (
+      <RequireAdmin>
+        <AdminLayout>
+          <Suspense fallback={renderFallback()}>
+            <Outlet />
+          </Suspense>
+        </AdminLayout>
+      </RequireAdmin>
+    ),
+    children: [
+      { index: true, element: <AdminPage /> },
+      { path: 'tenants', element: <AdminSectionPage section="tenants" /> },
+      { path: 'users', element: <AdminSectionPage section="users" /> },
+      { path: 'subscriptions', element: <AdminSectionPage section="subscriptions" /> },
+      { path: 'operations', element: <AdminSectionPage section="operations" /> },
+      { path: 'audit', element: <AdminSectionPage section="audit" /> },
+      { path: '*', element: <Page404 /> },
     ],
   },
 

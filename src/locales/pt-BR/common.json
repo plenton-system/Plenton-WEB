@@ -184,8 +184,18 @@
       "years": "{{count}} anos",
       "statusLabel": "Status"
     },
-    "gender": { "male": "Masculino", "female": "Feminino", "other": "Outro", "select": "Selecione" },
-    "status": { "active": "Ativo", "pending": "Pendente", "pendingPayment": "Pagamento pendente", "inactive": "Inativo" },
+    "gender": {
+      "male": "Masculino",
+      "female": "Feminino",
+      "other": "Outro",
+      "select": "Selecione"
+    },
+    "status": {
+      "active": "Ativo",
+      "pending": "Pendente",
+      "pendingPayment": "Pagamento pendente",
+      "inactive": "Inativo"
+    },
     "data": {
       "name": "Nome Completo",
       "document": "CPF",
@@ -194,7 +204,13 @@
       "birthDate": "Data de Nascimento",
       "gender": "Gênero"
     },
-    "address": { "zipCode": "CEP", "street": "Rua", "neighborhood": "Bairro", "city": "Cidade", "state": "Estado" },
+    "address": {
+      "zipCode": "CEP",
+      "street": "Rua",
+      "neighborhood": "Bairro",
+      "city": "Cidade",
+      "state": "Estado"
+    },
     "notes": { "label": "Observações" },
     "validation": {
       "caloriesInvalid": "Calorias inválidas",
@@ -223,7 +239,10 @@
       "observation": "Observação"
     },
     "status": { "scheduled": "Agendada", "completed": "Concluída", "canceled": "Cancelada" },
-    "delete": { "title": "Excluir consulta", "description": "Esta ação é irreversível. Deseja continuar?" },
+    "delete": {
+      "title": "Excluir consulta",
+      "description": "Esta ação é irreversível. Deseja continuar?"
+    },
     "validation": {
       "patientRequired": "Selecione o paciente",
       "dateRequired": "Escolha a data e hora",
@@ -263,7 +282,10 @@
       "attendanceRate": "Taxa de comparecimento"
     },
     "tasks": { "title": "Tarefas pendentes" },
-    "bmi": { "title": "IMC médio (últimos 12 meses)", "subheader": "Último IMC de cada paciente/mês" },
+    "bmi": {
+      "title": "IMC médio (últimos 12 meses)",
+      "subheader": "Último IMC de cada paciente/mês"
+    },
     "loadError": "Erro ao buscar dados"
   },
   "food": {
@@ -271,8 +293,20 @@
       "title": "Alimentos",
       "tabs": { "custom": "Meus alimentos", "taco": "TACO" },
       "search": "Buscar alimento",
-      "columns": { "description": "Descrição", "group": "Grupo", "kcal": "kcal", "protein": "Prot. (g)", "carbs": "Carb. (g)", "fat": "Gord. (g)", "actions": "Ações" },
-      "delete": { "title": "Excluir Alimento", "description": "Esta ação é irreversível. Deseja continuar?", "onlyCustom": "Só é possível excluir alimentos da aba Meus alimentos." },
+      "columns": {
+        "description": "Descrição",
+        "group": "Grupo",
+        "kcal": "kcal",
+        "protein": "Prot. (g)",
+        "carbs": "Carb. (g)",
+        "fat": "Gord. (g)",
+        "actions": "Ações"
+      },
+      "delete": {
+        "title": "Excluir Alimento",
+        "description": "Esta ação é irreversível. Deseja continuar?",
+        "onlyCustom": "Só é possível excluir alimentos da aba Meus alimentos."
+      },
       "deleteSuccess": "Alimento excluído com sucesso.",
       "deleteError": "Falha ao excluir alimento."
     },
@@ -292,7 +326,12 @@
       "carbs": "Carboidrato (g)",
       "fat": "Gordura (g)",
       "saveError": "Erro ao salvar alimento",
-      "sections": { "mainMacros": "Macronutrientes principais", "detailedMacros": "Macronutrientes detalhados", "micros": "Micronutrientes", "homemade": "Medidas caseiras" },
+      "sections": {
+        "mainMacros": "Macronutrientes principais",
+        "detailedMacros": "Macronutrientes detalhados",
+        "micros": "Micronutrientes",
+        "homemade": "Medidas caseiras"
+      },
       "homemadeDesc": "Descrição da medida caseira",
       "homemadeGrams": "Quantidade em gramas",
       "removeMeasure": "Remover",
@@ -355,10 +394,26 @@
       "mealsCount_other": "{{count}} refeições",
       "itemsCount_one": "{{count}} item",
       "itemsCount_other": "{{count}} itens",
-      "columns": { "name": "Nome", "status": "Status", "days": "Dias", "resume": "Resumo", "updatedAt": "Última atualização", "delivery": "Entrega", "actions": "Ações" }
+      "columns": {
+        "name": "Nome",
+        "status": "Status",
+        "days": "Dias",
+        "resume": "Resumo",
+        "updatedAt": "Última atualização",
+        "delivery": "Entrega",
+        "actions": "Ações"
+      }
     },
     "status": { "active": "Ativo", "inactive": "Inativo", "suspended": "Suspenso" },
-    "days": { "sun": "Dom", "mon": "Seg", "tue": "Ter", "wed": "Qua", "thu": "Qui", "fri": "Sex", "sat": "Sáb" },
+    "days": {
+      "sun": "Dom",
+      "mon": "Seg",
+      "tue": "Ter",
+      "wed": "Qua",
+      "thu": "Qui",
+      "fri": "Sex",
+      "sat": "Sáb"
+    },
     "form": {
       "name": "Nome do plano",
       "status": "Status",
@@ -385,7 +440,15 @@
       "noQuantity": "Sem quantidade informada",
       "expand": "Expandir {{name}}",
       "collapse": "Recolher {{name}}",
-      "columns": { "name": "Nome", "time": "Hora", "protein": "Proteína (g)", "carbs": "Carboidrato (g)", "fat": "Lipídeo (g)", "calories": "Calorias (kcal)", "actions": "Ações" }
+      "columns": {
+        "name": "Nome",
+        "time": "Hora",
+        "protein": "Proteína (g)",
+        "carbs": "Carboidrato (g)",
+        "fat": "Lipídeo (g)",
+        "calories": "Calorias (kcal)",
+        "actions": "Ações"
+      }
     },
     "mealDialog": {
       "editTitle": "Editar refeição",
@@ -398,7 +461,15 @@
       "title": "Itens da refeição",
       "add": "Adicionar item",
       "empty": "Nenhum item adicionado.",
-      "columns": { "food": "Alimento", "quantity": "Qtd", "grams": "Gramas", "measure": "Medida", "optional": "Opcional", "order": "Ordem", "actions": "Ações" }
+      "columns": {
+        "food": "Alimento",
+        "quantity": "Qtd",
+        "grams": "Gramas",
+        "measure": "Medida",
+        "optional": "Opcional",
+        "order": "Ordem",
+        "actions": "Ações"
+      }
     },
     "substitutes": {
       "ofParent": "Substitutas de",
@@ -425,7 +496,11 @@
       "saving": "Salvando..."
     },
     "foodAutocomplete": { "label": "Alimento", "placeholder": "Digite para buscar..." },
-    "measureAutocomplete": { "label": "Medida caseira", "addNew": "Adicionar nova medida...", "systemDefault": "Padrão do sistema" },
+    "measureAutocomplete": {
+      "label": "Medida caseira",
+      "addNew": "Adicionar nova medida...",
+      "systemDefault": "Padrão do sistema"
+    },
     "detail": {
       "editTitle": "Editar plano alimentar",
       "newTitle": "Novo plano alimentar",
@@ -468,7 +543,10 @@
   "anamnesis": {
     "list": {
       "title": "Questionários Anamnese",
-      "delete": { "title": "Excluir questionário", "description": "Esta ação é irreversível. Deseja continuar?" },
+      "delete": {
+        "title": "Excluir questionário",
+        "description": "Esta ação é irreversível. Deseja continuar?"
+      },
       "deleteSuccess": "Questionário excluído com sucesso.",
       "deleteError": "Falha ao excluir o questionário.",
       "columns": { "title": "Titulo", "description": "Descrição", "actions": "Ações" }
@@ -488,7 +566,13 @@
     },
     "card": {
       "type": "Tipo",
-      "types": { "text": "Texto", "number": "Número", "boolean": "Sim/Não", "select": "Múltipla escolha (única)", "multiSelect": "Múltipla escolha (várias)" },
+      "types": {
+        "text": "Texto",
+        "number": "Número",
+        "boolean": "Sim/Não",
+        "select": "Múltipla escolha (única)",
+        "multiSelect": "Múltipla escolha (várias)"
+      },
       "question": "Pergunta",
       "required": "Obrigatória",
       "moveUp": "Mover para cima",
@@ -1504,6 +1588,63 @@
   },
   "errors": {
     "unexpected": "Erro inesperado"
+  },
+  "admin": {
+    "nav": {
+      "overview": "Visão geral",
+      "tenants": "Tenants",
+      "users": "Usuários",
+      "subscriptions": "Assinaturas",
+      "operations": "Operações",
+      "audit": "Auditoria"
+    },
+    "forbidden": {
+      "title": "Acesso negado",
+      "description": "Sua conta não possui permissão administrativa.",
+      "back": "Voltar ao dashboard"
+    },
+    "states": {
+      "loading": "Carregando dados administrativos…",
+      "empty": "Nenhum dado disponível",
+      "comingSoon": "Esta seção será disponibilizada em uma próxima etapa."
+    },
+    "actions": { "retry": "Tentar novamente", "refresh": "Atualizar dados" },
+    "dialogs": { "reason": "Motivo", "conflictTitle": "Os dados foram alterados" },
+    "routeError": {
+      "title": "Não foi possível abrir a área administrativa",
+      "description": "Ocorreu um erro inesperado. Nenhum detalhe técnico foi exibido por segurança."
+    },
+    "data": {
+      "metadataCaption": "Metadados administrativos",
+      "diffCaption": "Comparação entre o estado anterior e o atual",
+      "field": "Campo",
+      "value": "Valor",
+      "before": "Antes",
+      "after": "Depois"
+    },
+    "errors": {
+      "validation": "Revise os dados informados.",
+      "authentication": "Sua sessão expirou.",
+      "authorization": "Você não possui permissão.",
+      "notFound": "O recurso não foi encontrado.",
+      "conflict": "Os dados foram alterados por outra operação.",
+      "providerUncertain": "O provedor não confirmou o resultado. Tente novamente com a mesma intenção.",
+      "network": "Não foi possível conectar ao servidor.",
+      "unknown": "Não foi possível concluir a operação."
+    },
+    "overview": {
+      "title": "Visão geral administrativa",
+      "description": "Indicadores operacionais da plataforma",
+      "windowStart": "Início da janela (UTC)",
+      "windowEnd": "Fim da janela (UTC)",
+      "tenants": "Tenants",
+      "users": "Usuários",
+      "patients": "Pacientes",
+      "subscriptions": "Assinaturas",
+      "webhooks": "Webhooks com falha",
+      "emails": "E-mails com falha",
+      "calculatedAt": "Calculado em {{date}}"
+    }
   },
   "pages": {
     "landingTitle": "{{appName}} — Software de gestão para nutricionistas",

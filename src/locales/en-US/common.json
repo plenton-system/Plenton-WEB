@@ -185,7 +185,12 @@
       "statusLabel": "Status"
     },
     "gender": { "male": "Male", "female": "Female", "other": "Other", "select": "Select" },
-    "status": { "active": "Active", "pending": "Pending", "pendingPayment": "Pending payment", "inactive": "Inactive" },
+    "status": {
+      "active": "Active",
+      "pending": "Pending",
+      "pendingPayment": "Pending payment",
+      "inactive": "Inactive"
+    },
     "data": {
       "name": "Full name",
       "document": "ID",
@@ -194,7 +199,13 @@
       "birthDate": "Date of birth",
       "gender": "Gender"
     },
-    "address": { "zipCode": "ZIP code", "street": "Street", "neighborhood": "District", "city": "City", "state": "State" },
+    "address": {
+      "zipCode": "ZIP code",
+      "street": "Street",
+      "neighborhood": "District",
+      "city": "City",
+      "state": "State"
+    },
     "notes": { "label": "Notes" },
     "validation": {
       "caloriesInvalid": "Invalid calories",
@@ -223,7 +234,10 @@
       "observation": "Notes"
     },
     "status": { "scheduled": "Scheduled", "completed": "Completed", "canceled": "Canceled" },
-    "delete": { "title": "Delete appointment", "description": "This action is irreversible. Do you want to continue?" },
+    "delete": {
+      "title": "Delete appointment",
+      "description": "This action is irreversible. Do you want to continue?"
+    },
     "validation": {
       "patientRequired": "Select a patient",
       "dateRequired": "Choose a date and time",
@@ -263,7 +277,10 @@
       "attendanceRate": "Attendance rate"
     },
     "tasks": { "title": "Pending tasks" },
-    "bmi": { "title": "Average BMI (last 12 months)", "subheader": "Latest BMI of each patient/month" },
+    "bmi": {
+      "title": "Average BMI (last 12 months)",
+      "subheader": "Latest BMI of each patient/month"
+    },
     "loadError": "Could not load dashboard data"
   },
   "food": {
@@ -271,8 +288,20 @@
       "title": "Foods",
       "tabs": { "custom": "My foods", "taco": "TACO" },
       "search": "Search food",
-      "columns": { "description": "Description", "group": "Group", "kcal": "kcal", "protein": "Prot. (g)", "carbs": "Carb. (g)", "fat": "Fat (g)", "actions": "Actions" },
-      "delete": { "title": "Delete food", "description": "This action is irreversible. Do you want to continue?", "onlyCustom": "You can only delete foods from the My foods tab." },
+      "columns": {
+        "description": "Description",
+        "group": "Group",
+        "kcal": "kcal",
+        "protein": "Prot. (g)",
+        "carbs": "Carb. (g)",
+        "fat": "Fat (g)",
+        "actions": "Actions"
+      },
+      "delete": {
+        "title": "Delete food",
+        "description": "This action is irreversible. Do you want to continue?",
+        "onlyCustom": "You can only delete foods from the My foods tab."
+      },
       "deleteSuccess": "Food deleted successfully.",
       "deleteError": "Failed to delete food."
     },
@@ -292,7 +321,12 @@
       "carbs": "Carbohydrate (g)",
       "fat": "Fat (g)",
       "saveError": "Error saving food",
-      "sections": { "mainMacros": "Main macronutrients", "detailedMacros": "Detailed macronutrients", "micros": "Micronutrients", "homemade": "Homemade measures" },
+      "sections": {
+        "mainMacros": "Main macronutrients",
+        "detailedMacros": "Detailed macronutrients",
+        "micros": "Micronutrients",
+        "homemade": "Homemade measures"
+      },
       "homemadeDesc": "Homemade measure description",
       "homemadeGrams": "Quantity in grams",
       "removeMeasure": "Remove",
@@ -355,10 +389,26 @@
       "mealsCount_other": "{{count}} meals",
       "itemsCount_one": "{{count}} item",
       "itemsCount_other": "{{count}} items",
-      "columns": { "name": "Name", "status": "Status", "days": "Days", "resume": "Summary", "updatedAt": "Last update", "delivery": "Delivery", "actions": "Actions" }
+      "columns": {
+        "name": "Name",
+        "status": "Status",
+        "days": "Days",
+        "resume": "Summary",
+        "updatedAt": "Last update",
+        "delivery": "Delivery",
+        "actions": "Actions"
+      }
     },
     "status": { "active": "Active", "inactive": "Inactive", "suspended": "Suspended" },
-    "days": { "sun": "Sun", "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat" },
+    "days": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
     "form": {
       "name": "Plan name",
       "status": "Status",
@@ -385,7 +435,15 @@
       "noQuantity": "No quantity provided",
       "expand": "Expand {{name}}",
       "collapse": "Collapse {{name}}",
-      "columns": { "name": "Name", "time": "Time", "protein": "Protein (g)", "carbs": "Carbohydrate (g)", "fat": "Fat (g)", "calories": "Calories (kcal)", "actions": "Actions" }
+      "columns": {
+        "name": "Name",
+        "time": "Time",
+        "protein": "Protein (g)",
+        "carbs": "Carbohydrate (g)",
+        "fat": "Fat (g)",
+        "calories": "Calories (kcal)",
+        "actions": "Actions"
+      }
     },
     "mealDialog": {
       "editTitle": "Edit meal",
@@ -398,7 +456,15 @@
       "title": "Meal items",
       "add": "Add item",
       "empty": "No item added.",
-      "columns": { "food": "Food", "quantity": "Qty", "grams": "Grams", "measure": "Measure", "optional": "Optional", "order": "Order", "actions": "Actions" }
+      "columns": {
+        "food": "Food",
+        "quantity": "Qty",
+        "grams": "Grams",
+        "measure": "Measure",
+        "optional": "Optional",
+        "order": "Order",
+        "actions": "Actions"
+      }
     },
     "substitutes": {
       "ofParent": "Substitutes of",
@@ -425,7 +491,11 @@
       "saving": "Saving..."
     },
     "foodAutocomplete": { "label": "Food", "placeholder": "Type to search..." },
-    "measureAutocomplete": { "label": "Homemade measure", "addNew": "Add new measure...", "systemDefault": "System default" },
+    "measureAutocomplete": {
+      "label": "Homemade measure",
+      "addNew": "Add new measure...",
+      "systemDefault": "System default"
+    },
     "detail": {
       "editTitle": "Edit meal plan",
       "newTitle": "New meal plan",
@@ -468,7 +538,10 @@
   "anamnesis": {
     "list": {
       "title": "Anamnesis questionnaires",
-      "delete": { "title": "Delete questionnaire", "description": "This action is irreversible. Do you want to continue?" },
+      "delete": {
+        "title": "Delete questionnaire",
+        "description": "This action is irreversible. Do you want to continue?"
+      },
       "deleteSuccess": "Questionnaire deleted successfully.",
       "deleteError": "Failed to delete the questionnaire.",
       "columns": { "title": "Title", "description": "Description", "actions": "Actions" }
@@ -488,7 +561,13 @@
     },
     "card": {
       "type": "Type",
-      "types": { "text": "Text", "number": "Number", "boolean": "Yes/No", "select": "Multiple choice (single)", "multiSelect": "Multiple choice (multiple)" },
+      "types": {
+        "text": "Text",
+        "number": "Number",
+        "boolean": "Yes/No",
+        "select": "Multiple choice (single)",
+        "multiSelect": "Multiple choice (multiple)"
+      },
       "question": "Question",
       "required": "Required",
       "moveUp": "Move up",
@@ -1504,6 +1583,63 @@
   },
   "errors": {
     "unexpected": "Unexpected error"
+  },
+  "admin": {
+    "nav": {
+      "overview": "Overview",
+      "tenants": "Tenants",
+      "users": "Users",
+      "subscriptions": "Subscriptions",
+      "operations": "Operations",
+      "audit": "Audit"
+    },
+    "forbidden": {
+      "title": "Access denied",
+      "description": "Your account does not have administrative permission.",
+      "back": "Back to dashboard"
+    },
+    "states": {
+      "loading": "Loading administrative data…",
+      "empty": "No data available",
+      "comingSoon": "This section will be available in a future stage."
+    },
+    "actions": { "retry": "Try again", "refresh": "Refresh data" },
+    "dialogs": { "reason": "Reason", "conflictTitle": "Data has changed" },
+    "routeError": {
+      "title": "The administrative area could not be opened",
+      "description": "An unexpected error occurred. Technical details are hidden for security."
+    },
+    "data": {
+      "metadataCaption": "Administrative metadata",
+      "diffCaption": "Comparison between the previous and current state",
+      "field": "Field",
+      "value": "Value",
+      "before": "Before",
+      "after": "After"
+    },
+    "errors": {
+      "validation": "Review the supplied data.",
+      "authentication": "Your session has expired.",
+      "authorization": "You do not have permission.",
+      "notFound": "The resource was not found.",
+      "conflict": "The data was changed by another operation.",
+      "providerUncertain": "The provider did not confirm the result. Retry the same intention.",
+      "network": "Could not connect to the server.",
+      "unknown": "The operation could not be completed."
+    },
+    "overview": {
+      "title": "Administrative overview",
+      "description": "Platform operational indicators",
+      "windowStart": "Window start (UTC)",
+      "windowEnd": "Window end (UTC)",
+      "tenants": "Tenants",
+      "users": "Users",
+      "patients": "Patients",
+      "subscriptions": "Subscriptions",
+      "webhooks": "Failed webhooks",
+      "emails": "Failed emails",
+      "calculatedAt": "Calculated at {{date}}"
+    }
   },
   "pages": {
     "landingTitle": "{{appName}} — Practice management software for nutritionists",

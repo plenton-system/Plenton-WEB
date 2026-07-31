@@ -107,10 +107,12 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
 
   return (
     <>
-      <Logo sx={{
-        pb: 2.5,
-        justifyContent: 'center'
-      }} />
+      <Logo
+        sx={{
+          pb: 2.5,
+          justifyContent: 'center',
+        }}
+      />
 
       {slots?.topArea}
 
@@ -135,7 +137,9 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
             }}
           >
             {data.map((item) => {
-              const isActived = item.path === pathname;
+              const isActived =
+                item.path === pathname ||
+                (item.path !== '/admin' && pathname.startsWith(`${item.path}/`));
 
               return (
                 <ListItem disableGutters disablePadding key={item.title}>
@@ -183,7 +187,6 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
       </Scrollbar>
 
       {slots?.bottomArea}
-
     </>
   );
 }

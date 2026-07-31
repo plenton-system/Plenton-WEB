@@ -18,6 +18,20 @@ import { HttpAuthState, abortAllRequests, registerRefreshExecutor } from 'src/se
 
 // ----------------------------------------------------------------------
 
+let refreshPromise: Promise<string> | null = null;
+
+const performRefresh = async (): Promise<string> => {
+    const data = await post<any>('/api/auth/refresh', {}, { withCredentials: true });
+    const accessToken: string | undefined =
+        data?.accessToken ?? data?.token?.accessToken ?? data?.Token?.AccessToken;
+
+    if (!accessToken)
+        throw new Error(i18n.t('auth.errors.refresh'));
+
+    HttpAuthState.setAccessToken(accessToken);
+    return accessToken;
+};
+
 export const authService = {
 
     register: async (payload: RegisterRequest): Promise<void> => {
@@ -68,16 +82,12 @@ export const authService = {
         }
     },
 
-    refresh: async (): Promise<string> => {
-        const data = await post<any>('/api/auth/refresh', {}, { withCredentials: true });
-        const accessToken: string | undefined =
-            data?.accessToken ?? data?.token?.accessToken ?? data?.Token?.AccessToken;
+    refresh: (): Promise<string> => {
+        refreshPromise ??= performRefresh().finally(() => {
+            refreshPromise = null;
+        });
 
-        if (!accessToken)
-            throw new Error(i18n.t('auth.errors.refresh'));
-
-        HttpAuthState.setAccessToken(accessToken);
-        return accessToken;
+        return refreshPromise;
     },
 
     logout: async () => {
