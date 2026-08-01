@@ -10,8 +10,15 @@ export type NavItem = {
     | 'nav.patients'
     | 'nav.appointments'
     | 'nav.workspace'
+    | 'nav.tasks'
     | 'nav.foods'
-    | 'nav.anamnesis';
+    | 'nav.anamnesis'
+    | 'admin.nav.overview'
+    | 'admin.nav.tenants'
+    | 'admin.nav.users'
+    | 'admin.nav.subscriptions'
+    | 'admin.nav.operations'
+    | 'admin.nav.audit';
   path: string;
   icon: React.ReactNode;
   info?: React.ReactNode;
@@ -37,6 +44,11 @@ export const navData: NavItem[] = [
     title: 'nav.workspace',
     path: '/workspace',
     icon: icon('ic-folder'),
+  },
+  {
+    title: 'nav.tasks',
+    path: '/planner',
+    icon: icon('ic-clipboard'),
   },
   {
     title: 'nav.foods',

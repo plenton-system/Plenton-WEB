@@ -8,9 +8,12 @@ import Box from '@mui/material/Box';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
 import { AuthLayout } from 'src/layouts/auth';
+import { AdminLayout } from 'src/layouts/admin';
 import { DashboardLayout } from 'src/layouts/dashboard';
 
 import { RequireAuth } from './components/require-auth';
+import { RequireAdmin } from './components/require-admin';
+import { AdminErrorBoundary } from './components/admin-error-boundary';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +23,7 @@ export const PatientPage = lazy(() => import('src/pages/patient'));
 export const AppointmentPage = lazy(() => import('src/pages/appointment'));
 export const AnamnesisPage = lazy(() => import('src/pages/anamnesis'));
 export const WorkspacePage = lazy(() => import('src/pages/workspace'));
+export const PlannerPage = lazy(() => import('src/pages/planner'));
 export const FoodPage = lazy(() => import('src/pages/food'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
 export const ForgotPasswordPage = lazy(() => import('src/pages/forgot-password'));
@@ -31,6 +35,16 @@ export const SubscriptionSuccessPage = lazy(() => import('src/pages/subscription
 export const SubscriptionCancelPage = lazy(() => import('src/pages/subscription-cancel'));
 export const SubscriptionExpiredPage = lazy(() => import('src/pages/subscription-expired'));
 export const SettingsSubscriptionPage = lazy(() => import('src/pages/settings-subscription'));
+export const AdminPage = lazy(() => import('src/pages/admin'));
+export const AdminSectionPage = lazy(() => import('src/pages/admin-section'));
+export const AdminTenantsPage = lazy(() => import('src/pages/admin-tenants'));
+export const AdminTenantDetailPage = lazy(() => import('src/pages/admin-tenant-detail'));
+export const AdminUsersPage = lazy(() => import('src/pages/admin-users'));
+export const AdminUserDetailPage = lazy(() => import('src/pages/admin-user-detail'));
+export const AdminSubscriptionsPage = lazy(() => import('src/pages/admin-subscriptions'));
+export const AdminSubscriptionDetailPage = lazy(
+  () => import('src/pages/admin-subscription-detail')
+);
 
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const PublicAnamnesisPage = lazy(() => import('src/pages/public-anamnesis'));
@@ -86,6 +100,32 @@ export const routesSection: RouteObject[] = [
     ],
   },
 
+  {
+    path: 'admin',
+    errorElement: <AdminErrorBoundary />,
+    element: (
+      <RequireAdmin>
+        <AdminLayout>
+          <Suspense fallback={renderFallback()}>
+            <Outlet />
+          </Suspense>
+        </AdminLayout>
+      </RequireAdmin>
+    ),
+    children: [
+      { index: true, element: <AdminPage /> },
+      { path: 'tenants', element: <AdminTenantsPage /> },
+      { path: 'tenants/:identifier', element: <AdminTenantDetailPage /> },
+      { path: 'users', element: <AdminUsersPage /> },
+      { path: 'users/:id', element: <AdminUserDetailPage /> },
+      { path: 'subscriptions', element: <AdminSubscriptionsPage /> },
+      { path: 'subscriptions/:id', element: <AdminSubscriptionDetailPage /> },
+      { path: 'operations', element: <AdminSectionPage section="operations" /> },
+      { path: 'audit', element: <AdminSectionPage section="audit" /> },
+      { path: '*', element: <Page404 /> },
+    ],
+  },
+
   // -------------------------
   // Auth (público)
   // -------------------------
@@ -123,6 +163,7 @@ export const routesSection: RouteObject[] = [
       { path: 'patient', element: <PatientPage /> },
       { path: 'appointment', element: <AppointmentPage /> },
       { path: 'workspace', element: <WorkspacePage /> },
+      { path: 'planner', element: <PlannerPage /> },
       { path: 'food', element: <FoodPage /> },
       { path: 'anamnesis', element: <AnamnesisPage /> },
       { path: 'subscription/checkout', element: <SubscriptionCheckoutPage /> },

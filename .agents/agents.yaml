@@ -1,0 +1,58 @@
+agents:
+  - name: frontend-techlead-agent
+    role: orchestration
+    instructions_file: .agents/frontend-techlead-agent.md
+    handoff_description: Coordena specs frontend, arquitetura, implementação, revisão de UX e fechamento técnico.
+    tools:
+      - frontend-dev-agent
+      - frontend-reviewer-agent
+
+  - name: frontend-dev-agent
+    role: implementation
+    instructions_file: .agents/frontend-dev-agent.md
+    handoff_description: Implementa React/TypeScript seguindo OpenSpec, padrões visuais e arquitetura do Plenton Web.
+
+  - name: frontend-reviewer-agent
+    role: review-validation
+    instructions_file: .agents/frontend-reviewer-agent.md
+    handoff_description: Revisa comportamento, UX, acessibilidade, segurança, responsividade, build e aderência à spec.
+
+orchestration:
+  recommended_pattern: agents_as_tools
+  manager: frontend-techlead-agent
+  final_decision_owner: frontend-techlead-agent
+  commit_owner: frontend-techlead-agent
+  commit_requires_explicit_user_request: true
+  dependency_installation_requires_approval: true
+  destructive_commands_allowed: false
+
+permissions:
+  global_denies:
+    - push
+    - destructive_commands
+    - broad_delete
+    - force_checkout
+    - git_reset
+    - git_clean
+    - dependency_install_without_approval
+    - production_deploy_without_explicit_user_request
+    - modify_environment_secrets
+  global_allows:
+    - read_repository
+    - inspect_diff
+    - run_typecheck
+    - run_build
+    - run_lint
+    - run_format_check
+    - run_existing_tests
+
+guardrails:
+  - require_spec_or_acceptance_criteria_review
+  - require_existing_pattern_inspection_before_new_abstraction
+  - require_loading_empty_error_success_state_review
+  - require_accessibility_and_responsiveness_review
+  - require_auth_and_browser_security_review_when_applicable
+  - require_i18n_review_for_user_facing_text
+  - require_build_lint_format_or_objective_justification_before_closure
+  - require_relevant_tests_or_explicit_test_gap_before_closure
+  - require_explicit_user_request_for_commit

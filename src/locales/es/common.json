@@ -183,8 +183,18 @@
       "years": "{{count}} años",
       "statusLabel": "Estado"
     },
-    "gender": { "male": "Masculino", "female": "Femenino", "other": "Otro", "select": "Seleccione" },
-    "status": { "active": "Activo", "pending": "Pendiente", "pendingPayment": "Pago pendiente", "inactive": "Inactivo" },
+    "gender": {
+      "male": "Masculino",
+      "female": "Femenino",
+      "other": "Otro",
+      "select": "Seleccione"
+    },
+    "status": {
+      "active": "Activo",
+      "pending": "Pendiente",
+      "pendingPayment": "Pago pendiente",
+      "inactive": "Inactivo"
+    },
     "data": {
       "name": "Nombre completo",
       "document": "Documento",
@@ -193,7 +203,13 @@
       "birthDate": "Fecha de nacimiento",
       "gender": "Género"
     },
-    "address": { "zipCode": "Código postal", "street": "Calle", "neighborhood": "Barrio", "city": "Ciudad", "state": "Estado" },
+    "address": {
+      "zipCode": "Código postal",
+      "street": "Calle",
+      "neighborhood": "Barrio",
+      "city": "Ciudad",
+      "state": "Estado"
+    },
     "notes": { "label": "Notas" },
     "validation": {
       "caloriesInvalid": "Calorías inválidas",
@@ -222,7 +238,10 @@
       "observation": "Observación"
     },
     "status": { "scheduled": "Agendada", "completed": "Completada", "canceled": "Cancelada" },
-    "delete": { "title": "Eliminar consulta", "description": "Esta acción es irreversible. ¿Desea continuar?" },
+    "delete": {
+      "title": "Eliminar consulta",
+      "description": "Esta acción es irreversible. ¿Desea continuar?"
+    },
     "validation": {
       "patientRequired": "Seleccione el paciente",
       "dateRequired": "Elija la fecha y hora",
@@ -249,7 +268,10 @@
       "attendanceRate": "Tasa de asistencia"
     },
     "tasks": { "title": "Consultas pendientes" },
-    "bmi": { "title": "IMC promedio (últimos 12 meses)", "subheader": "Último IMC de cada paciente/mes" },
+    "bmi": {
+      "title": "IMC promedio (últimos 12 meses)",
+      "subheader": "Último IMC de cada paciente/mes"
+    },
     "loadError": "No se pudieron cargar los datos del panel"
   },
   "food": {
@@ -257,8 +279,20 @@
       "title": "Alimentos",
       "tabs": { "custom": "Mis alimentos", "taco": "TACO" },
       "search": "Buscar alimento",
-      "columns": { "description": "Descripción", "group": "Grupo", "kcal": "kcal", "protein": "Prot. (g)", "carbs": "Carb. (g)", "fat": "Gras. (g)", "actions": "Acciones" },
-      "delete": { "title": "Eliminar alimento", "description": "Esta acción es irreversible. ¿Desea continuar?", "onlyCustom": "Solo es posible eliminar alimentos de la pestaña Mis alimentos." },
+      "columns": {
+        "description": "Descripción",
+        "group": "Grupo",
+        "kcal": "kcal",
+        "protein": "Prot. (g)",
+        "carbs": "Carb. (g)",
+        "fat": "Gras. (g)",
+        "actions": "Acciones"
+      },
+      "delete": {
+        "title": "Eliminar alimento",
+        "description": "Esta acción es irreversible. ¿Desea continuar?",
+        "onlyCustom": "Solo es posible eliminar alimentos de la pestaña Mis alimentos."
+      },
       "deleteSuccess": "Alimento eliminado con éxito.",
       "deleteError": "No se pudo eliminar el alimento."
     },
@@ -278,7 +312,12 @@
       "carbs": "Carbohidrato (g)",
       "fat": "Grasa (g)",
       "saveError": "Error al guardar el alimento",
-      "sections": { "mainMacros": "Macronutrientes principales", "detailedMacros": "Macronutrientes detallados", "micros": "Micronutrientes", "homemade": "Medidas caseras" },
+      "sections": {
+        "mainMacros": "Macronutrientes principales",
+        "detailedMacros": "Macronutrientes detallados",
+        "micros": "Micronutrientes",
+        "homemade": "Medidas caseras"
+      },
       "homemadeDesc": "Descripción de la medida casera",
       "homemadeGrams": "Cantidad en gramos",
       "removeMeasure": "Eliminar",
@@ -341,10 +380,26 @@
       "mealsCount_other": "{{count}} comidas",
       "itemsCount_one": "{{count}} ítem",
       "itemsCount_other": "{{count}} ítems",
-      "columns": { "name": "Nombre", "status": "Estado", "days": "Días", "resume": "Resumen", "updatedAt": "Última actualización", "delivery": "Entrega", "actions": "Acciones" }
+      "columns": {
+        "name": "Nombre",
+        "status": "Estado",
+        "days": "Días",
+        "resume": "Resumen",
+        "updatedAt": "Última actualización",
+        "delivery": "Entrega",
+        "actions": "Acciones"
+      }
     },
     "status": { "active": "Activo", "inactive": "Inactivo", "suspended": "Suspendido" },
-    "days": { "sun": "Dom", "mon": "Lun", "tue": "Mar", "wed": "Mié", "thu": "Jue", "fri": "Vie", "sat": "Sáb" },
+    "days": {
+      "sun": "Dom",
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb"
+    },
     "form": {
       "name": "Nombre del plan",
       "status": "Estado",
@@ -371,7 +426,15 @@
       "noQuantity": "Sin cantidad informada",
       "expand": "Expandir {{name}}",
       "collapse": "Contraer {{name}}",
-      "columns": { "name": "Nombre", "time": "Hora", "protein": "Proteína (g)", "carbs": "Carbohidrato (g)", "fat": "Lípido (g)", "calories": "Calorías (kcal)", "actions": "Acciones" }
+      "columns": {
+        "name": "Nombre",
+        "time": "Hora",
+        "protein": "Proteína (g)",
+        "carbs": "Carbohidrato (g)",
+        "fat": "Lípido (g)",
+        "calories": "Calorías (kcal)",
+        "actions": "Acciones"
+      }
     },
     "mealDialog": {
       "editTitle": "Editar comida",
@@ -384,7 +447,15 @@
       "title": "Ítems de la comida",
       "add": "Agregar ítem",
       "empty": "Ningún ítem agregado.",
-      "columns": { "food": "Alimento", "quantity": "Cant.", "grams": "Gramos", "measure": "Medida", "optional": "Opcional", "order": "Orden", "actions": "Acciones" }
+      "columns": {
+        "food": "Alimento",
+        "quantity": "Cant.",
+        "grams": "Gramos",
+        "measure": "Medida",
+        "optional": "Opcional",
+        "order": "Orden",
+        "actions": "Acciones"
+      }
     },
     "substitutes": {
       "ofParent": "Sustitutas de",
@@ -411,7 +482,11 @@
       "saving": "Guardando..."
     },
     "foodAutocomplete": { "label": "Alimento", "placeholder": "Escriba para buscar..." },
-    "measureAutocomplete": { "label": "Medida casera", "addNew": "Agregar nueva medida...", "systemDefault": "Predeterminado del sistema" },
+    "measureAutocomplete": {
+      "label": "Medida casera",
+      "addNew": "Agregar nueva medida...",
+      "systemDefault": "Predeterminado del sistema"
+    },
     "detail": {
       "editTitle": "Editar plan alimentario",
       "newTitle": "Nuevo plan alimentario",
@@ -454,7 +529,10 @@
   "anamnesis": {
     "list": {
       "title": "Cuestionarios de anamnesis",
-      "delete": { "title": "Eliminar cuestionario", "description": "Esta acción es irreversible. ¿Desea continuar?" },
+      "delete": {
+        "title": "Eliminar cuestionario",
+        "description": "Esta acción es irreversible. ¿Desea continuar?"
+      },
       "deleteSuccess": "Cuestionario eliminado con éxito.",
       "deleteError": "No se pudo eliminar el cuestionario.",
       "columns": { "title": "Título", "description": "Descripción", "actions": "Acciones" }
@@ -474,7 +552,13 @@
     },
     "card": {
       "type": "Tipo",
-      "types": { "text": "Texto", "number": "Número", "boolean": "Sí/No", "select": "Opción múltiple (única)", "multiSelect": "Opción múltiple (varias)" },
+      "types": {
+        "text": "Texto",
+        "number": "Número",
+        "boolean": "Sí/No",
+        "select": "Opción múltiple (única)",
+        "multiSelect": "Opción múltiple (varias)"
+      },
       "question": "Pregunta",
       "required": "Obligatoria",
       "moveUp": "Mover hacia arriba",
@@ -1480,6 +1564,221 @@
   },
   "errors": {
     "unexpected": "Error inesperado"
+  },
+  "admin": {
+    "nav": {
+      "overview": "Resumen",
+      "tenants": "Tenants",
+      "users": "Usuarios",
+      "subscriptions": "Suscripciones",
+      "operations": "Operaciones",
+      "audit": "Auditoría"
+    },
+    "forbidden": {
+      "title": "Acceso denegado",
+      "description": "Tu cuenta no tiene permiso administrativo.",
+      "back": "Volver al panel"
+    },
+    "states": {
+      "loading": "Cargando datos administrativos…",
+      "empty": "No hay datos disponibles",
+      "comingSoon": "Esta sección estará disponible en una etapa futura."
+    },
+    "actions": { "retry": "Intentar de nuevo", "refresh": "Actualizar datos" },
+    "dialogs": { "reason": "Motivo", "conflictTitle": "Los datos han cambiado" },
+    "routeError": {
+      "title": "No se pudo abrir el área administrativa",
+      "description": "Ocurrió un error inesperado. Los detalles técnicos están ocultos por seguridad."
+    },
+    "data": {
+      "metadataCaption": "Metadatos administrativos",
+      "diffCaption": "Comparación entre el estado anterior y el actual",
+      "field": "Campo",
+      "value": "Valor",
+      "before": "Antes",
+      "after": "Después"
+    },
+    "errors": {
+      "validation": "Revisa los datos informados.",
+      "authentication": "Tu sesión ha expirado.",
+      "authorization": "No tienes permiso.",
+      "notFound": "No se encontró el recurso.",
+      "conflict": "Otra operación modificó los datos.",
+      "providerUncertain": "El proveedor no confirmó el resultado. Reintenta la misma intención.",
+      "network": "No se pudo conectar al servidor.",
+      "unknown": "No se pudo completar la operación.",
+      "conflictRefresh": "El recurso fue actualizado. Revise los nuevos datos y confirme nuevamente."
+    },
+    "filters": {
+      "search": "Buscar",
+      "status": "Estado",
+      "all": "Todos",
+      "yes": "Sí",
+      "no": "No",
+      "role": "Rol",
+      "tenant": "Tenant",
+      "locked": "Bloqueado",
+      "emailConfirmed": "Correo confirmado"
+    },
+    "tenantStatus": { "active": "Activo", "suspended": "Suspendido" },
+    "userStatus": {
+      "active": "Acceso activo",
+      "blocked": "Usuario bloqueado",
+      "emailConfirmed": "Correo confirmado",
+      "emailPending": "Correo pendiente"
+    },
+    "tenants": {
+      "title": "Tenants",
+      "description": "Consulta y control operativo de tenants",
+      "detailDescription": "Detalles operativos, uso y suscripción",
+      "empty": "Ningún tenant coincide con los filtros actuales."
+    },
+    "users": {
+      "title": "Usuarios",
+      "description": "Consulta y control de acceso de usuarios",
+      "detailDescription": "Identidad sanitizada y estado de acceso",
+      "empty": "Ningún usuario coincide con los filtros actuales.",
+      "selfProtected": "No puede ejecutar comandos administrativos sobre su propia cuenta.",
+      "adminProtected": "Las cuentas administrativas están protegidas contra estos comandos."
+    },
+    "fields": {
+      "tenant": "Tenant",
+      "owner": "Responsable",
+      "usage": "Usuarios / pacientes",
+      "updated": "Actualizado",
+      "suspendedAt": "Suspendido el",
+      "reactivatedAt": "Reactivado el",
+      "concurrencyStamp": "Versión de concurrencia",
+      "lockoutEnabled": "Bloqueo habilitado",
+      "lockoutEnd": "Bloqueado hasta",
+      "created": "Creado",
+      "users": "usuarios",
+      "patients": "pacientes",
+      "nutritionists": "nutricionistas",
+      "subscription": "Suscripción",
+      "identity": "Identidad",
+      "access": "Acceso",
+      "email": "Correo",
+      "subscriptions": "suscripciones",
+      "currentPeriodEnd": "Fin del período actual",
+      "nextDueDate": "Próximo vencimiento",
+      "timestamps": "Fechas",
+      "suspended": "Suspendido el"
+    },
+    "subscriptionStatus": {
+      "1": "Pago pendiente",
+      "2": "En prueba",
+      "3": "Activa",
+      "4": "Atrasada",
+      "5": "Vencida",
+      "6": "Suspendida",
+      "7": "Cancelada",
+      "8": "Expirada"
+    },
+    "links": {
+      "users": "Ver usuarios del tenant",
+      "subscription": "Ver suscripción",
+      "audit": "Ver auditoría"
+    },
+    "actions": {
+      "retry": "Intentar de nuevo",
+      "refresh": "Actualizar datos",
+      "backToList": "Volver a la lista",
+      "suspendTenant": "Suspender tenant",
+      "reactivateTenant": "Reactivar tenant",
+      "blockUser": "Bloquear usuario",
+      "unblockUser": "Desbloquear usuario",
+      "revokeSessions": "Revocar sesiones",
+      "resendActivation": "Reenviar activación",
+      "passwordRecovery": "Recuperar contraseña"
+    },
+    "command": {
+      "block": "Bloquear usuario",
+      "unblock": "Desbloquear usuario",
+      "revoke": "Revocar sesiones",
+      "activation": "Reenviar activación",
+      "recovery": "Enviar recuperación de contraseña"
+    },
+    "consequences": {
+      "tenantSuspend": "La suspensión detiene las operaciones de todo el tenant y afecta a todos sus usuarios.",
+      "tenantReactivate": "La reactivación restaura las operaciones del tenant.",
+      "block": "El usuario perderá el acceso y sus sesiones serán revocadas.",
+      "unblock": "El usuario podrá acceder nuevamente a su cuenta.",
+      "revoke": "Todas las sesiones activas de este usuario finalizarán.",
+      "activation": "Se enviará una nueva invitación sin mostrar tokens.",
+      "recovery": "Se enviará una recuperación de contraseña sin mostrar tokens."
+    },
+    "feedback": {
+      "sessionsRevoked": "{{count}} sesión(es) revocada(s).",
+      "changed": "Estado actualizado correctamente.",
+      "requested": "Solicitud completada correctamente."
+    },
+    "invoiceStatus": {
+      "1": "Pendiente",
+      "2": "Pagada",
+      "3": "Vencida",
+      "4": "Cancelada",
+      "5": "Reembolsada",
+      "6": "Fallida"
+    },
+    "subscriptionManagement": {
+      "title": "Suscripciones",
+      "description": "Consulta comercial global y operaciones seguras de suscripción",
+      "detailDescription": "Estado comercial, identificadores del proveedor y facturas de solo lectura",
+      "empty": "Ninguna suscripción coincide con los filtros actuales.",
+      "tenantRequired": "El contexto del tenant es obligatorio para abrir esta suscripción.",
+      "catalogUnavailable": "Los precios activos no están disponibles. El cambio de plan permanece deshabilitado.",
+      "suspendHelp": "La suspensión es reversible y conserva la suscripción del proveedor para reactivarla.",
+      "reactivateHelp": "La reactivación reutiliza la misma suscripción del proveedor con una fecha futura.",
+      "utcHelp": "La hora local seleccionada se enviará como un instante UTC.",
+      "retrySameIntention": "El reintento reenviará exactamente el mismo payload y clave de idempotencia.",
+      "invoices": "Historial de facturas (solo lectura)",
+      "noInvoices": "No hay facturas disponibles.",
+      "actions": {
+        "plan": "Cambiar plan",
+        "suspend": "Suspender suscripción",
+        "reactivate": "Reactivar suscripción",
+        "retrySame": "Reintentar la misma intención",
+        "changeIntention": "Descartar y cambiar intención",
+        "reloadCatalog": "Intentar cargar precios de nuevo"
+      },
+      "fields": {
+        "plan": "Plan",
+        "activePrice": "Precio activo del plan",
+        "proration": "Tratamiento de cobros pendientes",
+        "invoiceStatus": "Estado de factura",
+        "providerCustomer": "Cliente del proveedor",
+        "provider": "Identificadores del proveedor",
+        "version": "Versión esperada",
+        "currentPeriod": "Período actual",
+        "nextDueDate": "Próximo vencimiento",
+        "dueDate": "Vencimiento",
+        "value": "Valor",
+        "paidAt": "Pagado el",
+        "paymentId": "ID de pago del proveedor"
+      },
+      "proration": {
+        "futureOnly": "Solo cobros futuros",
+        "includePending": "Incluir cobros pendientes",
+        "futureOnlyHelp": "El nuevo precio solo se aplica a cobros futuros.",
+        "includePendingHelp": "También se solicitará al proveedor actualizar cobros pendientes; aquí no se calcula ningún valor."
+      },
+      "validation": { "futureDate": "Elige una fecha y hora futuras válidas." },
+      "links": { "tenant": "Ver tenant" }
+    },
+    "overview": {
+      "title": "Resumen administrativo",
+      "description": "Indicadores operativos de la plataforma",
+      "windowStart": "Inicio de ventana (UTC)",
+      "windowEnd": "Fin de ventana (UTC)",
+      "tenants": "Tenants",
+      "users": "Usuarios",
+      "patients": "Pacientes",
+      "subscriptions": "Suscripciones",
+      "webhooks": "Webhooks fallidos",
+      "emails": "Correos fallidos",
+      "calculatedAt": "Calculado el {{date}}"
+    }
   },
   "pages": {
     "landingTitle": "{{appName}} — Software de gestión para nutricionistas",

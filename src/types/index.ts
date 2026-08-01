@@ -8,6 +8,8 @@ export * from './api/responses';
 
 export * from './domain/patient';
 
+export * from './domain/planner';
+
 export * from './domain/FoodGroup';
 
 export * from './domain/anamnesis';

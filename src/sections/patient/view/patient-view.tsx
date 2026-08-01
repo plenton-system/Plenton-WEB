@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
@@ -15,13 +16,24 @@ type Toast = | { kind: 'idle' } | { kind: 'success'; message: string } | { kind:
 // ----------------------------------------------------------------------
 
 export function PatientView() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPatientId = searchParams.get('patientId');
   const [toast, setToast] = useState<Toast>({ kind: 'idle' });
-  const [patientId, setPatientId] = useState<string | null>(null);
-  const [currentView, setCurrentView] = useState<'list' | 'form'>('list');
+  const [patientId, setPatientId] = useState<string | null>(initialPatientId);
+  const [currentView, setCurrentView] = useState<'list' | 'form'>(
+    initialPatientId ? 'form' : 'list'
+  );
 
   const handleEditAndCreate = (id: string | null) => {
     setPatientId(id);
     setCurrentView('form');
+    setSearchParams(id ? { patientId: id } : {});
+  };
+
+  const handleReturnToList = () => {
+    setPatientId(null);
+    setCurrentView('list');
+    setSearchParams({});
   };
 
   return (
@@ -38,7 +50,7 @@ export function PatientView() {
         ) : (
           <PatientFormView
             patientId={patientId}
-            onReturn={() => setCurrentView('list')}
+            onReturn={handleReturnToList}
           />
         )}
       </DashboardContent>

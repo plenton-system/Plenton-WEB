@@ -21,6 +21,7 @@ import { useWorkspaceAnthropometries } from 'src/hooks/workspace/use-workspace-a
 import { fNumber } from 'src/utils/format-number';
 import { fDateTimeLocale } from 'src/utils/format-time';
 
+import { plannerService } from 'src/services/planner/plannerService';
 import { workspaceAnthropometryService } from 'src/services/workspace/workspaceAnthropometryService';
 
 import { Loading } from 'src/components/loading';
@@ -31,6 +32,7 @@ import { WorkspaceAnthropometryDetailDrawer } from './workspace-anthropometry-de
 
 type Props = {
   patientId?: string;
+  patientName?: string;
   onDone?: () => void;
 };
 
@@ -47,7 +49,7 @@ const formatMetric = (
     : '-'
 );
 
-export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
+export function WorkspaceAnthropometryTab({ patientId, patientName, onDone }: Props) {
   const { t } = useTranslation();
   const confirm = useConfirm();
   const { items, loading, error, refetch } = useWorkspaceAnthropometries(patientId);
@@ -125,6 +127,43 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
       });
     } finally {
       setDeletingEvaluationId(null);
+    }
+  };
+
+  const offerMealPlanReminder = async () => {
+    if (!patientId) return true;
+
+    const shouldCreateTask = await confirm({
+      title: t('workspace.anthropometry.reminder.title'),
+      description: t('workspace.anthropometry.reminder.description'),
+      confirmText: t('workspace.anthropometry.reminder.confirm'),
+    });
+
+    if (!shouldCreateTask) return true;
+
+    try {
+      await plannerService.createTask({
+        patientId,
+        priority: 'Medium',
+        dueDate: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
+        title: t('workspace.anthropometry.reminder.taskTitle', {
+          patient: patientName ?? t('workspace.anthropometry.reminder.patientFallback'),
+        }),
+      });
+
+      setNotify({
+        open: true,
+        kind: 'success',
+        message: t('workspace.anthropometry.reminder.success'),
+      });
+      return true;
+    } catch (err: any) {
+      setNotify({
+        open: true,
+        kind: 'error',
+        message: err?.message ?? t('workspace.anthropometry.reminder.error'),
+      });
+      return false;
     }
   };
 
@@ -278,7 +317,11 @@ export function WorkspaceAnthropometryTab({ patientId, onDone }: Props) {
           await refetch();
           setDrawerOpen(false);
           setSelectedEvaluationId(null);
-          onDone?.();
+
+          const canFinish = await offerMealPlanReminder();
+          if (canFinish) {
+            onDone?.();
+          }
         }}
       />
 
