@@ -257,16 +257,38 @@
   },
   "planner": {
     "empty": "No tasks found.",
-    "fields": { "title": "Title", "description": "Description", "priority": "Priority", "dueDate": "Due date", "patient": "Patient" },
+    "fields": {
+      "title": "Title",
+      "description": "Description",
+      "priority": "Priority",
+      "dueDate": "Due date",
+      "patient": "Patient"
+    },
     "priority": { "low": "Low", "medium": "Medium", "high": "High" },
     "actions": { "add": "Add task", "complete": "Mark as completed", "reopen": "Reopen task" },
-    "delete": { "title": "Delete task", "description": "Delete the task “{{title}}”? This action cannot be undone." },
+    "delete": {
+      "title": "Delete task",
+      "description": "Delete the task “{{title}}”? This action cannot be undone."
+    },
     "dialog": { "newTitle": "New task", "editTitle": "Edit task" },
     "workspace": { "title": "Patient tasks" },
-    "page": { "title": "Tasks", "description": "Organize reminders and pending work for your patients." },
-    "filters": { "patient": "Showing tasks for {{patient}}.", "clear": "View all", "search": "Search tasks", "searchPlaceholder": "Title, description, or patient", "noResults": "No tasks found for this search." },
+    "page": {
+      "title": "Tasks",
+      "description": "Organize reminders and pending work for your patients."
+    },
+    "filters": {
+      "patient": "Showing tasks for {{patient}}.",
+      "clear": "View all",
+      "search": "Search tasks",
+      "searchPlaceholder": "Title, description, or patient",
+      "noResults": "No tasks found for this search."
+    },
     "validation": { "titleRequired": "Enter a title.", "dueDateInvalid": "Enter a valid date." },
-    "messages": { "loadError": "Could not load tasks.", "saveError": "Could not save the task.", "saveSuccess": "Task saved successfully!" }
+    "messages": {
+      "loadError": "Could not load tasks.",
+      "saveError": "Could not save the task.",
+      "saveSuccess": "Task saved successfully!"
+    }
   },
   "overview": {
     "welcome": "Hi, welcome back 👋",
@@ -1625,7 +1647,165 @@
       "conflict": "The data was changed by another operation.",
       "providerUncertain": "The provider did not confirm the result. Retry the same intention.",
       "network": "Could not connect to the server.",
-      "unknown": "The operation could not be completed."
+      "unknown": "The operation could not be completed.",
+      "conflictRefresh": "The resource was refreshed. Review the new data and confirm again."
+    },
+    "filters": {
+      "search": "Search",
+      "status": "Status",
+      "all": "All",
+      "yes": "Yes",
+      "no": "No",
+      "role": "Role",
+      "tenant": "Tenant",
+      "locked": "Locked",
+      "emailConfirmed": "Email confirmed"
+    },
+    "tenantStatus": { "active": "Active", "suspended": "Suspended" },
+    "userStatus": {
+      "active": "Access active",
+      "blocked": "User blocked",
+      "emailConfirmed": "Email confirmed",
+      "emailPending": "Email pending"
+    },
+    "tenants": {
+      "title": "Tenants",
+      "description": "Tenant search and operational control",
+      "detailDescription": "Operations, usage and subscription details",
+      "empty": "No tenant matches the current filters."
+    },
+    "users": {
+      "title": "Users",
+      "description": "User search and access control",
+      "detailDescription": "Sanitized identity and access state",
+      "empty": "No user matches the current filters.",
+      "selfProtected": "You cannot run administrative commands on your own account.",
+      "adminProtected": "Administrative accounts are protected from these commands."
+    },
+    "fields": {
+      "tenant": "Tenant",
+      "owner": "Owner",
+      "usage": "Users / patients",
+      "updated": "Updated at",
+      "suspendedAt": "Suspended at",
+      "reactivatedAt": "Reactivated at",
+      "concurrencyStamp": "Concurrency version",
+      "lockoutEnabled": "Lockout enabled",
+      "lockoutEnd": "Locked until",
+      "created": "Created at",
+      "users": "users",
+      "patients": "patients",
+      "nutritionists": "nutritionists",
+      "subscription": "Subscription",
+      "identity": "Identity",
+      "access": "Access",
+      "email": "Email",
+      "subscriptions": "subscriptions",
+      "currentPeriodEnd": "Current period end",
+      "nextDueDate": "Next due date",
+      "timestamps": "Timestamps",
+      "suspended": "Suspended at"
+    },
+    "subscriptionStatus": {
+      "1": "Pending payment",
+      "2": "Trialing",
+      "3": "Active",
+      "4": "Past due",
+      "5": "Overdue",
+      "6": "Suspended",
+      "7": "Canceled",
+      "8": "Expired"
+    },
+    "links": {
+      "users": "View tenant users",
+      "subscription": "View subscription",
+      "audit": "View audit"
+    },
+    "actions": {
+      "retry": "Try again",
+      "refresh": "Refresh data",
+      "backToList": "Back to list",
+      "suspendTenant": "Suspend tenant",
+      "reactivateTenant": "Reactivate tenant",
+      "blockUser": "Block user",
+      "unblockUser": "Unblock user",
+      "revokeSessions": "Revoke sessions",
+      "resendActivation": "Resend activation",
+      "passwordRecovery": "Password recovery"
+    },
+    "command": {
+      "block": "Block user",
+      "unblock": "Unblock user",
+      "revoke": "Revoke sessions",
+      "activation": "Resend activation",
+      "recovery": "Send password recovery"
+    },
+    "consequences": {
+      "tenantSuspend": "Suspension stops operations for the entire tenant and affects all its users.",
+      "tenantReactivate": "Reactivation restores tenant operations.",
+      "block": "The user will lose access and their sessions will be revoked.",
+      "unblock": "The user will be able to access their account again.",
+      "revoke": "All active sessions for this user will be terminated.",
+      "activation": "A new activation invitation will be sent without displaying tokens.",
+      "recovery": "A password recovery will be sent without displaying tokens."
+    },
+    "feedback": {
+      "sessionsRevoked": "{{count}} session(s) revoked.",
+      "changed": "State updated successfully.",
+      "requested": "Request completed successfully."
+    },
+    "invoiceStatus": {
+      "1": "Pending",
+      "2": "Paid",
+      "3": "Overdue",
+      "4": "Canceled",
+      "5": "Refunded",
+      "6": "Failed"
+    },
+    "subscriptionManagement": {
+      "title": "Subscriptions",
+      "description": "Global commercial search and safe subscription operations",
+      "detailDescription": "Commercial state, provider identifiers and read-only invoices",
+      "empty": "No subscription matches the current filters.",
+      "tenantRequired": "Tenant context is required to open this subscription.",
+      "catalogUnavailable": "Active prices are unavailable. Plan change remains disabled.",
+      "suspendHelp": "Suspension is reversible and keeps the provider subscription for later reactivation.",
+      "reactivateHelp": "Reactivation reuses the same provider subscription with a new future due date.",
+      "utcHelp": "The selected local time will be sent as a UTC instant.",
+      "retrySameIntention": "Retry will resend the exact same payload and idempotency key.",
+      "invoices": "Invoice history (read-only)",
+      "noInvoices": "No invoices are available.",
+      "actions": {
+        "plan": "Change plan",
+        "suspend": "Suspend subscription",
+        "reactivate": "Reactivate subscription",
+        "retrySame": "Retry same intention",
+        "changeIntention": "Discard and change intention",
+        "reloadCatalog": "Try loading prices again"
+      },
+      "fields": {
+        "plan": "Plan",
+        "activePrice": "Active plan price",
+        "proration": "Pending-charge handling",
+        "invoiceStatus": "Invoice status",
+        "providerCustomer": "Provider customer",
+        "provider": "Provider identifiers",
+        "version": "Expected version",
+        "currentPeriod": "Current period",
+        "nextDueDate": "Next due date",
+        "dueDate": "Due date",
+        "value": "Value",
+        "paidAt": "Paid at",
+        "paymentId": "Provider payment ID"
+      },
+      "proration": {
+        "futureOnly": "Future charges only",
+        "includePending": "Include pending charges",
+        "futureOnlyHelp": "The new price applies only to future charges.",
+        "includePendingHelp": "The provider will also be asked to update pending charges; no value is calculated here."
+      },
+      "validation": { "futureDate": "Choose a valid future date and time." },
+      "links": { "tenant": "View tenant" }
     },
     "overview": {
       "title": "Administrative overview",

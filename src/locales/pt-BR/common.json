@@ -262,16 +262,45 @@
   },
   "planner": {
     "empty": "Nenhuma tarefa encontrada.",
-    "fields": { "title": "Título", "description": "Descrição", "priority": "Prioridade", "dueDate": "Prazo", "patient": "Paciente" },
+    "fields": {
+      "title": "Título",
+      "description": "Descrição",
+      "priority": "Prioridade",
+      "dueDate": "Prazo",
+      "patient": "Paciente"
+    },
     "priority": { "low": "Baixa", "medium": "Média", "high": "Alta" },
-    "actions": { "add": "Adicionar tarefa", "complete": "Marcar como concluída", "reopen": "Reabrir tarefa" },
-    "delete": { "title": "Excluir tarefa", "description": "Deseja excluir a tarefa “{{title}}”? Esta ação não pode ser desfeita." },
+    "actions": {
+      "add": "Adicionar tarefa",
+      "complete": "Marcar como concluída",
+      "reopen": "Reabrir tarefa"
+    },
+    "delete": {
+      "title": "Excluir tarefa",
+      "description": "Deseja excluir a tarefa “{{title}}”? Esta ação não pode ser desfeita."
+    },
     "dialog": { "newTitle": "Nova tarefa", "editTitle": "Editar tarefa" },
     "workspace": { "title": "Tarefas do paciente" },
-    "page": { "title": "Tarefas", "description": "Organize lembretes e pendências dos seus pacientes." },
-    "filters": { "patient": "Exibindo tarefas de {{patient}}.", "clear": "Ver todas", "search": "Buscar tarefas", "searchPlaceholder": "Título, descrição ou paciente", "noResults": "Nenhuma tarefa encontrada para esta busca." },
-    "validation": { "titleRequired": "Informe o título.", "dueDateInvalid": "Informe uma data válida." },
-    "messages": { "loadError": "Não foi possível carregar as tarefas.", "saveError": "Não foi possível salvar a tarefa.", "saveSuccess": "Tarefa salva com sucesso!" }
+    "page": {
+      "title": "Tarefas",
+      "description": "Organize lembretes e pendências dos seus pacientes."
+    },
+    "filters": {
+      "patient": "Exibindo tarefas de {{patient}}.",
+      "clear": "Ver todas",
+      "search": "Buscar tarefas",
+      "searchPlaceholder": "Título, descrição ou paciente",
+      "noResults": "Nenhuma tarefa encontrada para esta busca."
+    },
+    "validation": {
+      "titleRequired": "Informe o título.",
+      "dueDateInvalid": "Informe uma data válida."
+    },
+    "messages": {
+      "loadError": "Não foi possível carregar as tarefas.",
+      "saveError": "Não foi possível salvar a tarefa.",
+      "saveSuccess": "Tarefa salva com sucesso!"
+    }
   },
   "overview": {
     "welcome": "Olá, bem-vindo de volta 👋",
@@ -1630,7 +1659,165 @@
       "conflict": "Os dados foram alterados por outra operação.",
       "providerUncertain": "O provedor não confirmou o resultado. Tente novamente com a mesma intenção.",
       "network": "Não foi possível conectar ao servidor.",
-      "unknown": "Não foi possível concluir a operação."
+      "unknown": "Não foi possível concluir a operação.",
+      "conflictRefresh": "O recurso foi atualizado. Revise os novos dados e confirme novamente."
+    },
+    "filters": {
+      "search": "Buscar",
+      "status": "Status",
+      "all": "Todos",
+      "yes": "Sim",
+      "no": "Não",
+      "role": "Perfil",
+      "tenant": "Tenant",
+      "locked": "Bloqueado",
+      "emailConfirmed": "E-mail confirmado"
+    },
+    "tenantStatus": { "active": "Ativo", "suspended": "Suspenso" },
+    "userStatus": {
+      "active": "Acesso ativo",
+      "blocked": "Usuário bloqueado",
+      "emailConfirmed": "E-mail confirmado",
+      "emailPending": "E-mail pendente"
+    },
+    "tenants": {
+      "title": "Tenants",
+      "description": "Consulta e controle operacional de tenants",
+      "detailDescription": "Detalhes operacionais, uso e assinatura",
+      "empty": "Nenhum tenant corresponde aos filtros atuais."
+    },
+    "users": {
+      "title": "Usuários",
+      "description": "Consulta e controle de acesso dos usuários",
+      "detailDescription": "Identidade sanitizada e estado de acesso",
+      "empty": "Nenhum usuário corresponde aos filtros atuais.",
+      "selfProtected": "Você não pode executar comandos administrativos sobre a própria conta.",
+      "adminProtected": "Contas administrativas são protegidas contra estes comandos."
+    },
+    "fields": {
+      "tenant": "Tenant",
+      "owner": "Responsável",
+      "usage": "Usuários / pacientes",
+      "updated": "Atualizado em",
+      "suspendedAt": "Suspenso em",
+      "reactivatedAt": "Reativado em",
+      "concurrencyStamp": "Versão de concorrência",
+      "lockoutEnabled": "Bloqueio habilitado",
+      "lockoutEnd": "Bloqueado até",
+      "created": "Criado em",
+      "users": "usuários",
+      "patients": "pacientes",
+      "nutritionists": "nutricionistas",
+      "subscription": "Assinatura",
+      "identity": "Identidade",
+      "access": "Acesso",
+      "email": "E-mail",
+      "subscriptions": "assinaturas",
+      "currentPeriodEnd": "Fim do período atual",
+      "nextDueDate": "Próximo vencimento",
+      "timestamps": "Datas",
+      "suspended": "Suspenso em"
+    },
+    "subscriptionStatus": {
+      "1": "Pagamento pendente",
+      "2": "Em teste",
+      "3": "Ativa",
+      "4": "Em atraso",
+      "5": "Vencida",
+      "6": "Suspensa",
+      "7": "Cancelada",
+      "8": "Expirada"
+    },
+    "links": {
+      "users": "Ver usuários deste tenant",
+      "subscription": "Ver assinatura",
+      "audit": "Ver auditoria"
+    },
+    "actions": {
+      "retry": "Tentar novamente",
+      "refresh": "Atualizar dados",
+      "backToList": "Voltar à lista",
+      "suspendTenant": "Suspender tenant",
+      "reactivateTenant": "Reativar tenant",
+      "blockUser": "Bloquear usuário",
+      "unblockUser": "Desbloquear usuário",
+      "revokeSessions": "Revogar sessões",
+      "resendActivation": "Reenviar ativação",
+      "passwordRecovery": "Recuperação de senha"
+    },
+    "command": {
+      "block": "Bloquear usuário",
+      "unblock": "Desbloquear usuário",
+      "revoke": "Revogar sessões",
+      "activation": "Reenviar ativação",
+      "recovery": "Enviar recuperação de senha"
+    },
+    "consequences": {
+      "tenantSuspend": "A suspensão interrompe operações de todo o tenant e afeta todos os seus usuários.",
+      "tenantReactivate": "A reativação restaura as operações do tenant.",
+      "block": "O usuário perderá o acesso e suas sessões serão revogadas.",
+      "unblock": "O usuário poderá voltar a acessar sua conta.",
+      "revoke": "Todas as sessões ativas deste usuário serão encerradas.",
+      "activation": "Um novo convite de ativação será enviado sem exibir tokens.",
+      "recovery": "Uma recuperação de senha será enviada sem exibir tokens."
+    },
+    "feedback": {
+      "sessionsRevoked": "{{count}} sessão(ões) revogada(s).",
+      "changed": "Estado atualizado com sucesso.",
+      "requested": "Solicitação concluída com sucesso."
+    },
+    "invoiceStatus": {
+      "1": "Pendente",
+      "2": "Paga",
+      "3": "Vencida",
+      "4": "Cancelada",
+      "5": "Estornada",
+      "6": "Falhou"
+    },
+    "subscriptionManagement": {
+      "title": "Assinaturas",
+      "description": "Consulta comercial global e operações seguras sobre assinaturas",
+      "detailDescription": "Estado comercial, identificadores do provedor e faturas somente leitura",
+      "empty": "Nenhuma assinatura corresponde aos filtros atuais.",
+      "tenantRequired": "O contexto do tenant é obrigatório para abrir esta assinatura.",
+      "catalogUnavailable": "Os preços ativos estão indisponíveis. A mudança de plano permanece desabilitada.",
+      "suspendHelp": "A suspensão é reversível e preserva a assinatura no provedor para futura reativação.",
+      "reactivateHelp": "A reativação reutiliza a mesma assinatura do provedor com um novo vencimento futuro.",
+      "utcHelp": "O horário local escolhido será enviado como um instante UTC.",
+      "retrySameIntention": "A nova tentativa reenviará exatamente o mesmo payload e a mesma chave de idempotência.",
+      "invoices": "Histórico de faturas (somente leitura)",
+      "noInvoices": "Nenhuma fatura disponível.",
+      "actions": {
+        "plan": "Alterar plano",
+        "suspend": "Suspender assinatura",
+        "reactivate": "Reativar assinatura",
+        "retrySame": "Tentar a mesma intenção",
+        "changeIntention": "Descartar e alterar intenção",
+        "reloadCatalog": "Tentar carregar preços novamente"
+      },
+      "fields": {
+        "plan": "Plano",
+        "activePrice": "Preço ativo do plano",
+        "proration": "Tratamento das cobranças pendentes",
+        "invoiceStatus": "Status da fatura",
+        "providerCustomer": "Cliente no provedor",
+        "provider": "Identificadores do provedor",
+        "version": "Versão esperada",
+        "currentPeriod": "Período atual",
+        "nextDueDate": "Próximo vencimento",
+        "dueDate": "Vencimento",
+        "value": "Valor",
+        "paidAt": "Pago em",
+        "paymentId": "ID do pagamento no provedor"
+      },
+      "proration": {
+        "futureOnly": "Somente cobranças futuras",
+        "includePending": "Incluir cobranças pendentes",
+        "futureOnlyHelp": "O novo preço será aplicado somente às cobranças futuras.",
+        "includePendingHelp": "O provedor também será solicitado a atualizar cobranças pendentes; nenhum valor é calculado aqui."
+      },
+      "validation": { "futureDate": "Escolha uma data e hora futuras válidas." },
+      "links": { "tenant": "Ver tenant" }
     },
     "overview": {
       "title": "Visão geral administrativa",

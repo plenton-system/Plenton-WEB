@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { Theme, SxProps } from '@mui/material/styles';
 import type { AdminStatus, PagedResult } from 'src/types/admin';
 
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
@@ -148,4 +149,24 @@ export function AdminErrorState({ message, onRetry }: { message: string; onRetry
 
 export function AdminSearchField(props: React.ComponentProps<typeof TextField>) {
   return <TextField size="small" {...props} />;
+}
+
+export function AdminDebouncedSearchField({
+  value,
+  onDebouncedChange,
+  ...props
+}: Omit<React.ComponentProps<typeof TextField>, 'value' | 'onChange'> & {
+  value: string;
+  onDebouncedChange: (value: string) => void;
+}) {
+  const [draft, setDraft] = useState(value);
+  useEffect(() => setDraft(value), [value]);
+  useEffect(() => {
+    if (draft === value) return undefined;
+    const timer = window.setTimeout(() => onDebouncedChange(draft), 400);
+    return () => window.clearTimeout(timer);
+  }, [draft, onDebouncedChange, value]);
+  return (
+    <AdminSearchField {...props} value={draft} onChange={(event) => setDraft(event.target.value)} />
+  );
 }

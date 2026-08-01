@@ -37,6 +37,14 @@ export const SubscriptionExpiredPage = lazy(() => import('src/pages/subscription
 export const SettingsSubscriptionPage = lazy(() => import('src/pages/settings-subscription'));
 export const AdminPage = lazy(() => import('src/pages/admin'));
 export const AdminSectionPage = lazy(() => import('src/pages/admin-section'));
+export const AdminTenantsPage = lazy(() => import('src/pages/admin-tenants'));
+export const AdminTenantDetailPage = lazy(() => import('src/pages/admin-tenant-detail'));
+export const AdminUsersPage = lazy(() => import('src/pages/admin-users'));
+export const AdminUserDetailPage = lazy(() => import('src/pages/admin-user-detail'));
+export const AdminSubscriptionsPage = lazy(() => import('src/pages/admin-subscriptions'));
+export const AdminSubscriptionDetailPage = lazy(
+  () => import('src/pages/admin-subscription-detail')
+);
 
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const PublicAnamnesisPage = lazy(() => import('src/pages/public-anamnesis'));
@@ -106,9 +114,12 @@ export const routesSection: RouteObject[] = [
     ),
     children: [
       { index: true, element: <AdminPage /> },
-      { path: 'tenants', element: <AdminSectionPage section="tenants" /> },
-      { path: 'users', element: <AdminSectionPage section="users" /> },
-      { path: 'subscriptions', element: <AdminSectionPage section="subscriptions" /> },
+      { path: 'tenants', element: <AdminTenantsPage /> },
+      { path: 'tenants/:identifier', element: <AdminTenantDetailPage /> },
+      { path: 'users', element: <AdminUsersPage /> },
+      { path: 'users/:id', element: <AdminUserDetailPage /> },
+      { path: 'subscriptions', element: <AdminSubscriptionsPage /> },
+      { path: 'subscriptions/:id', element: <AdminSubscriptionDetailPage /> },
       { path: 'operations', element: <AdminSectionPage section="operations" /> },
       { path: 'audit', element: <AdminSectionPage section="audit" /> },
       { path: '*', element: <Page404 /> },
