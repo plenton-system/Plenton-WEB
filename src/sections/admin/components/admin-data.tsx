@@ -9,7 +9,12 @@ import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 
-const REDACTED_KEYS = /token|password|secret|authorization|cookie|idempotency/i;
+import { auditDiffKind } from 'src/utils/admin-operations';
+
+import { AdminStatusBadge } from './admin-shared';
+
+const REDACTED_KEYS =
+  /token|password|secret|credential|authorization|cookie|idempotency|payload|payment|card|cvv|bank|pix/i;
 
 export function sanitizeAdminData(value: unknown): unknown {
   if (value instanceof Date) return value.toISOString();
@@ -92,24 +97,44 @@ export function AdminStateDiff({
         <TableHead>
           <TableRow>
             <TableCell>{t('admin.data.field')}</TableCell>
+            <TableCell>{t('admin.data.change')}</TableCell>
             <TableCell>{t('admin.data.before')}</TableCell>
             <TableCell>{t('admin.data.after')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {keys.map((key) => (
-            <TableRow key={key}>
-              <TableCell component="th" scope="row">
-                {key}
-              </TableCell>
-              <TableCell>
-                <SafeValue value={safeBefore[key]} />
-              </TableCell>
-              <TableCell>
-                <SafeValue value={safeAfter[key]} />
-              </TableCell>
-            </TableRow>
-          ))}
+          {keys.map((key) => {
+            const kind = auditDiffKind(
+              safeBefore[key],
+              safeAfter[key],
+              Object.prototype.hasOwnProperty.call(safeBefore, key),
+              Object.prototype.hasOwnProperty.call(safeAfter, key)
+            );
+            const tone =
+              kind === 'added'
+                ? 'success'
+                : kind === 'removed'
+                  ? 'error'
+                  : kind === 'changed'
+                    ? 'warning'
+                    : 'neutral';
+            return (
+              <TableRow key={key} data-diff-kind={kind}>
+                <TableCell component="th" scope="row">
+                  {key}
+                </TableCell>
+                <TableCell>
+                  <AdminStatusBadge status={tone} label={t(`admin.data.diff.${kind}`)} />
+                </TableCell>
+                <TableCell>
+                  <SafeValue value={safeBefore[key]} />
+                </TableCell>
+                <TableCell>
+                  <SafeValue value={safeAfter[key]} />
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

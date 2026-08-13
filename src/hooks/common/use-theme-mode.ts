@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { useColorScheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
@@ -22,7 +24,10 @@ export function useThemeMode() {
     const { mode, setMode, systemMode } = useColorScheme();
     const resolvedMode = (mode === 'system' ? systemMode ?? 'light' : mode) as Exclude<ThemeMode, 'system'>;
 
-    const setModeSafe = (next: ThemeMode | string) => setMode(normalizeMode(next));
+    const setModeSafe = useCallback(
+      (next: ThemeMode | string) => setMode(normalizeMode(next)),
+      [setMode]
+    );
 
     return { mode: (mode ?? 'system') as ThemeMode, setMode: setModeSafe, systemMode, resolvedMode };
 }

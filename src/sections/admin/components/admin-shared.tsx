@@ -45,7 +45,7 @@ export function AdminPageHeader({
 export function AdminFilterBar({ children, sx }: { children: ReactNode; sx?: SxProps<Theme> }) {
   return (
     <Paper variant="outlined" sx={{ p: 2, ...sx }}>
-      <Stack direction={{ xs: 'column', md: 'row' }} gap={2}>
+      <Stack direction={{ xs: 'column', md: 'row' }} flexWrap={{ md: 'wrap' }} useFlexGap gap={2}>
         {children}
       </Stack>
     </Paper>

@@ -184,3 +184,74 @@ export type AdminSubscriptionPlanCommand = AdminSubscriptionCommand & {
 export type AdminSubscriptionReactivateCommand = AdminSubscriptionCommand & {
   nextDueDate: string;
 };
+
+export type AdminOperationalEventSource = 'Webhook' | 'Email';
+export type AdminUtcRange = { startUtc?: string; endUtc?: string };
+
+export type AdminOperationalEventFilters = AdminUtcRange & {
+  source?: AdminOperationalEventSource;
+  tenantId?: string;
+  type?: string;
+  status?: string;
+  correlationId?: string;
+  page: number;
+  pageSize: number;
+};
+
+export type AdminOperationalEventListItem = {
+  id: string;
+  source: AdminOperationalEventSource;
+  tenantId: string;
+  type: string;
+  status: string;
+  attemptCount: number;
+  occurredAtUtc: string;
+  lastAttemptAtUtc: string | null;
+  completedAtUtc: string | null;
+  errorSummary: string | null;
+  correlationId: string;
+};
+
+export type AdminOperationalEventDetail = AdminOperationalEventListItem & {
+  safeMetadata: Record<string, string | null>;
+};
+
+export type AdminOperationalReprocess = {
+  idempotencyKey: string;
+  source: AdminOperationalEventSource;
+  eventId: string;
+  status: string;
+  message: string;
+  acceptedAtUtc: string;
+  correlationId: string;
+};
+
+export type AdminReprocessOutcome = {
+  result: AdminOperationalReprocess;
+  replayed: boolean;
+};
+
+export type AdminAuditFilters = AdminUtcRange & {
+  administratorId?: string;
+  action?: string;
+  targetType?: string;
+  targetId?: string;
+  tenantId?: string;
+  page: number;
+  pageSize: number;
+};
+
+export type AdminAuditEvent = {
+  id: string;
+  administratorId: string;
+  action: string;
+  targetType: string;
+  targetId: string;
+  tenantId: string | null;
+  reason: string;
+  beforeState: Record<string, string | null>;
+  afterState: Record<string, string | null>;
+  occurredAtUtc: string;
+  ipAddress: string;
+  correlationId: string;
+};

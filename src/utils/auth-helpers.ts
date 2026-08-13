@@ -2,6 +2,7 @@ import type { User } from 'src/types';
 
 import { JwtUtils } from 'src/utils/jwt-utils';
 import { authStorage } from 'src/utils/auth-storage';
+import { resolvePrimaryRole } from 'src/utils/app-roles';
 
 import { authService } from 'src/services';
 import i18n, { SUPPORTED_LANGUAGES } from 'src/i18n';
@@ -32,8 +33,11 @@ export async function buildAndStoreUser(token?: string): Promise<User> {
     };
 
     try {
-        const settings = await systemSettingsService.getByUserId(userData.id);
-        const preferredLanguage = settings.preferenceDto?.preferredLanguage;
+        const primaryRole = resolvePrimaryRole(userData.role);
+        const settings = primaryRole === 'Patient'
+            ? null
+            : await systemSettingsService.getByUserId(userData.id);
+        const preferredLanguage = settings?.preferenceDto?.preferredLanguage;
 
         if (
             preferredLanguage &&
@@ -41,6 +45,7 @@ export async function buildAndStoreUser(token?: string): Promise<User> {
         ) {
             await i18n.changeLanguage(preferredLanguage);
         }
+
     } catch {
         // A sessão continua válida mesmo se as preferências ainda não existirem.
     }

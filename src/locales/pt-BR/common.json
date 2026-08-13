@@ -1649,7 +1649,14 @@
       "field": "Campo",
       "value": "Valor",
       "before": "Antes",
-      "after": "Depois"
+      "after": "Depois",
+      "change": "Alteração",
+      "diff": {
+        "added": "Adicionado",
+        "removed": "Removido",
+        "changed": "Alterado",
+        "unchanged": "Sem alteração"
+      }
     },
     "errors": {
       "validation": "Revise os dados informados.",
@@ -1819,6 +1826,76 @@
       "validation": { "futureDate": "Escolha uma data e hora futuras válidas." },
       "links": { "tenant": "Ver tenant" }
     },
+    "range": {
+      "missingPair": "Informe o início e o fim do período UTC.",
+      "invalid": "Informe um período UTC válido.",
+      "reversed": "O fim do período não pode ser anterior ao início.",
+      "tooLong": "O período UTC não pode exceder 90 dias."
+    },
+    "operations": {
+      "title": "Operações",
+      "description": "Indicadores operacionais e investigação sanitizada de eventos",
+      "empty": "Nenhum evento operacional corresponde aos filtros.",
+      "detail": "Detalhe do evento operacional",
+      "close": "Fechar detalhe do evento",
+      "start": "Início do período (UTC)",
+      "end": "Fim do período (UTC)",
+      "metadata": "Metadata segura",
+      "calculated": "Calculado em {{date}}",
+      "window": "Janela de falhas: {{start}} a {{end}}",
+      "cards": {
+        "tenants": "Tenants",
+        "users": "Usuários",
+        "patients": "Pacientes",
+        "subscriptions": "Assinaturas",
+        "webhooks": "Webhooks com falha",
+        "emails": "E-mails com falha"
+      },
+      "fields": {
+        "source": "Origem",
+        "tenant": "Tenant",
+        "type": "Tipo",
+        "status": "Status",
+        "attempts": "Tentativas",
+        "occurred": "Ocorrido em",
+        "lastAttempt": "Última tentativa",
+        "completed": "Concluído em",
+        "correlation": "ID de correlação",
+        "error": "Erro sanitizado"
+      },
+      "reprocess": {
+        "title": "Reprocessar evento",
+        "action": "Reprocessar",
+        "cancel": "Cancelar",
+        "confirm": "Confirmar reprocessamento",
+        "retry": "Repetir mesma intenção",
+        "retrySame": "A repetição manterá o mesmo motivo e a mesma chave de idempotência.",
+        "accepted": "Reprocessamento aceito. Correlação: {{correlation}}",
+        "replayed": "Resultado anterior recuperado. Correlação: {{correlation}}"
+      }
+    },
+    "audit": {
+      "title": "Auditoria",
+      "description": "Investigação sanitizada de ações administrativas",
+      "empty": "Nenhum evento de auditoria corresponde aos filtros.",
+      "detail": "Detalhe do evento de auditoria",
+      "close": "Fechar detalhe da auditoria",
+      "start": "Início do período (UTC)",
+      "end": "Fim do período (UTC)",
+      "diff": "Comparação de estado",
+      "fields": {
+        "administrator": "Administrador",
+        "action": "Ação",
+        "target": "Alvo",
+        "targetType": "Tipo do alvo",
+        "targetId": "ID do alvo",
+        "tenant": "Tenant",
+        "reason": "Motivo",
+        "ip": "Endereço IP",
+        "correlation": "ID de correlação",
+        "occurred": "Ocorrido em"
+      }
+    },
     "overview": {
       "title": "Visão geral administrativa",
       "description": "Indicadores operacionais da plataforma",
@@ -1832,6 +1909,109 @@
       "emails": "E-mails com falha",
       "calculatedAt": "Calculado em {{date}}"
     }
+  },
+  "patientPortal": {
+    "nav": { "home": "Início", "mealPlan": "Plano alimentar", "account": "Minha conta" },
+    "actions": { "retry": "Tentar novamente" },
+    "states": {
+      "loading": "Carregando informações",
+      "error": "Não foi possível carregar estas informações.",
+      "capabilityUnavailable": "Este recurso ainda não está disponível. As demais áreas do portal continuam funcionando."
+    },
+    "nutritionist": {
+      "title": "Meu nutricionista",
+      "loading": "Carregando nutricionista",
+      "unlinkedTitle": "Nutricionista não informado",
+      "unlinkedDescription": "Ainda não há um nutricionista vinculado à sua conta.",
+      "contact": "Ligar para {{phone}}",
+      "address": "Endereço",
+      "about": "Sobre"
+    },
+    "progress": {
+      "title": "Minha evolução",
+      "subtitle": "Acompanhe suas medidas e composição corporal ao longo do tempo.",
+      "emptyTitle": "Nenhuma avaliação disponível",
+      "emptyDescription": "Quando seu nutricionista registrar uma avaliação, sua evolução aparecerá aqui.",
+      "openMealPlan": "Ver plano alimentar",
+      "weight": "Evolução do peso",
+      "weightTable": "Valores da evolução do peso",
+      "measurements": "Medidas: inicial, atual e variação",
+      "composition": "Composição corporal atual",
+      "leanMass": "Massa magra",
+      "fatMass": "Massa de gordura",
+      "date": "Data",
+      "weightValue": "Peso",
+      "measurementsTable": "Comparação das medidas corporais",
+      "metric": "Medida",
+      "initial": "Inicial",
+      "current": "Atual",
+      "change": "Variação",
+      "notAvailable": "Não disponível"
+    },
+    "metrics": {
+      "Weight": "Peso",
+      "BodyFatPercentage": "Percentual de gordura",
+      "LeanMass": "Massa magra",
+      "FatMass": "Massa de gordura",
+      "WaistCircumference": "Cintura",
+      "AbdominalCircumference": "Abdômen",
+      "HipCircumference": "Quadril",
+      "RightRelaxedArmCircumference": "Braço direito",
+      "LeftRelaxedArmCircumference": "Braço esquerdo",
+      "RightThighCircumference": "Coxa direita",
+      "LeftThighCircumference": "Coxa esquerda"
+    },
+    "macros": { "calories": "Calorias", "protein": "Proteínas", "carbs": "Carboidratos", "fat": "Gorduras", "fiber": "Fibras" },
+    "mealPlan": {
+      "title": "Meu plano alimentar",
+      "subtitle": "Siga as orientações para atingir seus objetivos.",
+      "selectDate": "Data do plano",
+      "openCalendar": "Abrir calendário",
+      "calendar": "Calendário do plano alimentar",
+      "previousMonth": "Mês anterior",
+      "nextMonth": "Próximo mês",
+      "today": "Hoje",
+      "todayDate": "Hoje, {{date}}",
+      "previousDay": "Dia anterior",
+      "nextDay": "Próximo dia",
+      "dateRequired": "Escolha uma data válida.",
+      "invalidDateTitle": "Escolha uma data",
+      "invalidDateDescription": "Informe uma data válida para consultar seu plano alimentar.",
+      "noPlansTitle": "Nenhum plano alimentar",
+      "noPlansDescription": "Seu nutricionista ainda não disponibilizou um plano alimentar.",
+      "noDateTitle": "Sem plano para esta data",
+      "noDateDescription": "Não encontramos refeições para {{date}}. Escolha outro dia ou converse com seu nutricionista.",
+      "unavailableTitle": "Plano indisponível",
+      "unavailableDescription": "Este plano não está mais disponível para consulta.",
+      "noMealsTitle": "Nenhuma refeição cadastrada",
+      "noMealsDescription": "O plano de {{date}} ainda não contém refeições.",
+      "dailySummary": "Resumo do dia",
+      "dailyTargets": "Metas do dia",
+      "nutritionSummary": "Resumo nutricional diário",
+      "macronutrients": "Macronutrientes",
+      "mealSummary": "Resumo da refeição",
+      "optional": "Opcional",
+      "equivalents": "Alimentos equivalentes",
+      "substitutes": "Opções de substituição"
+    },
+    "account": {
+      "title": "Minha conta",
+      "subtitle": "Consulte seus dados e ajuste as preferências do portal.",
+      "profile": "Perfil",
+      "settings": "Preferências e segurança",
+      "name": "Nome",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "photo": "Foto do perfil",
+      "photoHint": "Informe uma URL ou imagem compatível com as regras do serviço.",
+      "language": "Idioma",
+      "saveError": "Não foi possível salvar o perfil. Revise os dados e tente novamente.",
+      "preferenceFallback": "Não foi possível sincronizar as preferências; os valores deste dispositivo estão em uso.",
+      "preferenceWriteError": "A preferência não foi salva e o último valor confirmado foi restaurado.",
+      "validation": { "required": "Campo obrigatório" },
+      "address": { "street": "Rua", "number": "Número", "neighborhood": "Bairro", "city": "Cidade", "state": "Estado", "zipCode": "CEP" }
+    },
+    "languages": { "pt-BR": "Português (Brasil)", "en-US": "English (US)", "es": "Español" }
   },
   "pages": {
     "landingTitle": "{{appName}} — Software de gestão para nutricionistas",

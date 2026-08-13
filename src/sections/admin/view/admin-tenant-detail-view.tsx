@@ -208,7 +208,7 @@ export function AdminTenantDetailView() {
                 </Link>
                 <Link
                   component={RouterLink}
-                  to={`/admin/audit?tenantId=${encodeURIComponent(tenant.identifier)}&target=${encodeURIComponent(tenant.id)}`}
+                  to={`/admin/audit?tenantId=${encodeURIComponent(tenant.identifier)}&targetType=Tenant&targetId=${encodeURIComponent(tenant.id)}`}
                 >
                   {t('admin.links.audit')}
                 </Link>

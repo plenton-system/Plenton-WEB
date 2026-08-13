@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -22,6 +22,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'src/routes/hooks';
 
 import { useAuth } from 'src/hooks/common/use-auth';
+
+import { resolvePostSignInDestination } from 'src/utils/app-roles';
 
 import { authService } from 'src/services';
 import { fetchAddressByCep } from 'src/shared/services/cep';
@@ -67,6 +69,7 @@ export function SignInView() {
   const { t } = useTranslation();
   const theme = useTheme();
   const router = useRouter();
+  const location = useLocation();
   const { signIn, authenticating } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -128,24 +131,20 @@ export function SignInView() {
         return;
       }
 
-      await signIn({ email, password });
+      const signedInUser = await signIn({ email, password });
 
       const pendingPlanPriceId =
         searchParams.get('planPriceId') ?? sessionStorage.getItem('pendingPlanPriceId');
 
-      if (returnTo) {
-        sessionStorage.removeItem('pendingPlanPriceId');
-        router.push(returnTo);
-        return;
-      }
-
+      const stateReturnTo = (location.state as { from?: { pathname?: string } } | null)?.from
+        ?.pathname;
+      const requestedPath = returnTo ?? stateReturnTo;
       if (pendingPlanPriceId) {
         sessionStorage.removeItem('pendingPlanPriceId');
-        router.push(`/subscription/checkout?planPriceId=${encodeURIComponent(pendingPlanPriceId)}`);
-        return;
       }
-
-      router.push('/dashboard');
+      router.replace(
+        resolvePostSignInDestination(signedInUser.role, requestedPath, pendingPlanPriceId)
+      );
 
     } catch (error) {
       // Extrai apenas a mensagem limpa

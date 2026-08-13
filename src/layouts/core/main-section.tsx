@@ -21,5 +21,6 @@ export function MainSection({ children, className, sx, ...other }: MainSectionPr
 const MainRoot = styled('main')({
   display: 'flex',
   flex: '1 1 auto',
+  minWidth: 0,
   flexDirection: 'column',
 });

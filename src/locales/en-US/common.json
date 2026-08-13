@@ -1637,7 +1637,14 @@
       "field": "Field",
       "value": "Value",
       "before": "Before",
-      "after": "After"
+      "after": "After",
+      "change": "Change",
+      "diff": {
+        "added": "Added",
+        "removed": "Removed",
+        "changed": "Changed",
+        "unchanged": "Unchanged"
+      }
     },
     "errors": {
       "validation": "Review the supplied data.",
@@ -1807,6 +1814,76 @@
       "validation": { "futureDate": "Choose a valid future date and time." },
       "links": { "tenant": "View tenant" }
     },
+    "range": {
+      "missingPair": "Provide both the start and end of the UTC period.",
+      "invalid": "Provide a valid UTC period.",
+      "reversed": "The end of the period must not precede the start.",
+      "tooLong": "The UTC period cannot exceed 90 days."
+    },
+    "operations": {
+      "title": "Operations",
+      "description": "Operational indicators and sanitized event investigation",
+      "empty": "No operational event matches the filters.",
+      "detail": "Operational event detail",
+      "close": "Close event detail",
+      "start": "Period start (UTC)",
+      "end": "Period end (UTC)",
+      "metadata": "Safe metadata",
+      "calculated": "Calculated at {{date}}",
+      "window": "Failure window: {{start}} to {{end}}",
+      "cards": {
+        "tenants": "Tenants",
+        "users": "Users",
+        "patients": "Patients",
+        "subscriptions": "Subscriptions",
+        "webhooks": "Failed webhooks",
+        "emails": "Failed emails"
+      },
+      "fields": {
+        "source": "Source",
+        "tenant": "Tenant",
+        "type": "Type",
+        "status": "Status",
+        "attempts": "Attempts",
+        "occurred": "Occurred at",
+        "lastAttempt": "Last attempt",
+        "completed": "Completed at",
+        "correlation": "Correlation ID",
+        "error": "Sanitized error"
+      },
+      "reprocess": {
+        "title": "Reprocess event",
+        "action": "Reprocess",
+        "cancel": "Cancel",
+        "confirm": "Confirm reprocessing",
+        "retry": "Retry same intention",
+        "retrySame": "The retry will preserve the same reason and idempotency key.",
+        "accepted": "Reprocessing accepted. Correlation: {{correlation}}",
+        "replayed": "Previous reprocessing result recovered. Correlation: {{correlation}}"
+      }
+    },
+    "audit": {
+      "title": "Audit",
+      "description": "Sanitized investigation of administrative actions",
+      "empty": "No audit event matches the filters.",
+      "detail": "Audit event detail",
+      "close": "Close audit detail",
+      "start": "Period start (UTC)",
+      "end": "Period end (UTC)",
+      "diff": "State comparison",
+      "fields": {
+        "administrator": "Administrator",
+        "action": "Action",
+        "target": "Target",
+        "targetType": "Target type",
+        "targetId": "Target ID",
+        "tenant": "Tenant",
+        "reason": "Reason",
+        "ip": "IP address",
+        "correlation": "Correlation ID",
+        "occurred": "Occurred at"
+      }
+    },
     "overview": {
       "title": "Administrative overview",
       "description": "Platform operational indicators",
@@ -1820,6 +1897,77 @@
       "emails": "Failed emails",
       "calculatedAt": "Calculated at {{date}}"
     }
+  },
+  "patientPortal": {
+    "nav": { "home": "Home", "mealPlan": "Meal plan", "account": "My account" },
+    "actions": { "retry": "Try again" },
+    "states": {
+      "loading": "Loading information",
+      "error": "We could not load this information.",
+      "capabilityUnavailable": "This feature is not available yet. The other portal areas remain available."
+    },
+    "nutritionist": {
+      "title": "My nutritionist",
+      "loading": "Loading nutritionist",
+      "unlinkedTitle": "No nutritionist listed",
+      "unlinkedDescription": "There is no nutritionist linked to your account yet.",
+      "contact": "Call {{phone}}",
+      "address": "Address",
+      "about": "About"
+    },
+    "progress": {
+      "title": "My progress",
+      "subtitle": "Follow your measurements and body composition over time.",
+      "emptyTitle": "No assessments available",
+      "emptyDescription": "Your progress will appear here once your nutritionist records an assessment.",
+      "openMealPlan": "View meal plan",
+      "weight": "Weight progress",
+      "weightTable": "Weight progress values",
+      "measurements": "Measurements: initial, current and change",
+      "composition": "Current body composition",
+      "leanMass": "Lean mass",
+      "fatMass": "Fat mass",
+      "date": "Date",
+      "weightValue": "Weight",
+      "measurementsTable": "Body measurement comparison",
+      "metric": "Measurement",
+      "initial": "Initial",
+      "current": "Current",
+      "change": "Change",
+      "notAvailable": "Not available"
+    },
+    "metrics": {
+      "Weight": "Weight", "BodyFatPercentage": "Body fat percentage", "LeanMass": "Lean mass", "FatMass": "Fat mass",
+      "WaistCircumference": "Waist", "AbdominalCircumference": "Abdomen", "HipCircumference": "Hips",
+      "RightRelaxedArmCircumference": "Right arm", "LeftRelaxedArmCircumference": "Left arm",
+      "RightThighCircumference": "Right thigh", "LeftThighCircumference": "Left thigh"
+    },
+    "macros": { "calories": "Calories", "protein": "Protein", "carbs": "Carbohydrates", "fat": "Fat", "fiber": "Fiber" },
+    "mealPlan": {
+      "title": "My meal plan", "subtitle": "Follow the guidance to reach your goals.", "selectDate": "Plan date",
+      "openCalendar": "Open calendar",
+      "calendar": "Meal plan calendar", "previousMonth": "Previous month", "nextMonth": "Next month", "today": "Today",
+      "todayDate": "Today, {{date}}", "previousDay": "Previous day", "nextDay": "Next day",
+      "dateRequired": "Choose a valid date.", "invalidDateTitle": "Choose a date", "invalidDateDescription": "Enter a valid date to view your meal plan.",
+      "noPlansTitle": "No meal plan", "noPlansDescription": "Your nutritionist has not made a meal plan available yet.",
+      "noDateTitle": "No plan for this date", "noDateDescription": "We couldn't find meals for {{date}}. Choose another day or talk to your nutritionist.",
+      "unavailableTitle": "Plan unavailable", "unavailableDescription": "This plan is no longer available.",
+      "noMealsTitle": "No meals added", "noMealsDescription": "The plan for {{date}} does not contain meals yet.",
+      "dailySummary": "Daily summary", "dailyTargets": "Daily targets", "nutritionSummary": "Daily nutrition summary",
+      "macronutrients": "Macronutrients", "mealSummary": "Meal summary",
+      "optional": "Optional", "equivalents": "Equivalent foods", "substitutes": "Substitution options"
+    },
+    "account": {
+      "title": "My account", "subtitle": "Review your details and adjust portal preferences.", "profile": "Profile", "settings": "Preferences and security",
+      "name": "Name", "email": "Email", "phone": "Phone", "photo": "Profile photo",
+      "photoHint": "Enter a URL or image compatible with the service rules.", "language": "Language",
+      "saveError": "We could not save the profile. Review the details and try again.",
+      "preferenceFallback": "Preferences could not be synchronized; this device's values are being used.",
+      "preferenceWriteError": "The preference was not saved and the last confirmed value was restored.",
+      "validation": { "required": "Required field" },
+      "address": { "street": "Street", "number": "Number", "neighborhood": "Neighborhood", "city": "City", "state": "State", "zipCode": "ZIP code" }
+    },
+    "languages": { "pt-BR": "Português (Brasil)", "en-US": "English (US)", "es": "Español" }
   },
   "pages": {
     "landingTitle": "{{appName}} — Practice management software for nutritionists",

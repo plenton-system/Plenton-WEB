@@ -104,6 +104,9 @@ export function NavMobile({
 export function NavContent({ data, slots, sx }: NavContentProps) {
   const pathname = usePathname();
   const { t } = useTranslation();
+  const activePath = data
+    .filter((item) => pathname === item.path || pathname.startsWith(`${item.path}/`))
+    .sort((first, second) => second.path.length - first.path.length)[0]?.path;
 
   return (
     <>
@@ -137,9 +140,7 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
             }}
           >
             {data.map((item) => {
-              const isActived =
-                item.path === pathname ||
-                (item.path !== '/admin' && pathname.startsWith(`${item.path}/`));
+              const isActived = item.path === activePath;
 
               return (
                 <ListItem disableGutters disablePadding key={item.title}>
@@ -147,6 +148,7 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
                     disableGutters
                     component={RouterLink}
                     href={item.path}
+                    aria-current={isActived ? 'page' : undefined}
                     sx={[
                       (theme) => ({
                         pl: 2,

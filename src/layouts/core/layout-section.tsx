@@ -71,5 +71,7 @@ const LayoutRoot = styled('div')``;
 const LayoutSidebarContainer = styled('div')(() => ({
   display: 'flex',
   flex: '1 1 auto',
+  width: '100%',
+  minWidth: 0,
   flexDirection: 'column',
 }));

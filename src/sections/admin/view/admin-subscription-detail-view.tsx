@@ -216,7 +216,7 @@ export function AdminSubscriptionDetailView() {
                 </Link>
                 <Link
                   component={RouterLink}
-                  to={`/admin/audit?tenantId=${encodeURIComponent(subscription.tenantId)}&target=${subscription.id}`}
+                  to={`/admin/audit?tenantId=${encodeURIComponent(subscription.tenantId)}&targetType=Subscription&targetId=${encodeURIComponent(subscription.id)}`}
                 >
                   {t('admin.links.audit')}
                 </Link>

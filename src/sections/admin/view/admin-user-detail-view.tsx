@@ -190,6 +190,13 @@ export function AdminUserDetailView() {
                 </Stack>
               )}
             </Stack>
+            <Link
+              component={RouterLink}
+              to={`/admin/audit?tenantId=${encodeURIComponent(user.tenantId)}&targetType=User&targetId=${encodeURIComponent(user.id)}`}
+              sx={{ display: 'inline-block', mt: 2 }}
+            >
+              {t('admin.links.audit')}
+            </Link>
           </CardContent>
         </Card>
         <AdminCommandDialog

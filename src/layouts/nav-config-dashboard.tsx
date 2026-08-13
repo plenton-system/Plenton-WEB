@@ -18,7 +18,10 @@ export type NavItem = {
     | 'admin.nav.users'
     | 'admin.nav.subscriptions'
     | 'admin.nav.operations'
-    | 'admin.nav.audit';
+    | 'admin.nav.audit'
+    | 'patientPortal.nav.home'
+    | 'patientPortal.nav.mealPlan'
+    | 'patientPortal.nav.account';
   path: string;
   icon: React.ReactNode;
   info?: React.ReactNode;

@@ -18,7 +18,7 @@ export type AuthContextType = {
     isAuthenticated: boolean;
     loading: boolean;
     authenticating: boolean;
-    signIn: (credentials: LoginRequest) => Promise<void>;
+    signIn: (credentials: LoginRequest) => Promise<User>;
     signOut: () => void;
 };
 
@@ -84,6 +84,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const token = await authService.login(credentials);
             const userWithProfile = await buildAndStoreUser(token);
             setUser(userWithProfile);
+            return userWithProfile;
 
         } catch (error) {
             throw typeof error === 'string' ?
