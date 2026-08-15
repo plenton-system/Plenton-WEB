@@ -9,7 +9,6 @@ vi.mock('src/services/api', () => ({
 }));
 
 const getMock = vi.mocked(api.get);
-const putMock = vi.mocked(api.put);
 const httpError = (status: number) => ({ isAxiosError: true, response: { status } });
 
 describe('patientPortalService', () => {
@@ -46,26 +45,6 @@ describe('patientPortalService', () => {
       expect.objectContaining({ daysOfWeek: ['Monday', 'Friday'] }),
     ]);
     expect(getMock).toHaveBeenCalledWith('/api/patient/me/meal-plans');
-  });
-
-  it('uses only allowlisted self-profile fields and endpoints', async () => {
-    const payload = {
-      phone: '11999999999',
-      profilePhoto: 'photo',
-      addressDto: {
-        street: 'Street',
-        number: '1',
-        neighborhood: 'Center',
-        city: 'City',
-        state: 'SP',
-        zipCode: '00000-000',
-      },
-    };
-    putMock.mockResolvedValueOnce({ data: { data: { ...payload, address: payload.addressDto } } });
-
-    await patientPortalService.updateProfile(payload);
-    expect(putMock).toHaveBeenCalledWith('/api/patient/me/profile', payload);
-    expect(JSON.stringify(putMock.mock.calls)).not.toContain('patientId');
   });
 
   it('returns unavailable for a profile capability missing from an older backend', async () => {

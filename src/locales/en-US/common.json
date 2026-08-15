@@ -1959,13 +1959,9 @@
     },
     "account": {
       "title": "My account", "subtitle": "Review your details and adjust portal preferences.", "profile": "Profile", "settings": "Preferences and security",
-      "name": "Name", "email": "Email", "phone": "Phone", "photo": "Profile photo",
-      "photoHint": "Enter a URL or image compatible with the service rules.", "language": "Language",
-      "saveError": "We could not save the profile. Review the details and try again.",
+      "name": "Name", "email": "Email", "phone": "Phone", "language": "Language",
       "preferenceFallback": "Preferences could not be synchronized; this device's values are being used.",
-      "preferenceWriteError": "The preference was not saved and the last confirmed value was restored.",
-      "validation": { "required": "Required field" },
-      "address": { "street": "Street", "number": "Number", "neighborhood": "Neighborhood", "city": "City", "state": "State", "zipCode": "ZIP code" }
+      "preferenceWriteError": "The preference was not saved and the last confirmed value was restored."
     },
     "languages": { "pt-BR": "Português (Brasil)", "en-US": "English (US)", "es": "Español" }
   },

@@ -5,7 +5,6 @@ import type {
   PatientSelfProfile,
   PatientNutritionist,
   AnthropometricEvolution,
-  UpdatePatientSelfProfile,
 } from 'src/types/domain/patient-portal';
 
 import { isAxiosError } from 'axios';
@@ -48,20 +47,10 @@ function normalizePreferences(value: Partial<PatientPreferences> | null): Patien
 }
 
 function normalizeProfile(value: PatientSelfProfile): PatientSelfProfile {
-  const candidate = value as PatientSelfProfile & { addressDto?: PatientSelfProfile['address'] };
   return {
     ...value,
     phone: value.phone ?? '',
     profilePhoto: value.profilePhoto ?? '',
-    address: value.address ??
-      candidate.addressDto ?? {
-        street: '',
-        number: '',
-        neighborhood: '',
-        city: '',
-        state: '',
-        zipCode: '',
-      },
   };
 }
 
@@ -138,16 +127,6 @@ export const patientPortalService = {
       if (unavailableCapability(error)) return { status: 'unavailable', data: null };
       throw error;
     }
-  },
-
-  async updateProfile(payload: UpdatePatientSelfProfile): Promise<PatientSelfProfile> {
-    const response = await api.put<ApiEnvelope<PatientSelfProfile>>(
-      '/api/patient/me/profile',
-      payload
-    );
-    const value = unwrap(response.data);
-    if (!value) throw new Error('Invalid patient profile response');
-    return normalizeProfile(value);
   },
 
   async getPreferences(): Promise<CapabilityResult<PatientPreferences>> {

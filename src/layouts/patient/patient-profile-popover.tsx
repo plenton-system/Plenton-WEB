@@ -50,7 +50,7 @@ function PatientProfileDialog({
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent dividers sx={{ p: { xs: 2, sm: 3 } }}>
+      <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
         <PatientAccountContent state={state} />
       </DialogContent>
     </Dialog>

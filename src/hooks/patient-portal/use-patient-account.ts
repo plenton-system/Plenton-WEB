@@ -1,7 +1,6 @@
 import type {
   PatientSelfProfile,
   PatientNutritionist,
-  UpdatePatientSelfProfile,
 } from 'src/types/domain/patient-portal';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -20,8 +19,6 @@ const initialRemote = <T>(): Remote<T> => ({
 export function usePatientAccount() {
   const [profile, setProfile] = useState<Remote<PatientSelfProfile>>(initialRemote);
   const [nutritionist, setNutritionist] = useState<Remote<PatientNutritionist>>(initialRemote);
-  const [saving, setSaving] = useState(false);
-  const [saveError, setSaveError] = useState(false);
 
   const loadProfile = useCallback(async () => {
     setProfile((value) => ({ ...value, loading: true, error: false }));
@@ -57,28 +54,10 @@ export function usePatientAccount() {
     void loadNutritionist();
   }, [loadNutritionist, loadProfile]);
 
-  const updateProfile = useCallback(async (payload: UpdatePatientSelfProfile) => {
-    setSaving(true);
-    setSaveError(false);
-    try {
-      const data = await patientPortalService.updateProfile(payload);
-      setProfile({ data, loading: false, error: false, unavailable: false });
-      return true;
-    } catch {
-      setSaveError(true);
-      return false;
-    } finally {
-      setSaving(false);
-    }
-  }, []);
-
   return {
     profile,
     nutritionist,
-    saving,
-    saveError,
     retryProfile: loadProfile,
     retryNutritionist: loadNutritionist,
-    updateProfile,
   };
 }

@@ -20,11 +20,6 @@ export type PatientSelfProfile = {
   gender?: string | number | null;
   phone: string;
   profilePhoto: string;
-  address: PatientAddress;
-};
-
-export type UpdatePatientSelfProfile = Pick<PatientSelfProfile, 'phone' | 'profilePhoto'> & {
-  addressDto: PatientAddress;
 };
 
 export type PatientNutritionist = {

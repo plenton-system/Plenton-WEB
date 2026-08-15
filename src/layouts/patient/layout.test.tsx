@@ -73,11 +73,8 @@ it('renders only Patient navigation and accessible account/session actions', asy
       error: false,
       unavailable: false,
     },
-    saving: false,
-    saveError: false,
     retryProfile: vi.fn(),
     retryNutritionist: vi.fn(),
-    updateProfile: vi.fn(),
   });
   const user = userEvent.setup();
   render(
@@ -99,7 +96,9 @@ it('renders only Patient navigation and accessible account/session actions', asy
   expect(screen.queryByRole('menuitem', { name: /meu nutricionista/i })).not.toBeInTheDocument();
   expect(screen.getByRole('menuitem', { name: /minha conta/i })).toBeInTheDocument();
   await user.click(screen.getByRole('menuitem', { name: /minha conta/i }));
-  expect(screen.getByRole('dialog', { name: /minha conta/i })).toBeInTheDocument();
+  const accountDialog = screen.getByRole('dialog', { name: /minha conta/i });
+  expect(accountDialog).toBeInTheDocument();
+  expect(accountDialog.querySelector('.MuiDialogContent-dividers')).not.toBeInTheDocument();
   expect(screen.getByText('Dra. Ana')).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: /fechar/i }));
 

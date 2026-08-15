@@ -68,12 +68,7 @@ export function PatientAccountContent({ state }: { state: AccountState }) {
                     )}
                   </>
                 ) : (
-                  <PatientProfileForm
-                    profile={state.profile.data}
-                    saving={state.saving}
-                    saveError={state.saveError}
-                    onSave={state.updateProfile}
-                  />
+                  <PatientProfileForm profile={state.profile.data} />
                 )}
               </CardContent>
             </Card>

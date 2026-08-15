@@ -50,11 +50,8 @@ describe('PatientAccountView', () => {
         error: false,
         unavailable: false,
       },
-      saving: false,
-      saveError: false,
       retryProfile,
       retryNutritionist: vi.fn(),
-      updateProfile: vi.fn(),
     });
     const user = userEvent.setup();
     render(<PatientAccountView />);
@@ -68,11 +65,8 @@ describe('PatientAccountView', () => {
     vi.mocked(usePatientAccount).mockReturnValue({
       profile: { data: null, loading: false, error: false, unavailable: true },
       nutritionist: { data: null, loading: false, error: false, unavailable: false },
-      saving: false,
-      saveError: false,
       retryProfile: vi.fn(),
       retryNutritionist: vi.fn(),
-      updateProfile: vi.fn(),
     });
     render(<PatientAccountView />);
     expect(screen.getByText(/patient@test.dev/)).toBeInTheDocument();

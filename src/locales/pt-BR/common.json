@@ -2002,14 +2002,9 @@
       "name": "Nome",
       "email": "E-mail",
       "phone": "Telefone",
-      "photo": "Foto do perfil",
-      "photoHint": "Informe uma URL ou imagem compatível com as regras do serviço.",
       "language": "Idioma",
-      "saveError": "Não foi possível salvar o perfil. Revise os dados e tente novamente.",
       "preferenceFallback": "Não foi possível sincronizar as preferências; os valores deste dispositivo estão em uso.",
-      "preferenceWriteError": "A preferência não foi salva e o último valor confirmado foi restaurado.",
-      "validation": { "required": "Campo obrigatório" },
-      "address": { "street": "Rua", "number": "Número", "neighborhood": "Bairro", "city": "Cidade", "state": "Estado", "zipCode": "CEP" }
+      "preferenceWriteError": "A preferência não foi salva e o último valor confirmado foi restaurado."
     },
     "languages": { "pt-BR": "Português (Brasil)", "en-US": "English (US)", "es": "Español" }
   },

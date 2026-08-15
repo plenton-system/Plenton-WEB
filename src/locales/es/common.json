@@ -1892,13 +1892,9 @@
     },
     "account": {
       "title": "Mi cuenta", "subtitle": "Consulte sus datos y ajuste las preferencias del portal.", "profile": "Perfil", "settings": "Preferencias y seguridad",
-      "name": "Nombre", "email": "Correo", "phone": "Teléfono", "photo": "Foto del perfil",
-      "photoHint": "Informe una URL o imagen compatible con las reglas del servicio.", "language": "Idioma",
-      "saveError": "No pudimos guardar el perfil. Revise los datos e intente nuevamente.",
+      "name": "Nombre", "email": "Correo", "phone": "Teléfono", "language": "Idioma",
       "preferenceFallback": "No se pudieron sincronizar las preferencias; se usan los valores de este dispositivo.",
-      "preferenceWriteError": "La preferencia no se guardó y se restauró el último valor confirmado.",
-      "validation": { "required": "Campo obligatorio" },
-      "address": { "street": "Calle", "number": "Número", "neighborhood": "Barrio", "city": "Ciudad", "state": "Estado", "zipCode": "Código postal" }
+      "preferenceWriteError": "La preferencia no se guardó y se restauró el último valor confirmado."
     },
     "languages": { "pt-BR": "Português (Brasil)", "en-US": "English (US)", "es": "Español" }
   },
