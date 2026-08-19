@@ -13,7 +13,7 @@ type UseWorkspacePlansReturn = {
   items: WorkspacePlanItem[];
   loading: boolean;
   error: string | null;
-  refetch: () => Promise<void>;
+  refetch: () => Promise<boolean>;
 };
 
 // ----------------------------------------------------------------------
@@ -29,8 +29,10 @@ export function useWorkspacePlans(patientId?: string): UseWorkspacePlansReturn {
     try {
       const data = await workspacePlanService.getAll({ patientId });
       setItems(data?.items ?? []);
+      return true;
     } catch (err) {
       setError(extractApiErrorMessage(err, i18n.t('workspace.errors.loadPlans')));
+      return false;
     } finally {
       setLoading(false);
     }

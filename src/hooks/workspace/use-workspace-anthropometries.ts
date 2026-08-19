@@ -13,7 +13,7 @@ type UseWorkspaceAnthropometriesReturn = {
   items: WorkspaceAnthropometryListItem[];
   loading: boolean;
   error: string | null;
-  refetch: () => Promise<void>;
+  refetch: () => Promise<boolean>;
 };
 
 // ----------------------------------------------------------------------
@@ -29,8 +29,10 @@ export function useWorkspaceAnthropometries(patientId?: string): UseWorkspaceAnt
     try {
       const data = await workspaceAnthropometryService.getAll(patientId);
       setItems(data?.items ?? []);
+      return true;
     } catch (err) {
       setError(extractApiErrorMessage(err, i18n.t('workspace.errors.loadAnthropometry')));
+      return false;
     } finally {
       setLoading(false);
     }

@@ -33,23 +33,17 @@ import { WorkspaceAnthropometryDetailDrawer } from './workspace-anthropometry-de
 type Props = {
   patientId?: string;
   patientName?: string;
-  onDone?: () => void;
 };
 
 type SortField = 'date' | 'weight' | 'bmi' | 'bodyFat' | 'tdee';
 type NotifyState = { open: boolean; kind: 'success' | 'error' | 'info'; message: string };
 
-const formatMetric = (
-  value?: number | null,
-  suffix = '',
-  decimals = 1
-) => (
+const formatMetric = (value?: number | null, suffix = '', decimals = 1) =>
   typeof value === 'number' && Number.isFinite(value)
     ? `${fNumber(value, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}${suffix}`
-    : '-'
-);
+    : '-';
 
-export function WorkspaceAnthropometryTab({ patientId, patientName, onDone }: Props) {
+export function WorkspaceAnthropometryTab({ patientId, patientName }: Props) {
   const { t } = useTranslation();
   const confirm = useConfirm();
   const { items, loading, error, refetch } = useWorkspaceAnthropometries(patientId);
@@ -118,7 +112,6 @@ export function WorkspaceAnthropometryTab({ patientId, patientName, onDone }: Pr
         kind: 'success',
         message: t('workspace.anthropometry.deleteSuccess'),
       });
-      onDone?.();
     } catch (err: any) {
       setNotify({
         open: true,
@@ -171,11 +164,7 @@ export function WorkspaceAnthropometryTab({ patientId, patientName, onDone }: Pr
     <>
       <Card variant="outlined" sx={{ p: 2 }}>
         <Stack spacing={2}>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={2}
-            alignItems={{ sm: 'center' }}
-          >
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems={{ sm: 'center' }}>
             <Typography variant="h6" sx={{ flexGrow: 1 }}>
               {t('workspace.anthropometry.title')}
             </Typography>
@@ -239,7 +228,9 @@ export function WorkspaceAnthropometryTab({ patientId, patientName, onDone }: Pr
                   </TableCell>
                   <TableCell>{t('workspace.anthropometry.columns.leanMass')}</TableCell>
                   <TableCell>{t('workspace.anthropometry.columns.energy')}</TableCell>
-                  <TableCell align="center">{t('workspace.anthropometry.columns.actions')}</TableCell>
+                  <TableCell align="center">
+                    {t('workspace.anthropometry.columns.actions')}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -313,14 +304,13 @@ export function WorkspaceAnthropometryTab({ patientId, patientName, onDone }: Pr
           setDrawerOpen(false);
           setSelectedEvaluationId(null);
         }}
-        onSaved={async () => {
-          await refetch();
-          setDrawerOpen(false);
-          setSelectedEvaluationId(null);
+        onSaved={async (savedDetail) => {
+          setSelectedEvaluationId(savedDetail.id);
+          const synchronized = await refetch();
+          await offerMealPlanReminder();
 
-          const canFinish = await offerMealPlanReminder();
-          if (canFinish) {
-            onDone?.();
+          if (!synchronized) {
+            throw new Error(t('workspace.anthropometry.syncError'));
           }
         }}
       />

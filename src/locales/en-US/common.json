@@ -1023,7 +1023,10 @@
     "mealPlan": {
       "title": "Meal plans",
       "loadError": "The plan could not be loaded for editing.",
-      "saveError": "The meal plan could not be saved."
+      "saveError": "The meal plan could not be saved.",
+      "identityError": "The plan was saved, but the response did not include its identifier.",
+      "saveSuccess": "Meal plan saved successfully.",
+      "syncError": "The meal plan was saved, but the list could not be refreshed."
     },
     "anamnesis": {
       "title": "Anamnesis",
@@ -1095,6 +1098,8 @@
       "deleteDescription": "This action is irreversible. Do you want to continue?",
       "deleteError": "The anthropometric assessment could not be deleted.",
       "deleteSuccess": "Anthropometric assessment deleted successfully.",
+      "saveSuccess": "Anthropometric assessment saved successfully.",
+      "syncError": "The assessment was saved, but the list could not be refreshed.",
       "empty": "No anthropometric assessment found.",
       "noCalculation": "No saved calculation",
       "reminder": {

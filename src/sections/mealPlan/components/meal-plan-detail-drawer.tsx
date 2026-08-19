@@ -15,8 +15,8 @@ import { MealPlanStatus } from '../../../types';
 import { MealPlanInsightsPanel } from './insights/meal-plan-insights-panel';
 import { RowActionsMenu, type RowActionItem } from '../../../components/table';
 
-import type { MealPlanDto} from '../../../types';
 import type { MealPlanDrawerModel } from '../types/meal-plan-list';
+import type { MealPlanDto, MealPlanDetailResponse } from '../../../types';
 
 // ----------------------------------------------------------------------
 
@@ -25,10 +25,13 @@ type MealPlanDetailDrawerProps = {
   patientId: string;
   plan?: MealPlanDrawerModel | null;
   onClose: () => void;
-  onSubmit?: (payload: MealPlanDto) => Promise<void | boolean> | void;
-  onSaved?: () => void;
+  onSubmit?: (payload: MealPlanDto) => Promise<void | boolean | MealPlanDetailResponse> | void;
+  onSaved?: (result?: MealPlanDetailResponse) => void | Promise<void>;
+  closeAfterSave?: boolean;
   loading?: boolean;
   error?: string | null;
+  success?: string | null;
+  syncError?: string | null;
   headerActionsSlot?: ReactNode;
   rightPanelSlot?: ReactNode;
 };
@@ -40,8 +43,11 @@ export function MealPlanDetailDrawer({
   onClose,
   onSubmit,
   onSaved,
+  closeAfterSave = true,
   loading,
   error,
+  success,
+  syncError,
   patientId,
   plan,
   headerActionsSlot,
@@ -86,7 +92,7 @@ export function MealPlanDetailDrawer({
   ];
   const initialValues = useMemo(() => {
     if (!plan) return undefined;
-    
+
     if (plan.initial) return plan.initial;
 
     return {
@@ -126,6 +132,18 @@ export function MealPlanDetailDrawer({
           </Alert>
         )}
 
+        {success && (
+          <Alert severity="success" role="status" sx={{ mb: 2 }}>
+            {success}
+          </Alert>
+        )}
+
+        {syncError && (
+          <Alert severity="warning" role="alert" sx={{ mb: 2 }}>
+            {syncError}
+          </Alert>
+        )}
+
         <Stack
           direction={{ xs: 'column', xl: 'row' }}
           spacing={3}
@@ -142,8 +160,8 @@ export function MealPlanDetailDrawer({
                 const result = await onSubmit?.(payload);
                 if (result === false) return;
 
-                await onSaved?.();
-                onClose();
+                await onSaved?.(typeof result === 'object' ? result : undefined);
+                if (closeAfterSave) onClose();
               }}
               onCancel={onClose}
             />
@@ -151,7 +169,11 @@ export function MealPlanDetailDrawer({
 
           <Stack sx={{ width: { xs: '100%', xl: 360 } }}>
             {rightPanelSlot ?? (
-              <MealPlanInsightsPanel planName={plan?.name} totals={totals} micronutrients={micronutrients} />
+              <MealPlanInsightsPanel
+                planName={plan?.name}
+                totals={totals}
+                micronutrients={micronutrients}
+              />
             )}
           </Stack>
         </Stack>
@@ -178,10 +200,7 @@ type NutrientLabels = {
   potassium: string;
 };
 
-const buildTotals = (
-  plan: MealPlanDrawerModel | null | undefined,
-  labels: NutrientLabels
-) => {
+const buildTotals = (plan: MealPlanDrawerModel | null | undefined, labels: NutrientLabels) => {
   const macros = plan?.initial?.summary?.macros;
   const micros = plan?.initial?.summary?.micros;
   if (!macros || !micros) return [];
@@ -221,10 +240,7 @@ const buildTotals = (
   ];
 };
 
-const buildMicros = (
-  plan: MealPlanDrawerModel | null | undefined,
-  labels: NutrientLabels
-) => {
+const buildMicros = (plan: MealPlanDrawerModel | null | undefined, labels: NutrientLabels) => {
   const micros = plan?.initial?.summary?.micros;
   if (!micros) return [];
 

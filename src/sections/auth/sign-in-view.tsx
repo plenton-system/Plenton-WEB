@@ -145,11 +145,9 @@ export function SignInView() {
       router.replace(
         resolvePostSignInDestination(signedInUser.role, requestedPath, pendingPlanPriceId)
       );
-
     } catch (error) {
       // Extrai apenas a mensagem limpa
-      const message = error instanceof Error ?
-        error.message : t('auth.unknownError');
+      const message = error instanceof Error ? error.message : t('auth.unknownError');
       setErrorMessage(message);
     }
   };
@@ -218,8 +216,8 @@ export function SignInView() {
         overflow: 'hidden', // Mantém o conteúdo dentro das bordas arredondadas
         boxShadow: theme.customShadows.z16, // Adiciona sombra para melhor visualização (opcional)
         bgcolor: theme.vars.palette.background.paper,
-      }}>
-
+      }}
+    >
       {/* Lado Esquerdo - Mensagem */}
       <Grid
         size={{ xs: 12, md: 6 }}
@@ -249,13 +247,11 @@ export function SignInView() {
           textAlign="center"
           sx={{ color: 'rgba(255,255,255,0.92)' }}
         >
-          {isSignIn
-            ? t('auth.signInIntro')
-            : t('auth.registerIntro')}
+          {isSignIn ? t('auth.signInIntro') : t('auth.registerIntro')}
         </Typography>
 
         <Button
-          variant='outlined'
+          variant="outlined"
           onClick={toggleMode}
           sx={{
             color: '#FFFFFF',
@@ -349,7 +345,9 @@ export function SignInView() {
                     endAdornment: (
                       <InputAdornment position="end">
                         <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                          <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                          <Iconify
+                            icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'}
+                          />
                         </IconButton>
                       </InputAdornment>
                     ),
@@ -379,10 +377,8 @@ export function SignInView() {
                 disabled={authenticating}
                 startIcon={authenticating && <CircularProgress size={20} color="inherit" />}
               >
-                {authenticating ? t('auth.signingIn') : t('auth.signIn')}
+                <span>{authenticating ? t('auth.signingIn') : t('auth.signIn')}</span>
               </Button>
-
-
             </Box>
             {/* Login social (Google, GitHub, X) ainda não implementado — reativar quando pronto.
             <Divider sx={{ my: 1.5, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
@@ -412,7 +408,7 @@ export function SignInView() {
             </Box>
             */}
           </Paper>
-        </Slide >
+        </Slide>
 
         <Slide direction="right" timeout={400} in={!isSignIn} mountOnEnter unmountOnExit>
           <Paper
@@ -509,7 +505,9 @@ export function SignInView() {
                     endAdornment: (
                       <InputAdornment position="end">
                         <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                          <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                          <Iconify
+                            icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'}
+                          />
                         </IconButton>
                       </InputAdornment>
                     ),
@@ -604,7 +602,7 @@ export function SignInView() {
                 startIcon={registering && <CircularProgress size={20} color="inherit" />}
                 sx={{ gridColumn: '1 / -1', mt: 0.5, mb: 1 }}
               >
-                {registering ? t('auth.registering') : t('auth.register')}
+                <span>{registering ? t('auth.registering') : t('auth.register')}</span>
               </Button>
             </Box>
 
@@ -644,7 +642,6 @@ export function SignInView() {
             */}
           </Paper>
         </Slide>
-
       </Grid>
 
       <Snackbar
@@ -672,6 +669,6 @@ export function SignInView() {
           {successMessage}
         </Alert>
       </Snackbar>
-    </Grid >
+    </Grid>
   );
 }

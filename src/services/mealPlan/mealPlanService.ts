@@ -18,10 +18,16 @@ import type {
 import { get, post } from 'src/utils/http-client';
 import { extractFileNameFromContentDisposition } from 'src/utils/format-file';
 
+import i18n from 'src/i18n';
 import api from 'src/services/api';
 import { MealPlanStatus as MealPlanStatusEnum } from 'src/types';
 
 type ApiEnvelope<T> = T | { data?: T };
+type MealPlanCreateApiResponse =
+  | string
+  | MealPlanDetailResponse
+  | { id?: string | null; mealPlanId?: string | null }
+  | { data?: string | MealPlanDetailResponse | { id?: string | null; mealPlanId?: string | null } };
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   Boolean(value) && typeof value === 'object' && !Array.isArray(value);
@@ -91,9 +97,7 @@ const toDayIndex = (day: unknown): number | null => {
 const normalizeDaysOfWeek = (value: unknown): number[] => {
   if (!Array.isArray(value)) return [];
 
-  const indexes = value
-    .map(toDayIndex)
-    .filter((day): day is number => day !== null);
+  const indexes = value.map(toDayIndex).filter((day): day is number => day !== null);
 
   return [...new Set(indexes)].sort((a, b) => a - b);
 };
@@ -229,6 +233,24 @@ const normalizeDetail = (value: unknown, fallbackId: string): MealPlanDetailResp
   };
 };
 
+const getCreatedMealPlan = (
+  response: MealPlanCreateApiResponse,
+  payload: MealPlanCreateRequest
+): MealPlanDetailResponse => {
+  const raw = unwrapResponse(response);
+  const id =
+    toText(raw) ??
+    (isRecord(raw)
+      ? (toText(raw.id) ?? ('mealPlanId' in raw ? toText(raw.mealPlanId) : undefined))
+      : undefined);
+
+  if (!id) {
+    throw new Error(i18n.t('workspace.mealPlan.identityError'));
+  }
+
+  return normalizeDetail(isRecord(raw) ? { ...payload, ...raw, id } : { ...payload, id }, id);
+};
+
 const emptyListResponse: MealPlanListByPatientResponse = {
   currentPage: 0,
   totalPages: 0,
@@ -274,8 +296,12 @@ export const mealPlanService = {
     return normalizeDetail(raw, idMealPlan);
   },
 
-  create: async (payload: MealPlanCreateRequest): Promise<void> => {
-    await post('/api/MealPlan/create-meal-plan', payload);
+  create: async (payload: MealPlanCreateRequest): Promise<MealPlanDetailResponse> => {
+    const response = await post<MealPlanCreateApiResponse>(
+      '/api/MealPlan/create-meal-plan',
+      payload
+    );
+    return getCreatedMealPlan(response, payload);
   },
 
   edit: async (payload: MealPlanEditRequest): Promise<void> => {

@@ -1,4 +1,4 @@
-import type { MealPlanDto } from 'src/types';
+import type { MealPlanDto, MealPlanDetailResponse } from 'src/types';
 import type {
   MealPlanSortState,
   MealPlanListItemVM,
@@ -34,7 +34,6 @@ import {
 
 type Props = {
   patientId?: string;
-  onDone?: () => void;
 };
 
 // ----------------------------------------------------------------------
@@ -55,9 +54,20 @@ const toDrawerModelFromListItem = (item: MealPlanListItemVM): MealPlanDrawerMode
   lastDelivery: item.lastDelivery,
 });
 
-export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
+const toUiStatus = (status: MealPlanDetailResponse['status']): MealPlanDrawerModel['status'] => {
+  if (status === 1) return 'INACTIVE';
+  if (status === 2) return 'SUSPENDED';
+  return 'ACTIVE';
+};
+
+export function WorkspaceMealPlanTab({ patientId }: Props) {
   const { t } = useTranslation();
-  const { items: workspaceItems, loading, error: listError, refetch } = useWorkspacePlans(patientId);
+  const {
+    items: workspaceItems,
+    loading,
+    error: listError,
+    refetch,
+  } = useWorkspacePlans(patientId);
 
   const [selected, setSelected] = useState<MealPlanDrawerModel | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -66,15 +76,16 @@ export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
   const [detailError, setDetailError] = useState<string | null>(null);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
+  const [syncError, setSyncError] = useState<string | null>(null);
 
-  const listItems = useMemo(
-    () => workspaceItems.map(toMealPlanListItemVM),
-    [workspaceItems]
-  );
+  const listItems = useMemo(() => workspaceItems.map(toMealPlanListItemVM), [workspaceItems]);
 
   const handleCreate = () => {
     setDetailError(null);
     setSubmitError(null);
+    setSubmitSuccess(null);
+    setSyncError(null);
     setSelected(null);
     setDrawerOpen(true);
   };
@@ -85,6 +96,8 @@ export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
 
     setDetailError(null);
     setSubmitError(null);
+    setSubmitSuccess(null);
+    setSyncError(null);
     setDetailLoading(true);
 
     try {
@@ -101,8 +114,10 @@ export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
     }
   };
 
-  const handleSubmit = async (payload: MealPlanDto): Promise<boolean> => {
+  const handleSubmit = async (payload: MealPlanDto): Promise<boolean | MealPlanDetailResponse> => {
     setSubmitError(null);
+    setSubmitSuccess(null);
+    setSyncError(null);
     setSubmitLoading(true);
 
     try {
@@ -111,11 +126,10 @@ export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
           id: selected.id,
           ...payload,
         });
+        return { ...payload, id: selected.id };
       } else {
-        await mealPlanService.create(payload);
+        return await mealPlanService.create(payload);
       }
-
-      return true;
     } catch (error: unknown) {
       setSubmitError(extractApiErrorMessage(error, t('workspace.mealPlan.saveError')));
       return false;
@@ -162,18 +176,32 @@ export function WorkspaceMealPlanTab({ patientId, onDone }: Props) {
           setDrawerOpen(false);
           setSelected(null);
           setSubmitError(null);
+          setSubmitSuccess(null);
+          setSyncError(null);
         }}
         patientId={patientId ?? ''}
         plan={selected}
         loading={submitLoading || detailLoading}
         error={submitError}
+        success={submitSuccess}
+        syncError={syncError}
+        closeAfterSave={false}
         onSubmit={handleSubmit}
-        onSaved={async () => {
-          await refetch();
-          setSelected(null);
-          setDrawerOpen(false);
-          setSubmitError(null);
-          onDone?.();
+        onSaved={async (savedPlan) => {
+          if (savedPlan) {
+            setSelected({
+              id: savedPlan.id,
+              name: savedPlan.name,
+              status: toUiStatus(savedPlan.status),
+              initial: savedPlan,
+            });
+          }
+          setSubmitSuccess(t('workspace.mealPlan.saveSuccess'));
+
+          const synchronized = await refetch();
+          if (!synchronized) {
+            setSyncError(t('workspace.mealPlan.syncError'));
+          }
         }}
       />
     </>

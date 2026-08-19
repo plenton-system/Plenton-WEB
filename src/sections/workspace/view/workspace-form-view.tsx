@@ -30,7 +30,6 @@ type WorkspaceFormViewProps = {
   patientName?: string;
   initialTab?: WorkspaceTabId;
   onBack?: () => void;
-  onReturn?: () => void;
 };
 
 // ----------------------------------------------------------------------
@@ -40,14 +39,15 @@ export function WorkspaceFormView({
   patientName,
   initialTab,
   onBack,
-  onReturn,
 }: WorkspaceFormViewProps) {
   const [tab, setTab] = useState<WorkspaceTabId>(initialTab ?? 'mealPlan');
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
-  const [appointmentInitialData, setAppointmentInitialData] = useState<AppointmentDetailProps | null>(null);
+  const [appointmentInitialData, setAppointmentInitialData] =
+    useState<AppointmentDetailProps | null>(null);
   const [scheduleSnackbarOpen, setScheduleSnackbarOpen] = useState(false);
 
-  const { addEvent, loadingCalendar, loadingForm, error, success, resetFormStatesHook } = useAppointment();
+  const { addEvent, loadingCalendar, loadingForm, error, success, resetFormStatesHook } =
+    useAppointment();
 
   useEffect(() => {
     setTab(initialTab ?? 'mealPlan');
@@ -94,10 +94,7 @@ export function WorkspaceFormView({
   return (
     <Card variant="outlined" sx={{ p: { xs: 1.5, md: 2 }, borderRadius: 3 }}>
       <Stack spacing={3}>
-        <WorkspaceHeader
-          onBack={onBack}
-          onNewAppointment={handleOpenNewAppointment}
-        />
+        <WorkspaceHeader onBack={onBack} onNewAppointment={handleOpenNewAppointment} />
 
         <Divider />
 
@@ -114,14 +111,10 @@ export function WorkspaceFormView({
           }}
         >
           <Stack spacing={3}>
-            {tab === 'mealPlan' && <WorkspaceMealPlanTab patientId={patientId} onDone={onReturn} />}
+            {tab === 'mealPlan' && <WorkspaceMealPlanTab patientId={patientId} />}
 
             {tab === 'anthropometry' && (
-              <WorkspaceAnthropometryTab
-                patientId={patientId}
-                patientName={patientName}
-                onDone={onReturn}
-              />
+              <WorkspaceAnthropometryTab patientId={patientId} patientName={patientName} />
             )}
 
             {tab === 'anamnesis' && <WorkspaceAnamnesisTab patientId={patientId} />}
@@ -133,7 +126,6 @@ export function WorkspaceFormView({
             {tab === 'prescriptions' && (
               <WorkspaceClinicalDocumentTab kind="prescriptions" patientId={patientId} />
             )}
-
           </Stack>
         </Box>
       </Stack>

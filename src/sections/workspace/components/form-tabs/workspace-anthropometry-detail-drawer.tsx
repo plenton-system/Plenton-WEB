@@ -131,11 +131,7 @@ const calculateBmi = (weight: string, height: string) => {
   const parsedWeight = toNullableNumber(weight);
   const parsedHeight = toNullableNumber(height);
 
-  if (
-    parsedWeight == null ||
-    parsedHeight == null ||
-    parsedHeight <= 0
-  ) {
+  if (parsedWeight == null || parsedHeight == null || parsedHeight <= 0) {
     return '';
   }
 
@@ -163,7 +159,9 @@ const getPatientAge = (birthDate?: string | null) => {
 const buildAnthropometryForm = (
   detail?: WorkspaceAnthropometryDetail | null
 ): AnthropometryFormValues => ({
-  evaluationDateUtc: detail?.evaluationDateUtc ? fDateTimeInput(detail.evaluationDateUtc) : fNowDateTimeInput(),
+  evaluationDateUtc: detail?.evaluationDateUtc
+    ? fDateTimeInput(detail.evaluationDateUtc)
+    : fNowDateTimeInput(),
   weight: toInputString(detail?.weight),
   height: toInputString(detail?.height),
   bmi: toInputString(detail?.bmi),
@@ -207,7 +205,13 @@ const toEnergyResultFromDetail = (
   patientAgeYears?: number | null,
   patientGender?: EnergyCalculationGender | null
 ): EnergyCalculationResult | null => {
-  if (!detail?.nutritionGoal || !detail.weight || !detail.height || !patientAgeYears || !patientGender) {
+  if (
+    !detail?.nutritionGoal ||
+    !detail.weight ||
+    !detail.height ||
+    !patientAgeYears ||
+    !patientGender
+  ) {
     return null;
   }
 
@@ -231,7 +235,10 @@ export function WorkspaceAnthropometryDetailDrawer({
   onSaved,
 }: Props) {
   const { t } = useTranslation();
-  const patientDetail = usePatientDetail({ id: patientId ?? null, autoLoad: open && Boolean(patientId) });
+  const patientDetail = usePatientDetail({
+    id: patientId ?? null,
+    autoLoad: open && Boolean(patientId),
+  });
   const detail = useWorkspaceAnthropometryDetail(patientId, evaluationId, open);
   const energyCalculation = useEnergyExpenditureCalculation(patientId);
   const detailData = detail.data;
@@ -254,6 +261,8 @@ export function WorkspaceAnthropometryDetailDrawer({
   const [energyForm, setEnergyForm] = useState<EnergyFormValues>(DEFAULT_ENERGY_FORM);
   const [energyCalculatedAtUtc, setEnergyCalculatedAtUtc] = useState<string | null>(null);
   const [energyPersisted, setEnergyPersisted] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
+  const [syncError, setSyncError] = useState<string | null>(null);
 
   const patientAgeYears = useMemo(
     () => getPatientAge(patientDetail.data?.birthDate),
@@ -279,6 +288,8 @@ export function WorkspaceAnthropometryDetailDrawer({
       setEnergyForm(DEFAULT_ENERGY_FORM);
       setEnergyCalculatedAtUtc(null);
       setEnergyPersisted(false);
+      setSaveSuccess(null);
+      setSyncError(null);
       resetEnergyCalculation();
       resetDetail();
       return;
@@ -320,7 +331,10 @@ export function WorkspaceAnthropometryDetailDrawer({
     });
   };
 
-  const handleEnergyChange = <K extends keyof EnergyFormValues>(field: K, value: EnergyFormValues[K]) => {
+  const handleEnergyChange = <K extends keyof EnergyFormValues>(
+    field: K,
+    value: EnergyFormValues[K]
+  ) => {
     setEnergyForm((prev) => ({ ...prev, [field]: value }));
     setEnergyPersisted(false);
   };
@@ -366,8 +380,12 @@ export function WorkspaceAnthropometryDetailDrawer({
     leftCalfCircumference: toNullableNumber(anthropometryForm.leftCalfCircumference),
     rightThighCircumference: toNullableNumber(anthropometryForm.rightThighCircumference),
     leftThighCircumference: toNullableNumber(anthropometryForm.leftThighCircumference),
-    rightProximalThighCircumference: toNullableNumber(anthropometryForm.rightProximalThighCircumference),
-    leftProximalThighCircumference: toNullableNumber(anthropometryForm.leftProximalThighCircumference),
+    rightProximalThighCircumference: toNullableNumber(
+      anthropometryForm.rightProximalThighCircumference
+    ),
+    leftProximalThighCircumference: toNullableNumber(
+      anthropometryForm.leftProximalThighCircumference
+    ),
     whr: toNullableNumber(anthropometryForm.whr),
     leanMass: toNullableNumber(anthropometryForm.leanMass),
     fatMass: toNullableNumber(anthropometryForm.fatMass),
@@ -381,12 +399,25 @@ export function WorkspaceAnthropometryDetailDrawer({
   });
 
   const handleSave = async () => {
-    const savedDetail = await saveDetail(buildPayload());
-    const persistedResult = toEnergyResultFromDetail(savedDetail, patientAgeYears, patientGender);
-    setEnergyResult(persistedResult);
-    setEnergyCalculatedAtUtc(savedDetail.nutritionGoal?.calculatedAtUtc ?? null);
-    setEnergyPersisted(Boolean(savedDetail.nutritionGoal));
-    await onSaved?.(savedDetail);
+    setSaveSuccess(null);
+    setSyncError(null);
+
+    try {
+      const savedDetail = await saveDetail(buildPayload());
+      const persistedResult = toEnergyResultFromDetail(savedDetail, patientAgeYears, patientGender);
+      setEnergyResult(persistedResult);
+      setEnergyCalculatedAtUtc(savedDetail.nutritionGoal?.calculatedAtUtc ?? null);
+      setEnergyPersisted(Boolean(savedDetail.nutritionGoal));
+      setSaveSuccess(t('workspace.anthropometry.saveSuccess'));
+
+      try {
+        await onSaved?.(savedDetail);
+      } catch {
+        setSyncError(t('workspace.anthropometry.syncError'));
+      }
+    } catch {
+      // The detail hook exposes the localized persistence error without resetting form values.
+    }
   };
 
   const isLoading = detailLoading || patientDetail.loading;
@@ -406,6 +437,16 @@ export function WorkspaceAnthropometryDetailDrawer({
           <Stack spacing={3} sx={{ mt: 1 }}>
             {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
             {detailSaveError ? <Alert severity="error">{detailSaveError}</Alert> : null}
+            {saveSuccess ? (
+              <Alert severity="success" role="status">
+                {saveSuccess}
+              </Alert>
+            ) : null}
+            {syncError ? (
+              <Alert severity="warning" role="alert">
+                {syncError}
+              </Alert>
+            ) : null}
 
             <AnthropometryFormSection
               values={anthropometryForm}

@@ -1035,7 +1035,10 @@
     "mealPlan": {
       "title": "Planos alimentares",
       "loadError": "Não foi possível carregar o plano para edição.",
-      "saveError": "Não foi possível salvar o plano alimentar."
+      "saveError": "Não foi possível salvar o plano alimentar.",
+      "identityError": "O plano foi salvo, mas a resposta não informou sua identificação.",
+      "saveSuccess": "Plano alimentar salvo com sucesso.",
+      "syncError": "O plano alimentar foi salvo, mas a lista não pôde ser atualizada."
     },
     "anamnesis": {
       "title": "Anamnese",
@@ -1107,6 +1110,8 @@
       "deleteDescription": "Esta ação é irreversível. Deseja continuar?",
       "deleteError": "Não foi possível excluir a avaliação antropométrica.",
       "deleteSuccess": "Avaliação antropométrica excluída com sucesso.",
+      "saveSuccess": "Avaliação antropométrica salva com sucesso.",
+      "syncError": "A avaliação foi salva, mas a lista não pôde ser atualizada.",
       "empty": "Nenhuma avaliação antropométrica encontrada.",
       "noCalculation": "Sem cálculo salvo",
       "reminder": {

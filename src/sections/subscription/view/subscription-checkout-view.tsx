@@ -129,7 +129,11 @@ export function SubscriptionCheckoutView() {
         {!loading && !error && !selected && (
           <Alert
             severity="warning"
-            action={<Button onClick={() => navigate('/#planos')}>{t('subscription.common.choosePlan')}</Button>}
+            action={
+              <Button onClick={() => navigate('/#planos')}>
+                {t('subscription.common.choosePlan')}
+              </Button>
+            }
           >
             {t('subscription.checkout.unavailable')}
           </Alert>
@@ -140,7 +144,10 @@ export function SubscriptionCheckoutView() {
             <Grid size={{ xs: 12, md: 5 }}>
               <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
                 <Stack spacing={2}>
-                  <Chip label={t('subscription.checkout.selectedPlan')} sx={{ alignSelf: 'flex-start' }} />
+                  <Chip
+                    label={t('subscription.checkout.selectedPlan')}
+                    sx={{ alignSelf: 'flex-start' }}
+                  />
                   <Box>
                     <Typography variant="h5" sx={{ fontWeight: 700 }}>
                       {selected.plan.name}
@@ -150,8 +157,14 @@ export function SubscriptionCheckoutView() {
                     </Typography>
                   </Box>
                   <Typography variant="h4" sx={{ fontWeight: 800 }}>
-                    {isTrial ? t('subscription.checkout.free') : formatMoney(selected.price.value, selected.price.currency)}
-                    <Typography component="span" variant="body2" sx={{ color: 'text.secondary', ml: 1 }}>
+                    {isTrial
+                      ? t('subscription.checkout.free')
+                      : formatMoney(selected.price.value, selected.price.currency)}
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      sx={{ color: 'text.secondary', ml: 1 }}
+                    >
                       {isTrial
                         ? t('subscription.checkout.days', { count: selected.plan.trialDays })
                         : `/ ${billingCycleLabel(selected.price.billingCycle)}`}
@@ -165,7 +178,9 @@ export function SubscriptionCheckoutView() {
               <Paper variant="outlined" sx={{ p: 3, borderRadius: 2 }}>
                 <Stack spacing={2.5}>
                   <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                    {isTrial ? t('subscription.checkout.trialActivation') : t('subscription.checkout.paymentMethod')}
+                    {isTrial
+                      ? t('subscription.checkout.trialActivation')
+                      : t('subscription.checkout.paymentMethod')}
                   </Typography>
 
                   {isTrial ? (
@@ -175,11 +190,17 @@ export function SubscriptionCheckoutView() {
                   ) : (
                     <RadioGroup
                       value={billingType}
-                      onChange={(event) => setBillingType(event.target.value as SubscriptionBillingType)}
+                      onChange={(event) =>
+                        setBillingType(event.target.value as SubscriptionBillingType)
+                      }
                     >
                       <Stack spacing={1.5}>
                         {paymentOptions.map((option) => (
-                          <Paper key={option.value} variant="outlined" sx={{ px: 2, py: 1.5, borderRadius: 1.5 }}>
+                          <Paper
+                            key={option.value}
+                            variant="outlined"
+                            sx={{ px: 2, py: 1.5, borderRadius: 1.5 }}
+                          >
                             <FormControlLabel
                               value={option.value}
                               control={<Radio />}
@@ -199,7 +220,9 @@ export function SubscriptionCheckoutView() {
                     </RadioGroup>
                   )}
 
-                  {startSubscription.error && <Alert severity="error">{startSubscription.error}</Alert>}
+                  {startSubscription.error && (
+                    <Alert severity="error">{startSubscription.error}</Alert>
+                  )}
 
                   <Button
                     size="large"
@@ -215,11 +238,15 @@ export function SubscriptionCheckoutView() {
                     }
                     sx={{ alignSelf: { xs: 'stretch', sm: 'flex-start' } }}
                   >
-                    {isTrial
-                      ? t('subscription.checkout.startTrial')
-                      : billingType === 'CreditCard'
-                        ? t('subscription.checkout.goToAsaas')
-                        : t('subscription.checkout.startPayment', { method: billingTypeLabel(billingType) })}
+                    <span>
+                      {isTrial
+                        ? t('subscription.checkout.startTrial')
+                        : billingType === 'CreditCard'
+                          ? t('subscription.checkout.goToAsaas')
+                          : t('subscription.checkout.startPayment', {
+                              method: billingTypeLabel(billingType),
+                            })}
+                    </span>
                   </Button>
                 </Stack>
               </Paper>
