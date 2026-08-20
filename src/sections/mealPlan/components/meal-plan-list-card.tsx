@@ -110,6 +110,7 @@ type MealPlanListCardProps = {
   onCreate: () => void;
   onEdit: (item: MealPlanListItemVM) => void;
   onDelete?: (item: MealPlanListItemVM) => void;
+  deletingItemId?: string | null;
   headerActions?: ReactNode;
   renderStatus?: (item: MealPlanListItemVM) => ReactNode;
   renderRowActions?: (item: MealPlanListItemVM) => ReactNode;
@@ -128,6 +129,7 @@ export function MealPlanListCard({
   onCreate,
   onEdit,
   onDelete,
+  deletingItemId,
   headerActions,
   renderStatus,
   renderRowActions,
@@ -166,11 +168,7 @@ export function MealPlanListCard({
           return dir * (totalA - totalB);
         }
         case 'lastDelivery':
-          return compareOptionalTimestamps(
-            a.lastDeliverySortValue,
-            b.lastDeliverySortValue,
-            order
-          );
+          return compareOptionalTimestamps(a.lastDeliverySortValue, b.lastDeliverySortValue, order);
         case 'updatedAt':
         default:
           return compareOptionalTimestamps(a.updatedAtSortValue, b.updatedAtSortValue, order);
@@ -245,6 +243,7 @@ export function MealPlanListCard({
                       ) : (
                         <RowActionsMenu
                           menuWidth={150}
+                          ariaLabel={t('mealplan.list.actionsFor', { name: item.name })}
                           actions={[
                             {
                               label: t('actions.edit'),
@@ -255,7 +254,7 @@ export function MealPlanListCard({
                               label: t('actions.remove'),
                               icon: 'solar:trash-bin-trash-bold',
                               color: 'error',
-                              disabled: !onDelete,
+                              disabled: !onDelete || Boolean(deletingItemId),
                               onClick: () => onDelete?.(item),
                             },
                           ]}
@@ -289,7 +288,9 @@ export function MealPlanListCard({
             <TableHead>
               <TableRow>
                 <TableCell
-                  sortDirection={currentSortState.orderBy === 'name' ? currentSortState.order : false}
+                  sortDirection={
+                    currentSortState.orderBy === 'name' ? currentSortState.order : false
+                  }
                 >
                   <TableSortLabel
                     active={currentSortState.orderBy === 'name'}
@@ -300,18 +301,24 @@ export function MealPlanListCard({
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
-                  sortDirection={currentSortState.orderBy === 'status' ? currentSortState.order : false}
+                  sortDirection={
+                    currentSortState.orderBy === 'status' ? currentSortState.order : false
+                  }
                 >
                   <TableSortLabel
                     active={currentSortState.orderBy === 'status'}
-                    direction={currentSortState.orderBy === 'status' ? currentSortState.order : 'asc'}
+                    direction={
+                      currentSortState.orderBy === 'status' ? currentSortState.order : 'asc'
+                    }
                     onClick={() => handleSort('status')}
                   >
                     {t('mealplan.list.columns.status')}
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
-                  sortDirection={currentSortState.orderBy === 'days' ? currentSortState.order : false}
+                  sortDirection={
+                    currentSortState.orderBy === 'days' ? currentSortState.order : false
+                  }
                 >
                   <TableSortLabel
                     active={currentSortState.orderBy === 'days'}
@@ -322,11 +329,15 @@ export function MealPlanListCard({
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
-                  sortDirection={currentSortState.orderBy === 'resume' ? currentSortState.order : false}
+                  sortDirection={
+                    currentSortState.orderBy === 'resume' ? currentSortState.order : false
+                  }
                 >
                   <TableSortLabel
                     active={currentSortState.orderBy === 'resume'}
-                    direction={currentSortState.orderBy === 'resume' ? currentSortState.order : 'asc'}
+                    direction={
+                      currentSortState.orderBy === 'resume' ? currentSortState.order : 'asc'
+                    }
                     onClick={() => handleSort('resume')}
                   >
                     {t('mealplan.list.columns.resume')}
@@ -390,7 +401,8 @@ export function MealPlanListCard({
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2">
-                        {t('mealplan.list.mealsCount', { count: item.mealsCount ?? 0 })} · {t('mealplan.list.itemsCount', { count: item.itemsCount ?? 0 })}
+                        {t('mealplan.list.mealsCount', { count: item.mealsCount ?? 0 })} ·{' '}
+                        {t('mealplan.list.itemsCount', { count: item.itemsCount ?? 0 })}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -405,6 +417,7 @@ export function MealPlanListCard({
                       ) : (
                         <RowActionsMenu
                           menuWidth={150}
+                          ariaLabel={t('mealplan.list.actionsFor', { name: item.name })}
                           actions={[
                             {
                               label: t('actions.edit'),
@@ -415,7 +428,7 @@ export function MealPlanListCard({
                               label: t('actions.remove'),
                               icon: 'solar:trash-bin-trash-bold',
                               color: 'error',
-                              disabled: !onDelete,
+                              disabled: !onDelete || Boolean(deletingItemId),
                               onClick: () => onDelete?.(item),
                             },
                           ]}

@@ -419,6 +419,7 @@
       "updated": "Atualizado: {{date}}",
       "allDays": "Todos os dias",
       "delivery": "Entrega: {{value}}",
+      "actionsFor": "Ações do plano {{name}}",
       "mealsCount_one": "{{count}} refeição",
       "mealsCount_other": "{{count}} refeições",
       "itemsCount_one": "{{count}} item",
@@ -1038,7 +1039,14 @@
       "saveError": "Não foi possível salvar o plano alimentar.",
       "identityError": "O plano foi salvo, mas a resposta não informou sua identificação.",
       "saveSuccess": "Plano alimentar salvo com sucesso.",
-      "syncError": "O plano alimentar foi salvo, mas a lista não pôde ser atualizada."
+      "syncError": "O plano alimentar foi salvo, mas a lista não pôde ser atualizada.",
+      "deleteTitle": "Excluir plano alimentar?",
+      "deleteDescription": "O plano \"{{name}}\" será excluído. Esta ação não pode ser desfeita.",
+      "deleteSuccess": "Plano alimentar excluído com sucesso.",
+      "deleteError": "Não foi possível excluir o plano alimentar.",
+      "deleteNotFound": "O plano alimentar não está disponível para exclusão.",
+      "deleteConflict": "Planos já disponibilizados ao paciente não podem ser excluídos. Desative o plano em vez disso.",
+      "deleteSyncError": "O plano foi excluído, mas a lista não pôde ser atualizada. Tente recarregá-la novamente."
     },
     "anamnesis": {
       "title": "Anamnese",

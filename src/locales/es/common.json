@@ -376,6 +376,7 @@
       "updated": "Actualizado: {{date}}",
       "allDays": "Todos los días",
       "delivery": "Entrega: {{value}}",
+      "actionsFor": "Acciones del plan {{name}}",
       "mealsCount_one": "{{count}} comida",
       "mealsCount_other": "{{count}} comidas",
       "itemsCount_one": "{{count}} ítem",
@@ -994,7 +995,14 @@
       "saveError": "No se pudo guardar el plan alimentario.",
       "identityError": "El plan se guardó, pero la respuesta no incluyó su identificador.",
       "saveSuccess": "Plan alimentario guardado con éxito.",
-      "syncError": "El plan alimentario se guardó, pero no se pudo actualizar la lista."
+      "syncError": "El plan alimentario se guardó, pero no se pudo actualizar la lista.",
+      "deleteTitle": "¿Eliminar plan alimentario?",
+      "deleteDescription": "El plan \"{{name}}\" será eliminado. Esta acción no se puede deshacer.",
+      "deleteSuccess": "Plan alimentario eliminado con éxito.",
+      "deleteError": "No se pudo eliminar el plan alimentario.",
+      "deleteNotFound": "El plan alimentario no está disponible para eliminarlo.",
+      "deleteConflict": "Los planes ya compartidos con el paciente no se pueden eliminar. Desactive el plan en su lugar.",
+      "deleteSyncError": "El plan fue eliminado, pero no se pudo actualizar la lista. Intente actualizarla nuevamente."
     },
     "anamnesis": {
       "title": "Anamnesis",

@@ -8,10 +8,13 @@ import { MealPlanStatus } from 'src/types';
 
 import { mealPlanService } from './mealPlanService';
 
+const { deleteMock } = vi.hoisted(() => ({ deleteMock: vi.fn() }));
+
 vi.mock('src/utils/http-client', () => ({
   get: vi.fn(),
   post: vi.fn(),
 }));
+vi.mock('src/services/api', () => ({ default: { delete: deleteMock } }));
 
 const postMock = vi.mocked(post);
 const payload: MealPlanCreateRequest = {
@@ -44,5 +47,30 @@ describe('mealPlanService.create', () => {
     postMock.mockResolvedValueOnce({ data: {} });
 
     await expect(mealPlanService.create(payload)).rejects.toThrow();
+  });
+});
+
+describe('mealPlanService.delete', () => {
+  beforeEach(() => vi.clearAllMocks());
+
+  it.each([{ data: true }, { data: { data: true } }])(
+    'deletes by id and validates a successful envelope',
+    async (response) => {
+      deleteMock.mockResolvedValueOnce(response);
+
+      await expect(mealPlanService.delete('plan-1')).resolves.toBe(true);
+      expect(deleteMock).toHaveBeenCalledWith('/api/MealPlan/plan-1');
+    }
+  );
+
+  it('rejects an unsuccessful envelope', async () => {
+    deleteMock.mockResolvedValueOnce({ data: { data: false } });
+    await expect(mealPlanService.delete('plan-1')).rejects.toThrow();
+  });
+
+  it('propagates API errors', async () => {
+    const error = new Error('request failed');
+    deleteMock.mockRejectedValueOnce(error);
+    await expect(mealPlanService.delete('plan-1')).rejects.toBe(error);
   });
 });

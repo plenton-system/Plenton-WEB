@@ -22,6 +22,7 @@ type RowActionsMenuProps = {
   actions: RowActionItem[];
   menuWidth?: number;
   icon?: IconifyName;
+  ariaLabel?: string;
 };
 
 // ----------------------------------------------------------------------
@@ -30,6 +31,7 @@ export function RowActionsMenu({
   actions,
   menuWidth = 160,
   icon = 'eva:more-vertical-fill',
+  ariaLabel,
 }: RowActionsMenuProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
@@ -44,7 +46,7 @@ export function RowActionsMenu({
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-        <IconButton onClick={handleOpenPopover}>
+        <IconButton onClick={handleOpenPopover} aria-label={ariaLabel}>
           <Iconify icon={icon} />
         </IconButton>
       </Box>

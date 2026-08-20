@@ -310,6 +310,17 @@ export const mealPlanService = {
     });
   },
 
+  delete: async (idMealPlan: string): Promise<boolean> => {
+    const response = await api.delete<ApiEnvelope<boolean>>(`/api/MealPlan/${idMealPlan}`);
+    const deleted = unwrapResponse(response.data);
+
+    if (deleted !== true) {
+      throw new Error(i18n.t('workspace.mealPlan.deleteError'));
+    }
+
+    return true;
+  },
+
   downloadPdf: async (idMealPlan: string): Promise<{ blob: Blob; fileName: string }> => {
     const response = await api.get<Blob>(`/api/MealPlan/${idMealPlan}/pdf`, {
       responseType: 'blob',

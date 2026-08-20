@@ -407,6 +407,7 @@
       "updated": "Updated: {{date}}",
       "allDays": "Every day",
       "delivery": "Delivery: {{value}}",
+      "actionsFor": "Actions for plan {{name}}",
       "mealsCount_one": "{{count}} meal",
       "mealsCount_other": "{{count}} meals",
       "itemsCount_one": "{{count}} item",
@@ -1026,7 +1027,14 @@
       "saveError": "The meal plan could not be saved.",
       "identityError": "The plan was saved, but the response did not include its identifier.",
       "saveSuccess": "Meal plan saved successfully.",
-      "syncError": "The meal plan was saved, but the list could not be refreshed."
+      "syncError": "The meal plan was saved, but the list could not be refreshed.",
+      "deleteTitle": "Delete meal plan?",
+      "deleteDescription": "The plan \"{{name}}\" will be deleted. This action cannot be undone.",
+      "deleteSuccess": "Meal plan deleted successfully.",
+      "deleteError": "The meal plan could not be deleted.",
+      "deleteNotFound": "The meal plan is not available for deletion.",
+      "deleteConflict": "Plans already shared with the patient cannot be deleted. Deactivate the plan instead.",
+      "deleteSyncError": "The plan was deleted, but the list could not be refreshed. Try refreshing it again."
     },
     "anamnesis": {
       "title": "Anamnesis",

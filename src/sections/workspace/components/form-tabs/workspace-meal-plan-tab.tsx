@@ -5,13 +5,15 @@ import type {
   MealPlanDrawerModel,
 } from 'src/sections/mealPlan/types/meal-plan-list';
 
-import { useMemo, useState } from 'react';
+import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { useRef, useMemo, useState } from 'react';
 
 import Chip from '@mui/material/Chip';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 
+import { useConfirm } from 'src/hooks/common/use-confirm';
 import { useWorkspacePlans } from 'src/hooks/workspace/use-workspace-plans';
 
 import { extractApiErrorMessage } from 'src/utils/api-error';
@@ -62,6 +64,7 @@ const toUiStatus = (status: MealPlanDetailResponse['status']): MealPlanDrawerMod
 
 export function WorkspaceMealPlanTab({ patientId }: Props) {
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const {
     items: workspaceItems,
     loading,
@@ -78,6 +81,11 @@ export function WorkspaceMealPlanTab({ patientId }: Props) {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [syncError, setSyncError] = useState<string | null>(null);
+  const [deletingPlanId, setDeletingPlanId] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [deleteSuccess, setDeleteSuccess] = useState<string | null>(null);
+  const [deleteSyncError, setDeleteSyncError] = useState<string | null>(null);
+  const deleteFlowLockedRef = useRef(false);
 
   const listItems = useMemo(() => workspaceItems.map(toMealPlanListItemVM), [workspaceItems]);
 
@@ -138,11 +146,65 @@ export function WorkspaceMealPlanTab({ patientId }: Props) {
     }
   };
 
+  const handleDelete = async (item: MealPlanListItemVM) => {
+    if (deleteFlowLockedRef.current) return;
+    deleteFlowLockedRef.current = true;
+
+    try {
+      const confirmed = await confirm({
+        title: t('workspace.mealPlan.deleteTitle'),
+        description: t('workspace.mealPlan.deleteDescription', { name: item.name }),
+        confirmText: t('actions.delete'),
+        destructive: true,
+      });
+
+      if (!confirmed) return;
+
+      setDeleteError(null);
+      setDeleteSuccess(null);
+      setDeleteSyncError(null);
+      setDeletingPlanId(item.id);
+
+      await mealPlanService.delete(item.id);
+      setDeleteSuccess(t('workspace.mealPlan.deleteSuccess'));
+
+      const synchronized = await refetch();
+      if (!synchronized) setDeleteSyncError(t('workspace.mealPlan.deleteSyncError'));
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response?.status === 409) {
+        setDeleteError(t('workspace.mealPlan.deleteConflict'));
+      } else if (axios.isAxiosError(error) && error.response?.status === 404) {
+        setDeleteError(t('workspace.mealPlan.deleteNotFound'));
+      } else {
+        setDeleteError(extractApiErrorMessage(error, t('workspace.mealPlan.deleteError')));
+      }
+    } finally {
+      setDeletingPlanId(null);
+      deleteFlowLockedRef.current = false;
+    }
+  };
+
   return (
     <>
       {(listError || detailError) && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {detailError ?? listError}
+        </Alert>
+      )}
+
+      {deleteError && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {deleteError}
+        </Alert>
+      )}
+      {deleteSuccess && (
+        <Alert severity="success" role="status" sx={{ mb: 2 }}>
+          {deleteSuccess}
+        </Alert>
+      )}
+      {deleteSyncError && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          {deleteSyncError}
         </Alert>
       )}
 
@@ -154,6 +216,8 @@ export function WorkspaceMealPlanTab({ patientId }: Props) {
         onSortChange={setSortState}
         onCreate={handleCreate}
         onEdit={handleEdit}
+        onDelete={handleDelete}
+        deletingItemId={deletingPlanId}
         renderStatus={(item) =>
           item.status ? (
             <Chip
